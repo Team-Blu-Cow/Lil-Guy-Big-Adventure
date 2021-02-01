@@ -238,12 +238,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   combatant_type: 0
-  mod_str: 20
+  mod_str: 0
   mod_dex: 0
-  mod_mag: -20
+  mod_mag: 0
   mod_def: 0
   mod_con: 0
-  mod_luck: 20
+  mod_luck: 0
   mod_speed: 0
   mod_init: 0
 --- !u!212 &954173751
@@ -360,8 +360,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   spell_Name: 
   base_Power: 0
-  stat_modifier: 
+  stat_modifier: 0
   spell_type: 0
+  combatantStats: {fileID: 0}
 --- !u!4 &1467459567
 Transform:
   m_ObjectHideFlags: 0

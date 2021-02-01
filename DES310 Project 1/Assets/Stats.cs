@@ -124,4 +124,42 @@ public class Stats : MonoBehaviour
                 return 0;
         }
     }
+
+    public void setStat(string statName, int modStat)
+    {
+        switch (statName)
+        {
+            case "Str":
+                base_str += modStat;
+                break;
+
+            case "Dex":
+                base_dex += modStat;
+                break;
+
+            case "Mag":
+                base_mag += modStat;
+                break;
+
+            case "Def":
+                base_def += modStat;
+                break;
+
+            case "Con":
+                base_con += modStat;
+                break;
+
+            case "Luck":
+                base_luck += modStat;
+                break;
+
+            case "Speed":
+                base_speed += modStat;
+                break;
+
+            case "Init":
+                base_init += modStat;
+                break;
+        }
+    }
 }

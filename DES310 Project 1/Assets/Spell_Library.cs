@@ -9,6 +9,13 @@ public enum spellType
     Buff = 2
 };
 
+public enum stat_type
+{
+    Strength = 0,
+    Magic = 1,
+    Dexterity = 2
+};
+
 public class Spell_Library : MonoBehaviour
 {
     // luck
@@ -20,15 +27,32 @@ public class Spell_Library : MonoBehaviour
 
     public string spell_Name;
     public float base_Power;
-    public string stat_modifier;
+    public stat_type stat_modifier;
     public spellType spell_type;
+
+    public Stats combatantStats;
 
     public void castSpell(/*get ref to target*/)
     {
+
         switch (spell_type)
         {
             case spellType.Damage:
                 //Do Damage @ /*ref to enemy*/
+                switch (stat_modifier)
+                {
+                    case stat_type.Strength:
+                        Melee(combatantStats.getStat("Str"), combatantStats.getStat("Luck"));
+                        break;
+                    case stat_type.Magic:
+                        Magic(combatantStats.getStat("Mag"), combatantStats.getStat("Luck"));
+                        break;
+                    case stat_type.Dexterity:
+                        Ranged(combatantStats.getStat("Dex"), combatantStats.getStat("Luck"));
+                        break;
+                    default:
+                        break;
+                }
                 break;
 
             case spellType.Heal:
