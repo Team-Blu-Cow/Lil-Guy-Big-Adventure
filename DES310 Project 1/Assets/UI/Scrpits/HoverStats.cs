@@ -7,6 +7,9 @@ public class HoverStats : MonoBehaviour, IPointerEnterHandler, IPointerExitHandl
 {
     public GameObject combatant;
 
+    GameObject currentHover;
+    float hoverTime;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -16,29 +19,44 @@ public class HoverStats : MonoBehaviour, IPointerEnterHandler, IPointerExitHandl
     // Update is called once per frame
     void Update()
     {
-        
+        if (currentHover)
+        {           
+            if (hoverTime > 0.5f && !currentHover.activeInHierarchy)
+            {
+                ShowStats();
+            }
+            else if (hoverTime < 0.5f)
+            {
+                hoverTime += Time.deltaTime;
+            }
+        }
     }
 
     void IPointerEnterHandler.OnPointerEnter(PointerEventData eventData)
     {
         if (eventData.pointerCurrentRaycast.gameObject != null && eventData.pointerCurrentRaycast.gameObject.CompareTag("UIPartyMember"))
         {
-            ShowStats(eventData.pointerCurrentRaycast.gameObject);
+            currentHover = eventData.pointerCurrentRaycast.gameObject.transform.GetChild(0).gameObject;            
         }
     }
 
     void IPointerExitHandler.OnPointerExit(PointerEventData eventData)
     {
-        HideStats();       
+        LeanTween.scale(currentHover, new Vector3(0, 0, 0), 0.5f).setOnComplete(HideStats);
+        hoverTime = 0;
     }
 
-    void ShowStats(GameObject mouseOver)
-    {
-        mouseOver.transform.GetChild(0).gameObject.SetActive(true);
+    void ShowStats()
+    {              
+        currentHover.SetActive(true);
+        LeanTween.scale(currentHover, new Vector3(1, 1, 1), 0.5f);
     }
 
     void HideStats()
     {
+        if (currentHover)
+            currentHover.SetActive(false);
 
+        currentHover = null;
     }
 }
