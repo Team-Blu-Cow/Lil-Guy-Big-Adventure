@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine.EventSystems;
 using UnityEngine;
 
-public class HoverStats : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
+public class HoverStats : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, IPointerClickHandler
 {
     GameObject hovered;
     float hoverTime;
@@ -23,11 +23,26 @@ public class HoverStats : MonoBehaviour, IPointerEnterHandler, IPointerExitHandl
             }
         }
     }
+    void IPointerClickHandler.OnPointerClick(PointerEventData eventData)
+    {
+        switch (eventData.clickCount)
+        {
+            case 1:
+                LeanTween.delayedCall(0.3f,OpenCombatant).setOnCompleteParam(eventData.pointerCurrentRaycast.gameObject);
+                break;
+            case 2:
+                LeanTween.cancelAll();
+                OpenParty();
+                break;
+            default:
+                break;
+        }
+    }
 
     void IPointerEnterHandler.OnPointerEnter(PointerEventData eventData)
     {
         if (eventData.pointerCurrentRaycast.gameObject != null && eventData.pointerCurrentRaycast.gameObject.CompareTag("UIPartyMember"))
-        {         
+        {
             hovered = eventData.pointerCurrentRaycast.gameObject.transform.GetChild(0).gameObject;
             if (LeanTween.isTweening(hovered))
                 ShowStats();
@@ -38,7 +53,7 @@ public class HoverStats : MonoBehaviour, IPointerEnterHandler, IPointerExitHandl
     {
         GameObject temp = hovered;
         yield return new WaitForSeconds(0.0f);
-        LeanTween.scale(temp, new Vector3(0, 0, 0), 0.5f).setOnComplete(HideStats).setOnCompleteParam(temp);       
+        LeanTween.scale(temp, new Vector3(0, 0, 0), 0.5f).setOnComplete(HideStats).setOnCompleteParam(temp);
     }
 
     void IPointerExitHandler.OnPointerExit(PointerEventData eventData)
@@ -66,4 +81,18 @@ public class HoverStats : MonoBehaviour, IPointerEnterHandler, IPointerExitHandl
     {
         GetComponent<Canvas>().enabled = toggle;
     }
+
+    void OpenCombatant(object combatant)
+    {
+        GameObject goCombatant = combatant as GameObject;
+        ToggleCanvas(false);
+        FindObjectOfType<SwapScreenCombatant>().OpenScreen(goCombatant.GetComponent<PartyCombatant>());
+    }
+
+    void OpenParty()
+    {
+        ToggleCanvas(false);
+        FindObjectOfType<SwapScreenParty>().OpenScreen();
+    }
+
 }

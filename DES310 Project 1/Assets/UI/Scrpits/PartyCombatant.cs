@@ -8,7 +8,7 @@ public class PartyCombatant : MonoBehaviour
 
     public int health;
     public int maxHealth;
-    public string name;
+    public string named;
     public int[] res;
   
 }

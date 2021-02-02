@@ -4,11 +4,11 @@ using UnityEngine;
 
 public class ShowResistanceUI : MonoBehaviour
 {    
-    public void setRes()
+    public void setRes(PartyCombatant combatant)
     {        
         for (int i = 0; i < transform.childCount; i++)
         {
-            switch (GetComponentInParent<PartyCombatant>().res[i])
+            switch (combatant.res[i])
             {
                 case 0: 
                     transform.GetChild(i).transform.GetChild(0).gameObject.SetActive(false);
