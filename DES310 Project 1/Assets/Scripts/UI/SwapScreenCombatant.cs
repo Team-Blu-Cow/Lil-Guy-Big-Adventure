@@ -38,10 +38,10 @@ public class SwapScreenCombatant : MonoBehaviour
         combatant = combatantIn;
 
         // Set the resistances on ui
-        FindObjectOfType<ShowResistanceUI>().setRes(combatant);        
+        //FindObjectOfType<ShowResistanceUI>().SetRes(combatant);
 
         // Set the name and health on the ui
-        GameObject.Find("CombatantName").GetComponent<TextMeshProUGUI>().text = combatant.named + "(" + combatant.health + "/" + combatant.maxHealth + ")";
+        GameObject.Find("CombatantName").GetComponent<TextMeshProUGUI>().text = combatant.named + "(" + combatant.combatantStats.getStat("HP") + "/" + combatant.combatantStats.getStat("Con") + ")";
 
         // Fade in background
         Image back = transform.parent.GetComponentInChildren<Image>();

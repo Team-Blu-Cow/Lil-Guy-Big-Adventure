@@ -4,10 +4,7 @@ using UnityEngine;
 
 public class PartyCombatant : MonoBehaviour
 {
-    public GameObject combatant;
-
-    public int health;
-    public int maxHealth;
+    public Stats combatantStats;
     public string named;
     public int[] res;
   
