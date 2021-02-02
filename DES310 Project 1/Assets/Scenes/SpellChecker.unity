@@ -392,8 +392,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 954173753}
-        m_TargetAssemblyTypeName: CombatantAbilities, Assembly-CSharp
+      - m_Target: {fileID: 954173754}
+        m_TargetAssemblyTypeName: CombatAbilities, Assembly-CSharp
         m_MethodName: CastAbility
         m_Mode: 3
         m_Arguments:
@@ -454,6 +454,7 @@ GameObject:
   - component: {fileID: 954173751}
   - component: {fileID: 954173750}
   - component: {fileID: 954173753}
+  - component: {fileID: 954173754}
   m_Layer: 0
   m_Name: Combatant Player
   m_TagString: Untagged
@@ -559,11 +560,24 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: be4383718ad81d943a4863ddc9d1ec74, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  abilitiesLearnt: []
+--- !u!114 &954173754
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 954173749}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fd6fa089cc33eb94bab7721f277ebb65, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
   abilitiesUsing:
+  - {fileID: 7072381395796240469, guid: b035e8bf399227c49bf1a90c5ecb0edc, type: 3}
   - {fileID: 5698106485274030700, guid: f7ff168d4c5c0d743a6cdc484b19a655, type: 3}
-  - {fileID: 4127371302415139829, guid: bca79481931bc4946ab44bbcd4c71e7c, type: 3}
   - {fileID: 7706368254199740182, guid: 8381c0d70eb23de40b826bdd7c37bbbd, type: 3}
-  - {fileID: 3489780241480307656, guid: f3cd359b3c7b66545ab21139359cfc38, type: 3}
+  - {fileID: 941154833757141219, guid: c797b658771dd884b98def0b00d2c381, type: 3}
   enemy: {fileID: 1651901341}
   combatantStats: {fileID: 954173750}
 --- !u!1 &1137058420
@@ -649,8 +663,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 954173753}
-        m_TargetAssemblyTypeName: CombatantAbilities, Assembly-CSharp
+      - m_Target: {fileID: 954173754}
+        m_TargetAssemblyTypeName: CombatAbilities, Assembly-CSharp
         m_MethodName: CastAbility
         m_Mode: 3
         m_Arguments:
@@ -769,7 +783,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: Cure Wounds
+  m_Text: Ability 2
 --- !u!222 &1262591649
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -861,8 +875,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 954173753}
-        m_TargetAssemblyTypeName: CombatantAbilities, Assembly-CSharp
+      - m_Target: {fileID: 954173754}
+        m_TargetAssemblyTypeName: CombatAbilities, Assembly-CSharp
         m_MethodName: CastAbility
         m_Mode: 3
         m_Arguments:
@@ -981,7 +995,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: EXPLOSION
+  m_Text: Ability 3
 --- !u!222 &1597424466
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -1177,8 +1191,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 954173753}
-        m_TargetAssemblyTypeName: CombatantAbilities, Assembly-CSharp
+      - m_Target: {fileID: 954173754}
+        m_TargetAssemblyTypeName: CombatAbilities, Assembly-CSharp
         m_MethodName: CastAbility
         m_Mode: 3
         m_Arguments:
@@ -1363,7 +1377,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: Buff Strength
+  m_Text: Ability 4
 --- !u!222 &1909730772
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -1442,7 +1456,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: Bonk
+  m_Text: Ability 1
 --- !u!222 &2001975690
 CanvasRenderer:
   m_ObjectHideFlags: 0

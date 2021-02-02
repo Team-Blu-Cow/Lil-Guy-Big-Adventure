@@ -91,36 +91,22 @@ public class Stats : MonoBehaviour
         {
             case "Str":
                 return base_str;
-                break;
-
             case "Dex":
                 return base_dex;
-                break;
-
             case "Mag":
                 return base_mag;
-                break;
-
             case "Def":
                 return base_def;
-                break;
-
             case "Con":
                 return base_con;
-                break;
-
             case "Luck":
                 return base_luck;
-                break;
-
             case "Speed":
                 return base_speed;
-                break;
-
             case "Init":
                 return base_init;
-                break;
-
+            case "HP":
+                return base_hp;
             default:
                 Debug.Log("ERROR: Invalid Stat Name");
                 return 0;
