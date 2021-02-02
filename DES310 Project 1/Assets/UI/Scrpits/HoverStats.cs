@@ -5,8 +5,6 @@ using UnityEngine;
 
 public class HoverStats : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
 {
-    public GameObject combatant;
-
     GameObject currentHover;
     float hoverTime;
 
@@ -30,6 +28,8 @@ public class HoverStats : MonoBehaviour, IPointerEnterHandler, IPointerExitHandl
                 hoverTime += Time.deltaTime;
             }
         }
+
+       // currentHover.GetComponentInParent<PartyCombatant>(); // This gets what combantnt is int his party slot
     }
 
     void IPointerEnterHandler.OnPointerEnter(PointerEventData eventData)
