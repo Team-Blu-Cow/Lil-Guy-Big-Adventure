@@ -11,16 +11,16 @@ public class ShowResistanceUI : MonoBehaviour
             switch (GetComponentInParent<PartyCombatant>().res[i])
             {
                 case 0: 
-                    transform.GetChild(i).gameObject.transform.GetChild(0).gameObject.SetActive(false);
-                    transform.GetChild(i).gameObject.transform.GetChild(1).gameObject.SetActive(true);
+                    transform.GetChild(i).transform.GetChild(0).gameObject.SetActive(false);
+                    transform.GetChild(i).transform.GetChild(1).gameObject.SetActive(true);
                     break;
                 case 1:
-                    transform.GetChild(i).gameObject.transform.GetChild(0).gameObject.SetActive(true);
-                    transform.GetChild(i).gameObject.transform.GetChild(1).gameObject.SetActive(false);
+                    transform.GetChild(i).transform.GetChild(0).gameObject.SetActive(true);
+                    transform.GetChild(i).transform.GetChild(1).gameObject.SetActive(false);
                     break;
                 default:
-                    transform.GetChild(i).gameObject.transform.GetChild(0).gameObject.SetActive(false);
-                    transform.GetChild(i).gameObject.transform.GetChild(1).gameObject.SetActive(false);
+                    transform.GetChild(i).transform.GetChild(0).gameObject.SetActive(false);
+                    transform.GetChild(i).transform.GetChild(1).gameObject.SetActive(false);
                     break;
             }            
         }

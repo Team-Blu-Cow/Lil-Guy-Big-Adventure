@@ -10,10 +10,5 @@ public class PartyCombatant : MonoBehaviour
     public int maxHealth;
     public string name;
     public int[] res;
-
-    public void UpdateScreen()
-    {
-        GetComponentInChildren<ShowResistanceUI>().setRes();
-        GetComponentInChildren<RenameCombatantScreen>().Rename();
-    }
+  
 }

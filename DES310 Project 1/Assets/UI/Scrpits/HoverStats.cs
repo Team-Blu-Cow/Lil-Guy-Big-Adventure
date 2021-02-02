@@ -5,21 +5,15 @@ using UnityEngine;
 
 public class HoverStats : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
 {
-    GameObject currentHover;
+    GameObject hovered;
     float hoverTime;
-
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
 
     // Update is called once per frame
     void Update()
     {
-        if (currentHover)
-        {           
-            if (hoverTime > 0.5f && !currentHover.activeInHierarchy)
+        if (hovered)
+        {
+            if (hoverTime > 0.5f && !hovered.activeSelf)
             {
                 ShowStats();
             }
@@ -28,35 +22,48 @@ public class HoverStats : MonoBehaviour, IPointerEnterHandler, IPointerExitHandl
                 hoverTime += Time.deltaTime;
             }
         }
-
-       // currentHover.GetComponentInParent<PartyCombatant>(); // This gets what combantnt is int his party slot
     }
 
     void IPointerEnterHandler.OnPointerEnter(PointerEventData eventData)
     {
         if (eventData.pointerCurrentRaycast.gameObject != null && eventData.pointerCurrentRaycast.gameObject.CompareTag("UIPartyMember"))
-        {
-            currentHover = eventData.pointerCurrentRaycast.gameObject.transform.GetChild(0).gameObject;            
+        {         
+            hovered = eventData.pointerCurrentRaycast.gameObject.transform.GetChild(0).gameObject;
+            if (LeanTween.isTweening(hovered))
+                ShowStats();
         }
+    }
+
+    IEnumerator Exit()
+    {
+        GameObject temp = hovered;
+        yield return new WaitForSeconds(0.0f);
+        LeanTween.scale(temp, new Vector3(0, 0, 0), 0.5f).setOnComplete(HideStats).setOnCompleteParam(temp);       
     }
 
     void IPointerExitHandler.OnPointerExit(PointerEventData eventData)
     {
-        LeanTween.scale(currentHover, new Vector3(0, 0, 0), 0.5f).setOnComplete(HideStats);
-        hoverTime = 0;
+        if (hovered)
+            StartCoroutine(Exit());
+        hovered = null;
     }
 
     void ShowStats()
     {              
-        currentHover.SetActive(true);
-        LeanTween.scale(currentHover, new Vector3(1, 1, 1), 0.5f);
+        hovered.SetActive(true);
+        LeanTween.cancel(hovered); 
+        LeanTween.scale(hovered, new Vector3(1, 1, 1), 0.5f);
     }
 
-    void HideStats()
+    void HideStats(object hovered)
     {
-        if (currentHover)
-            currentHover.SetActive(false);
+        GameObject i = hovered as GameObject;
+        i.SetActive(false);
+        hoverTime = 0;
+    }
 
-        currentHover = null;
+    public void ToggleCanvas(bool toggle)
+    {
+        GetComponent<Canvas>().enabled = toggle;
     }
 }
