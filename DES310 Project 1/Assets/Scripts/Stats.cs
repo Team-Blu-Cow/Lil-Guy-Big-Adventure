@@ -25,7 +25,6 @@ public class Stats : MonoBehaviour
 
     // base stats
     private int base_str = 25;
-
     private int base_dex = 25;
     private int base_mag = 25;
     private int base_def = 25;
@@ -33,9 +32,11 @@ public class Stats : MonoBehaviour
     private int base_luck = 5; // regular 1 in 20 e.g. d20 roll
     private int base_speed = 25;
     private int base_init = 25;
+    private int base_hp = 25;
 
     private void Start()
     {
+        // Racial traits
         switch (combatant_type)
         {
             case Combatant_Type.Human:
@@ -46,7 +47,7 @@ public class Stats : MonoBehaviour
                 base_con += 3;
                 base_luck += 3;
                 base_speed += 3;
-                base_init += 3;
+                base_init += 3;               
                 break;
 
             case Combatant_Type.Dragon:
@@ -81,6 +82,7 @@ public class Stats : MonoBehaviour
         Debug.Log("luck: " + base_luck);
         Debug.Log("speed: " + base_speed);
         Debug.Log("init: " + base_init);
+        Debug.Log("HP: " + base_hp);
     }
 
     public int getStat(string statName)
@@ -159,6 +161,9 @@ public class Stats : MonoBehaviour
 
             case "Init":
                 base_init += modStat;
+                break;
+            case "HP":
+                base_hp += modStat;
                 break;
         }
     }
