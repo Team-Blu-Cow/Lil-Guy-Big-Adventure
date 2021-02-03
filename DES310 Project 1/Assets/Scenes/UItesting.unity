@@ -427,7 +427,7 @@ GameObject:
   - component: {fileID: 179768639}
   - component: {fileID: 179768638}
   m_Layer: 5
-  m_Name: Text (TMP)
+  m_Name: StatsText
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1183,7 +1183,7 @@ GameObject:
   - component: {fileID: 444810746}
   - component: {fileID: 444810745}
   m_Layer: 5
-  m_Name: ModifiesStats
+  m_Name: ModifiedStats
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1445,7 +1445,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &513876828
 RectTransform:
   m_ObjectHideFlags: 0
@@ -1538,7 +1538,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -126.35201, y: -231.99797}
+  m_AnchoredPosition: {x: -126.35201, y: -298}
   m_SizeDelta: {x: 82.7646, y: 47.996}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &547782931
@@ -3377,7 +3377,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &941946276
 RectTransform:
   m_ObjectHideFlags: 0
@@ -5585,7 +5585,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 134.17699, y: -234.00201}
+  m_AnchoredPosition: {x: 134.17699, y: -300}
   m_SizeDelta: {x: 82.7646, y: 47.996}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1377856417
@@ -6085,7 +6085,7 @@ MonoBehaviour:
   mod_dex: 0
   mod_mag: 0
   mod_def: 0
-  mod_con: 30
+  mod_con: 0
   mod_luck: 0
   mod_speed: 0
   mod_init: 0
@@ -6335,7 +6335,7 @@ Canvas:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1645683366}
-  m_Enabled: 0
+  m_Enabled: 1
   serializedVersion: 3
   m_RenderMode: 0
   m_Camera: {fileID: 0}
@@ -6883,7 +6883,7 @@ GameObject:
   - component: {fileID: 1919776571}
   - component: {fileID: 1919776570}
   m_Layer: 5
-  m_Name: Text (TMP) (4)
+  m_Name: ModifiedStatsText
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
