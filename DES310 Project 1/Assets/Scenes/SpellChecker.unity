@@ -1734,7 +1734,7 @@ GameObject:
   - component: {fileID: 1215125043}
   - component: {fileID: 1215125042}
   m_Layer: 0
-  m_Name: GameObject
+  m_Name: Thick Skin
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1754,8 +1754,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   quirkName: Thick Skin
   quirkPower: 0
-  quirkAspect: 0
+  quirkAspect: 5
   statBoost: 0
+  quirkResistance: 0
 --- !u!4 &1215125043
 Transform:
   m_ObjectHideFlags: 0
@@ -1764,7 +1765,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1215125041}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 663.33325, y: 372.45108, z: -77.67895}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
