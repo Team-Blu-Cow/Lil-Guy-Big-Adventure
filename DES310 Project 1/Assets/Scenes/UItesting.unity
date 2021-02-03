@@ -308,7 +308,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f809ff5706eac3d479549dd4fc267001, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  combatantStats: {fileID: 0}
+  combatant: {fileID: 0}
   named: 
   res: 
 --- !u!114 &37496657
@@ -607,7 +607,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f809ff5706eac3d479549dd4fc267001, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  combatantStats: {fileID: 0}
+  combatant: {fileID: 0}
   named: 
   res: 
 --- !u!114 &203236527
@@ -744,11 +744,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1 &296462949 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 6057237310379914198, guid: 187919b75895fb746a0041226075cfd1, type: 3}
-  m_PrefabInstance: {fileID: 2104452650}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &336416669
 GameObject:
   m_ObjectHideFlags: 0
@@ -1357,14 +1352,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   combatant_type: 0
-  mod_str: 0
-  mod_dex: 0
-  mod_mag: 0
-  mod_def: 0
+  mod_str: 5
+  mod_dex: 4
+  mod_mag: 3
+  mod_def: 4
   mod_con: 10
-  mod_luck: 0
-  mod_speed: 0
-  mod_init: 0
+  mod_luck: 7
+  mod_speed: 6
+  mod_init: 8
 --- !u!212 &491874597
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -1992,6 +1987,7 @@ GameObject:
   - component: {fileID: 646393761}
   - component: {fileID: 646393760}
   - component: {fileID: 646393762}
+  - component: {fileID: 646393763}
   m_Layer: 5
   m_Name: Base
   m_TagString: Untagged
@@ -2076,6 +2072,21 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 07e37153e00d5744d901991b16bf0c42, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &646393763
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 646393758}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f809ff5706eac3d479549dd4fc267001, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  combatant: {fileID: 0}
+  named: 
+  res: 
 --- !u!1 &656381677
 GameObject:
   m_ObjectHideFlags: 0
@@ -2142,7 +2153,7 @@ Canvas:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 656381677}
-  m_Enabled: 1
+  m_Enabled: 0
   serializedVersion: 3
   m_RenderMode: 0
   m_Camera: {fileID: 0}
@@ -3085,11 +3096,6 @@ RectTransform:
   m_CorrespondingSourceObject: {fileID: 7544740650726335691, guid: 17a1b6cfa36e31641a162e8a2538ff77, type: 3}
   m_PrefabInstance: {fileID: 745920878}
   m_PrefabAsset: {fileID: 0}
---- !u!1 &781100948 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 6057237310379914198, guid: 187919b75895fb746a0041226075cfd1, type: 3}
-  m_PrefabInstance: {fileID: 6057237309682701378}
-  m_PrefabAsset: {fileID: 0}
 --- !u!224 &781100949 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 6057237310379914199, guid: 187919b75895fb746a0041226075cfd1, type: 3}
@@ -3377,7 +3383,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &941946276
 RectTransform:
   m_ObjectHideFlags: 0
@@ -3413,7 +3419,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &942403219
 RectTransform:
   m_ObjectHideFlags: 0
@@ -4977,7 +4983,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f809ff5706eac3d479549dd4fc267001, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  combatantStats: {fileID: 0}
+  combatant: {fileID: 0}
   named: 
   res: 
 --- !u!114 &1255031394
@@ -5718,11 +5724,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1 &1388658818 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 6057237310379914198, guid: 187919b75895fb746a0041226075cfd1, type: 3}
-  m_PrefabInstance: {fileID: 1795403321}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1454986963
 GameObject:
   m_ObjectHideFlags: 0
@@ -6085,7 +6086,7 @@ MonoBehaviour:
   mod_dex: 0
   mod_mag: 0
   mod_def: 0
-  mod_con: 0
+  mod_con: 30
   mod_luck: 0
   mod_speed: 0
   mod_init: 0
@@ -6614,7 +6615,7 @@ PrefabInstance:
     - target: {fileID: 6057237310379914202, guid: 187919b75895fb746a0041226075cfd1, type: 3}
       propertyPath: combatant
       value: 
-      objectReference: {fileID: 1388658818}
+      objectReference: {fileID: 1597494296}
     - target: {fileID: 6057237310379914202, guid: 187919b75895fb746a0041226075cfd1, type: 3}
       propertyPath: maxHealth
       value: 60
@@ -6776,7 +6777,6 @@ GameObject:
   - component: {fileID: 1898111957}
   - component: {fileID: 1898111961}
   - component: {fileID: 1898111960}
-  - component: {fileID: 1898111958}
   - component: {fileID: 1898111959}
   m_Layer: 5
   m_Name: Base
@@ -6806,21 +6806,6 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 650, y: 650}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &1898111958
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1898111956}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f809ff5706eac3d479549dd4fc267001, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  combatantStats: {fileID: 0}
-  named: 
-  res: 0000000001000000020000000000000001000000
 --- !u!114 &1898111959
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -7524,7 +7509,7 @@ PrefabInstance:
     - target: {fileID: 6057237310379914202, guid: 187919b75895fb746a0041226075cfd1, type: 3}
       propertyPath: combatant
       value: 
-      objectReference: {fileID: 296462949}
+      objectReference: {fileID: 1459599834}
     - target: {fileID: 6057237310379914202, guid: 187919b75895fb746a0041226075cfd1, type: 3}
       propertyPath: maxHealth
       value: 10
@@ -7670,7 +7655,7 @@ PrefabInstance:
     - target: {fileID: 6057237310379914202, guid: 187919b75895fb746a0041226075cfd1, type: 3}
       propertyPath: combatant
       value: 
-      objectReference: {fileID: 781100948}
+      objectReference: {fileID: 491874594}
     - target: {fileID: 6057237310379914202, guid: 187919b75895fb746a0041226075cfd1, type: 3}
       propertyPath: maxHealth
       value: 30
@@ -7695,6 +7680,10 @@ PrefabInstance:
       propertyPath: res.Array.data[3]
       value: 2
       objectReference: {fileID: 0}
+    - target: {fileID: 6057237310379914202, guid: 187919b75895fb746a0041226075cfd1, type: 3}
+      propertyPath: combatantAbilities
+      value: 
+      objectReference: {fileID: 491874595}
     - target: {fileID: 6057237310476124653, guid: 187919b75895fb746a0041226075cfd1, type: 3}
       propertyPath: m_AnchorMax.x
       value: 0

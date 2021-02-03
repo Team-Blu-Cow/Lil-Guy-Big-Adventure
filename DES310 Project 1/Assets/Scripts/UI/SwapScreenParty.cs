@@ -47,7 +47,9 @@ public class SwapScreenParty : MonoBehaviour
     void SetPartyMember(int i)
     {
         // get the child in he party section in the "InGameCanvas"
-        Stats combatant = GameObject.Find("InGameCanvas/Party").GetComponentsInChildren<PartyCombatant>()[i].combatantStats;
-        GameObject.Find("PartyMenu/Base/Party").GetComponentsInChildren<PartyCombatant>()[i].combatantStats = combatant;
+        PartyCombatant combatant = GameObject.Find("InGameCanvas/Party").GetComponentsInChildren<PartyCombatant>()[i];
+        GameObject.Find("PartyMenu/Base/Party").GetComponentsInChildren<PartyCombatant>()[i].SetCombatant(combatant.GetCombatant());
+        GameObject.Find("PartyMenu/Base/Party").GetComponentsInChildren<PartyCombatant>()[i].SetStats(combatant.GetStats());
+        GameObject.Find("PartyMenu/Base/Party").GetComponentsInChildren<PartyCombatant>()[i].SetAbilities(combatant.GetAbilities());
     }
 }

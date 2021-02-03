@@ -5,27 +5,21 @@ using UnityEngine.UI;
 
 public class HealthBar : MonoBehaviour
 {
-    private PartyCombatant combatant;
-    private void Start()
-    {
-        combatant = GetComponentInParent<PartyCombatant>();
-    }
-
     public void Update()
     {
-        if (GetComponent<Slider>().value != combatant.combatantStats.getStat("HP") )
+        if (GetComponent<Slider>().value != GetComponentInParent<PartyCombatant>().GetStats().getStat("HP"))
             SetHealth();
-        if (GetComponent<Slider>().maxValue != combatant.combatantStats.getStat("Con"))
+        if (GetComponent<Slider>().maxValue != GetComponentInParent<PartyCombatant>().GetStats().getStat("Con"))
             SetMaxHealth();        
     }
 
     public void SetHealth()
     {
-        GetComponent<Slider>().value = combatant.combatantStats.getStat("HP");
+        GetComponent<Slider>().value = GetComponentInParent<PartyCombatant>().GetStats().getStat("HP");
     }
     
     public void SetMaxHealth()
     {
-        GetComponent<Slider>().maxValue = combatant.combatantStats.getStat("Con");
+        GetComponent<Slider>().maxValue = GetComponentInParent<PartyCombatant>().GetStats().getStat("Con");
     }
 }
