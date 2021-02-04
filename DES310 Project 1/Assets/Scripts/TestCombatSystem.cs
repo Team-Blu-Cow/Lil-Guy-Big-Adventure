@@ -9,11 +9,13 @@ public class TestCombatSystem : MonoBehaviour
 
     private CombatantAbilities combatantAbilities;
     private CombatantItems combatantItems;
+    private CombatantQuirks combatantQuirks;
     private Stats combatantStats;
 
     private Ability[] abilitiesUsing;
     private Ability[] abilitiesLearnt;
     private Item[] items;
+    private Quirks[] quirks;
 
     int damage = 0;
     int poisonDamage = 0;
@@ -22,36 +24,52 @@ public class TestCombatSystem : MonoBehaviour
     {
         combatantAbilities = GetComponent<CombatantAbilities>();
         combatantItems = GetComponent<CombatantItems>();
+        combatantQuirks = GetComponent<CombatantQuirks>();
         combatantStats = GetComponent<Stats>();
 
         abilitiesUsing = combatantAbilities.abilitiesUsing;
         abilitiesLearnt = combatantAbilities.abilitiesLearnt;
+        quirks = combatantQuirks.combatantQuirks;
         items = combatantItems.combatantItems;
     }
 
     public void CastAbility(int abilityNum)
     {
         Debug.Log("Casting Ability...");
-        if (abilitiesUsing[abilityNum].abilityType == ability_type.Damage)
+        switch (abilitiesUsing[abilityNum].abilityType)
         {
-            DamageAbility(abilityNum);
+            case ability_type.Damage:
+                DamageAbility(abilityNum);
+                break;
+            case ability_type.Heal:
+                HealAbility(abilityNum);
+                break;
+            case ability_type.Buff:
+                BuffAbility(abilityNum);
+                break;
+            default:
+                break;
         }
-        else if (abilitiesUsing[abilityNum].abilityType == ability_type.Heal)
-        {
-            HealAbility(abilityNum);
-        }
-        else if (abilitiesUsing[abilityNum].abilityType == ability_type.Buff)
-        {
-            BuffAbility(abilityNum);
-        }
+
     }
 
     private void DamageAbility(int abilityNum)
     {
+        CombatantQuirks enemyCombatantQuirks = enemy.GetComponent<CombatantQuirks>();
+        Resistances enemyResistances = enemy.GetComponent<Resistances>();
+        Quirks[] enemyQuirks = enemyCombatantQuirks.combatantQuirks;
 
         if (abilitiesUsing[abilityNum].statUsed == stat_used.Strength)
         {
             damage = abilitiesUsing[abilityNum].abilityPower + combatantStats.getStat("Str");
+
+            for (int i = 0; i < 3; i++)
+            {
+                damage = CheckQuirkTypeResistances(damage, enemyQuirks[i], abilityNum);
+                damage = CheckTypeResistance(damage, enemyResistances, abilityNum, i);
+            }
+
+
 
             if (Random.Range(1, 100) < combatantStats.getStat("Luck"))
             {
@@ -70,6 +88,12 @@ public class TestCombatSystem : MonoBehaviour
         {
             damage = abilitiesUsing[abilityNum].abilityPower + combatantStats.getStat("Mag");
 
+            for (int i = 0; i < 3; i++)
+            {
+                damage = CheckQuirkTypeResistances(damage, enemyQuirks[i], abilityNum);
+                damage = CheckTypeResistance(damage, enemyResistances, abilityNum, i);
+            }
+
             if (Random.Range(1, 100) < combatantStats.getStat("Luck"))
             {
                 damage *= 2;
@@ -86,6 +110,12 @@ public class TestCombatSystem : MonoBehaviour
         else if (abilitiesUsing[abilityNum].statUsed == stat_used.Dexterity)
         {
             damage = abilitiesUsing[abilityNum].abilityPower + combatantStats.getStat("Dex");
+
+            for (int i = 0; i < 3; i++)
+            {
+                damage = CheckQuirkTypeResistances(damage, enemyQuirks[i], abilityNum);
+                damage = CheckTypeResistance(damage, enemyResistances, abilityNum, i);
+            }
 
             if (Random.Range(1, 100) < combatantStats.getStat("Luck"))
             {
@@ -162,20 +192,20 @@ public class TestCombatSystem : MonoBehaviour
     public void UseItem()
     {
         int currentItem = combatantItems.currentItem;
-        Debug.Log("Using Item...");
-        
-        if(items[currentItem].itemType == item_type.Poison)
+        Debug.Log("Using Item...");        
+        switch (items[currentItem].itemType)
         {
-            PoisonItem(currentItem);
+            case item_type.Poison:
+                PoisonItem(currentItem);
+                break;
+            case item_type.Heal:
+                HealItem(currentItem);
+                break;
+            case item_type.Buff:
+                BuffItem(currentItem);
+                break;
         }
-        else if (items[currentItem].itemType == item_type.Heal)
-        {
-            HealItem(currentItem);
-        }
-        else if (items[currentItem].itemType == item_type.Buff)
-        {
-            BuffItem(currentItem);
-        }
+
     }
 
     private void PoisonItem(int currentItem)
@@ -236,5 +266,65 @@ public class TestCombatSystem : MonoBehaviour
                 break;
         }
 
+    }
+
+    private int CheckQuirkTypeResistances(int damage, Quirks enemyQuirk, int abilityNum)
+    {
+        if (enemyQuirk != null)
+        {
+            if (enemyQuirk.quirkResistance == quirk_resistant.Immunity)
+            {
+                if (CheckResistancesMatch(enemyQuirk.quirkAspect, abilityNum))
+                {
+                    return damage *= 0;
+                }
+            }
+            else if (enemyQuirk.quirkResistance == quirk_resistant.Resistance)
+            {
+                if (CheckResistancesMatch(enemyQuirk.quirkAspect, abilityNum))
+                {
+                    return damage /= 2;
+                }
+            }
+            else if (enemyQuirk.quirkResistance == quirk_resistant.Vulnerability)
+            {
+                if (CheckResistancesMatch(enemyQuirk.quirkAspect, abilityNum))
+                {
+                    return damage *= 2;
+                }
+            }
+        }
+
+        return damage;        
+    }
+
+    private int CheckTypeResistance(int damage, Resistances enemyResistances, int abilityNum, int i)
+    {
+        if (enemyResistances.resistances[i] == abilitiesUsing[abilityNum].abilityAspect)
+        {
+            return damage /= 2;
+        }
+        else if (enemyResistances.immunities[i] == abilitiesUsing[abilityNum].abilityAspect)
+        {
+            return damage *= 0;
+        }
+        else if (enemyResistances.vulnerabilities[i] == abilitiesUsing[abilityNum].abilityAspect)
+        {
+            return damage *= 2;
+        }
+
+        return damage;
+    }
+
+    private bool CheckResistancesMatch(Aspects.Aspect enemyResAspect, int abilityNum)
+    {
+        if (enemyResAspect == abilitiesUsing[abilityNum].abilityAspect)
+        {
+            return true;
+        }
+        else
+        {
+            return false;
+        }
     }
 }

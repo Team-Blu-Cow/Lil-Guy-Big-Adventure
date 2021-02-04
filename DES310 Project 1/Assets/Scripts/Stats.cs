@@ -13,6 +13,7 @@ public enum Combatant_Type
 public class Stats : MonoBehaviour
 {
     public Combatant_Type combatant_type;
+    CombatantQuirks combatantQuirks;
 
     public int mod_str;
     public int mod_dex;
@@ -36,6 +37,7 @@ public class Stats : MonoBehaviour
 
     private void Start()
     {
+        combatantQuirks = GetComponent<CombatantQuirks>();
         // Racial traits
         switch (combatant_type)
         {
@@ -73,6 +75,8 @@ public class Stats : MonoBehaviour
         base_luck += mod_luck;
         base_speed += mod_speed;
         base_init += mod_init;
+
+        quirkStats();
 
         Debug.Log("Str: " + base_str);
         Debug.Log("dex: " + base_dex);
@@ -151,6 +155,48 @@ public class Stats : MonoBehaviour
             case "HP":
                 base_hp += modStat;
                 break;
+        }
+    }
+
+    private void quirkStats()
+    {
+        Quirks[] quirks = combatantQuirks.combatantQuirks;
+
+        
+        for(int i = 0; i < 3; i++)
+        {
+            if (quirks[i] != null)
+            {
+                switch (quirks[i].statBoost)
+                {
+                    case quirk_stat.Strength:
+                        base_str += quirks[i].quirkPower;
+                        break;
+                    case quirk_stat.Dexterity:
+                        base_dex += quirks[i].quirkPower;
+                        break;
+                    case quirk_stat.Magic:
+                        base_mag += quirks[i].quirkPower;
+                        break;
+                    case quirk_stat.Defence:
+                        base_def += quirks[i].quirkPower;
+                        break;
+                    case quirk_stat.Constitution:
+                        base_con += quirks[i].quirkPower;
+                        break;
+                    case quirk_stat.Luck:
+                        base_luck += quirks[i].quirkPower;
+                        break;
+                    case quirk_stat.Speed:
+                        base_speed += quirks[i].quirkPower;
+                        break;
+                    case quirk_stat.Initiative:
+                        base_init += quirks[i].quirkPower;
+                        break;
+                    case quirk_stat.None:
+                        break;
+                }
+            }
         }
     }
 }

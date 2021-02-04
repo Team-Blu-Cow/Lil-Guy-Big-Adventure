@@ -1255,6 +1255,7 @@ GameObject:
   - component: {fileID: 954173753}
   - component: {fileID: 954173755}
   - component: {fileID: 954173754}
+  - component: {fileID: 954173757}
   - component: {fileID: 954173756}
   m_Layer: 0
   m_Name: Combatant Player
@@ -1423,6 +1424,22 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   enemy: {fileID: 1651901341}
+--- !u!114 &954173757
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 954173749}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 048ca74560ea9b740acaf196a502e904, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  combatantQuirks:
+  - {fileID: 3746784182433375505, guid: 6d240da83c79d464aad2aa37514191f4, type: 3}
+  - {fileID: 7267804556780378025, guid: 4132e3a41e8d7e04a81abb33b1bf2dba, type: 3}
+  - {fileID: 6796871343876344585, guid: b789b38dab6ecd245bbb78916d7d4bca, type: 3}
 --- !u!1 &1026693619
 GameObject:
   m_ObjectHideFlags: 0
@@ -2317,6 +2334,7 @@ GameObject:
   - component: {fileID: 1651901343}
   - component: {fileID: 1651901342}
   - component: {fileID: 1651901345}
+  - component: {fileID: 1651901346}
   m_Layer: 0
   m_Name: CombatantEnemy
   m_TagString: Untagged
@@ -2425,6 +2443,22 @@ MonoBehaviour:
   resistances: 030000000000000000000000
   immunities: 010000000000000000000000
   vulnerabilities: 000000000000000000000000
+--- !u!114 &1651901346
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1651901341}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 048ca74560ea9b740acaf196a502e904, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  combatantQuirks:
+  - {fileID: 8029700042953720832, guid: 316b468971f6dbd4281020854c43211b, type: 3}
+  - {fileID: 0}
+  - {fileID: 0}
 --- !u!1 &1693737805
 GameObject:
   m_ObjectHideFlags: 0
