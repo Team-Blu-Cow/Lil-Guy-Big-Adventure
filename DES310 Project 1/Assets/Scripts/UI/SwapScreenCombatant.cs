@@ -46,7 +46,7 @@ public class SwapScreenCombatant : MonoBehaviour
         Image back = transform.parent.GetComponentInChildren<Image>();
         LeanTween.value(back.gameObject, a => back.color = a, new Color(0, 0, 0, 0), new Color(0, 0, 0, 0.6f), 0.5f);
         // enable all screens
-       
+
         // Set stats on text
         SetStats(combatant.GetStats());
         SetStatsModified(combatant.GetStats());
@@ -86,7 +86,7 @@ public class SwapScreenCombatant : MonoBehaviour
             "Speed: " + combatantStats.getStat("Speed") + "\n" +
             "Initit: " + combatantStats.getStat("Init") + "\n";
     }
-    
+
     void SetStats(Stats combatantStats)
     {
         GameObject.Find("Stats/BaseStats").transform.GetChild(0).GetComponentInChildren<TextMeshProUGUI>().text =
@@ -104,9 +104,9 @@ public class SwapScreenCombatant : MonoBehaviour
     {
         int count = 0;
         foreach (Ability ab in abilities.abilitiesUsing)
-        {            
+        {
             GameObject.Find("Base/Abilities").transform.GetChild(count).GetComponentInChildren<TextMeshProUGUI>().text = ab.abilityName;
-            GameObject.Find("Base/Abilities").transform.GetChild(count).GetChild(0).GetComponentInChildren<TextMeshProUGUI>().text = 
+            GameObject.Find("Base/Abilities").transform.GetChild(count).GetChild(0).GetComponentInChildren<TextMeshProUGUI>().text =
             "Type: " + ab.abilityType.ToString() + "\n" +
             "Main Stat: " + ab.statUsed.ToString() + "\n" +
             "Power: " + ab.abilityPower + "\n" +
@@ -114,12 +114,5 @@ public class SwapScreenCombatant : MonoBehaviour
             "Aspect: " + ab.abilityAspect;
             count++;
         }
-
-        ability_type abilityType;
-        stat_used statUsed;
-        int abilityPower;
-        int abilityRange;
-        int abilityArea;
-        Aspects.Aspect abilityAspect;
-}
+    }
 }

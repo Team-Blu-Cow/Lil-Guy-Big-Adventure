@@ -23,12 +23,13 @@ public class HoverStats : MonoBehaviour, IPointerEnterHandler, IPointerExitHandl
             }
         }
     }
+
     void IPointerClickHandler.OnPointerClick(PointerEventData eventData)
     {
         switch (eventData.clickCount)
         {
             case 1:
-                LeanTween.delayedCall(0.3f,OpenCombatant).setOnCompleteParam(eventData.pointerCurrentRaycast.gameObject);
+                LeanTween.delayedCall(0.3f, OpenCombatant).setOnCompleteParam(eventData.pointerCurrentRaycast.gameObject);
                 break;
             case 2:
                 LeanTween.cancelAll();
