@@ -43,9 +43,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2d2d9ad1ce01c3b41aedd5c1c2bbd77c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  abiliityName: Explosion
+  abilityName: 
   abilityType: 0
   statUsed: 1
   abilityPower: 10
   abilityRange: 4
   abilityArea: 2
+  abilityAspect: 0

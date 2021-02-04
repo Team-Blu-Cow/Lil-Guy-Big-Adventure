@@ -19,11 +19,12 @@ public class PartyCombatant : MonoBehaviour
             SetAbilities(abilitiea);
     }
 
-    public void SetAll(GameObject combatant, Stats stats, CombatantAbilities abilities)
+    public void SetAll(GameObject combatant, Stats stats, CombatantAbilities abilities, string names)
     {
         SetCombatant(combatant);
         SetStats(stats);
         SetAbilities(abilities);
+        named = names;
     }
 
     public Stats GetStats()

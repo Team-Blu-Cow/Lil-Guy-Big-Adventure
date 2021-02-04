@@ -50,6 +50,7 @@ public class SwapScreenCombatant : MonoBehaviour
         // Set stats on text
         SetStats(combatant.GetStats());
         SetStatsModified(combatant.GetStats());
+        SetAblities(combatant.GetAbilities());
 
         // Swap to main screen
         Swap(transform.GetChild(1).gameObject);
@@ -99,8 +100,26 @@ public class SwapScreenCombatant : MonoBehaviour
             "Initi: " + (combatantStats.getStat("Init") - combatantStats.mod_init) + "\n";
     }
 
-    void SetAblities()
+    void SetAblities(CombatantAbilities abilities)
     {
+        int count = 0;
+        foreach (Ability ab in abilities.abilitiesUsing)
+        {            
+            GameObject.Find("Base/Abilities").transform.GetChild(count).GetComponentInChildren<TextMeshProUGUI>().text = ab.abilityName;
+            GameObject.Find("Base/Abilities").transform.GetChild(count).GetChild(0).GetComponentInChildren<TextMeshProUGUI>().text = 
+            "Type: " + ab.abilityType.ToString() + "\n" +
+            "Main Stat: " + ab.statUsed.ToString() + "\n" +
+            "Power: " + ab.abilityPower + "\n" +
+            "Area: " + ab.abilityArea + "\n" +
+            "Aspect: " + ab.abilityAspect;
+            count++;
+        }
 
-    }
+        ability_type abilityType;
+        stat_used statUsed;
+        int abilityPower;
+        int abilityRange;
+        int abilityArea;
+        Aspects.Aspect abilityAspect;
+}
 }
