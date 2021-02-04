@@ -37,7 +37,7 @@ public class SwapScreenCombatant : MonoBehaviour
         LeanTween.scale(gameObject, new Vector3(1, 1, 1), 0.5f);
 
         // Set the resistances on ui
-        //FindObjectOfType<ShowResistanceUI>().SetRes(combatant);
+        FindObjectOfType<ShowResistanceUI>().SetRes(combatant);
 
         // Set the name and health on the ui
         GameObject.Find("CombatantName").GetComponent<TextMeshProUGUI>().text = combatant.named + "(" + combatant.GetStats().getStat("HP") + "/" + combatant.GetStats().getStat("Con") + ")";

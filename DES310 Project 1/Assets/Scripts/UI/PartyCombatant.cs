@@ -8,8 +8,6 @@ public class PartyCombatant : MonoBehaviour
     Stats combatantStats;
     CombatantAbilities combatantAbilities;
     public string named;
-    public int[] res;
-
     private void Start()
     {
         if (combatant.TryGetComponent<Stats>(out Stats stat))
