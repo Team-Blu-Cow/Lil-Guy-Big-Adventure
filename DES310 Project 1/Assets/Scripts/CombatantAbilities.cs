@@ -4,121 +4,43 @@ using UnityEngine;
 
 public class CombatantAbilities : MonoBehaviour
 {
+    public Ability[] abilitiesLearnt;
     public Ability[] abilitiesUsing;
     public GameObject enemy;
     public Stats combatantStats;
-    
 
-    public void CastAbility(int abilityNum)
+    public int abilitySelect = 0;
+
+    private void Start()
     {
-        Debug.Log("Casting Ability...");
-        if(abilitiesUsing[abilityNum].abilityType == ability_type.Damage)
-        {
-            DamageAbility(abilityNum);
-        }
-        else if (abilitiesUsing[abilityNum].abilityType == ability_type.Heal)
-        {
-            HealAbility(abilityNum);
-        }
-        else if (abilitiesUsing[abilityNum].abilityType == ability_type.Buff)
-        {
-            BuffAbility(abilityNum);
-        }
+        abilitiesUsing[0] = abilitiesLearnt[0];
+        abilitiesUsing[1] = abilitiesLearnt[1];
+        abilitiesUsing[2] = abilitiesLearnt[2];
+        abilitiesUsing[3] = abilitiesLearnt[3];
     }
 
-    public void DamageAbility(int abilityNum)
+    private void Update()
     {
-        int damage = 0;
-
-        if(abilitiesUsing[abilityNum].statUsed == stat_used.Strength)
+        if (Input.GetKeyDown(KeyCode.Alpha1))
         {
-            damage = abilitiesUsing[abilityNum].abilityPower + combatantStats.getStat("Str");
-
-            if(Random.Range(1,100) < combatantStats.getStat("Luck"))
-            {
-                damage *= 2;
-                enemy.GetComponent<Stats>().setStat("HP", -damage);
-            }
-            else
-            {
-                enemy.GetComponent<Stats>().setStat("HP", -damage);
-            }
-
+            abilitySelect = 0;
         }
-        else if(abilitiesUsing[abilityNum].statUsed == stat_used.Magic)
+        else if (Input.GetKeyDown(KeyCode.Alpha2))
         {
-            damage = abilitiesUsing[abilityNum].abilityPower + combatantStats.getStat("Mag");
-
-            if (Random.Range(1, 100) < combatantStats.getStat("Luck"))
-            {
-                enemy.GetComponent<Stats>().setStat("HP", -damage * 2);
-            }
-            else
-            {
-                enemy.GetComponent<Stats>().setStat("HP", -damage);
-            }
-
+            abilitySelect = 1;
         }
-        else if(abilitiesUsing[abilityNum].statUsed == stat_used.Dexterity)
+        else if (Input.GetKeyDown(KeyCode.Alpha3))
         {
-            damage = abilitiesUsing[abilityNum].abilityPower + combatantStats.getStat("Dex");
-
-            if (Random.Range(1, 100) < combatantStats.getStat("Luck"))
-            {
-                enemy.GetComponent<Stats>().setStat("HP", -damage * 2);
-            }
-            else
-            {
-                enemy.GetComponent<Stats>().setStat("HP", -damage);
-            }
-
+            abilitySelect = 2;
         }
-        Debug.Log("Dealt " + damage + " damage");
-    }
+        else if (Input.GetKeyDown(KeyCode.Alpha4))
+        {
+            abilitySelect = 3;
+        }
+    }    
 
-    public void HealAbility(int abilityNum)
+    public void SetAbilityUsed(int abilityNum)
     {
-
+        abilitiesUsing[abilitySelect] = abilitiesLearnt[abilityNum];
     }
-
-    public void BuffAbility(int abilityNum)
-    {
-        switch (abilitiesUsing[abilityNum].statUsed)
-        {
-            case stat_used.Strength:
-                combatantStats.setStat("Str", abilitiesUsing[abilityNum].abilityPower);
-                Debug.Log("Strength has been buffed to " + combatantStats.getStat("Str"));
-                break;
-            case stat_used.Dexterity:
-                combatantStats.setStat("Dex", abilitiesUsing[abilityNum].abilityPower);
-                Debug.Log("Dexterity has been buffed to " + combatantStats.getStat("Dex"));
-                break;
-            case stat_used.Magic:
-                combatantStats.setStat("Mag", abilitiesUsing[abilityNum].abilityPower);
-                Debug.Log("Magic has been buffed to " + combatantStats.getStat("Mag"));
-                break;
-            case stat_used.Defence:
-                combatantStats.setStat("Def", abilitiesUsing[abilityNum].abilityPower);
-                Debug.Log("Defence has been buffed to " + combatantStats.getStat("Def"));
-                break;
-            case stat_used.Constitution:
-                combatantStats.setStat("Con", abilitiesUsing[abilityNum].abilityPower);
-                Debug.Log("Constitution has been buffed to " + combatantStats.getStat("Con"));
-                break;
-            case stat_used.Luck:
-                combatantStats.setStat("Luck", abilitiesUsing[abilityNum].abilityPower);
-                Debug.Log("Luck has been buffed to " + combatantStats.getStat("Luck"));
-                break;
-            case stat_used.Speed:
-                combatantStats.setStat("Speed", abilitiesUsing[abilityNum].abilityPower);
-                Debug.Log("Speed has been buffed to " + combatantStats.getStat("Speed"));
-                break;
-            case stat_used.Initiative:
-                combatantStats.setStat("Init", abilitiesUsing[abilityNum].abilityPower);
-                Debug.Log("Initiative has been buffed to " + combatantStats.getStat("Init"));
-                break;
-
-        }
-    }
-
 }
