@@ -1,54 +1,60 @@
 using System.Collections;
 using System.Collections.Generic;
-using UnityEngine;
 using TMPro;
+using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.EventSystems;
 
-public class ToolTip : MonoBehaviour
+public class ToolTip : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
 {
-    public int characterWrapLimit;
+    InventorySlot slot;
+    public Canvas toolTip;
+
+    private void Awake()
+    {
+        slot = GetComponent<InventorySlot>();
+    }
 
     private void Start()
     {
-       
+        
     }
 
     private void Update()
     {
-        SetHeader();
-        SetText();
-        SetResistance();
-            
-        //int headerLength = GetComponentsInChildren<TextMeshProUGUI>()[0].text.Length ;
-        //int contentLength = GetComponentsInChildren<TextMeshProUGUI>()[1].text.Length/4 ;
+        toolTip.transform.position = Input.mousePosition;
+    }
 
-        //GetComponent<LayoutElement>().enabled = (headerLength > characterWrapLimit || contentLength > characterWrapLimit) ? true : false;
+    void IPointerEnterHandler.OnPointerEnter(PointerEventData eventData)
+    {
+        if (eventData.pointerCurrentRaycast.gameObject != null && eventData.pointerCurrentRaycast.gameObject.CompareTag("InventoryItem") && slot.GetItem())
+        {
+            toolTip.enabled = true;
+            SetHeader();
+            SetText();
+        }
+    }
+
+    void IPointerExitHandler.OnPointerExit(PointerEventData eventData)
+    {
+        toolTip.enabled = false;
     }
 
     public void SetHeader()
     {
-        GetComponentsInChildren<TextMeshProUGUI>()[0].text = transform.parent.GetComponentInParent<PartyCombatant>().named;
+        toolTip.GetComponentsInChildren<TextMeshProUGUI>()[0].text = slot.GetItem().name;
     }
 
     public void SetText()
     {
-        Stats stats = transform.parent.GetComponentInParent<PartyCombatant>().GetStats();
-
-        foreach (TextMeshProUGUI TMP in GetComponentsInChildren<TextMeshProUGUI>())
-        {
-            if (TMP.name == "Stats")
-            {
-                TMP.text= "Str: " + stats.getStat("Str") +   "   Dex: " + stats.getStat("Dex") + "\n" + 
-                "Mag: " + stats.getStat("Mag")  +  "    Def: " + stats.getStat("Def") + "\n" + 
-                "Con: " + stats.getStat("Con")  +  "     Lck: " + stats.getStat("Luck") + "\n" +
-                "Spd: " + stats.getStat("Speed")+  "   Init: " + stats.getStat("Init") + "\n" + 
-                "HP: " + stats.getStat("HP");
-            }
-        }
+        toolTip.GetComponentsInChildren<TextMeshProUGUI>()[1].text = "Str: " + slot.GetItem().itemType + "\n" +
+        "Str: " + slot.GetItem().itemDuration + "\n" +
+        "Str: " + slot.GetItem().itemPower + "\n" +
+        "Str: " + slot.GetItem().statBoost + "\n";
     }
 
-    public void SetResistance()
+    void FollowCursor()
     {
-        GetComponentInChildren<ShowResistanceUI>().SetRes(transform.parent.GetComponentInParent<PartyCombatant>());
+
     }
 }

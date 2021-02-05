@@ -78,4 +78,9 @@ public class InventorySlot : MonoBehaviour, IPointerDownHandler, IPointerUpHandl
     {
         Inventory.instance.items.Remove(item);
     }
+
+    public Item GetItem()
+    {
+        return item;
+    }
 }
