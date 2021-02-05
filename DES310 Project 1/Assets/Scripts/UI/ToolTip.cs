@@ -15,14 +15,9 @@ public class ToolTip : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
         slot = GetComponent<InventorySlot>();
     }
 
-    private void Start()
-    {
-        
-    }
-
     private void Update()
     {
-        toolTip.transform.position = Input.mousePosition;
+        FollowCursor();
     }
 
     void IPointerEnterHandler.OnPointerEnter(PointerEventData eventData)
@@ -55,6 +50,35 @@ public class ToolTip : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
 
     void FollowCursor()
     {
+        int padding = 15;
 
+        if (toolTip.enabled)
+        {
+            Vector3 newPos = Input.mousePosition + new Vector3(padding,padding,0);
+
+            if (newPos.x + toolTip.GetComponentInChildren<RectTransform>().rect.width > Screen.width - padding)
+            {
+                newPos.x = Screen.width - toolTip.GetComponentInChildren<RectTransform>().rect.width - padding;
+            }
+
+            if (newPos.y + toolTip.GetComponentInChildren<RectTransform>().rect.height > Screen.height - padding)
+            {
+                newPos.y = Screen.height - toolTip.GetComponentInChildren<RectTransform>().rect.height - padding;
+            }
+            
+            if (newPos.x < padding)
+            {
+                newPos.x = padding;
+            }
+            
+            if (newPos.y < padding)
+            {
+                newPos.y = padding;
+            }
+
+            toolTip.transform.position = newPos;
+        }
+
+        
     }
 }

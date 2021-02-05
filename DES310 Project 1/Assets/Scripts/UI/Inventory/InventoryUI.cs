@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class InventoryUI : MonoBehaviour
 {
-
+    public GameObject FullInv;
     Inventory inventory;
 
     InventorySlot[] slots;
@@ -16,13 +16,6 @@ public class InventoryUI : MonoBehaviour
 
         slots = GetComponentsInChildren<InventorySlot>();
     }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
-
     public void UpdateUI()
     {
         for (int i = 0; i < inventory.invSpace; i++)
@@ -36,5 +29,10 @@ public class InventoryUI : MonoBehaviour
                 slots[i].ClearItem();
             }
         }
+    }
+
+    public void ToggleInventory()
+    {
+        FullInv.SetActive(!FullInv.activeSelf);
     }
 }
