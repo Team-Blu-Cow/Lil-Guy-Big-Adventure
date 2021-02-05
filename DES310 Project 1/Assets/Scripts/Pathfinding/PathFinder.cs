@@ -92,10 +92,12 @@ public class PathFinder : MonoBehaviour
         int dstX = Mathf.Abs(nodeA.gridPosition.x - nodeB.gridPosition.x);
         int dstY = Mathf.Abs(nodeA.gridPosition.y - nodeB.gridPosition.y);
 
-        if (dstX > dstY)
+        return dstX + dstY;
+
+        /*if (dstX > dstY)
             return 14 * dstY + 10 * (dstX - dstY);
         else
-            return 14 * dstX + 10 * (dstY - dstX);
+            return 14 * dstX + 10 * (dstY - dstX);//*/
     }
 
 }

@@ -40,9 +40,7 @@ public class AStarGrid : MonoBehaviour
 
                 bool walkable = tileMap.HasTile(currentCell);
 
-                //decide whether point is walkable or not
                 grid[x, y] = new AStarNode(walkable, worldPoint, new Vector3Int(x,y,0));
-                grid[x, y].test = false;
             }
         }
     }
@@ -51,7 +49,45 @@ public class AStarGrid : MonoBehaviour
     {
         List<AStarNode> neighbors = new List<AStarNode>();
 
-        for (int x = -1; x <= 1; x ++)
+        int checkX, checkY;
+
+        // north neighbor
+        checkX = _node.gridPosition.x;
+        checkY = _node.gridPosition.y + 1;
+
+        if (checkX >= 0 && checkX < gridSizeX && checkY >= 0 && checkY < gridSizeY)
+        {
+            neighbors.Add(grid[checkX, checkY]);
+        }
+
+        // south neighbor
+        checkX = _node.gridPosition.x;
+        checkY = _node.gridPosition.y - 1;
+
+        if (checkX >= 0 && checkX < gridSizeX && checkY >= 0 && checkY < gridSizeY)
+        {
+            neighbors.Add(grid[checkX, checkY]);
+        }
+
+        // east neighbor
+        checkX = _node.gridPosition.x + 1;
+        checkY = _node.gridPosition.y;
+
+        if (checkX >= 0 && checkX < gridSizeX && checkY >= 0 && checkY < gridSizeY)
+        {
+            neighbors.Add(grid[checkX, checkY]);
+        }
+
+        // west neighbor
+        checkX = _node.gridPosition.x - 1;
+        checkY = _node.gridPosition.y;
+
+        if (checkX >= 0 && checkX < gridSizeX && checkY >= 0 && checkY < gridSizeY)
+        {
+            neighbors.Add(grid[checkX, checkY]);
+        }
+
+        /*for (int x = -1; x <= 1; x ++)
         {
             for (int y = -1; y <= 1; y ++)
             {
@@ -66,7 +102,7 @@ public class AStarGrid : MonoBehaviour
                     neighbors.Add(grid[checkX, checkY]);
                 }
             }
-        }
+        }//*/
 
         return neighbors;
     }
@@ -93,8 +129,7 @@ public class AStarGrid : MonoBehaviour
 
         return grid[int_x, int_y];
     }
-
-    [SerializeField]
+    
     public List<AStarNode> path;
     private void OnDrawGizmos()
     {
@@ -103,8 +138,7 @@ public class AStarGrid : MonoBehaviour
             Vector3 worldTopLeft = transform.position - Vector3.right * gridSize.x / 2 + Vector3.up * gridSize.y / 2;
             foreach (AStarNode node in grid)
             {
-                //Gizmos.color = (node.walkable) ? Color.white : Color.red;
-                Gizmos.color = (node.test) ? Color.blue : (node.walkable) ? Color.white : Color.red;
+                Gizmos.color = (node.walkable) ? Color.white : Color.red;
                 if (path != null)
                     if (path.Contains(node))
                         Gizmos.color = Color.black;

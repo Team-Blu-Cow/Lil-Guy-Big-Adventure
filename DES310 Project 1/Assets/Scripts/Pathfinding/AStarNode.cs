@@ -9,8 +9,6 @@ public class AStarNode
     public Vector3 worldPosition;
     public Vector3Int gridPosition;
 
-    public bool test;
-
     public int gCost;
     public int hCost;
 
