@@ -5,10 +5,14 @@ using UnityEngine.Tilemaps;
 
 public class AStarGrid : MonoBehaviour
 {
-    public Vector2Int gridSize;
+    [Header("Grid Settings")]
+    [SerializeField] public Vector2Int gridSize;
+
+    [Header("Node Settings")]
     public float nodeRadius;
     public LayerMask unwalkableMask;
 
+    [Header("References")]
     public Tilemap tileMap;
 
     AStarNode[,] grid;
@@ -18,17 +22,21 @@ public class AStarGrid : MonoBehaviour
 
     void Start()
     {
+        InitGrid();
+        CreateGrid();
+    }
+
+    public void InitGrid()
+    {
         transform.position = Vector3.zero;
         nodeDiameter = nodeRadius * 2;
         gridSizeX = Mathf.RoundToInt(gridSize.x);
         gridSizeY = Mathf.RoundToInt(gridSize.y);
-        CreateGrid();
     }
 
-    void CreateGrid()
+    public void CreateGrid()
     {
         grid = new AStarNode[gridSizeX, gridSizeY];
-        Vector3 worldTopLeft = transform.position - Vector3.right * gridSize.x / 2 + Vector3.up * gridSize.y / 2;
 
         for (int x = 0; x < gridSizeX; x++)
         {
@@ -130,9 +138,48 @@ public class AStarGrid : MonoBehaviour
         return grid[int_x, int_y];
     }
     
+    private void SnapToGrid()
+    {
+        Vector3 position = new Vector3(
+            Mathf.Round(this.transform.position.x / this.gridSize.x) * this.gridSize.x,
+            Mathf.Round(this.transform.position.y / this.gridSize.y) * this.gridSize.y,
+            this.transform.position.z
+            );
+
+        this.transform.position = position;
+    }
+
+    [HideInInspector]
     public List<AStarNode> path;
     private void OnDrawGizmos()
     {
+        Gizmos.color = Color.white;
+        Vector3 startPos = transform.position;
+        Vector3 targetPos = new Vector3(transform.position.x + (gridSize.x*nodeDiameter), transform.position.y - ((gridSize.x * nodeDiameter / 2f)), transform.position.z);
+        Gizmos.DrawLine(startPos, targetPos);
+
+        Gizmos.color = new Color(1, 1, 1, 0.25f);
+        for (int i = 1; i < gridSize.y; i++)
+        {
+            Gizmos.DrawLine(startPos + new Vector3(i*-nodeDiameter,i*(-nodeDiameter/2f),0), targetPos + new Vector3(i*-nodeDiameter, i * (-nodeDiameter / 2f), 0));
+        }
+
+        Gizmos.color = Color.white;
+        Gizmos.DrawLine(startPos + new Vector3(gridSize.y * -nodeDiameter, gridSize.y * (-nodeDiameter / 2f), 0), targetPos + new Vector3(gridSize.y * -nodeDiameter, gridSize.y * (-nodeDiameter / 2f), 0));
+        
+        startPos = transform.position;
+        targetPos = new Vector3(transform.position.x - (gridSize.y * nodeDiameter), transform.position.y - ((gridSize.y * nodeDiameter / 2f)), transform.position.z);
+        Gizmos.DrawLine(startPos, targetPos);
+
+        Gizmos.color = new Color(1, 1, 1, 0.25f);
+        for (int i = 1; i < gridSize.x; i++)
+        {
+            Gizmos.DrawLine(startPos + new Vector3(i * nodeDiameter, i * (-nodeDiameter / 2f), 0), targetPos + new Vector3(i * nodeDiameter, i * (-nodeDiameter / 2f), 0));
+        }
+
+        Gizmos.color = Color.white;
+        Gizmos.DrawLine(startPos + new Vector3(gridSize.x * nodeDiameter, gridSize.x * (-nodeDiameter / 2f), 0), targetPos + new Vector3(gridSize.x * nodeDiameter, gridSize.x * (-nodeDiameter / 2f), 0));
+
         if (grid != null)
         {
             Vector3 worldTopLeft = transform.position - Vector3.right * gridSize.x / 2 + Vector3.up * gridSize.y / 2;
