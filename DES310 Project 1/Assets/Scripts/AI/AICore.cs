@@ -4,7 +4,7 @@ using UnityEngine;
 namespace AI
 {
     // different ai can be run using different scripts, they should all inherit from this
-    internal abstract class AIBaseBehavior : MonoBehaviour
+    public abstract class AIBaseBehavior : MonoBehaviour
     {
         public abstract void run(AICore aiCore);
     }
