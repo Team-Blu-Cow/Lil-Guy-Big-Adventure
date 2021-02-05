@@ -15,19 +15,12 @@ public enum quirk_stat
     Initiative = 8
 }
 
-public enum quirk_resistant
-{
-    Resistance = 0,
-    Immmunity = 1,
-    Vulnerability = 2
-}
-
 public class Quirks : MonoBehaviour
 {
     public string quirkName;
     public int quirkPower;
     public Aspects.Aspect quirkAspect;
     public quirk_stat statBoost;
-    public quirk_resistant quirkResistance;
+    public float quirkResistance;
 
 }

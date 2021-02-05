@@ -45,6 +45,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   quirkName: Extra Thick Skin
   quirkPower: 0
-  quirkAspect: 5
+  quirkAspect: 3
   statBoost: 0
-  quirkResistance: 1
+  quirkResistance: 0

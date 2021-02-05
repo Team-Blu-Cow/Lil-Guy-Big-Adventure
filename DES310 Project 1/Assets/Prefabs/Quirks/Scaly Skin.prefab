@@ -47,4 +47,4 @@ MonoBehaviour:
   quirkPower: 0
   quirkAspect: 1
   statBoost: 0
-  quirkResistance: 0
+  quirkResistance: 0.5

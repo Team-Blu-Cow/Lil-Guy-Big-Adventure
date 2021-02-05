@@ -1,105 +1,116 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.EventSystems;
 
 public class TestCombatSystem : MonoBehaviour
 {
 
     public GameObject enemy;
 
-    private CombatantAbilities combatantAbilities;
-    private CombatantItems combatantItems;
+    private Combatant combatant;
     private Stats combatantStats;
 
     private Ability[] abilitiesUsing;
     private Ability[] abilitiesLearnt;
     private Item[] items;
+    private Quirks[] quirks;
 
     int damage = 0;
     int poisonDamage = 0;
 
+
     private void Start()
     {
-        combatantAbilities = GetComponent<CombatantAbilities>();
-        combatantItems = GetComponent<CombatantItems>();
         combatantStats = GetComponent<Stats>();
+        combatant = GetComponent<Combatant>();
 
-        abilitiesUsing = combatantAbilities.abilitiesUsing;
-        abilitiesLearnt = combatantAbilities.abilitiesLearnt;
-        items = combatantItems.combatantItems;
+        abilitiesUsing = combatant.abilitiesUsing;
+        abilitiesLearnt = combatant.abilitiesLearnt;
+        quirks = combatant.combatantQuirks;
+        items = combatant.combatantItems;
     }
 
     public void CastAbility(int abilityNum)
     {
         Debug.Log("Casting Ability...");
-        if (abilitiesUsing[abilityNum].abilityType == ability_type.Damage)
+        switch (abilitiesUsing[abilityNum].abilityType)
         {
-            DamageAbility(abilityNum);
+            case ability_type.Damage:
+                DamageAbility(abilityNum);
+                break;
+            case ability_type.Heal:
+                HealAbility(abilityNum);
+                break;
+            case ability_type.Buff:
+                BuffAbility(abilityNum);
+                break;
+            default:
+                break;
         }
-        else if (abilitiesUsing[abilityNum].abilityType == ability_type.Heal)
-        {
-            HealAbility(abilityNum);
-        }
-        else if (abilitiesUsing[abilityNum].abilityType == ability_type.Buff)
-        {
-            BuffAbility(abilityNum);
-        }
+
     }
 
     private void DamageAbility(int abilityNum)
     {
+        Quirks[] enemyQuirks = enemy.GetComponent<Combatant>().combatantQuirks;
+        float[] enemyResistances = enemy.GetComponent<Combatant>().resistances;
 
-        if (abilitiesUsing[abilityNum].statUsed == stat_used.Strength)
+        int aspectType = (int)abilitiesUsing[abilityNum].abilityAspect;
+
+        float tempDamage = 0;
+
+        switch (abilitiesUsing[abilityNum].statUsed)
         {
-            damage = abilitiesUsing[abilityNum].abilityPower + combatantStats.getStat("Str");
+            case stat_used.Strength:
+                damage = abilitiesUsing[abilityNum].abilityPower + combatantStats.getStat("Str");
 
-            if (Random.Range(1, 100) < combatantStats.getStat("Luck"))
-            {
-                damage *= 2;
-                damage += poisonDamage;
-                enemy.GetComponent<Stats>().setStat("HP", -damage);
-            }
-            else
-            {
-                damage += poisonDamage;
-                enemy.GetComponent<Stats>().setStat("HP", -damage);
-            }
+                tempDamage = damage * enemyResistances[aspectType];
+
+                for (int i = 0; i < 3; i++)
+                {
+                    tempDamage *= CheckQuirkTypeResistances(enemyQuirks[i], aspectType);
+                }
+                break;
+
+            case stat_used.Magic:
+                damage = abilitiesUsing[abilityNum].abilityPower + combatantStats.getStat("Mag");
+
+                tempDamage = damage * enemyResistances[aspectType];
+
+                for (int i = 0; i < 3; i++)
+                {
+                    tempDamage *= CheckQuirkTypeResistances(enemyQuirks[i], aspectType);
+                }
+                break;
+
+            case stat_used.Dexterity:
+                damage = abilitiesUsing[abilityNum].abilityPower + combatantStats.getStat("Dex");
+
+                tempDamage = damage * enemyResistances[aspectType];
+
+                for (int i = 0; i < 3; i++)
+                {
+                    tempDamage *= CheckQuirkTypeResistances(enemyQuirks[i], aspectType);
+                }
+                break;
+
+            default:
+                break;
+        }
+
+        damage = (int)tempDamage;
+
+        if (Random.Range(1, 100) < combatantStats.getStat("Luck"))
+        {
+            damage *= 2;
 
         }
-        else if (abilitiesUsing[abilityNum].statUsed == stat_used.Magic)
-        {
-            damage = abilitiesUsing[abilityNum].abilityPower + combatantStats.getStat("Mag");
 
-            if (Random.Range(1, 100) < combatantStats.getStat("Luck"))
-            {
-                damage *= 2;
-                damage += poisonDamage;
-                enemy.GetComponent<Stats>().setStat("HP", -damage);
-            }
-            else
-            {
-                damage += poisonDamage;
-                enemy.GetComponent<Stats>().setStat("HP", -damage);
-            }
+        damage += poisonDamage;
+        enemy.GetComponent<Stats>().setStat("HP", -damage);
+        Debug.Log("Enemy HP: " + enemy.GetComponent<Stats>().getStat("HP"));
 
-        }
-        else if (abilitiesUsing[abilityNum].statUsed == stat_used.Dexterity)
-        {
-            damage = abilitiesUsing[abilityNum].abilityPower + combatantStats.getStat("Dex");
-
-            if (Random.Range(1, 100) < combatantStats.getStat("Luck"))
-            {
-                damage *= 2;
-                damage += poisonDamage;
-                enemy.GetComponent<Stats>().setStat("HP", -damage);
-            }
-            else
-            {
-                damage += poisonDamage;
-                enemy.GetComponent<Stats>().setStat("HP", -damage);
-            }
-
-        }
         Debug.Log("Dealt " + damage + " damage");
         poisonDamage = 0;
         damage = 0;
@@ -161,21 +172,21 @@ public class TestCombatSystem : MonoBehaviour
 
     public void UseItem()
     {
-        int currentItem = combatantItems.currentItem;
-        Debug.Log("Using Item...");
-        
-        if(items[currentItem].itemType == item_type.Poison)
+        int currentItem = combatant.currentItem;
+        Debug.Log("Using Item...");        
+        switch (items[currentItem].itemType)
         {
-            PoisonItem(currentItem);
+            case item_type.Poison:
+                PoisonItem(currentItem);
+                break;
+            case item_type.Heal:
+                HealItem(currentItem);
+                break;
+            case item_type.Buff:
+                BuffItem(currentItem);
+                break;
         }
-        else if (items[currentItem].itemType == item_type.Heal)
-        {
-            HealItem(currentItem);
-        }
-        else if (items[currentItem].itemType == item_type.Buff)
-        {
-            BuffItem(currentItem);
-        }
+
     }
 
     private void PoisonItem(int currentItem)
@@ -236,5 +247,30 @@ public class TestCombatSystem : MonoBehaviour
                 break;
         }
 
+    }
+
+    private float CheckQuirkTypeResistances( Quirks enemyQuirk, int abilityType)
+    {
+        if (enemyQuirk != null)
+        {
+            if((int)enemyQuirk.quirkAspect == abilityType)
+            {
+                return enemyQuirk.quirkResistance;
+            }            
+        }
+
+        return 1;        
+    }
+
+    private bool CheckResistancesMatch(Aspects.Aspect enemyResAspect, int abilityNum)
+    {
+        if (enemyResAspect == abilitiesUsing[abilityNum].abilityAspect)
+        {
+            return true;
+        }
+        else
+        {
+            return false;
+        }
     }
 }

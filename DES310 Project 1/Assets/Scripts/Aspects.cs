@@ -10,9 +10,11 @@ public class Aspects : MonoBehaviour
         None = 0,
         Fire = 1,
         Electric = 2,
-        Piercing = 3,
-        Bludgeoning = 4,
-        Slashing = 5
+        Physical = 3,
+        Nature = 4,
+        Water = 5,
+        Holy = 6,
+        Cursed = 7,
     }
 
 
