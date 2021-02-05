@@ -54,87 +54,63 @@ public class TestCombatSystem : MonoBehaviour
     private void DamageAbility(int abilityNum)
     {
         Quirks[] enemyQuirks = enemy.GetComponent<Combatant>().combatantQuirks;
-        Aspects.Aspect[] enemyResistances = enemy.GetComponent<Combatant>().resistances;
-        Aspects.Aspect[] enemyImmunities = enemy.GetComponent<Combatant>().immunities;
-        Aspects.Aspect[] enemyVulnerabilities = enemy.GetComponent<Combatant>().immunities;
+        float[] enemyResistances = enemy.GetComponent<Combatant>().resistances;
 
-        if (abilitiesUsing[abilityNum].statUsed == stat_used.Strength)
+        int aspectType = (int)abilitiesUsing[abilityNum].abilityAspect;
+
+        float tempDamage = 0;
+
+        switch (abilitiesUsing[abilityNum].statUsed)
         {
-            damage = abilitiesUsing[abilityNum].abilityPower + combatantStats.getStat("Str");
+            case stat_used.Strength:
+                damage = abilitiesUsing[abilityNum].abilityPower + combatantStats.getStat("Str");
 
-            for (int i = 0; i < 3; i++)
-            {
-                damage = CheckQuirkTypeResistances(damage, enemyQuirks[i], abilityNum);
-                damage = CheckTypeResistance(damage, enemyResistances[i], enemyImmunities[i], enemyVulnerabilities[i], abilityNum, i);
-            }
+                tempDamage = damage * enemyResistances[aspectType];
 
+                for (int i = 0; i < 3; i++)
+                {
+                    tempDamage *= CheckQuirkTypeResistances(enemyQuirks[i], aspectType);
+                }
+                break;
 
+            case stat_used.Magic:
+                damage = abilitiesUsing[abilityNum].abilityPower + combatantStats.getStat("Mag");
 
-            if (Random.Range(1, 100) < combatantStats.getStat("Luck"))
-            {
-                damage *= 2;
-                damage += poisonDamage;
-                enemy.GetComponent<Stats>().setStat("HP", -damage);
-                Debug.Log("Enemy HP: " + enemy.GetComponent<Stats>().getStat("HP"));
-            }
-            else
-            {
-                damage += poisonDamage;
-                enemy.GetComponent<Stats>().setStat("HP", -damage);
-                Debug.Log("Enemy HP: " + enemy.GetComponent<Stats>().getStat("HP"));
-            }
+                tempDamage = damage * enemyResistances[aspectType];
+
+                for (int i = 0; i < 3; i++)
+                {
+                    tempDamage *= CheckQuirkTypeResistances(enemyQuirks[i], aspectType);
+                }
+                break;
+
+            case stat_used.Dexterity:
+                damage = abilitiesUsing[abilityNum].abilityPower + combatantStats.getStat("Dex");
+
+                tempDamage = damage * enemyResistances[aspectType];
+
+                for (int i = 0; i < 3; i++)
+                {
+                    tempDamage *= CheckQuirkTypeResistances(enemyQuirks[i], aspectType);
+                }
+                break;
+
+            default:
+                break;
+        }
+
+        damage = (int)tempDamage;
+
+        if (Random.Range(1, 100) < combatantStats.getStat("Luck"))
+        {
+            damage *= 2;
 
         }
-        else if (abilitiesUsing[abilityNum].statUsed == stat_used.Magic)
-        {
-            damage = abilitiesUsing[abilityNum].abilityPower + combatantStats.getStat("Mag");
 
-            for (int i = 0; i < 3; i++)
-            {
-                damage = CheckQuirkTypeResistances(damage, enemyQuirks[i], abilityNum);
-                damage = CheckTypeResistance(damage, enemyResistances[i], enemyImmunities[i], enemyVulnerabilities[i], abilityNum, i);
-            }
+        damage += poisonDamage;
+        enemy.GetComponent<Stats>().setStat("HP", -damage);
+        Debug.Log("Enemy HP: " + enemy.GetComponent<Stats>().getStat("HP"));
 
-            if (Random.Range(1, 100) < combatantStats.getStat("Luck"))
-            {
-                damage *= 2;
-                damage += poisonDamage;
-                enemy.GetComponent<Stats>().setStat("HP", -damage);
-                Debug.Log("Enemy HP: " + enemy.GetComponent<Stats>().getStat("HP"));
-            }
-            else
-            {
-                damage += poisonDamage;
-                enemy.GetComponent<Stats>().setStat("HP", -damage);
-                Debug.Log("Enemy HP: " + enemy.GetComponent<Stats>().getStat("HP"));
-            }
-
-        }
-        else if (abilitiesUsing[abilityNum].statUsed == stat_used.Dexterity)
-        {
-            damage = abilitiesUsing[abilityNum].abilityPower + combatantStats.getStat("Dex");
-
-            for (int i = 0; i < 3; i++)
-            {
-                damage = CheckQuirkTypeResistances(damage, enemyQuirks[i], abilityNum);
-                damage = CheckTypeResistance(damage, enemyResistances[i], enemyImmunities[i], enemyVulnerabilities[i], abilityNum, i);
-            }
-
-            if (Random.Range(1, 100) < combatantStats.getStat("Luck"))
-            {
-                damage *= 2;
-                damage += poisonDamage;
-                enemy.GetComponent<Stats>().setStat("HP", -damage);
-                Debug.Log("Enemy HP: " + enemy.GetComponent<Stats>().getStat("HP"));
-            }
-            else
-            {
-                damage += poisonDamage;
-                enemy.GetComponent<Stats>().setStat("HP", -damage);
-                Debug.Log("Enemy HP: " + enemy.GetComponent<Stats>().getStat("HP"));
-            }
-
-        }
         Debug.Log("Dealt " + damage + " damage");
         poisonDamage = 0;
         damage = 0;
@@ -273,53 +249,17 @@ public class TestCombatSystem : MonoBehaviour
 
     }
 
-    private int CheckQuirkTypeResistances(int damage, Quirks enemyQuirk, int abilityNum)
+    private float CheckQuirkTypeResistances( Quirks enemyQuirk, int abilityType)
     {
         if (enemyQuirk != null)
         {
-            if (enemyQuirk.quirkResistance == quirk_resistant.Immunity)
+            if((int)enemyQuirk.quirkAspect == abilityType)
             {
-                if (CheckResistancesMatch(enemyQuirk.quirkAspect, abilityNum))
-                {
-                    return damage *= 0;
-                }
-            }
-            else if (enemyQuirk.quirkResistance == quirk_resistant.Resistance)
-            {
-                if (CheckResistancesMatch(enemyQuirk.quirkAspect, abilityNum))
-                {
-                    return damage /= 2;
-                }
-            }
-            else if (enemyQuirk.quirkResistance == quirk_resistant.Vulnerability)
-            {
-                if (CheckResistancesMatch(enemyQuirk.quirkAspect, abilityNum))
-                {
-                    return damage *= 2;
-                }
-            }
+                return enemyQuirk.quirkResistance;
+            }            
         }
 
-        return damage;        
-    }
-
-    private int CheckTypeResistance(int damage, Aspects.Aspect enemyResistances, Aspects.Aspect enemyImmunities, Aspects.Aspect enemyVulnerabilities, int abilityNum, int i)
-    {
-
-        if(enemyResistances == abilitiesUsing[abilityNum].abilityAspect)
-        {
-            return damage /= 2;
-        }
-        else if (enemyImmunities == abilitiesUsing[abilityNum].abilityAspect)
-        {
-            return damage *= 0;
-        }
-        else if (enemyVulnerabilities == abilitiesUsing[abilityNum].abilityAspect)
-        {
-            return damage *= 2;
-        }
-
-        return damage;
+        return 1;        
     }
 
     private bool CheckResistancesMatch(Aspects.Aspect enemyResAspect, int abilityNum)

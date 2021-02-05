@@ -14,9 +14,7 @@ public class Combatant : MonoBehaviour
     public Item[] combatantItems;
     public int currentItem = 0;
 
-    public Aspects.Aspect[] resistances;
-    public Aspects.Aspect[] immunities;
-    public Aspects.Aspect[] vulnerabilities;
+    public float[] resistances;
 
     public Quirks[] combatantQuirks;
 

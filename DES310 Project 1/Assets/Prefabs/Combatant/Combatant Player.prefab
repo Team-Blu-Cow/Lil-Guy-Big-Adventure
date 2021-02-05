@@ -131,6 +131,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cf65118ca2564484991111fe932c906f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  combatantNum: 0
+  fighting: 0
   abilitiesLearnt:
   - {fileID: 5698106485274030700, guid: f7ff168d4c5c0d743a6cdc484b19a655, type: 3}
   - {fileID: 941154833757141219, guid: c797b658771dd884b98def0b00d2c381, type: 3}
@@ -151,9 +153,15 @@ MonoBehaviour:
   - {fileID: 7376404541262646643, guid: 2273297ae3488c440ba095fc3a38b05a, type: 3}
   - {fileID: 2868705229470346965, guid: e48764a0a77346a44a493f1a6241d1f2, type: 3}
   currentItem: 0
-  resistances: 040000000000000000000000
-  immunities: 020000000000000000000000
-  vulnerabilities: 000000000000000000000000
+  resistances:
+  - 1
+  - 1
+  - 1
+  - 1
+  - 1
+  - 1
+  - 1
+  - 1
   combatantQuirks:
   - {fileID: 3746784182433375505, guid: 6d240da83c79d464aad2aa37514191f4, type: 3}
   - {fileID: 7267804556780378025, guid: 4132e3a41e8d7e04a81abb33b1bf2dba, type: 3}
