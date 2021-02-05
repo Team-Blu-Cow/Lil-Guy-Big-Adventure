@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class InventoryUI : MonoBehaviour
 {
-    public Canvas FullInv;
+    public GameObject fullInventory;
     Inventory inventory;
 
     InventorySlot[] slots;
@@ -18,21 +18,28 @@ public class InventoryUI : MonoBehaviour
     }
     public void UpdateUI()
     {
-        for (int i = 0; i < inventory.invSpace; i++)
+        if (fullInventory.activeSelf)
         {
-            if (i < inventory.items.Count)
+            for (int i = 0; i < inventory.invSpace; i++)
             {
-                slots[i].AddItem(inventory.items[i]);
-            }
-            else
-            {
-                slots[i].ClearItem();
+                if (i < inventory.items.Count)
+                {
+                    slots[i].AddItem(inventory.items[i]);
+                }
+                else
+                {
+                    slots[i].ClearItem();
+                }
             }
         }
     }
 
     public void ToggleInventory()
     {
-        FullInv.enabled = !FullInv.enabled;
+        fullInventory.SetActive(!fullInventory.activeSelf);
+        if (fullInventory.activeSelf)
+        {
+            UpdateUI();
+        }            
     }
 }
