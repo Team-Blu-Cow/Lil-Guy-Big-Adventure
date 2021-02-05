@@ -2264,7 +2264,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 34cbe36d080121944bafc5de98bea0d0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  combatantItems: []
+  combatantItems:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
   currentItem: 0
 --- !u!114 &491874600
 MonoBehaviour:
@@ -11181,7 +11185,7 @@ GameObject:
   - component: {fileID: 175011838920121283}
   m_Layer: 5
   m_Name: InventorySlot (1)
-  m_TagString: InventoryEquipt
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -11315,7 +11319,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_RaycastTarget: 1
+  m_RaycastTarget: 0
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
   m_OnCullStateChanged:

@@ -32,6 +32,7 @@ public class SwapScreenCombatant : MonoBehaviour
     {
         // Enable canvas
         transform.GetComponentInParent<Canvas>().enabled = true;
+        GetComponent<PartyCombatant>().SetItems(combatant.GetItems());
 
         // Fade in background
         LeanTween.scale(gameObject, new Vector3(1, 1, 1), 0.5f);

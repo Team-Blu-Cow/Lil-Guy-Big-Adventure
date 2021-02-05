@@ -25,7 +25,6 @@ public class InventorySlot : MonoBehaviour, IPointerDownHandler, IPointerUpHandl
     {
         if (eventData.pointerCurrentRaycast.gameObject.CompareTag("InventoryItem") && item)
         {
-            Debug.Log("Down Item");
             dragging = true;
         }
     }
@@ -47,15 +46,12 @@ public class InventorySlot : MonoBehaviour, IPointerDownHandler, IPointerUpHandl
             }
             else if (eventGO.CompareTag("InventoryEquipt"))
             {
-                Debug.Log("Up Equipt");
                 // Equipt item
-                eventGO.transform.parent.GetComponentInParent<PartyCombatant>().GetItems().combatantItems[eventGO.transform.parent.GetComponentInParent<PartyCombatant>().GetItems().combatantItems.Length] = item;
+                eventGO.transform.parent.parent.GetComponentInParent<PartyCombatant>().GetItems().combatantItems[0] = item;
+
+                // Removes from inventory
                 Inventory.instance.items.Remove(item);
-                transform.parent.GetComponentInParent<InventoryUI>().UpdateUI();
-            }
-            else
-            {
-                Debug.Log("Nothing happened");
+                transform.parent.parent.GetComponentInParent<InventoryUI>().UpdateUI();
             }
         }
     }
