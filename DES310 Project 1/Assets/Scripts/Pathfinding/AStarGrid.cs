@@ -34,7 +34,7 @@ public class AStarGrid : MonoBehaviour
         {
             for (int y = 0; y < gridSizeY; y++)
             {
-                Vector3 worldPoint = ToWorld(x, y, 0);
+                Vector3 worldPoint = NodeToWorld(x, y, 0);
 
                 Vector3Int currentCell = tileMap.WorldToCell(worldPoint);
 
@@ -47,7 +47,31 @@ public class AStarGrid : MonoBehaviour
         }
     }
 
-    private Vector3 ToWorld(float x, float y, float z)
+    public List<AStarNode> GetNeighbors(AStarNode _node)
+    {
+        List<AStarNode> neighbors = new List<AStarNode>();
+
+        for (int x = -1; x <= 1; x ++)
+        {
+            for (int y = -1; y <= 1; y ++)
+            {
+                if (x == 0 && y == 0)
+                    continue;
+
+                int checkX = _node.gridPosition.x + x;
+                int checkY = _node.gridPosition.y + y;
+
+                if (checkX >= 0 && checkX < gridSizeX && checkY >= 0 && checkY < gridSizeY)
+                {
+                    neighbors.Add(grid[checkX, checkY]);
+                }
+            }
+        }
+
+        return neighbors;
+    }
+
+    private Vector3 NodeToWorld(float x, float y, float z)
     {
         return new Vector3(
             (transform.position.x) + (x-y) * (nodeDiameter),
@@ -56,7 +80,7 @@ public class AStarGrid : MonoBehaviour
             );
     }
 
-    public AStarNode ToNode(Vector3 _worldPos)
+    public AStarNode WorldToNode(Vector3 _worldPos)
     {
         float node_x, node_y;
         int int_x, int_y;
@@ -70,6 +94,8 @@ public class AStarGrid : MonoBehaviour
         return grid[int_x, int_y];
     }
 
+    [SerializeField]
+    public List<AStarNode> path;
     private void OnDrawGizmos()
     {
         if (grid != null)
@@ -79,14 +105,12 @@ public class AStarGrid : MonoBehaviour
             {
                 //Gizmos.color = (node.walkable) ? Color.white : Color.red;
                 Gizmos.color = (node.test) ? Color.blue : (node.walkable) ? Color.white : Color.red;
+                if (path != null)
+                    if (path.Contains(node))
+                        Gizmos.color = Color.black;
                 Gizmos.DrawCube(node.worldPosition, Vector3.one * (nodeRadius/2));
             }
         }
-    }
-
-    private float NormalizeInRange(float p, float p_min, float p_max)
-    {
-        return (p - p_min) / (p_max - p_min);
     }
 }
 
