@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine.UI;
+using TMPro;
 using UnityEngine;
 
 public class SwapScreenParty : MonoBehaviour
@@ -30,7 +31,9 @@ public class SwapScreenParty : MonoBehaviour
         for(int i = 0; i <  GameObject.Find("InGameCanvas/Party").transform.childCount; i++)
         {
             SetPartyMember(i);
+            transform.GetChild(0).GetChild(i).GetComponentInChildren<TextMeshProUGUI>().text = transform.GetChild(0).GetComponentsInChildren<PartyCombatant>()[i].named;
         }
+
     }
 
     // Close the whole screen
@@ -48,6 +51,6 @@ public class SwapScreenParty : MonoBehaviour
     {
         // get the child in he party section in the "InGameCanvas"
         PartyCombatant combatant = GameObject.Find("InGameCanvas/Party").GetComponentsInChildren<PartyCombatant>()[i];
-        GameObject.Find("PartyMenu/Base/Party").GetComponentsInChildren<PartyCombatant>()[i].SetAll(combatant.GetCombatant(),combatant.GetStats(),combatant.GetAbilities(), combatant.named);
+        transform.GetChild(0).GetComponentsInChildren<PartyCombatant>()[i].SetAll(combatant.GetCombatant(),combatant.GetStats(),combatant.GetAbilities(), combatant.named);
     }
 }
