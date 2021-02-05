@@ -6,6 +6,7 @@ TagManager:
   tags:
   - UIPartyMember
   - InventoryItem
+  - InventoryEquipt
   layers:
   - Default
   - TransparentFX

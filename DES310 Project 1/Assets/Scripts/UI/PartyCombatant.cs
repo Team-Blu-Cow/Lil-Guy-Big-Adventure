@@ -7,7 +7,15 @@ public class PartyCombatant : MonoBehaviour
     public GameObject combatant;
     Stats combatantStats;
     CombatantAbilities combatantAbilities;
+    CombatantItems combatantItems;
     public string named;
+
+    private void Awake()
+    {
+        if (combatant == null)
+            combatant = transform.gameObject;        
+    }
+
     private void Start()
     {
         if (combatant.TryGetComponent<Stats>(out Stats stat))
@@ -15,6 +23,9 @@ public class PartyCombatant : MonoBehaviour
         
         if (combatant.TryGetComponent<CombatantAbilities>(out CombatantAbilities abilitiea))
             SetAbilities(abilitiea);
+        
+        if (combatant.TryGetComponent<CombatantItems>(out CombatantItems items))
+            SetItems(items);
     }
 
     public void SetAll(GameObject combatant, Stats stats, CombatantAbilities abilities, string names)
@@ -42,6 +53,16 @@ public class PartyCombatant : MonoBehaviour
     public void SetAbilities(CombatantAbilities abilities)
     {
         combatantAbilities = abilities;
+    }
+    
+    public void SetItems(CombatantItems items)
+    {
+        combatantItems = items;
+    }
+    
+    public CombatantItems GetItems()
+    {
+       return combatantItems;
     }
     
     public GameObject GetCombatant()
