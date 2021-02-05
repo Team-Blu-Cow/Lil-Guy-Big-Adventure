@@ -16,8 +16,8 @@ public class TestCombatSystem : MonoBehaviour
     private Item[] items;
     private Quirks[] quirks;
 
-    int damage = 0;
-    int poisonDamage = 0;
+    float damage = 0;
+    float poisonDamage = 0;
 
 
     private void Start()
@@ -65,7 +65,7 @@ public class TestCombatSystem : MonoBehaviour
             case stat_used.Strength:
                 damage = abilitiesUsing[abilityNum].abilityPower + combatantStats.getStat("Str");
 
-                tempDamage = damage * enemyResistances[aspectType];
+                tempDamage = (float)damage * enemyResistances[aspectType];
 
                 for (int i = 0; i < 3; i++)
                 {
@@ -76,7 +76,7 @@ public class TestCombatSystem : MonoBehaviour
             case stat_used.Magic:
                 damage = abilitiesUsing[abilityNum].abilityPower + combatantStats.getStat("Mag");
 
-                tempDamage = damage * enemyResistances[aspectType];
+                tempDamage = (float)damage * enemyResistances[aspectType];
 
                 for (int i = 0; i < 3; i++)
                 {
@@ -87,7 +87,7 @@ public class TestCombatSystem : MonoBehaviour
             case stat_used.Dexterity:
                 damage = abilitiesUsing[abilityNum].abilityPower + combatantStats.getStat("Dex");
 
-                tempDamage = damage * enemyResistances[aspectType];
+                tempDamage = (float)damage * enemyResistances[aspectType];
 
                 for (int i = 0; i < 3; i++)
                 {
@@ -108,7 +108,7 @@ public class TestCombatSystem : MonoBehaviour
         }
 
         damage += poisonDamage;
-        enemy.GetComponent<Stats>().setStat("HP", -damage);
+        enemy.GetComponent<Stats>().setStat("HP", (int)-damage);
         Debug.Log("Enemy HP: " + enemy.GetComponent<Stats>().getStat("HP"));
 
         Debug.Log("Dealt " + damage + " damage");

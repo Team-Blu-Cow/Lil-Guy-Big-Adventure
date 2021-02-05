@@ -5,8 +5,8 @@ using UnityEngine;
 public enum Combatant_Type
 {
     Human = 0, // average weights
-    Mushroom = 1, // Strong:(str, def) Weak:(Speed, init)
-    StoneBug = 2, // Strong: (Dex, Mag) Weak:(str, def)
+    Mushroom = 1, //
+    StoneBug = 2, //
     Phoenix = 3,
     Hedgehog = 4
 }
@@ -171,31 +171,29 @@ public class Stats : MonoBehaviour
             {
                 switch (quirks[i].statBoost)
                 {
-                    case quirk_stat.Strength:
+                    case stat_used.Strength:
                         base_str += quirks[i].quirkPower;
                         break;
-                    case quirk_stat.Dexterity:
+                    case stat_used.Dexterity:
                         base_dex += quirks[i].quirkPower;
                         break;
-                    case quirk_stat.Magic:
+                    case stat_used.Magic:
                         base_mag += quirks[i].quirkPower;
                         break;
-                    case quirk_stat.Defence:
+                    case stat_used.Defence:
                         base_def += quirks[i].quirkPower;
                         break;
-                    case quirk_stat.Constitution:
+                    case stat_used.Constitution:
                         base_con += quirks[i].quirkPower;
                         break;
-                    case quirk_stat.Luck:
+                    case stat_used.Luck:
                         base_luck += quirks[i].quirkPower;
                         break;
-                    case quirk_stat.Speed:
+                    case stat_used.Speed:
                         base_speed += quirks[i].quirkPower;
                         break;
-                    case quirk_stat.Initiative:
+                    case stat_used.Initiative:
                         base_init += quirks[i].quirkPower;
-                        break;
-                    case quirk_stat.None:
                         break;
                 }
             }
