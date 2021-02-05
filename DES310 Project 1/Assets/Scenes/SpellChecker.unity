@@ -713,8 +713,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 954173755}
-        m_TargetAssemblyTypeName: CombatantAbilities, Assembly-CSharp
+      - m_Target: {fileID: 954173753}
+        m_TargetAssemblyTypeName: Combatant, Assembly-CSharp
         m_MethodName: SetAbilityUsed
         m_Mode: 3
         m_Arguments:
@@ -846,8 +846,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 954173755}
-        m_TargetAssemblyTypeName: CombatantAbilities, Assembly-CSharp
+      - m_Target: {fileID: 954173753}
+        m_TargetAssemblyTypeName: Combatant, Assembly-CSharp
         m_MethodName: SetAbilityUsed
         m_Mode: 3
         m_Arguments:
@@ -1058,8 +1058,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 954173755}
-        m_TargetAssemblyTypeName: CombatantAbilities, Assembly-CSharp
+      - m_Target: {fileID: 954173753}
+        m_TargetAssemblyTypeName: Combatant, Assembly-CSharp
         m_MethodName: SetAbilityUsed
         m_Mode: 3
         m_Arguments:
@@ -1252,11 +1252,8 @@ GameObject:
   - component: {fileID: 954173752}
   - component: {fileID: 954173751}
   - component: {fileID: 954173750}
-  - component: {fileID: 954173753}
-  - component: {fileID: 954173755}
-  - component: {fileID: 954173754}
-  - component: {fileID: 954173757}
   - component: {fileID: 954173756}
+  - component: {fileID: 954173753}
   m_Layer: 0
   m_Name: Combatant Player
   m_TagString: Untagged
@@ -1359,41 +1356,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 954173749}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1a9977576c183a44984d969cf07bc174, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  resistances: 040000000000000000000000
-  immunities: 000000000000000000000000
-  vulnerabilities: 050000000100000000000000
---- !u!114 &954173754
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 954173749}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 34cbe36d080121944bafc5de98bea0d0, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  combatantItems:
-  - {fileID: 4278568830661491707, guid: f62d7ffe0af67fa48bddf04315d6ad3d, type: 3}
-  - {fileID: 6075591998877253005, guid: d1c5e16e6468cae4bae057a2239a074b, type: 3}
-  - {fileID: 839842521999992252, guid: eb5c59b6e29c6d941b96cc4a90885f6e, type: 3}
-  - {fileID: 2868705229470346965, guid: e48764a0a77346a44a493f1a6241d1f2, type: 3}
-  - {fileID: 7376404541262646643, guid: 2273297ae3488c440ba095fc3a38b05a, type: 3}
-  currentItem: 0
---- !u!114 &954173755
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 954173749}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: be4383718ad81d943a4863ddc9d1ec74, type: 3}
+  m_Script: {fileID: 11500000, guid: cf65118ca2564484991111fe932c906f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   abilitiesLearnt:
@@ -1408,9 +1371,21 @@ MonoBehaviour:
   - {fileID: 0}
   - {fileID: 0}
   - {fileID: 0}
-  enemy: {fileID: 1651901341}
-  combatantStats: {fileID: 954173750}
   abilitySelect: 0
+  combatantItems:
+  - {fileID: 4278568830661491707, guid: f62d7ffe0af67fa48bddf04315d6ad3d, type: 3}
+  - {fileID: 6075591998877253005, guid: d1c5e16e6468cae4bae057a2239a074b, type: 3}
+  - {fileID: 839842521999992252, guid: eb5c59b6e29c6d941b96cc4a90885f6e, type: 3}
+  - {fileID: 7376404541262646643, guid: 2273297ae3488c440ba095fc3a38b05a, type: 3}
+  - {fileID: 2868705229470346965, guid: e48764a0a77346a44a493f1a6241d1f2, type: 3}
+  currentItem: 0
+  resistances: 040000000000000000000000
+  immunities: 020000000000000000000000
+  vulnerabilities: 000000000000000000000000
+  combatantQuirks:
+  - {fileID: 3746784182433375505, guid: 6d240da83c79d464aad2aa37514191f4, type: 3}
+  - {fileID: 7267804556780378025, guid: 4132e3a41e8d7e04a81abb33b1bf2dba, type: 3}
+  - {fileID: 8029700042953720832, guid: 316b468971f6dbd4281020854c43211b, type: 3}
 --- !u!114 &954173756
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1424,22 +1399,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   enemy: {fileID: 1651901341}
---- !u!114 &954173757
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 954173749}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 048ca74560ea9b740acaf196a502e904, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  combatantQuirks:
-  - {fileID: 3746784182433375505, guid: 6d240da83c79d464aad2aa37514191f4, type: 3}
-  - {fileID: 7267804556780378025, guid: 4132e3a41e8d7e04a81abb33b1bf2dba, type: 3}
-  - {fileID: 6796871343876344585, guid: b789b38dab6ecd245bbb78916d7d4bca, type: 3}
 --- !u!1 &1026693619
 GameObject:
   m_ObjectHideFlags: 0
@@ -1523,8 +1482,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 954173755}
-        m_TargetAssemblyTypeName: CombatantAbilities, Assembly-CSharp
+      - m_Target: {fileID: 954173753}
+        m_TargetAssemblyTypeName: Combatant, Assembly-CSharp
         m_MethodName: SetAbilityUsed
         m_Mode: 3
         m_Arguments:
@@ -1823,8 +1782,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 954173755}
-        m_TargetAssemblyTypeName: CombatantAbilities, Assembly-CSharp
+      - m_Target: {fileID: 954173753}
+        m_TargetAssemblyTypeName: Combatant, Assembly-CSharp
         m_MethodName: SetAbilityUsed
         m_Mode: 3
         m_Arguments:
@@ -2334,7 +2293,6 @@ GameObject:
   - component: {fileID: 1651901343}
   - component: {fileID: 1651901342}
   - component: {fileID: 1651901345}
-  - component: {fileID: 1651901346}
   m_Layer: 0
   m_Name: CombatantEnemy
   m_TagString: Untagged
@@ -2426,7 +2384,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 4
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &1651901345
 MonoBehaviour:
@@ -2437,26 +2395,34 @@ MonoBehaviour:
   m_GameObject: {fileID: 1651901341}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1a9977576c183a44984d969cf07bc174, type: 3}
+  m_Script: {fileID: 11500000, guid: cf65118ca2564484991111fe932c906f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  abilitiesLearnt:
+  - {fileID: 5698106485274030700, guid: f7ff168d4c5c0d743a6cdc484b19a655, type: 3}
+  - {fileID: 941154833757141219, guid: c797b658771dd884b98def0b00d2c381, type: 3}
+  - {fileID: 7706368254199740182, guid: 8381c0d70eb23de40b826bdd7c37bbbd, type: 3}
+  - {fileID: 7072381395796240469, guid: b035e8bf399227c49bf1a90c5ecb0edc, type: 3}
+  - {fileID: 3489780241480307656, guid: f3cd359b3c7b66545ab21139359cfc38, type: 3}
+  - {fileID: 4127371302415139829, guid: bca79481931bc4946ab44bbcd4c71e7c, type: 3}
+  abilitiesUsing:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  abilitySelect: 0
+  combatantItems:
+  - {fileID: 4278568830661491707, guid: f62d7ffe0af67fa48bddf04315d6ad3d, type: 3}
+  - {fileID: 6075591998877253005, guid: d1c5e16e6468cae4bae057a2239a074b, type: 3}
+  - {fileID: 839842521999992252, guid: eb5c59b6e29c6d941b96cc4a90885f6e, type: 3}
+  - {fileID: 7376404541262646643, guid: 2273297ae3488c440ba095fc3a38b05a, type: 3}
+  - {fileID: 2868705229470346965, guid: e48764a0a77346a44a493f1a6241d1f2, type: 3}
+  currentItem: 0
   resistances: 030000000000000000000000
   immunities: 010000000000000000000000
   vulnerabilities: 000000000000000000000000
---- !u!114 &1651901346
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1651901341}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 048ca74560ea9b740acaf196a502e904, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
   combatantQuirks:
-  - {fileID: 8029700042953720832, guid: 316b468971f6dbd4281020854c43211b, type: 3}
+  - {fileID: 0}
   - {fileID: 0}
   - {fileID: 0}
 --- !u!1 &1693737805
@@ -2671,72 +2637,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1710489628}
   m_CullTransparentMesh: 1
---- !u!1 &1762609274
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1762609277}
-  - component: {fileID: 1762609276}
-  - component: {fileID: 1762609275}
-  m_Layer: 0
-  m_Name: EventSystem
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!114 &1762609275
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1762609274}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4f231c4fb786f3946a6b90b886c48677, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_HorizontalAxis: Horizontal
-  m_VerticalAxis: Vertical
-  m_SubmitButton: Submit
-  m_CancelButton: Cancel
-  m_InputActionsPerSecond: 10
-  m_RepeatDelay: 0.5
-  m_ForceModuleActive: 0
---- !u!114 &1762609276
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1762609274}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 76c392e42b5098c458856cdf6ecaaaa1, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_FirstSelected: {fileID: 0}
-  m_sendNavigationEvents: 1
-  m_DragThreshold: 10
---- !u!4 &1762609277
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1762609274}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_RootOrder: 3
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1788636178
 GameObject:
   m_ObjectHideFlags: 0
@@ -3014,8 +2914,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 954173755}
-        m_TargetAssemblyTypeName: CombatantAbilities, Assembly-CSharp
+      - m_Target: {fileID: 954173753}
+        m_TargetAssemblyTypeName: Combatant, Assembly-CSharp
         m_MethodName: SetAbilityUsed
         m_Mode: 3
         m_Arguments:

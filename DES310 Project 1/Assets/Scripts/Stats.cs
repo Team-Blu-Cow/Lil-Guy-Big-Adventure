@@ -13,7 +13,7 @@ public enum Combatant_Type
 public class Stats : MonoBehaviour
 {
     public Combatant_Type combatant_type;
-    CombatantQuirks combatantQuirks;
+    Combatant combatant;
 
     public int mod_str;
     public int mod_dex;
@@ -37,7 +37,7 @@ public class Stats : MonoBehaviour
 
     private void Start()
     {
-        combatantQuirks = GetComponent<CombatantQuirks>();
+        combatant = GetComponent<Combatant>();
         // Racial traits
         switch (combatant_type)
         {
@@ -160,7 +160,7 @@ public class Stats : MonoBehaviour
 
     private void quirkStats()
     {
-        Quirks[] quirks = combatantQuirks.combatantQuirks;
+        Quirks[] quirks = combatant.combatantQuirks;
 
         
         for(int i = 0; i < 3; i++)

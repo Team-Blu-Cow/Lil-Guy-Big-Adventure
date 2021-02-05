@@ -1,0 +1,131 @@
+{
+    "name": "InputManager",
+    "maps": [
+        {
+            "name": "Keyboard",
+            "id": "f767443d-4aae-4688-89c1-a05d02d72ec0",
+            "actions": [
+                {
+                    "name": "Change Item",
+                    "type": "Button",
+                    "id": "06165784-f918-4a48-9779-8960939dab61",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": ""
+                },
+                {
+                    "name": "Change to ability 1",
+                    "type": "Button",
+                    "id": "1ffa0537-c6b0-46ed-8c4c-31e03ca43859",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": ""
+                },
+                {
+                    "name": "Change to ability 2",
+                    "type": "Button",
+                    "id": "710ddbab-8e8c-4fb6-bed6-8c30ba118132",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": ""
+                },
+                {
+                    "name": "Change to ability 3",
+                    "type": "Button",
+                    "id": "081c1a2f-46e1-49b1-b65f-cd268eaafb42",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": ""
+                },
+                {
+                    "name": "Change to  ability 4",
+                    "type": "Button",
+                    "id": "ecc89c6e-52bd-494b-9e82-8e8ee31f4e84",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": ""
+                }
+            ],
+            "bindings": [
+                {
+                    "name": "",
+                    "id": "73761fd2-065a-4df4-8874-c7c9edf81a98",
+                    "path": "<Keyboard>/1",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Change to ability 1",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "32c440d3-8f8a-467e-a27a-92f36469c96a",
+                    "path": "<Keyboard>/2",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Change to ability 2",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "21393ee8-650d-4be3-8a03-29304a488fc7",
+                    "path": "<Keyboard>/3",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Change to ability 3",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "d1e49c8b-813d-4174-9b78-0848f0e6a757",
+                    "path": "<Keyboard>/4",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Change to  ability 4",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "1D Axis",
+                    "id": "90ccaff7-1bb2-4f20-8d8d-832a77d72657",
+                    "path": "1DAxis",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Change Item",
+                    "isComposite": true,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "negative",
+                    "id": "e4f07488-4349-4137-ac0e-5365089a47e3",
+                    "path": "<Keyboard>/q",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Change Item",
+                    "isComposite": false,
+                    "isPartOfComposite": true
+                },
+                {
+                    "name": "positive",
+                    "id": "67f28943-38bf-4283-b3f2-69465556a245",
+                    "path": "<Keyboard>/e",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Change Item",
+                    "isComposite": false,
+                    "isPartOfComposite": true
+                }
+            ]
+        }
+    ],
+    "controlSchemes": []
+}
