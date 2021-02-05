@@ -8,6 +8,8 @@ public class AStarNode
     public Vector3 worldPosition;
     public Vector3Int gridPosition;
 
+    public bool test;
+
     public AStarNode(bool _walkable, Vector3 _worldPos, Vector3Int _gridPosition)
     {
         walkable = _walkable;
