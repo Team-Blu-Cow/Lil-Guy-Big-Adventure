@@ -1,12 +1,16 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Tilemaps;
 
 public class AStarGrid : MonoBehaviour
 {
-    public Vector2 gridSize;
+    public Vector2Int gridSize;
     public float nodeRadius;
     public LayerMask unwalkableMask;
+
+    public Tilemap tileMap;
+
     AStarNode[,] grid;
 
     float nodeDiameter;
@@ -15,8 +19,8 @@ public class AStarGrid : MonoBehaviour
     void Start()
     {
         nodeDiameter = nodeRadius * 2;
-        gridSizeX = Mathf.RoundToInt(gridSize.x / nodeDiameter);
-        gridSizeY = Mathf.RoundToInt(gridSize.y / nodeDiameter);
+        gridSizeX = Mathf.RoundToInt(gridSize.x);
+        gridSizeY = Mathf.RoundToInt(gridSize.y);
         CreateGrid();
     }
 
@@ -31,9 +35,12 @@ public class AStarGrid : MonoBehaviour
             {
                 Vector3 worldPoint = ToWorld(x, y, worldTopLeft);
 
-                //Vector3 worldPoint = worldTopLeft + Vector3.right * (x * nodeDiameter + nodeRadius) - Vector3.up * (y * nodeDiameter + nodeRadius);
+                Vector3Int currentCell = tileMap.WorldToCell(worldPoint);
+
+                bool walkable = tileMap.HasTile(currentCell);
+
                 //decide whether point is walkable or not
-                grid[x, y] = new AStarNode(true, worldPoint);
+                grid[x, y] = new AStarNode(walkable, worldPoint, new Vector3Int(x,y,1));
             }
         }
     }
@@ -42,14 +49,14 @@ public class AStarGrid : MonoBehaviour
     {
         return new Vector3(
             (transform.position.x * nodeDiameter) + (x-y) * (nodeRadius*2),
-            (origin.y * nodeDiameter) - (x+y) * (nodeRadius),
-            1
+            (transform.position.y * nodeDiameter) - (x+y) * (nodeRadius) - (nodeRadius),
+            0
             );
     }
 
     private void OnDrawGizmos()
     {
-        Gizmos.DrawWireCube(transform.position, new Vector3(gridSize.x, gridSize.y, 1));
+        //Gizmos.DrawWireCube(transform.position, new Vector3(gridSize.x, gridSize.y, 1));
        
 
         if (grid != null)
@@ -58,14 +65,7 @@ public class AStarGrid : MonoBehaviour
             foreach (AStarNode node in grid)
             {
                 Gizmos.color = (node.walkable) ? Color.white : Color.red;
-
-
-                /*Gizmos.color = new Color(
-                    NormalizeInRange(node.worldPosition.x,worldTopLeft.x, worldTopLeft.x + gridSize.x), 
-                    NormalizeInRange(node.worldPosition.y, worldTopLeft.y, worldTopLeft.y - gridSize.y),
-                    0, 
-                    1);//*/
-                Gizmos.DrawCube(node.worldPosition, Vector3.one * (nodeDiameter/2));
+                Gizmos.DrawCube(node.worldPosition, Vector3.one * (nodeRadius/2));
             }
         }
     }
