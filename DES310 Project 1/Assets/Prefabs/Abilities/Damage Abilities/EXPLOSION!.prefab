@@ -49,4 +49,4 @@ MonoBehaviour:
   abilityPower: 10
   abilityRange: 4
   abilityArea: 2
-  abilityAspect: 0
+  abilityAspect: 1
