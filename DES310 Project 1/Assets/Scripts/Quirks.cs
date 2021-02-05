@@ -18,9 +18,8 @@ public enum quirk_stat
 public enum quirk_resistant
 {
     Resistance = 0,
-    Immunity = 1,
-    Vulnerability = 2,
-    None = 3
+    Immmunity = 1,
+    Vulnerability = 2
 }
 
 public class Quirks : MonoBehaviour
