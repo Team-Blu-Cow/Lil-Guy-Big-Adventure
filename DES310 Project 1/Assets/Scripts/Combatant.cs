@@ -22,7 +22,8 @@ public class Combatant : MonoBehaviour
     private void Awake()
     {
         controls = new InputManager();
-        controls.Keyboard.ChangeItem.started += ctx => changeItem(ctx.ReadValue<int>());
+        controls.Keyboard.IncrementAbilitySelect.started += ctx => changeItem(1);
+        controls.Keyboard.DecrementAbilitySelect.started += ctx => changeItem(-1);
         controls.Keyboard.Changetoability1.started += ctx => changeAbilitySelect(0);
         controls.Keyboard.Changetoability2.started += ctx => changeAbilitySelect(1);
         controls.Keyboard.Changetoability3.started += ctx => changeAbilitySelect(2);
@@ -60,7 +61,10 @@ public class Combatant : MonoBehaviour
 
     private void changeItem(int itemSwitch)
     {
-        currentItem += itemSwitch;
+        if ((itemSwitch == 1 && currentItem < 4) || (itemSwitch == -1 && currentItem > 0))
+        {
+            currentItem += itemSwitch;
+        }
     }
 
     private void changeAbilitySelect(int num)
@@ -68,3 +72,4 @@ public class Combatant : MonoBehaviour
         abilitySelect = num;
     }
 }
+

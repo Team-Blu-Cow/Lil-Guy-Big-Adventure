@@ -6,14 +6,6 @@
             "id": "f767443d-4aae-4688-89c1-a05d02d72ec0",
             "actions": [
                 {
-                    "name": "Change Item",
-                    "type": "Button",
-                    "id": "06165784-f918-4a48-9779-8960939dab61",
-                    "expectedControlType": "Button",
-                    "processors": "",
-                    "interactions": ""
-                },
-                {
                     "name": "Change to ability 1",
                     "type": "Button",
                     "id": "1ffa0537-c6b0-46ed-8c4c-31e03ca43859",
@@ -41,6 +33,30 @@
                     "name": "Change to  ability 4",
                     "type": "Button",
                     "id": "ecc89c6e-52bd-494b-9e82-8e8ee31f4e84",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": ""
+                },
+                {
+                    "name": "Increment Ability Select",
+                    "type": "Button",
+                    "id": "5e168547-17f6-47aa-b17e-b86e28435a16",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": ""
+                },
+                {
+                    "name": "Decrement Ability Select",
+                    "type": "Button",
+                    "id": "49dfca90-caa7-4232-852d-8330b462064f",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": ""
+                },
+                {
+                    "name": "Mouse",
+                    "type": "Button",
+                    "id": "76a78281-05ac-4b9f-bde8-fc8cdbc9ffa2",
                     "expectedControlType": "Button",
                     "processors": "",
                     "interactions": ""
@@ -92,37 +108,37 @@
                     "isPartOfComposite": false
                 },
                 {
-                    "name": "1D Axis",
-                    "id": "90ccaff7-1bb2-4f20-8d8d-832a77d72657",
-                    "path": "1DAxis",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "",
-                    "action": "Change Item",
-                    "isComposite": true,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "negative",
-                    "id": "e4f07488-4349-4137-ac0e-5365089a47e3",
-                    "path": "<Keyboard>/q",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "",
-                    "action": "Change Item",
-                    "isComposite": false,
-                    "isPartOfComposite": true
-                },
-                {
-                    "name": "positive",
-                    "id": "67f28943-38bf-4283-b3f2-69465556a245",
+                    "name": "",
+                    "id": "2ea1408c-9dfe-48d0-abbc-929e897bf169",
                     "path": "<Keyboard>/e",
                     "interactions": "",
                     "processors": "",
                     "groups": "",
-                    "action": "Change Item",
+                    "action": "Increment Ability Select",
                     "isComposite": false,
-                    "isPartOfComposite": true
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "a115628c-0768-47e1-bddd-418edddd35cc",
+                    "path": "<Keyboard>/q",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Decrement Ability Select",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "4b49b30f-2a10-43fd-bd80-3774b1fd446e",
+                    "path": "<Mouse>/press",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Mouse",
+                    "isComposite": false,
+                    "isPartOfComposite": false
                 }
             ]
         }

@@ -1,8 +1,9 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.EventSystems;
 
-public class TestCombatSystem : MonoBehaviour
+public class TestCombatSystem : MonoBehaviour, IPointerClickHandler
 {
 
     public GameObject enemy;
@@ -17,6 +18,7 @@ public class TestCombatSystem : MonoBehaviour
 
     int damage = 0;
     int poisonDamage = 0;
+
 
     private void Start()
     {
@@ -324,5 +326,10 @@ public class TestCombatSystem : MonoBehaviour
         {
             return false;
         }
+    }
+
+    public void OnPointerClick(PointerEventData pointerEventData)
+    {
+        
     }
 }

@@ -19,14 +19,6 @@ public class @InputManager : IInputActionCollection, IDisposable
             ""id"": ""f767443d-4aae-4688-89c1-a05d02d72ec0"",
             ""actions"": [
                 {
-                    ""name"": ""Change Item"",
-                    ""type"": ""Button"",
-                    ""id"": ""06165784-f918-4a48-9779-8960939dab61"",
-                    ""expectedControlType"": ""Button"",
-                    ""processors"": """",
-                    ""interactions"": """"
-                },
-                {
                     ""name"": ""Change to ability 1"",
                     ""type"": ""Button"",
                     ""id"": ""1ffa0537-c6b0-46ed-8c4c-31e03ca43859"",
@@ -54,6 +46,30 @@ public class @InputManager : IInputActionCollection, IDisposable
                     ""name"": ""Change to  ability 4"",
                     ""type"": ""Button"",
                     ""id"": ""ecc89c6e-52bd-494b-9e82-8e8ee31f4e84"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """"
+                },
+                {
+                    ""name"": ""Increment Ability Select"",
+                    ""type"": ""Button"",
+                    ""id"": ""5e168547-17f6-47aa-b17e-b86e28435a16"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """"
+                },
+                {
+                    ""name"": ""Decrement Ability Select"",
+                    ""type"": ""Button"",
+                    ""id"": ""49dfca90-caa7-4232-852d-8330b462064f"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """"
+                },
+                {
+                    ""name"": ""Mouse"",
+                    ""type"": ""Button"",
+                    ""id"": ""76a78281-05ac-4b9f-bde8-fc8cdbc9ffa2"",
                     ""expectedControlType"": ""Button"",
                     ""processors"": """",
                     ""interactions"": """"
@@ -105,37 +121,37 @@ public class @InputManager : IInputActionCollection, IDisposable
                     ""isPartOfComposite"": false
                 },
                 {
-                    ""name"": ""1D Axis"",
-                    ""id"": ""90ccaff7-1bb2-4f20-8d8d-832a77d72657"",
-                    ""path"": ""1DAxis"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": """",
-                    ""action"": ""Change Item"",
-                    ""isComposite"": true,
-                    ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": ""negative"",
-                    ""id"": ""e4f07488-4349-4137-ac0e-5365089a47e3"",
-                    ""path"": ""<Keyboard>/q"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": """",
-                    ""action"": ""Change Item"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": true
-                },
-                {
-                    ""name"": ""positive"",
-                    ""id"": ""67f28943-38bf-4283-b3f2-69465556a245"",
+                    ""name"": """",
+                    ""id"": ""2ea1408c-9dfe-48d0-abbc-929e897bf169"",
                     ""path"": ""<Keyboard>/e"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
-                    ""action"": ""Change Item"",
+                    ""action"": ""Increment Ability Select"",
                     ""isComposite"": false,
-                    ""isPartOfComposite"": true
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""a115628c-0768-47e1-bddd-418edddd35cc"",
+                    ""path"": ""<Keyboard>/q"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Decrement Ability Select"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""4b49b30f-2a10-43fd-bd80-3774b1fd446e"",
+                    ""path"": ""<Mouse>/press"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Mouse"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -144,11 +160,13 @@ public class @InputManager : IInputActionCollection, IDisposable
 }");
         // Keyboard
         m_Keyboard = asset.FindActionMap("Keyboard", throwIfNotFound: true);
-        m_Keyboard_ChangeItem = m_Keyboard.FindAction("Change Item", throwIfNotFound: true);
         m_Keyboard_Changetoability1 = m_Keyboard.FindAction("Change to ability 1", throwIfNotFound: true);
         m_Keyboard_Changetoability2 = m_Keyboard.FindAction("Change to ability 2", throwIfNotFound: true);
         m_Keyboard_Changetoability3 = m_Keyboard.FindAction("Change to ability 3", throwIfNotFound: true);
         m_Keyboard_Changetoability4 = m_Keyboard.FindAction("Change to  ability 4", throwIfNotFound: true);
+        m_Keyboard_IncrementAbilitySelect = m_Keyboard.FindAction("Increment Ability Select", throwIfNotFound: true);
+        m_Keyboard_DecrementAbilitySelect = m_Keyboard.FindAction("Decrement Ability Select", throwIfNotFound: true);
+        m_Keyboard_Mouse = m_Keyboard.FindAction("Mouse", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -198,20 +216,24 @@ public class @InputManager : IInputActionCollection, IDisposable
     // Keyboard
     private readonly InputActionMap m_Keyboard;
     private IKeyboardActions m_KeyboardActionsCallbackInterface;
-    private readonly InputAction m_Keyboard_ChangeItem;
     private readonly InputAction m_Keyboard_Changetoability1;
     private readonly InputAction m_Keyboard_Changetoability2;
     private readonly InputAction m_Keyboard_Changetoability3;
     private readonly InputAction m_Keyboard_Changetoability4;
+    private readonly InputAction m_Keyboard_IncrementAbilitySelect;
+    private readonly InputAction m_Keyboard_DecrementAbilitySelect;
+    private readonly InputAction m_Keyboard_Mouse;
     public struct KeyboardActions
     {
         private @InputManager m_Wrapper;
         public KeyboardActions(@InputManager wrapper) { m_Wrapper = wrapper; }
-        public InputAction @ChangeItem => m_Wrapper.m_Keyboard_ChangeItem;
         public InputAction @Changetoability1 => m_Wrapper.m_Keyboard_Changetoability1;
         public InputAction @Changetoability2 => m_Wrapper.m_Keyboard_Changetoability2;
         public InputAction @Changetoability3 => m_Wrapper.m_Keyboard_Changetoability3;
         public InputAction @Changetoability4 => m_Wrapper.m_Keyboard_Changetoability4;
+        public InputAction @IncrementAbilitySelect => m_Wrapper.m_Keyboard_IncrementAbilitySelect;
+        public InputAction @DecrementAbilitySelect => m_Wrapper.m_Keyboard_DecrementAbilitySelect;
+        public InputAction @Mouse => m_Wrapper.m_Keyboard_Mouse;
         public InputActionMap Get() { return m_Wrapper.m_Keyboard; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -221,9 +243,6 @@ public class @InputManager : IInputActionCollection, IDisposable
         {
             if (m_Wrapper.m_KeyboardActionsCallbackInterface != null)
             {
-                @ChangeItem.started -= m_Wrapper.m_KeyboardActionsCallbackInterface.OnChangeItem;
-                @ChangeItem.performed -= m_Wrapper.m_KeyboardActionsCallbackInterface.OnChangeItem;
-                @ChangeItem.canceled -= m_Wrapper.m_KeyboardActionsCallbackInterface.OnChangeItem;
                 @Changetoability1.started -= m_Wrapper.m_KeyboardActionsCallbackInterface.OnChangetoability1;
                 @Changetoability1.performed -= m_Wrapper.m_KeyboardActionsCallbackInterface.OnChangetoability1;
                 @Changetoability1.canceled -= m_Wrapper.m_KeyboardActionsCallbackInterface.OnChangetoability1;
@@ -236,13 +255,19 @@ public class @InputManager : IInputActionCollection, IDisposable
                 @Changetoability4.started -= m_Wrapper.m_KeyboardActionsCallbackInterface.OnChangetoability4;
                 @Changetoability4.performed -= m_Wrapper.m_KeyboardActionsCallbackInterface.OnChangetoability4;
                 @Changetoability4.canceled -= m_Wrapper.m_KeyboardActionsCallbackInterface.OnChangetoability4;
+                @IncrementAbilitySelect.started -= m_Wrapper.m_KeyboardActionsCallbackInterface.OnIncrementAbilitySelect;
+                @IncrementAbilitySelect.performed -= m_Wrapper.m_KeyboardActionsCallbackInterface.OnIncrementAbilitySelect;
+                @IncrementAbilitySelect.canceled -= m_Wrapper.m_KeyboardActionsCallbackInterface.OnIncrementAbilitySelect;
+                @DecrementAbilitySelect.started -= m_Wrapper.m_KeyboardActionsCallbackInterface.OnDecrementAbilitySelect;
+                @DecrementAbilitySelect.performed -= m_Wrapper.m_KeyboardActionsCallbackInterface.OnDecrementAbilitySelect;
+                @DecrementAbilitySelect.canceled -= m_Wrapper.m_KeyboardActionsCallbackInterface.OnDecrementAbilitySelect;
+                @Mouse.started -= m_Wrapper.m_KeyboardActionsCallbackInterface.OnMouse;
+                @Mouse.performed -= m_Wrapper.m_KeyboardActionsCallbackInterface.OnMouse;
+                @Mouse.canceled -= m_Wrapper.m_KeyboardActionsCallbackInterface.OnMouse;
             }
             m_Wrapper.m_KeyboardActionsCallbackInterface = instance;
             if (instance != null)
             {
-                @ChangeItem.started += instance.OnChangeItem;
-                @ChangeItem.performed += instance.OnChangeItem;
-                @ChangeItem.canceled += instance.OnChangeItem;
                 @Changetoability1.started += instance.OnChangetoability1;
                 @Changetoability1.performed += instance.OnChangetoability1;
                 @Changetoability1.canceled += instance.OnChangetoability1;
@@ -255,16 +280,27 @@ public class @InputManager : IInputActionCollection, IDisposable
                 @Changetoability4.started += instance.OnChangetoability4;
                 @Changetoability4.performed += instance.OnChangetoability4;
                 @Changetoability4.canceled += instance.OnChangetoability4;
+                @IncrementAbilitySelect.started += instance.OnIncrementAbilitySelect;
+                @IncrementAbilitySelect.performed += instance.OnIncrementAbilitySelect;
+                @IncrementAbilitySelect.canceled += instance.OnIncrementAbilitySelect;
+                @DecrementAbilitySelect.started += instance.OnDecrementAbilitySelect;
+                @DecrementAbilitySelect.performed += instance.OnDecrementAbilitySelect;
+                @DecrementAbilitySelect.canceled += instance.OnDecrementAbilitySelect;
+                @Mouse.started += instance.OnMouse;
+                @Mouse.performed += instance.OnMouse;
+                @Mouse.canceled += instance.OnMouse;
             }
         }
     }
     public KeyboardActions @Keyboard => new KeyboardActions(this);
     public interface IKeyboardActions
     {
-        void OnChangeItem(InputAction.CallbackContext context);
         void OnChangetoability1(InputAction.CallbackContext context);
         void OnChangetoability2(InputAction.CallbackContext context);
         void OnChangetoability3(InputAction.CallbackContext context);
         void OnChangetoability4(InputAction.CallbackContext context);
+        void OnIncrementAbilitySelect(InputAction.CallbackContext context);
+        void OnDecrementAbilitySelect(InputAction.CallbackContext context);
+        void OnMouse(InputAction.CallbackContext context);
     }
 }
