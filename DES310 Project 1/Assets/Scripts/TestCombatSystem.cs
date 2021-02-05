@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
-public class TestCombatSystem : MonoBehaviour, IPointerClickHandler
+public class TestCombatSystem : MonoBehaviour
 {
 
     public GameObject enemy;
@@ -75,11 +75,13 @@ public class TestCombatSystem : MonoBehaviour, IPointerClickHandler
                 damage *= 2;
                 damage += poisonDamage;
                 enemy.GetComponent<Stats>().setStat("HP", -damage);
+                Debug.Log("Enemy HP: " + enemy.GetComponent<Stats>().getStat("HP"));
             }
             else
             {
                 damage += poisonDamage;
                 enemy.GetComponent<Stats>().setStat("HP", -damage);
+                Debug.Log("Enemy HP: " + enemy.GetComponent<Stats>().getStat("HP"));
             }
 
         }
@@ -98,11 +100,13 @@ public class TestCombatSystem : MonoBehaviour, IPointerClickHandler
                 damage *= 2;
                 damage += poisonDamage;
                 enemy.GetComponent<Stats>().setStat("HP", -damage);
+                Debug.Log("Enemy HP: " + enemy.GetComponent<Stats>().getStat("HP"));
             }
             else
             {
                 damage += poisonDamage;
                 enemy.GetComponent<Stats>().setStat("HP", -damage);
+                Debug.Log("Enemy HP: " + enemy.GetComponent<Stats>().getStat("HP"));
             }
 
         }
@@ -121,11 +125,13 @@ public class TestCombatSystem : MonoBehaviour, IPointerClickHandler
                 damage *= 2;
                 damage += poisonDamage;
                 enemy.GetComponent<Stats>().setStat("HP", -damage);
+                Debug.Log("Enemy HP: " + enemy.GetComponent<Stats>().getStat("HP"));
             }
             else
             {
                 damage += poisonDamage;
                 enemy.GetComponent<Stats>().setStat("HP", -damage);
+                Debug.Log("Enemy HP: " + enemy.GetComponent<Stats>().getStat("HP"));
             }
 
         }
@@ -326,10 +332,5 @@ public class TestCombatSystem : MonoBehaviour, IPointerClickHandler
         {
             return false;
         }
-    }
-
-    public void OnPointerClick(PointerEventData pointerEventData)
-    {
-        
     }
 }

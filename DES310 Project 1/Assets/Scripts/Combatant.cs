@@ -4,6 +4,9 @@ using UnityEngine;
 
 public class Combatant : MonoBehaviour
 {
+    public int combatantNum;
+    public bool fighting;
+
     public Ability[] abilitiesLearnt;
     public Ability[] abilitiesUsing;
     public int abilitySelect = 0;
@@ -28,7 +31,6 @@ public class Combatant : MonoBehaviour
         controls.Keyboard.Changetoability2.started += ctx => changeAbilitySelect(1);
         controls.Keyboard.Changetoability3.started += ctx => changeAbilitySelect(2);
         controls.Keyboard.Changetoability4.started += ctx => changeAbilitySelect(3);
-        
     }
 
     void OnEnable()
@@ -51,7 +53,7 @@ public class Combatant : MonoBehaviour
 
     private void Update()
     {
-        
+
     }
 
     public void SetAbilityUsed(int abilityNum)

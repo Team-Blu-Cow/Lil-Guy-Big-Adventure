@@ -5,8 +5,10 @@ using UnityEngine;
 public enum Combatant_Type
 {
     Human = 0, // average weights
-    Dragon = 1, // Strong:(str, def) Weak:(Speed, init)
-    Elf = 2 // Strong: (Dex, Mag) Weak:(str, def)
+    Mushroom = 1, // Strong:(str, def) Weak:(Speed, init)
+    StoneBug = 2, // Strong: (Dex, Mag) Weak:(str, def)
+    Phoenix = 3,
+    Hedgehog = 4
 }
 
 [System.Serializable]
@@ -52,14 +54,14 @@ public class Stats : MonoBehaviour
                 base_init += 3;               
                 break;
 
-            case Combatant_Type.Dragon:
+            case Combatant_Type.Mushroom:
                 base_str += 6;
                 base_def += 6;
                 base_speed -= 3;
                 base_init -= 3;
                 break;
 
-            case Combatant_Type.Elf:
+            case Combatant_Type.StoneBug:
                 base_mag += 6;
                 base_dex += 6;
                 base_str -= 3;

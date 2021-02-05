@@ -67,9 +67,17 @@ public class @InputManager : IInputActionCollection, IDisposable
                     ""interactions"": """"
                 },
                 {
-                    ""name"": ""Mouse"",
+                    ""name"": ""Change Party Member"",
                     ""type"": ""Button"",
-                    ""id"": ""76a78281-05ac-4b9f-bde8-fc8cdbc9ffa2"",
+                    ""id"": ""3a86d212-5c0c-41a8-be5b-5735f95f3352"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """"
+                },
+                {
+                    ""name"": ""Pause"",
+                    ""type"": ""Button"",
+                    ""id"": ""af46e327-fcee-4c36-ae88-d1eb4f034647"",
                     ""expectedControlType"": ""Button"",
                     ""processors"": """",
                     ""interactions"": """"
@@ -144,12 +152,23 @@ public class @InputManager : IInputActionCollection, IDisposable
                 },
                 {
                     ""name"": """",
-                    ""id"": ""4b49b30f-2a10-43fd-bd80-3774b1fd446e"",
-                    ""path"": ""<Mouse>/press"",
+                    ""id"": ""568058b7-bb05-467c-834f-9f3426707566"",
+                    ""path"": ""<Keyboard>/w"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
-                    ""action"": ""Mouse"",
+                    ""action"": ""Change Party Member"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""0b13a95a-065b-4f19-8d52-dfe15dcfcb7e"",
+                    ""path"": ""<Keyboard>/escape"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Pause"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 }
@@ -166,7 +185,8 @@ public class @InputManager : IInputActionCollection, IDisposable
         m_Keyboard_Changetoability4 = m_Keyboard.FindAction("Change to  ability 4", throwIfNotFound: true);
         m_Keyboard_IncrementAbilitySelect = m_Keyboard.FindAction("Increment Ability Select", throwIfNotFound: true);
         m_Keyboard_DecrementAbilitySelect = m_Keyboard.FindAction("Decrement Ability Select", throwIfNotFound: true);
-        m_Keyboard_Mouse = m_Keyboard.FindAction("Mouse", throwIfNotFound: true);
+        m_Keyboard_ChangePartyMember = m_Keyboard.FindAction("Change Party Member", throwIfNotFound: true);
+        m_Keyboard_Pause = m_Keyboard.FindAction("Pause", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -222,7 +242,8 @@ public class @InputManager : IInputActionCollection, IDisposable
     private readonly InputAction m_Keyboard_Changetoability4;
     private readonly InputAction m_Keyboard_IncrementAbilitySelect;
     private readonly InputAction m_Keyboard_DecrementAbilitySelect;
-    private readonly InputAction m_Keyboard_Mouse;
+    private readonly InputAction m_Keyboard_ChangePartyMember;
+    private readonly InputAction m_Keyboard_Pause;
     public struct KeyboardActions
     {
         private @InputManager m_Wrapper;
@@ -233,7 +254,8 @@ public class @InputManager : IInputActionCollection, IDisposable
         public InputAction @Changetoability4 => m_Wrapper.m_Keyboard_Changetoability4;
         public InputAction @IncrementAbilitySelect => m_Wrapper.m_Keyboard_IncrementAbilitySelect;
         public InputAction @DecrementAbilitySelect => m_Wrapper.m_Keyboard_DecrementAbilitySelect;
-        public InputAction @Mouse => m_Wrapper.m_Keyboard_Mouse;
+        public InputAction @ChangePartyMember => m_Wrapper.m_Keyboard_ChangePartyMember;
+        public InputAction @Pause => m_Wrapper.m_Keyboard_Pause;
         public InputActionMap Get() { return m_Wrapper.m_Keyboard; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -261,9 +283,12 @@ public class @InputManager : IInputActionCollection, IDisposable
                 @DecrementAbilitySelect.started -= m_Wrapper.m_KeyboardActionsCallbackInterface.OnDecrementAbilitySelect;
                 @DecrementAbilitySelect.performed -= m_Wrapper.m_KeyboardActionsCallbackInterface.OnDecrementAbilitySelect;
                 @DecrementAbilitySelect.canceled -= m_Wrapper.m_KeyboardActionsCallbackInterface.OnDecrementAbilitySelect;
-                @Mouse.started -= m_Wrapper.m_KeyboardActionsCallbackInterface.OnMouse;
-                @Mouse.performed -= m_Wrapper.m_KeyboardActionsCallbackInterface.OnMouse;
-                @Mouse.canceled -= m_Wrapper.m_KeyboardActionsCallbackInterface.OnMouse;
+                @ChangePartyMember.started -= m_Wrapper.m_KeyboardActionsCallbackInterface.OnChangePartyMember;
+                @ChangePartyMember.performed -= m_Wrapper.m_KeyboardActionsCallbackInterface.OnChangePartyMember;
+                @ChangePartyMember.canceled -= m_Wrapper.m_KeyboardActionsCallbackInterface.OnChangePartyMember;
+                @Pause.started -= m_Wrapper.m_KeyboardActionsCallbackInterface.OnPause;
+                @Pause.performed -= m_Wrapper.m_KeyboardActionsCallbackInterface.OnPause;
+                @Pause.canceled -= m_Wrapper.m_KeyboardActionsCallbackInterface.OnPause;
             }
             m_Wrapper.m_KeyboardActionsCallbackInterface = instance;
             if (instance != null)
@@ -286,9 +311,12 @@ public class @InputManager : IInputActionCollection, IDisposable
                 @DecrementAbilitySelect.started += instance.OnDecrementAbilitySelect;
                 @DecrementAbilitySelect.performed += instance.OnDecrementAbilitySelect;
                 @DecrementAbilitySelect.canceled += instance.OnDecrementAbilitySelect;
-                @Mouse.started += instance.OnMouse;
-                @Mouse.performed += instance.OnMouse;
-                @Mouse.canceled += instance.OnMouse;
+                @ChangePartyMember.started += instance.OnChangePartyMember;
+                @ChangePartyMember.performed += instance.OnChangePartyMember;
+                @ChangePartyMember.canceled += instance.OnChangePartyMember;
+                @Pause.started += instance.OnPause;
+                @Pause.performed += instance.OnPause;
+                @Pause.canceled += instance.OnPause;
             }
         }
     }
@@ -301,6 +329,7 @@ public class @InputManager : IInputActionCollection, IDisposable
         void OnChangetoability4(InputAction.CallbackContext context);
         void OnIncrementAbilitySelect(InputAction.CallbackContext context);
         void OnDecrementAbilitySelect(InputAction.CallbackContext context);
-        void OnMouse(InputAction.CallbackContext context);
+        void OnChangePartyMember(InputAction.CallbackContext context);
+        void OnPause(InputAction.CallbackContext context);
     }
 }
