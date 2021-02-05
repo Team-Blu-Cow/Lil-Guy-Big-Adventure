@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class InventoryUI : MonoBehaviour
 {
-    public GameObject FullInv;
+    public Canvas FullInv;
     Inventory inventory;
 
     InventorySlot[] slots;
@@ -33,6 +33,6 @@ public class InventoryUI : MonoBehaviour
 
     public void ToggleInventory()
     {
-        FullInv.SetActive(!FullInv.activeSelf);
+        FullInv.enabled = !FullInv.enabled;
     }
 }
