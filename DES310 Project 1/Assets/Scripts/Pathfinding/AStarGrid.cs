@@ -18,7 +18,7 @@ public class AStarGrid : MonoBehaviour
     public List<TileData> tileData;
 
     [Header("Debug Options")]
-    public bool onlyDisplayPathGizmos;
+    public bool DisplayGridGizmos;
 
     // Private Fields *****************************************************************************
     private Dictionary<TileBase, TileData> dataFromTiles;
@@ -180,72 +180,42 @@ public class AStarGrid : MonoBehaviour
     }
 
     // Debug Gizmo Methods ************************************************************************
-    [HideInInspector]
-    public List<AStarNode> path;
     private void OnDrawGizmos()
     {
+        // draw horizontal grid lines
         Gizmos.color = Color.white;
         Vector3 startPos = transform.position;
         Vector3 targetPos = new Vector3(transform.position.x + (gridSize.x*nodeDiameter), transform.position.y - ((gridSize.x * nodeDiameter / 2f)), transform.position.z);
         Gizmos.DrawLine(startPos, targetPos);
-
-        if (!onlyDisplayPathGizmos)
-        {
-            Gizmos.color = new Color(1, 1, 1, 0.25f);
+        Gizmos.color = new Color(1, 1, 1, 0.25f);
+        if (DisplayGridGizmos)
             for (int i = 1; i < gridSize.y; i++)
-            {
                 Gizmos.DrawLine(startPos + new Vector3(i * -nodeDiameter, i * (-nodeDiameter / 2f), 0), targetPos + new Vector3(i * -nodeDiameter, i * (-nodeDiameter / 2f), 0));
-            }
-
-            Gizmos.color = Color.white;
-        }
-
-        
+        Gizmos.color = Color.white;
         Gizmos.DrawLine(startPos + new Vector3(gridSize.y * -nodeDiameter, gridSize.y * (-nodeDiameter / 2f), 0), targetPos + new Vector3(gridSize.y * -nodeDiameter, gridSize.y * (-nodeDiameter / 2f), 0));
         
+        // draw vertical grid lines
         startPos = transform.position;
         targetPos = new Vector3(transform.position.x - (gridSize.y * nodeDiameter), transform.position.y - ((gridSize.y * nodeDiameter / 2f)), transform.position.z);
         Gizmos.DrawLine(startPos, targetPos);
-
-        if (!onlyDisplayPathGizmos)
-        {
-            Gizmos.color = new Color(1, 1, 1, 0.25f);
+        Gizmos.color = new Color(1, 1, 1, 0.25f);
+        if (DisplayGridGizmos)
             for (int i = 1; i < gridSize.x; i++)
-            {
                 Gizmos.DrawLine(startPos + new Vector3(i * nodeDiameter, i * (-nodeDiameter / 2f), 0), targetPos + new Vector3(i * nodeDiameter, i * (-nodeDiameter / 2f), 0));
-            }
-            Gizmos.color = Color.white;
-        }
-        
+        Gizmos.color = Color.white;
         Gizmos.DrawLine(startPos + new Vector3(gridSize.x * nodeDiameter, gridSize.x * (-nodeDiameter / 2f), 0), targetPos + new Vector3(gridSize.x * nodeDiameter, gridSize.x * (-nodeDiameter / 2f), 0));
 
-        if(onlyDisplayPathGizmos)
+        // draw nodes
+        if (grid != null && DisplayGridGizmos)
         {
-            if(path != null)
+            Vector3 worldTopLeft = transform.position - Vector3.right * gridSize.x / 2 + Vector3.up * gridSize.y / 2;
+            foreach (AStarNode node in grid)
             {
-                foreach (AStarNode node in path)
-                {
-                    Gizmos.color = Color.black;
-                    Gizmos.DrawCube(node.worldPosition, Vector3.one * (nodeRadius / 2));
-                }
+                Gizmos.color = (node.walkable) ? Color.white : Color.red;
+                Gizmos.DrawCube(node.worldPosition, Vector3.one * (nodeRadius / 2));
             }
         }
-        else
-        {
-            if (grid != null)
-            {
-                Vector3 worldTopLeft = transform.position - Vector3.right * gridSize.x / 2 + Vector3.up * gridSize.y / 2;
-                foreach (AStarNode node in grid)
-                {
-                    Gizmos.color = (node.walkable) ? Color.white : Color.red;
-                    if (path != null)
-                        if (path.Contains(node))
-                            Gizmos.color = Color.black;
-                    Gizmos.DrawCube(node.worldPosition, Vector3.one * (nodeRadius / 2));
-                }
-            }
-        }
-        
+
     }
 }
 
