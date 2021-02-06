@@ -8,16 +8,19 @@ public class PathFindingUnit : MonoBehaviour
     [SerializeField] float speed = 0.5f;
     [SerializeField] Vector3[] path;
     int targetIndex;
+    bool currentlyPathFinding = false;
 
     public void RequestPath()
     {
-        PathRequestManager.RequestPath(transform.position, target.position, OnPathFound);
+        if (!currentlyPathFinding)
+            PathRequestManager.RequestPath(transform.position, target.position, OnPathFound);
     }
 
     public void OnPathFound(Vector3[] newPath, bool pathSuccess)
     {
         if (pathSuccess)
         {
+            currentlyPathFinding = true;
             path = newPath;
             StopCoroutine("FollowPath");
             StartCoroutine("FollowPath");
@@ -37,6 +40,7 @@ public class PathFindingUnit : MonoBehaviour
                 {
                     targetIndex = 0;
                     path = new Vector3[0];
+                    currentlyPathFinding = false;
                     yield break;
                 }
                 currentWaypoint = path[targetIndex];

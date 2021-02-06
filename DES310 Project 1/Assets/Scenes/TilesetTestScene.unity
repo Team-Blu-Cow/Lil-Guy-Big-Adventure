@@ -2520,7 +2520,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 5302e6883c704204481122c035e40761, type: 2}
   - {fileID: 11400000, guid: 1bb95acbb6fac8a4496732a47cec3c31, type: 2}
   - {fileID: 11400000, guid: 31b855971d2bd7a41aec77d2076497a2, type: 2}
-  DisplayGridGizmos: 0
+  DisplayGridGizmos: 1
 --- !u!114 &1047362071
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2626,7 +2626,7 @@ Transform:
   m_LocalScale: {x: 0.25, y: 0.25, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 3
+  m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &1118138638
 MonoBehaviour:
@@ -2798,7 +2798,7 @@ Transform:
   m_LocalScale: {x: 0.25, y: 0.25, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 4
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 45}
 --- !u!114 &1719667355
 MonoBehaviour:
