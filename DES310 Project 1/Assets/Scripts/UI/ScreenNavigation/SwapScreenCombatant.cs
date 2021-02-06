@@ -32,13 +32,13 @@ public class SwapScreenCombatant : MonoBehaviour
     {
         // Enable canvas
         transform.GetComponentInParent<Canvas>().enabled = true;
-        GetComponent<PartyCombatant>().SetItems(combatant.GetItems());
+        GetComponent<PartyCombatant>().SetCombatant(combatant.GetCombatant());
 
         // Fade in background
         LeanTween.scale(gameObject, new Vector3(1, 1, 1), 0.5f);
 
         // Set the resistances on ui
-        FindObjectOfType<ShowResistanceUI>().SetRes(combatant);
+        GetComponentInChildren<ShowResistanceUI>().SetRes(combatant);
 
         // Set the name and health on the ui
         GameObject.Find("CombatantName").GetComponent<TextMeshProUGUI>().text = combatant.named + "(" + combatant.GetStats().getStat("HP") + "/" + combatant.GetStats().getStat("Con") + ")";
@@ -46,12 +46,11 @@ public class SwapScreenCombatant : MonoBehaviour
         // Fade in background
         Image back = transform.parent.GetComponentInChildren<Image>();
         LeanTween.value(back.gameObject, a => back.color = a, new Color(0, 0, 0, 0), new Color(0, 0, 0, 0.6f), 0.5f);
-        // enable all screens
 
         // Set stats on text
         SetStats(combatant.GetStats());
         SetStatsModified(combatant.GetStats());
-        SetAblities(combatant.GetAbilities());
+        SetAblities(combatant.GetCombatant());
 
         // Swap to main screen
         Swap(transform.GetChild(1).gameObject);
@@ -101,7 +100,7 @@ public class SwapScreenCombatant : MonoBehaviour
             "Initi: " + (combatantStats.getStat("Init") - combatantStats.mod_init) + "\n";
     }
 
-    void SetAblities(CombatantAbilities abilities)
+    void SetAblities(Combatant abilities)
     {
         int count = 0;
         foreach (Ability ab in abilities.abilitiesUsing)

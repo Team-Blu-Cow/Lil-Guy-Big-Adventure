@@ -13,37 +13,21 @@ public class ShowResistanceUI : MonoBehaviour
             transform.GetChild(i).GetChild(2).gameObject.SetActive(false);
         }
 
-        foreach (Aspects.Aspect aspect in combatant.combatant.GetComponent<Resistances>().vulnerabilities)
+        for (int i = 0; i < transform.childCount; i++)
         {
-            for (int i = 0; i < transform.childCount; i++)
+            if (combatant.GetCombatant().resistances[i] < 1)
             {
-                if (transform.GetChild(i).name == aspect.ToString())
-                {
-                    transform.GetChild(i).GetChild(0).gameObject.SetActive(true);
-                }
+                transform.GetChild(i).GetChild(0).gameObject.SetActive(true);
             }
-        }
-
-        foreach (Aspects.Aspect aspect in combatant.combatant.GetComponent<Resistances>().resistances)
-        {
-            for (int i = 0; i < transform.childCount; i++)
+            else if (combatant.GetCombatant().resistances[i] > 1)
             {
-                if (transform.GetChild(i).name == aspect.ToString())
-                {
-                    transform.GetChild(i).GetChild(1).gameObject.SetActive(true);
-                }
+                transform.GetChild(i).GetChild(1).gameObject.SetActive(true);
             }
-        }        
-        
-        foreach (Aspects.Aspect aspect in combatant.combatant.GetComponent<Resistances>().immunities)
-        {
-            for (int i = 0; i < transform.childCount; i++)
+            else if (combatant.GetCombatant().resistances[i] <= 0)
             {
-                if (transform.GetChild(i).name == aspect.ToString())
-                {
-                    transform.GetChild(i).GetChild(2).gameObject.SetActive(true);
-                }
+                transform.GetChild(i).GetChild(2).gameObject.SetActive(true);
             }
         }
     }
 }
+

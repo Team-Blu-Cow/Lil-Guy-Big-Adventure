@@ -7,6 +7,7 @@ public class HoverStats : MonoBehaviour, IPointerEnterHandler, IPointerExitHandl
 {
     GameObject hovered;
     float hoverTime;
+    int count = 0;
 
     // Update is called once per frame
     void Update()
@@ -26,14 +27,16 @@ public class HoverStats : MonoBehaviour, IPointerEnterHandler, IPointerExitHandl
 
     void IPointerClickHandler.OnPointerClick(PointerEventData eventData)
     {
-        switch (eventData.clickCount)
-        {
-            case 1:
+        switch (count)
+        {            
+            case 0:
                 LeanTween.delayedCall(0.3f, OpenCombatant).setOnCompleteParam(eventData.pointerCurrentRaycast.gameObject);
+                count++;
                 break;
-            case 2:
+            case 1:
                 LeanTween.cancelAll();
                 OpenParty();
+                count = 0;
                 break;
             default:
                 break;
@@ -87,7 +90,8 @@ public class HoverStats : MonoBehaviour, IPointerEnterHandler, IPointerExitHandl
     {
         GameObject goCombatant = combatant as GameObject;
         ToggleCanvas(false);       
-        FindObjectOfType<SwapScreenCombatant>().OpenScreen(goCombatant.GetComponent<PartyCombatant>());        
+        FindObjectOfType<SwapScreenCombatant>().OpenScreen(goCombatant.GetComponent<PartyCombatant>());
+        count = 0;
     }
 
     void OpenParty()

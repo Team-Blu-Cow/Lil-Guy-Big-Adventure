@@ -6,51 +6,58 @@ using UnityEngine.UI;
 public class PauseScreen : MonoBehaviour
 {
     Canvas pauseMenu;
-    //public MasterInput controls;
-    private bool paused = false;
+    public InputManager controls;
+    GraphicRaycaster[] rayCasters;
 
     private void Awake()
     {
-        pauseMenu = GetComponent<Canvas>();
-        //controls = new MasterInput();
-        //controls.PlayerControls.Pause.performed += ctx => PauseGame();
+        if (TryGetComponent<Canvas>(out Canvas canvas))
+        {
+            pauseMenu = canvas;
+            pauseMenu.enabled = false;
+        }
+        
+        controls = new InputManager();
+        controls.Keyboard.Pause.performed += ctx => PauseGame();
+
+        rayCasters = transform.parent.GetComponentsInChildren<GraphicRaycaster>();
     }
 
-    //private void OnEnable()
-    //{
-    //    controls.Enable();
-    //}
+    private void OnEnable()
+    {
+        controls.Enable();
+    }
 
-    //private void OnDisable()
-    //{
-    //    controls.Disable();
-    //}
-
-    // Start is called before the first frame update
-    void Start()
-    {        
-        if (pauseMenu)
-        {
-            pauseMenu.enabled = paused;
-        }
+    private void OnDisable()
+    {
+        controls.Disable();
     }
 
     public void PauseGame()
     {
-        Debug.Log("Paused Pressed");
-        if (pauseMenu && paused)
+        if (!pauseMenu.enabled)
         {
             Time.timeScale = 0f;
-            pauseMenu.enabled = paused;
-            paused = !paused;
-            Debug.Log("Game paused");
+            pauseMenu.enabled = true;
+            foreach (GraphicRaycaster caster in rayCasters)
+            {
+                caster.enabled = false;
+            }
+            GetComponent<GraphicRaycaster>().enabled = true;
         }
-        else if (pauseMenu && !paused)
+        else if (pauseMenu.enabled)
         {
             Time.timeScale = 1f;
-            pauseMenu.enabled = paused;
-            paused = !paused;
-            Debug.Log("Game unpaused");
+            pauseMenu.enabled = false;
+            foreach (GraphicRaycaster caster in rayCasters)
+            {
+                caster.enabled = true;
+            }
         }
+    }
+
+    public void MainMenu()
+    {
+        Debug.Log("Main menu");
     }
 }

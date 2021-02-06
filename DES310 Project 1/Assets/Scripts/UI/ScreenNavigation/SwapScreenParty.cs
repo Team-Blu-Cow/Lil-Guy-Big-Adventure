@@ -9,7 +9,7 @@ public class SwapScreenParty : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        // Set starting o closed position
+        // Set starting to closed position
         LeanTween.scale(gameObject, new Vector3(0, 0, 0), 0.0f);
         GetComponentInParent<Canvas>().enabled = false;
     }
@@ -51,6 +51,6 @@ public class SwapScreenParty : MonoBehaviour
     {
         // get the child in he party section in the "InGameCanvas"
         PartyCombatant combatant = GameObject.Find("InGameCanvas/Party").GetComponentsInChildren<PartyCombatant>()[i];
-        transform.GetChild(0).GetComponentsInChildren<PartyCombatant>()[i].SetAll(combatant.GetCombatant(),combatant.GetStats(),combatant.GetAbilities(), combatant.named);
+        transform.GetChild(0).GetComponentsInChildren<PartyCombatant>()[i].SetAll(combatant.GetCombatantGO(),combatant.GetStats(),combatant.GetCombatant(), combatant.named);
     }
 }

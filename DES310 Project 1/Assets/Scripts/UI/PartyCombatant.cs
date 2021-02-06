@@ -4,35 +4,31 @@ using UnityEngine;
 
 public class PartyCombatant : MonoBehaviour
 {
-    public GameObject combatant;
+    public GameObject combatantGO;
     Stats combatantStats;
-    CombatantAbilities combatantAbilities;
-    CombatantItems combatantItems;
+    Combatant combatant;
     public string named;
 
     private void Awake()
     {
-        if (combatant == null)
-            combatant = transform.gameObject;        
+        if (combatantGO == null)
+            combatantGO = transform.gameObject;  
     }
 
     private void Start()
     {
-        if (combatant.TryGetComponent<Stats>(out Stats stat))
+        if (combatantGO.TryGetComponent<Stats>(out Stats stat))
             SetStats(stat);
         
-        if (combatant.TryGetComponent<CombatantAbilities>(out CombatantAbilities abilitiea))
-            SetAbilities(abilitiea);
-        
-        if (combatant.TryGetComponent<CombatantItems>(out CombatantItems items))
-            SetItems(items);
+        if (combatantGO.TryGetComponent<Combatant>(out Combatant combatant))
+            SetCombatant(combatant);
     }
 
-    public void SetAll(GameObject combatant, Stats stats, CombatantAbilities abilities, string names)
+    public void SetAll(GameObject combatantGO, Stats stats, Combatant combtantScript, string names)
     {
-        SetCombatant(combatant);
+        SetCombatantGO(combatantGO);
         SetStats(stats);
-        SetAbilities(abilities);
+        SetCombatant(combtantScript);
         named = names;
     }
 
@@ -44,34 +40,23 @@ public class PartyCombatant : MonoBehaviour
     {
         combatantStats = stats;
     }
-
-    public CombatantAbilities GetAbilities()
-    {
-        return combatantAbilities;
-    }
-
-    public void SetAbilities(CombatantAbilities abilities)
-    {
-        combatantAbilities = abilities;
-    }
     
-    public void SetItems(CombatantItems items)
-    {
-        combatantItems = items;
-    }
-    
-    public CombatantItems GetItems()
-    {
-       return combatantItems;
-    }
-    
-    public GameObject GetCombatant()
+    public Combatant GetCombatant()
     {
         return combatant;
     }
-
-    public void SetCombatant(GameObject combatantIn)
+   public void SetCombatant(Combatant combatantScrpit)
     {
-        combatant = combatantIn;
+        combatant = combatantScrpit;
+    }
+    
+    public GameObject GetCombatantGO()
+    {
+        return combatantGO;
+    }
+
+    public void SetCombatantGO(GameObject combatantIn)
+    {
+        combatantGO = combatantIn;
     }
 }
