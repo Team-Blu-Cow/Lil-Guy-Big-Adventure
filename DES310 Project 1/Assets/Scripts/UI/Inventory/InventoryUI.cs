@@ -48,4 +48,13 @@ public class InventoryUI : MonoBehaviour
             UpdateUI();
         }            
     }
+    
+    public void FlipInventory()
+    {
+        fullInventory.SetActive(!fullInventory.activeSelf);
+        if (fullInventory.activeSelf)
+        {
+            UpdateUI();
+        }            
+    }
 }

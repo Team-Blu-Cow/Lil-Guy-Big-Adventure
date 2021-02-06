@@ -57,6 +57,15 @@ public class ScreenManager : MonoBehaviour
     {
         inventory.ToggleInventory(true);
     }
+    public void CloseInventory()
+    {
+        inventory.ToggleInventory(false);
+    }
+    
+    public void ToggleInventory()
+    {
+        inventory.FlipInventory();
+    }
     
     public void OpenInGameUI()
     {

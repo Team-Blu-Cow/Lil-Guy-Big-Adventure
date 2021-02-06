@@ -89,15 +89,13 @@ public class HoverStats : MonoBehaviour, IPointerEnterHandler, IPointerExitHandl
     void OpenCombatant(object combatant)
     {
         GameObject goCombatant = combatant as GameObject;
-        ToggleCanvas(false);       
-        FindObjectOfType<SwapScreenCombatant>().OpenScreen(goCombatant.GetComponent<PartyCombatant>());
+        FindObjectOfType<ScreenManager>().OpenCombatantScreen(goCombatant.GetComponent<PartyCombatant>());
         count = 0;
     }
 
     void OpenParty()
     {
-        ToggleCanvas(false);
-        FindObjectOfType<SwapScreenParty>().OpenScreen();
+        FindObjectOfType<ScreenManager>().OpenPartyScreen();
     }
 
 }
