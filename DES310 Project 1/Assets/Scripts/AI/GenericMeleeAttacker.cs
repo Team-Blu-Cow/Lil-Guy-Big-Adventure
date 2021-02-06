@@ -9,19 +9,22 @@ namespace AI
     {
         public override void run(AICore aiCore) 
         {
-            if(enemy_in_attack_range())
+            GameObject closest = find_closest_enemy();
+
+            if(enemy_in_attack_range(closest))
             {
-                attack();
+                attack(closest);
             }
             else
             {
-                move();
+                move(closest);
             }
         }
 
-        bool enemy_in_attack_range() { return true; } // TODO @matthew - heck if anyone is in range
-        void move() { } // TODO @matthew - pathfind towards nearest enemy
-        void attack() { } //TODO @matthew - attempt to deal damage to nearest enemy
+        GameObject find_closest_enemy() { return null; } // TODO @matthew - calculate distance to targets
+        bool enemy_in_attack_range(GameObject enemy) { return true; } // TODO @matthew - check if target
+        void move(GameObject enemy) { } // TODO @matthew - pathfind towards nearest enemy
+        void attack(GameObject enemy) { } //TODO @matthew - attempt to deal damage to nearest enemy
         
     }
 }
