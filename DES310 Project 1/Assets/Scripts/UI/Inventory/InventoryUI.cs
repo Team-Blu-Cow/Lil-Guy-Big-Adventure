@@ -40,9 +40,9 @@ public class InventoryUI : MonoBehaviour
         }
     }
 
-    public void ToggleInventory()
+    public void ToggleInventory(bool toggle)
     {
-        fullInventory.SetActive(!fullInventory.activeSelf);
+        fullInventory.SetActive(toggle);
         if (fullInventory.activeSelf)
         {
             UpdateUI();
