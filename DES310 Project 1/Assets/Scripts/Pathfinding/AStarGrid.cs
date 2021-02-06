@@ -188,8 +188,7 @@ public class AStarGrid : MonoBehaviour
         Vector3 targetPos = new Vector3(transform.position.x + (gridSize.x*nodeDiameter), transform.position.y - ((gridSize.x * nodeDiameter / 2f)), transform.position.z);
         Gizmos.DrawLine(startPos, targetPos);
         Gizmos.color = new Color(1, 1, 1, 0.25f);
-        if (DisplayGridGizmos)
-            for (int i = 1; i < gridSize.y; i++)
+        for (int i = 1; i < gridSize.y; i++)
                 Gizmos.DrawLine(startPos + new Vector3(i * -nodeDiameter, i * (-nodeDiameter / 2f), 0), targetPos + new Vector3(i * -nodeDiameter, i * (-nodeDiameter / 2f), 0));
         Gizmos.color = Color.white;
         Gizmos.DrawLine(startPos + new Vector3(gridSize.y * -nodeDiameter, gridSize.y * (-nodeDiameter / 2f), 0), targetPos + new Vector3(gridSize.y * -nodeDiameter, gridSize.y * (-nodeDiameter / 2f), 0));
@@ -199,8 +198,7 @@ public class AStarGrid : MonoBehaviour
         targetPos = new Vector3(transform.position.x - (gridSize.y * nodeDiameter), transform.position.y - ((gridSize.y * nodeDiameter / 2f)), transform.position.z);
         Gizmos.DrawLine(startPos, targetPos);
         Gizmos.color = new Color(1, 1, 1, 0.25f);
-        if (DisplayGridGizmos)
-            for (int i = 1; i < gridSize.x; i++)
+        for (int i = 1; i < gridSize.x; i++)
                 Gizmos.DrawLine(startPos + new Vector3(i * nodeDiameter, i * (-nodeDiameter / 2f), 0), targetPos + new Vector3(i * nodeDiameter, i * (-nodeDiameter / 2f), 0));
         Gizmos.color = Color.white;
         Gizmos.DrawLine(startPos + new Vector3(gridSize.x * nodeDiameter, gridSize.x * (-nodeDiameter / 2f), 0), targetPos + new Vector3(gridSize.x * nodeDiameter, gridSize.x * (-nodeDiameter / 2f), 0));
