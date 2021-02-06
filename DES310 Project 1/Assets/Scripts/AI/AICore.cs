@@ -3,12 +3,6 @@ using UnityEngine;
 
 namespace AI
 {
-    // different ai can be run using different scripts, they should all inherit from this
-    public abstract class AIBaseBehavior : MonoBehaviour
-    {
-        public abstract void run(AICore aiCore);
-    }
-
     // a AI core must exist in every scene, this controls all ai within the scene
     // this inclues non combatants, eg birds
 
@@ -16,8 +10,11 @@ namespace AI
 
     public class AICore : MonoBehaviour
     {
-        public GameObject player;
+        //public GameObject player;
         public List<GameObject> ai_list;
+        public List<GameObject> party_list;
+        public PathFinder pathfinder;
+
 
         private void Start()
         {
@@ -47,15 +44,15 @@ namespace AI
 
         private void FixedUpdate()
         {
-            foreach (GameObject actor in ai_list)
-            {
-                // this will always cache miss however it allows the behaviour script to be changed out at runtime
-                AIBaseBehavior behaviour = actor.GetComponent<AIBaseBehavior>();
-                if (behaviour)
-                {
-                    behaviour.run(this);
-                }
-            }
+            //foreach (GameObject actor in ai_list)
+            //{
+            //    // this will always cache miss however it allows the behaviour script to be changed out at runtime
+            //    AIBaseBehavior behaviour = actor.GetComponent<AIBaseBehavior>();
+            //    if (behaviour)
+            //    {
+            //        behaviour.run(this);
+            //    }
+            //}
         }
     }
 }
