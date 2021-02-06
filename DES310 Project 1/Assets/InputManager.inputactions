@@ -54,9 +54,17 @@
                     "interactions": ""
                 },
                 {
-                    "name": "Mouse",
+                    "name": "Change Party Member",
                     "type": "Button",
-                    "id": "76a78281-05ac-4b9f-bde8-fc8cdbc9ffa2",
+                    "id": "3a86d212-5c0c-41a8-be5b-5735f95f3352",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": ""
+                },
+                {
+                    "name": "Pause",
+                    "type": "Button",
+                    "id": "af46e327-fcee-4c36-ae88-d1eb4f034647",
                     "expectedControlType": "Button",
                     "processors": "",
                     "interactions": ""
@@ -131,12 +139,23 @@
                 },
                 {
                     "name": "",
-                    "id": "4b49b30f-2a10-43fd-bd80-3774b1fd446e",
-                    "path": "<Mouse>/press",
+                    "id": "568058b7-bb05-467c-834f-9f3426707566",
+                    "path": "<Keyboard>/w",
                     "interactions": "",
                     "processors": "",
                     "groups": "",
-                    "action": "Mouse",
+                    "action": "Change Party Member",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "0b13a95a-065b-4f19-8d52-dfe15dcfcb7e",
+                    "path": "<Keyboard>/escape",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Pause",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }
