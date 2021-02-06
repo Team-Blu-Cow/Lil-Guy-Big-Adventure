@@ -12,6 +12,11 @@ public class AStarGridEditor : Editor
         grid.InitGrid();
     }
 
+    private void OnValidate()
+    {
+        AStarGrid grid = (AStarGrid)target;
+    }
+
     public override void OnInspectorGUI()
     {
         base.OnInspectorGUI();

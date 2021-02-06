@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System.Diagnostics;
 
 public class PathFinder : MonoBehaviour
 {
@@ -16,22 +17,27 @@ public class PathFinder : MonoBehaviour
 
     private void Update()
     {
-        FindPath(seeker.position, target.position);
+        if(Input.GetButtonDown("Jump"))
+            FindPath(seeker.position, target.position);
     }
 
     void FindPath(Vector3 startPos, Vector3 targetPos)
     {
+        Stopwatch sw = new Stopwatch();
+        sw.Start();
+
         AStarNode startNode = grid.WorldToNode(startPos);
         AStarNode targetNode = grid.WorldToNode(targetPos);
 
-        List<AStarNode> openSet = new List<AStarNode>();
+        //List<AStarNode> openSet = new List<AStarNode>();
+        Heap<AStarNode> openSet = new Heap<AStarNode>(grid.MaxSize);
         HashSet<AStarNode> closedSet = new HashSet<AStarNode>();
 
         openSet.Add(startNode);
 
         while(openSet.Count > 0)
         {
-            AStarNode currentNode = openSet[0];
+           /* AStarNode currentNode = openSet[0];
             for (int i = 1; i < openSet.Count; i++)
             {
                 if(openSet[i].fCost < currentNode.fCost || openSet[i].fCost == currentNode.fCost && openSet[i].hCost < currentNode.hCost)
@@ -40,11 +46,14 @@ public class PathFinder : MonoBehaviour
                 }
             }
 
-            openSet.Remove(currentNode);
+            openSet.Remove(currentNode);//*/
+            AStarNode currentNode = openSet.RemoveFirst();
             closedSet.Add(currentNode);
 
             if(currentNode == targetNode)
             {
+                sw.Stop();
+                UnityEngine.Debug.Log("Path found in: " + sw.ElapsedMilliseconds + "ms");
                 RetracePath(startNode, targetNode);
                 return;
             }
@@ -92,7 +101,7 @@ public class PathFinder : MonoBehaviour
         int dstX = Mathf.Abs(nodeA.gridPosition.x - nodeB.gridPosition.x);
         int dstY = Mathf.Abs(nodeA.gridPosition.y - nodeB.gridPosition.y);
 
-        return dstX + dstY;
+        return (dstX*10) + (dstY*10);
 
         /*if (dstX > dstY)
             return 14 * dstY + 10 * (dstX - dstY);
