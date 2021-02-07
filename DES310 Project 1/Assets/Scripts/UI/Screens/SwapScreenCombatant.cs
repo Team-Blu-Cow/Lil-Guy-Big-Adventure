@@ -54,7 +54,7 @@ public class SwapScreenCombatant : MonoBehaviour
         SetStatsModified(combatant.GetStats());
         SetAblities(combatant.GetCombatant());
         int count = 0;
-        foreach (LeanedAbility ability in swapAbility.GetComponentsInChildren<LeanedAbility>())
+        foreach (LearnedAbility ability in swapAbility.GetComponentsInChildren<LearnedAbility>())
         {
             ability.SetAbility(combatant.GetCombatant(),count);
             count++;
@@ -111,16 +111,28 @@ public class SwapScreenCombatant : MonoBehaviour
     void SetAblities(Combatant abilities)
     {
         int count = 0;
+        
+        GameObject abilityGO = GameObject.Find("Base/Abilities");
+        for (int i = 0; i < 4; i++)
+        {
+            abilityGO.transform.GetChild(i).GetComponentInChildren<TextMeshProUGUI>().text = "";
+            abilityGO.transform.GetChild(i).transform.GetChild(0).GetComponentInChildren<TextMeshProUGUI>().text = "";
+        }
+
+
         foreach (Ability ab in abilities.abilitiesUsing)
         {
-            GameObject.Find("Base/Abilities").transform.GetChild(count).GetComponentInChildren<TextMeshProUGUI>().text = ab.abilityName;
-            GameObject.Find("Base/Abilities").transform.GetChild(count).GetChild(0).GetComponentInChildren<TextMeshProUGUI>().text =
-            "Type: " + ab.abilityType.ToString() + "\n" +
-            "Main Stat: " + ab.statUsed.ToString() + "\n" +
-            "Power: " + ab.abilityPower + "\n" +
-            "Area: " + ab.abilityArea + "\n" +
-            "Aspect: " + ab.abilityAspect;
-            count++;
+            if (ab)
+            {
+                abilityGO.transform.GetChild(count).GetComponentInChildren<TextMeshProUGUI>().text = ab.abilityName;
+                abilityGO.transform.GetChild(count).GetChild(0).GetComponentInChildren<TextMeshProUGUI>().text =
+                "Type: " + ab.abilityType.ToString() + "\n" +
+                "Main Stat: " + ab.statUsed.ToString() + "\n" +
+                "Power: " + ab.abilityPower + "\n" +
+                "Area: " + ab.abilityArea + "\n" +
+                "Aspect: " + ab.abilityAspect;
+                count++;
+            }
         }
     }
 }
