@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.EventSystems;
+using UnityEngine.InputSystem;
 
 public class InventorySlot : MonoBehaviour, IPointerDownHandler, IPointerUpHandler
 {
@@ -17,7 +18,7 @@ public class InventorySlot : MonoBehaviour, IPointerDownHandler, IPointerUpHandl
     {
         if (dragging)
         {
-            icon.transform.position = (Input.mousePosition);
+            icon.transform.position = (Mouse.current.position.ReadValue());
         }
     }
 
@@ -26,10 +27,10 @@ public class InventorySlot : MonoBehaviour, IPointerDownHandler, IPointerUpHandl
         if (eventData.pointerCurrentRaycast.gameObject.CompareTag("InventoryItem") && item)
         {
             dragging = true;
-        }
+        }       
     }
     
-    void IPointerUpHandler.OnPointerUp(PointerEventData eventData)
+    public void OnPointerUp(PointerEventData eventData)
     {
         if (item)
         {

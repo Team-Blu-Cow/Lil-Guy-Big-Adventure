@@ -4,6 +4,22 @@ using UnityEngine;
 
 public class ScreenManager : MonoBehaviour
 {
+    #region Singleton
+    public static ScreenManager screenManager;
+    private void Awake()
+    {
+        if (screenManager != null)
+        {
+            Debug.LogWarning("Screen Manager instances");
+            return;
+        }
+        screenManager = this;
+        
+        controls = new InputManager();
+        controls.Keyboard.Pause.performed += ctx => TogglePause();
+    }
+    #endregion
+
     public InputManager controls;
 
     public PauseScreen pause;
@@ -12,13 +28,6 @@ public class ScreenManager : MonoBehaviour
     public InventoryUI inventory;
     public HoverStats inGameParty;
     public LevelLoader levelSwitch;
-
-    private void Awake()
-    {
-        controls = new InputManager();
-        controls.Keyboard.Pause.performed += ctx => TogglePause();
-    }
-
 
     private void OnEnable()
     {

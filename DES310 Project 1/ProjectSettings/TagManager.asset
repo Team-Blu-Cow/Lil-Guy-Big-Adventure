@@ -7,6 +7,7 @@ TagManager:
   - UIPartyMember
   - InventoryItem
   - InventoryEquipt
+  - LearnedAbility
   layers:
   - Default
   - TransparentFX

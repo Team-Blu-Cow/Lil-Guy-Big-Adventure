@@ -4,6 +4,7 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.EventSystems;
+using UnityEngine.InputSystem;
 
 public class ToolTip : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
 {
@@ -54,7 +55,7 @@ public class ToolTip : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
 
         if (toolTip.enabled)
         {
-            Vector3 newPos = Input.mousePosition + new Vector3(padding,padding,0);
+            Vector3 newPos = Mouse.current.position.ReadValue() + new Vector2(padding,padding);
 
             if (newPos.x + toolTip.GetComponentInChildren<RectTransform>().rect.width > Screen.width - padding)
             {

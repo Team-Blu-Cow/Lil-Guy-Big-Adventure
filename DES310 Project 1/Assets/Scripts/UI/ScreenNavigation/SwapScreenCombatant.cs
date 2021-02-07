@@ -6,6 +6,8 @@ using UnityEngine;
 
 public class SwapScreenCombatant : MonoBehaviour
 {
+    public GameObject swapAbility;
+
     private void Start()
     {
         LeanTween.scale(gameObject, new Vector3(0, 0, 0), 0.0f);
@@ -51,6 +53,12 @@ public class SwapScreenCombatant : MonoBehaviour
         SetStats(combatant.GetStats());
         SetStatsModified(combatant.GetStats());
         SetAblities(combatant.GetCombatant());
+        int count = 0;
+        foreach (LeanedAbility ability in swapAbility.GetComponentsInChildren<LeanedAbility>())
+        {
+            ability.SetAbility(combatant.GetCombatant(),count);
+            count++;
+        }
 
         // Swap to main screen
         Swap(transform.GetChild(1).gameObject);
