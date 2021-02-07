@@ -66,6 +66,8 @@ public class PathFinder : MonoBehaviour
 
                         if (!openSet.Contains(neighbour))
                             openSet.Add(neighbour);
+                        else
+                            openSet.UpdateItem(neighbour);
                     }
 
                 }
@@ -90,6 +92,7 @@ public class PathFinder : MonoBehaviour
             path.Add(currentNode);
             currentNode = currentNode.parent;
         }
+        path.Add(currentNode);
         Vector3[] waypoints = SimplifyPath(path);
 
         Array.Reverse(waypoints);

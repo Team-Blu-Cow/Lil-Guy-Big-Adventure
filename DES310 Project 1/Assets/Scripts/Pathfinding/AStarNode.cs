@@ -7,6 +7,7 @@ using System;
 public class AStarNode : IHeapItem<AStarNode>
 {
     public bool walkable;
+
     public Vector3 worldPosition;
     public Vector3Int gridPosition;
 
