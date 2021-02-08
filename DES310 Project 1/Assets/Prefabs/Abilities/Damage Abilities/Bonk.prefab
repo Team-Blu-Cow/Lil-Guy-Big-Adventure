@@ -43,10 +43,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2d2d9ad1ce01c3b41aedd5c1c2bbd77c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  abilityName: 
+  abilityName: Bonk
   abilityType: 0
   statUsed: 0
   abilityPower: 10
   abilityRange: 1
   abilityArea: 1
-  abilityAspect: 4
+  abilityAspect: 3

@@ -4,7 +4,11 @@
 TagManager:
   serializedVersion: 2
   tags:
-  - Enemy
+  - UIPartyMember
+  - InventoryItem
+  - InventoryEquipt
+  - LearnedAbility
+  - UsingAbility
   layers:
   - Default
   - TransparentFX

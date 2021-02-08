@@ -81,6 +81,14 @@ public class @InputManager : IInputActionCollection, IDisposable
                     ""expectedControlType"": ""Button"",
                     ""processors"": """",
                     ""interactions"": """"
+                },
+                {
+                    ""name"": ""Mouse"",
+                    ""type"": ""Value"",
+                    ""id"": ""5dced9c4-7b43-43ee-89ea-b38031a3e3fb"",
+                    ""expectedControlType"": ""Vector2"",
+                    ""processors"": """",
+                    ""interactions"": """"
                 }
             ],
             ""bindings"": [
@@ -171,6 +179,17 @@ public class @InputManager : IInputActionCollection, IDisposable
                     ""action"": ""Pause"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""aee2740b-2b92-4589-87cf-d479a71c6f9c"",
+                    ""path"": ""<Mouse>/position"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Mouse"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -187,6 +206,7 @@ public class @InputManager : IInputActionCollection, IDisposable
         m_Keyboard_DecrementAbilitySelect = m_Keyboard.FindAction("Decrement Ability Select", throwIfNotFound: true);
         m_Keyboard_ChangePartyMember = m_Keyboard.FindAction("Change Party Member", throwIfNotFound: true);
         m_Keyboard_Pause = m_Keyboard.FindAction("Pause", throwIfNotFound: true);
+        m_Keyboard_Mouse = m_Keyboard.FindAction("Mouse", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -244,6 +264,7 @@ public class @InputManager : IInputActionCollection, IDisposable
     private readonly InputAction m_Keyboard_DecrementAbilitySelect;
     private readonly InputAction m_Keyboard_ChangePartyMember;
     private readonly InputAction m_Keyboard_Pause;
+    private readonly InputAction m_Keyboard_Mouse;
     public struct KeyboardActions
     {
         private @InputManager m_Wrapper;
@@ -256,6 +277,7 @@ public class @InputManager : IInputActionCollection, IDisposable
         public InputAction @DecrementAbilitySelect => m_Wrapper.m_Keyboard_DecrementAbilitySelect;
         public InputAction @ChangePartyMember => m_Wrapper.m_Keyboard_ChangePartyMember;
         public InputAction @Pause => m_Wrapper.m_Keyboard_Pause;
+        public InputAction @Mouse => m_Wrapper.m_Keyboard_Mouse;
         public InputActionMap Get() { return m_Wrapper.m_Keyboard; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -289,6 +311,9 @@ public class @InputManager : IInputActionCollection, IDisposable
                 @Pause.started -= m_Wrapper.m_KeyboardActionsCallbackInterface.OnPause;
                 @Pause.performed -= m_Wrapper.m_KeyboardActionsCallbackInterface.OnPause;
                 @Pause.canceled -= m_Wrapper.m_KeyboardActionsCallbackInterface.OnPause;
+                @Mouse.started -= m_Wrapper.m_KeyboardActionsCallbackInterface.OnMouse;
+                @Mouse.performed -= m_Wrapper.m_KeyboardActionsCallbackInterface.OnMouse;
+                @Mouse.canceled -= m_Wrapper.m_KeyboardActionsCallbackInterface.OnMouse;
             }
             m_Wrapper.m_KeyboardActionsCallbackInterface = instance;
             if (instance != null)
@@ -317,6 +342,9 @@ public class @InputManager : IInputActionCollection, IDisposable
                 @Pause.started += instance.OnPause;
                 @Pause.performed += instance.OnPause;
                 @Pause.canceled += instance.OnPause;
+                @Mouse.started += instance.OnMouse;
+                @Mouse.performed += instance.OnMouse;
+                @Mouse.canceled += instance.OnMouse;
             }
         }
     }
@@ -331,5 +359,6 @@ public class @InputManager : IInputActionCollection, IDisposable
         void OnDecrementAbilitySelect(InputAction.CallbackContext context);
         void OnChangePartyMember(InputAction.CallbackContext context);
         void OnPause(InputAction.CallbackContext context);
+        void OnMouse(InputAction.CallbackContext context);
     }
 }
