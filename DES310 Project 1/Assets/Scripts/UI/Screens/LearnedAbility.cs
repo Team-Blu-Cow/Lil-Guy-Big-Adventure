@@ -11,6 +11,7 @@ public class LearnedAbility : MonoBehaviour, IPointerDownHandler,IPointerUpHandl
 {
     bool dragging = false;
     public GameObject textGO;
+    int abilitySelect = 0;
 
     // Update is called once per frame
     void Update()
@@ -27,6 +28,31 @@ public class LearnedAbility : MonoBehaviour, IPointerDownHandler,IPointerUpHandl
         {
             dragging = true;
             textGO.GetComponent<LayoutElement>().ignoreLayout = true;
+
+            if (eventData.pointerCurrentRaycast.gameObject.name.Contains("1"))
+            {
+                abilitySelect = 0;
+            }
+            else if (eventData.pointerCurrentRaycast.gameObject.name.Contains("2"))
+            {
+                abilitySelect = 1;
+            }  
+            else if (eventData.pointerCurrentRaycast.gameObject.name.Contains("3"))
+            {
+                abilitySelect = 2;
+            }  
+            else if (eventData.pointerCurrentRaycast.gameObject.name.Contains("4"))
+            {
+                abilitySelect = 3;
+            }  
+            else if (eventData.pointerCurrentRaycast.gameObject.name.Contains("5"))
+            {
+                abilitySelect = 4;
+            } 
+            else if (eventData.pointerCurrentRaycast.gameObject.name.Contains("6"))
+            {
+                abilitySelect = 5;
+            }
         }
     }
 
@@ -43,22 +69,22 @@ public class LearnedAbility : MonoBehaviour, IPointerDownHandler,IPointerUpHandl
                 if (eventGO.name.Contains("1"))
                 {
                     Debug.Log(1);
-                    combatant.abilitiesUsing[0] = combatant.abilitiesLearnt[0];
+                    combatant.abilitiesUsing[0] = combatant.abilitiesLearnt[abilitySelect];
                 }
                 else if (eventGO.name.Contains("2"))
                 {
                     Debug.Log(2); 
-                    combatant.abilitiesUsing[1] = combatant.abilitiesLearnt[1];
+                    combatant.abilitiesUsing[1] = combatant.abilitiesLearnt[abilitySelect];
                 }
                 else if (eventGO.name.Contains("3"))
                 {
                     Debug.Log(3);
-                    combatant.abilitiesUsing[2] = combatant.abilitiesLearnt[2];
+                    combatant.abilitiesUsing[2] = combatant.abilitiesLearnt[abilitySelect];
                 }
                 else if (eventGO.name.Contains("4"))
                 {
                     Debug.Log(4);
-                    combatant.abilitiesUsing[3] = combatant.abilitiesLearnt[3];
+                    combatant.abilitiesUsing[3] = combatant.abilitiesLearnt[abilitySelect];
                 }
             }
         }
