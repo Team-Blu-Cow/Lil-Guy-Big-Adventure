@@ -6,15 +6,15 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 1
-    path: Assets/Scenes/SampleScene.unity
+    path: Assets/Scenes/Sprint 1/SampleScene.unity
     guid: 2cda990e2423bbf4892e6590ba056729
   - enabled: 1
-    path: Assets/Scenes/SpellChecker.unity
+    path: Assets/Scenes/Sprint 1/SpellChecker.unity
     guid: 67afd9598e6ff3b43a4b9ee932f2320b
   - enabled: 1
-    path: Assets/Scenes/MainMenu.unity
+    path: Assets/Scenes/Sprint 1/MainMenu.unity
     guid: 1eed9786fb1c9b048bdafa219df709af
   - enabled: 1
-    path: Assets/Scenes/UItesting.unity
+    path: Assets/Scenes/Sprint 1/UItesting.unity
     guid: 1ac53c54246252b47b887327dd3d655c
   m_configObjects: {}
