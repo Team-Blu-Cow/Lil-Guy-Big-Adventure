@@ -32,32 +32,47 @@ public class LearnedAbility : MonoBehaviour, IPointerDownHandler,IPointerUpHandl
 
     void IPointerUpHandler.OnPointerUp(PointerEventData eventData)
     {
-        if (gameObject.activeSelf)
+        GameObject eventGO = eventData.pointerCurrentRaycast.gameObject;
+
+        if (eventGO)
         {
-            dragging = false;
-            textGO.GetComponent<LayoutElement>().ignoreLayout = false;
+            if (eventGO.CompareTag("UsingAbility") && gameObject.activeSelf)
+            {
+                Combatant combatant = eventGO.transform.parent.GetComponentInParent<PartyCombatant>().GetCombatant();
 
-
-            GameObject eventGO = eventData.pointerCurrentRaycast.gameObject;
-
-            //if (!eventGO)
-            //{
-            //}
-            //else if (eventGO.CompareTag("Abilty"))
-            //{
-            //    // set ability
-            //    combatant.abilitiesUsing[0] = combatant.abilitiesLearnt[0];
-
-            //}
+                if (eventGO.name.Contains("1"))
+                {
+                    Debug.Log(1);
+                    combatant.abilitiesUsing[0] = combatant.abilitiesLearnt[0];
+                }
+                else if (eventGO.name.Contains("2"))
+                {
+                    Debug.Log(2); 
+                    combatant.abilitiesUsing[1] = combatant.abilitiesLearnt[1];
+                }
+                else if (eventGO.name.Contains("3"))
+                {
+                    Debug.Log(3);
+                    combatant.abilitiesUsing[2] = combatant.abilitiesLearnt[2];
+                }
+                else if (eventGO.name.Contains("4"))
+                {
+                    Debug.Log(4);
+                    combatant.abilitiesUsing[3] = combatant.abilitiesLearnt[3];
+                }
+            }
         }
+
+        dragging = false;
+        textGO.GetComponent<LayoutElement>().ignoreLayout = false;
     }
 
-    public void SetAbility(Combatant combatant, int index)
+    public void SetAbility(Combatant combatantIn, int index)
     {
         textGO.SetActive(true);
-        if (combatant.abilitiesLearnt[index])
+        if (combatantIn.abilitiesLearnt[index])
         {
-            textGO.GetComponent<TextMeshProUGUI>().text = combatant.abilitiesLearnt[index].abilityName;
+            textGO.GetComponent<TextMeshProUGUI>().text = combatantIn.abilitiesLearnt[index].abilityName;
         }
         else
         {

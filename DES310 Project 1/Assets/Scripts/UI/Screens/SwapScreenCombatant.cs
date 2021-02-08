@@ -35,6 +35,7 @@ public class SwapScreenCombatant : MonoBehaviour
         // Enable canvas
         transform.GetComponentInParent<Canvas>().enabled = true;
         GetComponent<PartyCombatant>().SetCombatant(combatant.GetCombatant());
+        GetComponent<PartyCombatant>().SetCombatantGO(combatant.combatantGO);
 
         // Fade in background
         LeanTween.scale(gameObject, new Vector3(1, 1, 1), 0.5f);
@@ -115,8 +116,8 @@ public class SwapScreenCombatant : MonoBehaviour
         GameObject abilityGO = GameObject.Find("Base/Abilities");
         for (int i = 0; i < 4; i++)
         {
-            abilityGO.transform.GetChild(i).GetComponentInChildren<TextMeshProUGUI>().text = "";
             abilityGO.transform.GetChild(i).transform.GetChild(0).GetComponentInChildren<TextMeshProUGUI>().text = "";
+            abilityGO.transform.GetChild(i).transform.GetChild(1).GetComponentInChildren<TextMeshProUGUI>().text = "";
         }
 
 
@@ -124,8 +125,8 @@ public class SwapScreenCombatant : MonoBehaviour
         {
             if (ab)
             {
-                abilityGO.transform.GetChild(count).GetComponentInChildren<TextMeshProUGUI>().text = ab.abilityName;
-                abilityGO.transform.GetChild(count).GetChild(0).GetComponentInChildren<TextMeshProUGUI>().text =
+                abilityGO.transform.GetChild(count).GetChild(0).GetComponentInChildren<TextMeshProUGUI>().text = ab.abilityName;
+                abilityGO.transform.GetChild(count).GetChild(1).GetComponentInChildren<TextMeshProUGUI>().text =
                 "Type: " + ab.abilityType.ToString() + "\n" +
                 "Main Stat: " + ab.statUsed.ToString() + "\n" +
                 "Power: " + ab.abilityPower + "\n" +

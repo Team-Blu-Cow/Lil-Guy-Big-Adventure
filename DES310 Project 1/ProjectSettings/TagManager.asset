@@ -8,6 +8,7 @@ TagManager:
   - InventoryItem
   - InventoryEquipt
   - LearnedAbility
+  - UsingAbility
   layers:
   - Default
   - TransparentFX
