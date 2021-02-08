@@ -5,16 +5,17 @@ using UnityEngine;
 public enum Combatant_Type
 {
     Human = 0, // average weights
-    Mushroom = 1, // Strong:(str, def) Weak:(Speed, init)
-    StoneBug = 2, // Strong: (Dex, Mag) Weak:(str, def)
-    Phoenix = 3,
-    Hedgehog = 4
+    Mushroom = 1, // Str: Luck, Mag Weak: Def, Dex
+    StoneBug = 2, // Str: Str, Def Weak: Mag, Init
+    Phoenix = 3, // Str: Mag, Init Weak: Luck, Str
+    Hedgehog = 4 // Str: Dex Weak: Str, Init
 }
 
 [System.Serializable]
 public class Stats : MonoBehaviour
 {
     public Combatant_Type combatant_type;
+    Combatant combatant;
 
     public int mod_str;
     public int mod_dex;
@@ -38,6 +39,7 @@ public class Stats : MonoBehaviour
 
     private void Start()
     {
+        combatant = GetComponent<Combatant>();
         // Racial traits
         switch (combatant_type)
         {
@@ -53,17 +55,27 @@ public class Stats : MonoBehaviour
                 break;
 
             case Combatant_Type.Mushroom:
+                base_luck += 6;
+                base_mag += 6;
+                base_def -= 3;
+                base_dex -= 3;
+                break;
+            case Combatant_Type.StoneBug:
                 base_str += 6;
                 base_def += 6;
-                base_speed -= 3;
+                base_mag -= 3;
                 base_init -= 3;
                 break;
-
-            case Combatant_Type.StoneBug:
+            case Combatant_Type.Phoenix:
                 base_mag += 6;
-                base_dex += 6;
+                base_init += 6;
+                base_luck -= 3;
                 base_str -= 3;
-                base_def -= 3;
+                break;
+            case Combatant_Type.Hedgehog:
+                base_dex += 9;
+                base_str -= 3;
+                base_init -= 3;
                 break;
         };
 
@@ -75,6 +87,8 @@ public class Stats : MonoBehaviour
         base_luck += mod_luck;
         base_speed += mod_speed;
         base_init += mod_init;
+
+        quirkStats();
 
         Debug.Log("Str: " + base_str);
         Debug.Log("dex: " + base_dex);
@@ -153,6 +167,46 @@ public class Stats : MonoBehaviour
             case "HP":
                 base_hp += modStat;
                 break;
+        }
+    }
+
+    private void quirkStats()
+    {
+        Quirks[] quirks = combatant.combatantQuirks;
+
+        
+        for(int i = 0; i < 3; i++)
+        {
+            if (quirks[i] != null)
+            {
+                switch (quirks[i].statBoost)
+                {
+                    case stat_used.Strength:
+                        base_str += quirks[i].quirkPower;
+                        break;
+                    case stat_used.Dexterity:
+                        base_dex += quirks[i].quirkPower;
+                        break;
+                    case stat_used.Magic:
+                        base_mag += quirks[i].quirkPower;
+                        break;
+                    case stat_used.Defence:
+                        base_def += quirks[i].quirkPower;
+                        break;
+                    case stat_used.Constitution:
+                        base_con += quirks[i].quirkPower;
+                        break;
+                    case stat_used.Luck:
+                        base_luck += quirks[i].quirkPower;
+                        break;
+                    case stat_used.Speed:
+                        base_speed += quirks[i].quirkPower;
+                        break;
+                    case stat_used.Initiative:
+                        base_init += quirks[i].quirkPower;
+                        break;
+                }
+            }
         }
     }
 }
