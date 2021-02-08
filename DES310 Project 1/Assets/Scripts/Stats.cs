@@ -5,10 +5,10 @@ using UnityEngine;
 public enum Combatant_Type
 {
     Human = 0, // average weights
-    Mushroom = 1, //
-    StoneBug = 2, //
-    Phoenix = 3,
-    Hedgehog = 4
+    Mushroom = 1, // Str: Luck, Mag Weak: Def, Dex
+    StoneBug = 2, // Str: Str, Def Weak: Mag, Init
+    Phoenix = 3, // Str: Mag, Init Weak: Luck, Str
+    Hedgehog = 4 // Str: Dex Weak: Str, Init
 }
 
 [System.Serializable]
@@ -55,17 +55,27 @@ public class Stats : MonoBehaviour
                 break;
 
             case Combatant_Type.Mushroom:
+                base_luck += 6;
+                base_mag += 6;
+                base_def -= 3;
+                base_dex -= 3;
+                break;
+            case Combatant_Type.StoneBug:
                 base_str += 6;
                 base_def += 6;
-                base_speed -= 3;
+                base_mag -= 3;
                 base_init -= 3;
                 break;
-
-            case Combatant_Type.StoneBug:
+            case Combatant_Type.Phoenix:
                 base_mag += 6;
-                base_dex += 6;
+                base_init += 6;
+                base_luck -= 3;
                 base_str -= 3;
-                base_def -= 3;
+                break;
+            case Combatant_Type.Hedgehog:
+                base_dex += 9;
+                base_str -= 3;
+                base_init -= 3;
                 break;
         };
 
