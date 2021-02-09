@@ -17,6 +17,7 @@ public class Combatant : MonoBehaviour
     public float[] resistances;
 
     public Quirks[] combatantQuirks;
+    public InitiativeTracker initTracker;
 
     public InputManager controls;
 
@@ -55,6 +56,8 @@ public class Combatant : MonoBehaviour
         abilitiesUsing[1] = abilitiesLearnt[1];
         abilitiesUsing[2] = abilitiesLearnt[2];
         abilitiesUsing[3] = abilitiesLearnt[3];
+
+        initTracker.AddCombatant(this.gameObject);
     }
 
     private void Update()
@@ -81,15 +84,7 @@ public class Combatant : MonoBehaviour
     }
 
 
-    // TODO - this is here to as a basic placeholder, it should be moved into its own file
-    public enum DamageType
-    {
-        NORMAL = 0,
-        FIRE,
-        WATER
-    };
-
-    public void do_damage(int damage, DamageType type)
+    public void do_damage(int damage, Aspects.Aspect type)
     {
         // why cant i just get direct access to this? the switch case in these functions adds unnecessary overhead
         GetComponent<Stats>().setStat("HP", -damage);
