@@ -4234,6 +4234,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8577228859547442781}
+  - component: {fileID: 5749537621042549145}
   m_Layer: 5
   m_Name: Inventory
   m_TagString: Untagged
@@ -4262,6 +4263,27 @@ RectTransform:
   m_AnchoredPosition: {x: -150, y: 188}
   m_SizeDelta: {x: 247.00464, y: 319.1622}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!223 &5749537621042549145
+Canvas:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8577228859547442780}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_RenderMode: 2
+  m_Camera: {fileID: 0}
+  m_PlaneDistance: 100
+  m_PixelPerfect: 0
+  m_ReceivesEvents: 1
+  m_OverrideSorting: 0
+  m_OverridePixelPerfect: 0
+  m_SortingBucketNormalizedSize: 0
+  m_AdditionalShaderChannelsFlag: 0
+  m_SortingLayerID: 0
+  m_SortingOrder: 0
+  m_TargetDisplay: 0
 --- !u!1 &8577228859568231854
 GameObject:
   m_ObjectHideFlags: 0
@@ -10897,7 +10919,7 @@ GameObject:
   m_Component:
   - component: {fileID: 8577228860964857462}
   m_Layer: 5
-  m_Name: Canvases
+  m_Name: UI_Canvases
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

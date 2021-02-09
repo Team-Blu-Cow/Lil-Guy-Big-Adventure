@@ -15,7 +15,7 @@ public class SwapScreenCombatant : MonoBehaviour
         // Enable all screens
         for (int i = 1; i < 6; i++)
         {
-            transform.GetChild(i).gameObject.SetActive(true);
+            transform.GetChild(i).GetComponent<Canvas>().enabled = true;
         }
     }
 
@@ -24,10 +24,10 @@ public class SwapScreenCombatant : MonoBehaviour
         // Disable all screens
         for (int i = 1; i < 6; i++)
         {
-            transform.GetChild(i).gameObject.SetActive(false);
+            transform.GetChild(i).GetComponent<Canvas>().enabled = false;
         }
         // Re-enable required screen
-        screen.SetActive(true);
+        screen.GetComponent<Canvas>().enabled = true;
     }
 
     public void OpenScreen(PartyCombatant combatant)
@@ -74,7 +74,7 @@ public class SwapScreenCombatant : MonoBehaviour
             // Enabe all screens
             for (int i = 1; i < 6; i++)
             {
-                transform.GetChild(i).gameObject.SetActive(true);
+                transform.GetChild(i).GetComponent<Canvas>().enabled = true;
             }
         });
 
