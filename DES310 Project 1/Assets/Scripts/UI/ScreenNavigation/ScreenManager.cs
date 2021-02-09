@@ -1,11 +1,22 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using TMPro;
 
 public class ScreenManager : MonoBehaviour
 {
-    #region Singleton
     public static ScreenManager screenManager;
+
+    public InputManager controls;
+
+    PauseScreen pause;
+    SwapScreenCombatant combatantScreen;
+    SwapScreenParty partyScreen;
+    InventoryUI inventory;
+    HoverStats inGameParty;
+    LevelLoader levelSwitch;
+    public List<TMP_FontAsset> fonts;
+
     private void Awake()
     {
         if (screenManager != null)
@@ -17,17 +28,14 @@ public class ScreenManager : MonoBehaviour
         
         controls = new InputManager();
         controls.Keyboard.Pause.performed += ctx => TogglePause();
+
+        pause = GetComponentInChildren<PauseScreen>();
+        combatantScreen = GetComponentInChildren<SwapScreenCombatant>();
+        partyScreen = GetComponentInChildren<SwapScreenParty>();
+        inventory = GetComponentInChildren<InventoryUI>();
+        inGameParty = GetComponentInChildren<HoverStats>();
+        levelSwitch = GetComponentInChildren<LevelLoader>();
     }
-    #endregion
-
-    public InputManager controls;
-
-    public PauseScreen pause;
-    public SwapScreenCombatant combatantScreen;
-    public SwapScreenParty partyScreen;
-    public InventoryUI inventory;
-    public HoverStats inGameParty;
-    public LevelLoader levelSwitch;
 
     private void OnEnable()
     {
@@ -51,6 +59,7 @@ public class ScreenManager : MonoBehaviour
         inGameParty.ToggleCanvas(false);
         partyScreen.CloseScreen();
         combatantScreen.OpenScreen(combatant);
+        combatantScreen.ToggleLearned(false);
         pause.TogglePauseGame(false);
     }
     
@@ -59,6 +68,7 @@ public class ScreenManager : MonoBehaviour
         inGameParty.ToggleCanvas(false);
         partyScreen.OpenScreen();
         combatantScreen.CloseScreen();
+        combatantScreen.ToggleLearned(false);
         pause.TogglePauseGame(false);
     }
     
@@ -82,6 +92,7 @@ public class ScreenManager : MonoBehaviour
         partyScreen.CloseScreen();
         combatantScreen.CloseScreen();
         pause.TogglePauseGame(false);
+        combatantScreen.ToggleLearned(false);
     }
 
     public void SwitchLevel(string scene)
@@ -91,4 +102,17 @@ public class ScreenManager : MonoBehaviour
         levelSwitch.SwitchScene(scene);        
     }
 
+    public void SwapFont(int i)
+    {
+        foreach (TextMeshProUGUI text in GetComponentsInChildren<TextMeshProUGUI>())
+        {
+            if (fonts.Count > i)
+                text.font = fonts[i];
+        }
+    }
+
+    public SwapScreenCombatant GetCombatantScreen()
+    {
+        return combatantScreen;
+    }
 }

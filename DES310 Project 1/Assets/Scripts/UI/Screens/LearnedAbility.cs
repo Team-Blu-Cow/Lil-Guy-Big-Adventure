@@ -68,24 +68,21 @@ public class LearnedAbility : MonoBehaviour, IPointerDownHandler,IPointerUpHandl
 
                 if (eventGO.name.Contains("1"))
                 {
-                    Debug.Log(1);
                     combatant.abilitiesUsing[0] = combatant.abilitiesLearnt[abilitySelect];
                 }
                 else if (eventGO.name.Contains("2"))
                 {
-                    Debug.Log(2); 
                     combatant.abilitiesUsing[1] = combatant.abilitiesLearnt[abilitySelect];
                 }
                 else if (eventGO.name.Contains("3"))
                 {
-                    Debug.Log(3);
                     combatant.abilitiesUsing[2] = combatant.abilitiesLearnt[abilitySelect];
                 }
                 else if (eventGO.name.Contains("4"))
                 {
-                    Debug.Log(4);
                     combatant.abilitiesUsing[3] = combatant.abilitiesLearnt[abilitySelect];
                 }
+                ScreenManager.screenManager.GetCombatantScreen().SetAblities(combatant);
             }
         }
 

@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class InventoryUI : MonoBehaviour
 {
-    public GameObject fullInventory;
+    public Canvas fullInventory;
     Inventory inventory;
 
     InventorySlot[] slots;
@@ -19,12 +19,12 @@ public class InventoryUI : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {        
-        fullInventory.SetActive(false);
+        fullInventory.enabled = false;
     }
 
     public void UpdateUI()
     {
-        if (fullInventory.activeSelf)
+        if (fullInventory.enabled)
         {
             for (int i = 0; i < inventory.invSpace; i++)
             {
@@ -42,8 +42,8 @@ public class InventoryUI : MonoBehaviour
 
     public void ToggleInventory(bool toggle)
     {
-        fullInventory.SetActive(toggle);
-        if (fullInventory.activeSelf)
+        fullInventory.enabled = toggle;
+        if (fullInventory.enabled)
         {
             UpdateUI();
         }            
@@ -51,8 +51,8 @@ public class InventoryUI : MonoBehaviour
     
     public void FlipInventory()
     {
-        fullInventory.SetActive(!fullInventory.activeSelf);
-        if (fullInventory.activeSelf)
+        fullInventory.enabled = !fullInventory.enabled;
+        if (fullInventory.enabled)
         {
             UpdateUI();
         }            
