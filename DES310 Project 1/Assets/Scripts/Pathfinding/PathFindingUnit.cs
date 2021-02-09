@@ -30,7 +30,9 @@ public class PathFindingUnit : MonoBehaviour
     public void StartPath()
     {
         if (currentlyPathFinding)
-        {            
+        {
+            targetIndex = 0;
+            path = new Vector3[0];
             currentlyPathFinding = false;
             StopCoroutine("FollowPath");
             RequestPath();
