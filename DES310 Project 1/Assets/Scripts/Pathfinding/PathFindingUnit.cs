@@ -29,17 +29,18 @@ public class PathFindingUnit : MonoBehaviour
 
     public void StartPath()
     {
+        StopPath();
+        RequestPath();
+    }
+
+    public void StopPath()
+    {
         if (currentlyPathFinding)
         {
             targetIndex = 0;
             path = new Vector3[0];
             currentlyPathFinding = false;
             StopCoroutine("FollowPath");
-            RequestPath();
-        }
-        else
-        {
-            RequestPath();
         }
     }
 

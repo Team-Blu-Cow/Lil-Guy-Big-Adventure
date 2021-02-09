@@ -8,7 +8,8 @@ public class Movement : MonoBehaviour
     public AStarGrid grid;
     Transform target;
 
-    bool RMouseDown;
+    bool RMouseDown = false;
+    bool LClick = false;
     float timer;
 
     private void Awake()
@@ -18,6 +19,7 @@ public class Movement : MonoBehaviour
         controls = new InputManager();
         controls.Keyboard.RClick.started += ctx => { RMouseDown = true; };
         controls.Keyboard.RClick.canceled += ctx => { RMouseDown = false; };
+        controls.Keyboard.LClick.performed += ctx => Stop();
     }
 
     private void OnEnable()
@@ -48,9 +50,16 @@ public class Movement : MonoBehaviour
         Vector3 oldPos = target.position;
         target.position = new Vector3(nodePos.x, nodePos.y, 1);
 
-        if (oldPos != new Vector3 (nodePos.x,nodePos.y,1))
+        if (oldPos != new Vector3 (nodePos.x,nodePos.y,1) || LClick)
         {
             GetComponent<PathFindingUnit>().StartPath();
+            LClick = false;
         }
+    }
+
+    private void Stop()
+    {
+        GetComponent<PathFindingUnit>().StopPath();
+        LClick = true;
     }
 }
