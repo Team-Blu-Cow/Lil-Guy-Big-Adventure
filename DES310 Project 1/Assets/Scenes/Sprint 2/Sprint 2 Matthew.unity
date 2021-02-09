@@ -640,6 +640,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4dfd2858b38515948ab9d3eead944062, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  turn_completed: 1
+  movement_distance: 3
+  speed: 1
 --- !u!1 &1171353324
 GameObject:
   m_ObjectHideFlags: 0
