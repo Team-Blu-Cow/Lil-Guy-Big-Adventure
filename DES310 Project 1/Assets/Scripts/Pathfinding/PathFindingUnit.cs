@@ -27,6 +27,20 @@ public class PathFindingUnit : MonoBehaviour
         }
     }
 
+    public void StartPath()
+    {
+        if (currentlyPathFinding)
+        {            
+            currentlyPathFinding = false;
+            StopCoroutine("FollowPath");
+            RequestPath();
+        }
+        else
+        {
+            RequestPath();
+        }
+    }
+
     IEnumerator FollowPath()
     {
         Vector3 currentWaypoint = path[0];

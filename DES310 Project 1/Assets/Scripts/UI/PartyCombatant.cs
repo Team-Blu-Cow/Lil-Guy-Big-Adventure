@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class PartyCombatant : MonoBehaviour
 {
-    public GameObject combatantGO;
+    [HideInInspector] public GameObject combatantGO;
     Stats combatantStats;
     Combatant combatant;
     public string named;
