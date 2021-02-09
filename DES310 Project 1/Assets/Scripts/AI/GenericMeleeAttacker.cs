@@ -15,8 +15,6 @@ namespace AI
         List<Vector3[]> path_list = new List<Vector3[]>();
         AICore ai_core;
 
-
-
         public override void run(AICore aiCore) 
         {
             ai_core = aiCore;
@@ -29,7 +27,6 @@ namespace AI
 
         }
 
-        
         void OnPathFound(Vector3[] newPath, bool pathSuccess)
         {
             mutex.WaitOne();
@@ -136,14 +133,15 @@ namespace AI
             }
         }
 
-
         void move(Vector3[] path)
         {
             GetComponent<Transform>().position = path[0];
         }
 
-
-        void attack(GameObject enemy) { } //TODO @matthew - attempt to deal damage to nearest enemy
+        void attack(GameObject enemy) 
+        {
+            enemy.GetComponent<Combatant>().do_damage(1, Combatant.DamageType.NORMAL);
+        } 
 
     }
 }

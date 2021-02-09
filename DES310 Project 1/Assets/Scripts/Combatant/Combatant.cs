@@ -20,6 +20,14 @@ public class Combatant : MonoBehaviour
 
     public InputManager controls;
 
+    /*
+     would it not be better to put the Stats class here eg.
+     
+     public Stats stats = new Stats();
+     
+     this would save us having to use GetComponent<Stats>() every time you need access
+     */
+
     private void Awake()
     {
         controls = new InputManager();
@@ -70,6 +78,26 @@ public class Combatant : MonoBehaviour
     private void changeAbilitySelect(int num)
     {
         abilitySelect = num;
+    }
+
+
+    // TODO - this is here to as a basic placeholder, it should be moved into its own file
+    public enum DamageType
+    {
+        NORMAL = 0,
+        FIRE,
+        WATER
+    };
+
+    public void do_damage(int damage, DamageType type)
+    {
+        // why cant i just get direct access to this? the switch case in these functions adds unnecessary overhead
+        GetComponent<Stats>().setStat("HP", -damage);
+    }
+
+    public void do_heal(int heal)
+    {
+        GetComponent<Stats>().setStat("HP", heal);
     }
 }
 
