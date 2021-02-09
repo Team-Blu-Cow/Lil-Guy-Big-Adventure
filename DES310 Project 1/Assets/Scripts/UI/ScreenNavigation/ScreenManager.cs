@@ -59,6 +59,7 @@ public class ScreenManager : MonoBehaviour
         inGameParty.ToggleCanvas(false);
         partyScreen.CloseScreen();
         combatantScreen.OpenScreen(combatant);
+        combatantScreen.ToggleLearned(false);
         pause.TogglePauseGame(false);
     }
     
@@ -67,6 +68,7 @@ public class ScreenManager : MonoBehaviour
         inGameParty.ToggleCanvas(false);
         partyScreen.OpenScreen();
         combatantScreen.CloseScreen();
+        combatantScreen.ToggleLearned(false);
         pause.TogglePauseGame(false);
     }
     
@@ -90,6 +92,7 @@ public class ScreenManager : MonoBehaviour
         partyScreen.CloseScreen();
         combatantScreen.CloseScreen();
         pause.TogglePauseGame(false);
+        combatantScreen.ToggleLearned(false);
     }
 
     public void SwitchLevel(string scene)
@@ -106,5 +109,10 @@ public class ScreenManager : MonoBehaviour
             if (fonts.Count > i)
                 text.font = fonts[i];
         }
+    }
+
+    public SwapScreenCombatant GetCombatantScreen()
+    {
+        return combatantScreen;
     }
 }

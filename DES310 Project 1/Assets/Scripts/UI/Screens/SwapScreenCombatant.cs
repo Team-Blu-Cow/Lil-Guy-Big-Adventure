@@ -83,6 +83,24 @@ public class SwapScreenCombatant : MonoBehaviour
         LeanTween.value(back.gameObject, a => back.color = a, new Color(0, 0, 0, 0.6f), new Color(0, 0, 0, 0), 0.5f);
     }
 
+    public void ToggleLearned(bool toggle)
+    {
+        swapAbility.GetComponent<Canvas>().enabled = toggle;
+
+        foreach (Canvas canvas in swapAbility.GetComponentsInChildren<Canvas>())
+        {
+            canvas.enabled = toggle;
+        }
+    }
+    
+    public void FlipLearned()
+    {
+        foreach (Canvas canvas in swapAbility.GetComponentsInChildren<Canvas>())
+        {
+            canvas.enabled = !canvas.enabled;
+        }
+    }
+
     void SetStatsModified(Stats combatantStats)
     {
         GameObject.Find("Stats/ModifiedStats").transform.GetChild(0).GetComponentInChildren<TextMeshProUGUI>().text =
@@ -109,7 +127,7 @@ public class SwapScreenCombatant : MonoBehaviour
             "Initi: " + (combatantStats.getStat("Init") - combatantStats.mod_init) + "\n";
     }
 
-    void SetAblities(Combatant abilities)
+    public void SetAblities(Combatant abilities)
     {
         int count = 0;
         
