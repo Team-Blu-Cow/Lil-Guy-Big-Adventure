@@ -11,6 +11,9 @@ public enum Combatant_Type
     Hedgehog = 4 // Str: Dex Weak: Str, Init
 }
 
+// TODO - this system should use an enum not strings for accessing stats
+// string comparison is really expensive
+
 [System.Serializable]
 public class Stats : MonoBehaviour
 {
@@ -129,6 +132,7 @@ public class Stats : MonoBehaviour
         }
     }
 
+    // this is dumb, it modifies the stat not set it
     public void setStat(string statName, int modStat)
     {
         switch (statName)
