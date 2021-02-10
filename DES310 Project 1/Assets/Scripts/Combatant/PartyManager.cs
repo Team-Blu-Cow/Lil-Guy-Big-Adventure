@@ -8,8 +8,7 @@ public class PartyManager : MonoBehaviour
     public InputManager controls;
     public int currentCombatantNum = 1;
 
-    Color color;
-    Color white;
+
 
     private void Awake()
     {
@@ -29,14 +28,7 @@ public class PartyManager : MonoBehaviour
 
     void Start()
     {
-        white.r = 255;
-        white.g = 255;
-        white.b = 255;
-        white.a = 255;
-        color.r = 255;
-        color.g = 0;
-        color.b = 0;
-        color.a = 255;
+
     }
 
     void Update()

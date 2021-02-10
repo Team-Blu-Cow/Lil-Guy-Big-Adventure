@@ -170,3 +170,7 @@ MonoBehaviour:
   - {fileID: 0}
   - {fileID: 0}
   - {fileID: 0}
+  initTracker: {fileID: 0}
+  moved: 0
+  moving: 0
+  oldPosition: {x: 0, y: 0, z: 0}

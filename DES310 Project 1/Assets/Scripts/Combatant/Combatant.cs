@@ -15,9 +15,17 @@ public class Combatant : MonoBehaviour
     public int currentItem = 0;
 
     public float[] resistances;
-
     public Quirks[] combatantQuirks;
+
     public InitiativeTracker initTracker;
+
+    // TODO Split these into enum for each state for the combatant
+    public bool moved = false; 
+    public bool moving = false;
+    public Vector3 oldPosition;
+
+    public bool attacking = false;
+    public bool attacked = false;
 
     public InputManager controls;
 
@@ -62,7 +70,18 @@ public class Combatant : MonoBehaviour
 
     private void Update()
     {
+        
+        if(moving == true)
+        {
+            Transform targetT = GetComponent<PathFindingUnit>().target;
 
+            // TODO rethinkg this if statement. Looks ugly :( (Sorry if statement)
+            if(transform.position.x > targetT.position.x - 0.5f && transform.position.x < targetT.position.x + 0.5f && transform.position.y > targetT.position.y - 0.5f && transform.position.y < targetT.position.x + 0.5f)
+            {
+                moved = true;
+                moving = false;               
+            }
+        }
     }
 
     public void SetAbilityUsed(int abilityNum)
@@ -92,6 +111,22 @@ public class Combatant : MonoBehaviour
     public void do_heal(int heal)
     {
         GetComponent<Stats>().setStat(Combatant_Stats.HP, GetComponent<Stats>().getStat(Combatant_Stats.HP) + heal);
+    }
+
+    public void cancelMove()
+    {
+        if (moved == true)
+        {
+            moved = false;
+            moving = false;
+            transform.position = oldPosition;
+        }
+    }
+
+    public void confirmMove()
+    {
+        moved = true;
+        attacking = true;
     }
 }
 
