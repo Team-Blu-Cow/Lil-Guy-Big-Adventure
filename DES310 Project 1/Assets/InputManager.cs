@@ -83,10 +83,18 @@ public class @InputManager : IInputActionCollection, IDisposable
                     ""interactions"": """"
                 },
                 {
-                    ""name"": ""Mouse"",
+                    ""name"": ""MousePos"",
                     ""type"": ""Value"",
                     ""id"": ""5dced9c4-7b43-43ee-89ea-b38031a3e3fb"",
                     ""expectedControlType"": ""Vector2"",
+                    ""processors"": """",
+                    ""interactions"": """"
+                },
+                {
+                    ""name"": ""MouseClick"",
+                    ""type"": ""Button"",
+                    ""id"": ""b84af43a-1103-45f4-a688-f7e4e9b70675"",
+                    ""expectedControlType"": ""Button"",
                     ""processors"": """",
                     ""interactions"": """"
                 }
@@ -187,7 +195,18 @@ public class @InputManager : IInputActionCollection, IDisposable
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
-                    ""action"": ""Mouse"",
+                    ""action"": ""MousePos"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""6815ae55-ebde-44db-941e-c47bba9737e4"",
+                    ""path"": ""<Mouse>/leftButton"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""MouseClick"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 }
@@ -206,7 +225,8 @@ public class @InputManager : IInputActionCollection, IDisposable
         m_Keyboard_DecrementAbilitySelect = m_Keyboard.FindAction("Decrement Ability Select", throwIfNotFound: true);
         m_Keyboard_ChangePartyMember = m_Keyboard.FindAction("Change Party Member", throwIfNotFound: true);
         m_Keyboard_Pause = m_Keyboard.FindAction("Pause", throwIfNotFound: true);
-        m_Keyboard_Mouse = m_Keyboard.FindAction("Mouse", throwIfNotFound: true);
+        m_Keyboard_MousePos = m_Keyboard.FindAction("MousePos", throwIfNotFound: true);
+        m_Keyboard_MouseClick = m_Keyboard.FindAction("MouseClick", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -264,7 +284,8 @@ public class @InputManager : IInputActionCollection, IDisposable
     private readonly InputAction m_Keyboard_DecrementAbilitySelect;
     private readonly InputAction m_Keyboard_ChangePartyMember;
     private readonly InputAction m_Keyboard_Pause;
-    private readonly InputAction m_Keyboard_Mouse;
+    private readonly InputAction m_Keyboard_MousePos;
+    private readonly InputAction m_Keyboard_MouseClick;
     public struct KeyboardActions
     {
         private @InputManager m_Wrapper;
@@ -277,7 +298,8 @@ public class @InputManager : IInputActionCollection, IDisposable
         public InputAction @DecrementAbilitySelect => m_Wrapper.m_Keyboard_DecrementAbilitySelect;
         public InputAction @ChangePartyMember => m_Wrapper.m_Keyboard_ChangePartyMember;
         public InputAction @Pause => m_Wrapper.m_Keyboard_Pause;
-        public InputAction @Mouse => m_Wrapper.m_Keyboard_Mouse;
+        public InputAction @MousePos => m_Wrapper.m_Keyboard_MousePos;
+        public InputAction @MouseClick => m_Wrapper.m_Keyboard_MouseClick;
         public InputActionMap Get() { return m_Wrapper.m_Keyboard; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -311,9 +333,12 @@ public class @InputManager : IInputActionCollection, IDisposable
                 @Pause.started -= m_Wrapper.m_KeyboardActionsCallbackInterface.OnPause;
                 @Pause.performed -= m_Wrapper.m_KeyboardActionsCallbackInterface.OnPause;
                 @Pause.canceled -= m_Wrapper.m_KeyboardActionsCallbackInterface.OnPause;
-                @Mouse.started -= m_Wrapper.m_KeyboardActionsCallbackInterface.OnMouse;
-                @Mouse.performed -= m_Wrapper.m_KeyboardActionsCallbackInterface.OnMouse;
-                @Mouse.canceled -= m_Wrapper.m_KeyboardActionsCallbackInterface.OnMouse;
+                @MousePos.started -= m_Wrapper.m_KeyboardActionsCallbackInterface.OnMousePos;
+                @MousePos.performed -= m_Wrapper.m_KeyboardActionsCallbackInterface.OnMousePos;
+                @MousePos.canceled -= m_Wrapper.m_KeyboardActionsCallbackInterface.OnMousePos;
+                @MouseClick.started -= m_Wrapper.m_KeyboardActionsCallbackInterface.OnMouseClick;
+                @MouseClick.performed -= m_Wrapper.m_KeyboardActionsCallbackInterface.OnMouseClick;
+                @MouseClick.canceled -= m_Wrapper.m_KeyboardActionsCallbackInterface.OnMouseClick;
             }
             m_Wrapper.m_KeyboardActionsCallbackInterface = instance;
             if (instance != null)
@@ -342,9 +367,12 @@ public class @InputManager : IInputActionCollection, IDisposable
                 @Pause.started += instance.OnPause;
                 @Pause.performed += instance.OnPause;
                 @Pause.canceled += instance.OnPause;
-                @Mouse.started += instance.OnMouse;
-                @Mouse.performed += instance.OnMouse;
-                @Mouse.canceled += instance.OnMouse;
+                @MousePos.started += instance.OnMousePos;
+                @MousePos.performed += instance.OnMousePos;
+                @MousePos.canceled += instance.OnMousePos;
+                @MouseClick.started += instance.OnMouseClick;
+                @MouseClick.performed += instance.OnMouseClick;
+                @MouseClick.canceled += instance.OnMouseClick;
             }
         }
     }
@@ -359,6 +387,7 @@ public class @InputManager : IInputActionCollection, IDisposable
         void OnDecrementAbilitySelect(InputAction.CallbackContext context);
         void OnChangePartyMember(InputAction.CallbackContext context);
         void OnPause(InputAction.CallbackContext context);
-        void OnMouse(InputAction.CallbackContext context);
+        void OnMousePos(InputAction.CallbackContext context);
+        void OnMouseClick(InputAction.CallbackContext context);
     }
 }

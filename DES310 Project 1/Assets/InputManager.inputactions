@@ -70,10 +70,18 @@
                     "interactions": ""
                 },
                 {
-                    "name": "Mouse",
+                    "name": "MousePos",
                     "type": "Value",
                     "id": "5dced9c4-7b43-43ee-89ea-b38031a3e3fb",
                     "expectedControlType": "Vector2",
+                    "processors": "",
+                    "interactions": ""
+                },
+                {
+                    "name": "MouseClick",
+                    "type": "Button",
+                    "id": "b84af43a-1103-45f4-a688-f7e4e9b70675",
+                    "expectedControlType": "Button",
                     "processors": "",
                     "interactions": ""
                 }
@@ -174,7 +182,18 @@
                     "interactions": "",
                     "processors": "",
                     "groups": "",
-                    "action": "Mouse",
+                    "action": "MousePos",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "6815ae55-ebde-44db-941e-c47bba9737e4",
+                    "path": "<Mouse>/leftButton",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "MouseClick",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

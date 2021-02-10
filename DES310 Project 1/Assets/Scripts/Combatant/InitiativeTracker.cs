@@ -133,9 +133,22 @@ public class InitiativeTracker : MonoBehaviour
     public void ChangeCurrentCombatant()
     {
         currentCombatantNum++;
-        if(currentCombatantNum == 8)
+        if(currentCombatantNum == combatants.ToArray().Length)
         {
             currentCombatantNum = 0;
         }
+    }
+
+    public GameObject getCurrentCombatant()
+    {
+        for(int i = 0; i < combatants.ToArray().Length; i++)
+        {
+            if(currentCombatantNum == combatants[i].GetComponent<Combatant>().combatantNum)
+            {
+                return combatants[i];
+            }           
+        }
+
+        return null;
     }
 }
