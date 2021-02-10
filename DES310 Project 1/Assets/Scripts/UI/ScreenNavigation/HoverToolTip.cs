@@ -33,11 +33,11 @@ public class HoverToolTip : MonoBehaviour
         {
             if (TMP.name == "Stats")
             {
-                TMP.text= "Str: " + stats.getStat("Str") +   "   Dex: " + stats.getStat("Dex") + "\n" + 
-                "Mag: " + stats.getStat("Mag")  +  "    Def: " + stats.getStat("Def") + "\n" + 
-                "Con: " + stats.getStat("Con")  +  "     Lck: " + stats.getStat("Luck") + "\n" +
-                "Spd: " + stats.getStat("Speed")+  "   Init: " + stats.getStat("Init") + "\n" + 
-                "HP: " + stats.getStat("HP");
+                TMP.text= "Str: " + stats.getStat(Combatant_Stats.Strength) +   "   Dex: " + stats.getStat(Combatant_Stats.Dexterity) + "\n" + 
+                "Mag: " + stats.getStat(Combatant_Stats.Magic)  +  "    Def: " + stats.getStat(Combatant_Stats.Defence) + "\n" + 
+                "Con: " + stats.getStat(Combatant_Stats.Constitution)  +  "     Lck: " + stats.getStat(Combatant_Stats.Luck) + "\n" +
+                "Spd: " + stats.getStat(Combatant_Stats.Speed) +  "   Init: " + stats.getStat(Combatant_Stats.Initiative) + "\n" + 
+                "HP: " + stats.getStat(Combatant_Stats.HP);
             }
         }
     }

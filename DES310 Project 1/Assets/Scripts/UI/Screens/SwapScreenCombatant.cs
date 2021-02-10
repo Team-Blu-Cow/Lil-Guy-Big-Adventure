@@ -44,7 +44,7 @@ public class SwapScreenCombatant : MonoBehaviour
         GetComponentInChildren<ShowResistanceUI>().SetRes(combatant);
 
         // Set the name and health on the ui
-        GameObject.Find("CombatantName").GetComponent<TextMeshProUGUI>().text = combatant.named + "(" + combatant.GetStats().getStat("HP") + "/" + combatant.GetStats().getStat("Con") + ")";
+        GameObject.Find("CombatantName").GetComponent<TextMeshProUGUI>().text = combatant.named + "(" + combatant.GetStats().getStat(Combatant_Stats.HP) + "/" + combatant.GetStats().getStat(Combatant_Stats.Constitution) + ")";
 
         // Fade in background
         Image back = transform.parent.GetComponentInChildren<Image>();
@@ -104,27 +104,27 @@ public class SwapScreenCombatant : MonoBehaviour
     void SetStatsModified(Stats combatantStats)
     {
         GameObject.Find("Stats/ModifiedStats").transform.GetChild(0).GetComponentInChildren<TextMeshProUGUI>().text =
-            "Strength: " + combatantStats.getStat("Str") + "\n" +
-            "Dexterity: " + combatantStats.getStat("Dex") + "\n" +
-            "Magic: " + combatantStats.getStat("Mag") + "\n" +
-            "Defence: " + combatantStats.getStat("Def") + "\n" +
-            "Constitution: " + combatantStats.getStat("Con") + "\n" +
-            "Luck: " + combatantStats.getStat("Luck") + "\n" +
-            "Speed: " + combatantStats.getStat("Speed") + "\n" +
-            "Initit: " + combatantStats.getStat("Init") + "\n";
+            "Strength: " + combatantStats.getStat(Combatant_Stats.Strength) + "\n" +
+            "Dexterity: " + combatantStats.getStat(Combatant_Stats.Dexterity) + "\n" +
+            "Magic: " + combatantStats.getStat(Combatant_Stats.Magic) + "\n" +
+            "Defence: " + combatantStats.getStat(Combatant_Stats.Defence) + "\n" +
+            "Constitution: " + combatantStats.getStat(Combatant_Stats.Constitution) + "\n" +
+            "Luck: " + combatantStats.getStat(Combatant_Stats.Luck) + "\n" +
+            "Speed: " + combatantStats.getStat(Combatant_Stats.Speed) + "\n" +
+            "Initit: " + combatantStats.getStat(Combatant_Stats.Initiative) + "\n";
     }
 
     void SetStats(Stats combatantStats)
     {
         GameObject.Find("Stats/BaseStats").transform.GetChild(0).GetComponentInChildren<TextMeshProUGUI>().text =
-            "Strength: " + (combatantStats.getStat("Str") - combatantStats.mod_str) + "\n" +
-            "Dexterity: " + (combatantStats.getStat("Dex") - combatantStats.mod_dex) + "\n" +
-            "Magic: " + (combatantStats.getStat("Mag") - combatantStats.mod_mag) + "\n" +
-            "Defence: " + (combatantStats.getStat("Def") - combatantStats.mod_def) + "\n" +
-            "Constitution: " + (combatantStats.getStat("Con") - combatantStats.mod_con) + "\n" +
-            "Luck: " + (combatantStats.getStat("Luck") - combatantStats.mod_luck) + "\n" +
-            "Speed: " + (combatantStats.getStat("Speed") - combatantStats.mod_speed) + "\n" +
-            "Initi: " + (combatantStats.getStat("Init") - combatantStats.mod_init) + "\n";
+            "Strength: " + (combatantStats.getStat(Combatant_Stats.Strength) - combatantStats.mod_str) + "\n" +
+            "Dexterity: " + (combatantStats.getStat(Combatant_Stats.Dexterity) - combatantStats.mod_dex) + "\n" +
+            "Magic: " + (combatantStats.getStat(Combatant_Stats.Magic) - combatantStats.mod_mag) + "\n" +
+            "Defence: " + (combatantStats.getStat(Combatant_Stats.Defence) - combatantStats.mod_def) + "\n" +
+            "Constitution: " + (combatantStats.getStat(Combatant_Stats.Constitution) - combatantStats.mod_con) + "\n" +
+            "Luck: " + (combatantStats.getStat(Combatant_Stats.Luck) - combatantStats.mod_luck) + "\n" +
+            "Speed: " + (combatantStats.getStat(Combatant_Stats.Speed) - combatantStats.mod_speed) + "\n" +
+            "Initi: " + (combatantStats.getStat(Combatant_Stats.Initiative) - combatantStats.mod_init) + "\n";
     }
 
     public void SetAblities(Combatant abilities)
