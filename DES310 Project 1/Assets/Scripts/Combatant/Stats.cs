@@ -11,8 +11,19 @@ public enum Combatant_Type
     Hedgehog = 4 // Str: Dex Weak: Str, Init
 }
 
-// TODO - this system should use an enum not strings for accessing stats
-// string comparison is really expensive
+public enum Combatant_Stats
+{
+    Strength = 0,
+    Dexterity = 1,
+    Magic = 2,
+    Defence = 3,
+    Constitution = 4,
+    Luck = 5,
+    Speed = 6,
+    Initiative = 7,
+    HP = 8
+}
+
 
 [System.Serializable]
 public class Stats : MonoBehaviour
@@ -104,27 +115,27 @@ public class Stats : MonoBehaviour
         Debug.Log("HP: " + base_hp);
     }
 
-    public int getStat(string statName)
+    public int getStat(Combatant_Stats stat)
     {
-        switch (statName)
+        switch (stat)
         {
-            case "Str":
+            case Combatant_Stats.Strength:
                 return base_str;
-            case "Dex":
+            case Combatant_Stats.Dexterity:
                 return base_dex;
-            case "Mag":
+            case Combatant_Stats.Magic:
                 return base_mag;
-            case "Def":
+            case Combatant_Stats.Defence:
                 return base_def;
-            case "Con":
+            case Combatant_Stats.Constitution:
                 return base_con;
-            case "Luck":
+            case Combatant_Stats.Luck:
                 return base_luck;
-            case "Speed":
+            case Combatant_Stats.Speed:
                 return base_speed;
-            case "Init":
+            case Combatant_Stats.Initiative:
                 return base_init;
-            case "HP":
+            case Combatant_Stats.HP:
                 return base_hp;
             default:
                 Debug.Log("ERROR: Invalid Stat Name");
@@ -132,44 +143,36 @@ public class Stats : MonoBehaviour
         }
     }
 
-    // this is dumb, it modifies the stat not set it
-    public void setStat(string statName, int modStat)
+    public void setStat(Combatant_Stats stat, int setStat)
     {
-        switch (statName)
+        switch (stat)
         {
-            case "Str":
-                base_str += modStat;
+            case Combatant_Stats.Strength:
+                base_str = setStat;
                 break;
-
-            case "Dex":
-                base_dex += modStat;
+            case Combatant_Stats.Dexterity:
+                base_dex = setStat;
                 break;
-
-            case "Mag":
-                base_mag += modStat;
+            case Combatant_Stats.Magic:
+                base_mag = setStat;
                 break;
-
-            case "Def":
-                base_def += modStat;
+            case Combatant_Stats.Defence:
+                base_def = setStat;
                 break;
-
-            case "Con":
-                base_con += modStat;
+            case Combatant_Stats.Constitution:
+                base_con = setStat;
                 break;
-
-            case "Luck":
-                base_luck += modStat;
+            case Combatant_Stats.Luck:
+                base_luck = setStat;
                 break;
-
-            case "Speed":
-                base_speed += modStat;
+            case Combatant_Stats.Speed:
+                base_speed = setStat;
                 break;
-
-            case "Init":
-                base_init += modStat;
+            case Combatant_Stats.Initiative:
+                base_init = setStat;
                 break;
-            case "HP":
-                base_hp += modStat;
+            case Combatant_Stats.HP:
+                base_hp = setStat;
                 break;
         }
     }

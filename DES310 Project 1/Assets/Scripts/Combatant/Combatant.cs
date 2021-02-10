@@ -83,16 +83,15 @@ public class Combatant : MonoBehaviour
         abilitySelect = num;
     }
 
-
     public void do_damage(int damage, Aspects.Aspect type)
     {
         // why cant i just get direct access to this? the switch case in these functions adds unnecessary overhead
-        GetComponent<Stats>().setStat("HP", -damage);
+        GetComponent<Stats>().setStat(Combatant_Stats.HP, GetComponent<Stats>().getStat(Combatant_Stats.HP) - damage);
     }
 
     public void do_heal(int heal)
     {
-        GetComponent<Stats>().setStat("HP", heal);
+        GetComponent<Stats>().setStat(Combatant_Stats.HP, GetComponent<Stats>().getStat(Combatant_Stats.HP) + heal);
     }
 }
 

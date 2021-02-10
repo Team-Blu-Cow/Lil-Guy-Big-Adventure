@@ -55,7 +55,7 @@ public class InitiativeTracker : MonoBehaviour
                 if (combatants[i] != null) // Check for whether there is a combatant in the spot on the list
                 {
                     Stats combatantStats = combatants[i].GetComponent<Stats>(); // Create temp variable for combatant's stats
-                    combatantInits.Add(combatantStats.getStat("Init")); // Add the combatant's initiative to the list
+                    combatantInits.Add(combatantStats.getStat(Combatant_Stats.Initiative)); // Add the combatant's initiative to the list
                 }
             }
             combatantInits.Sort(); // Sort the list of combatant initiatives
@@ -68,32 +68,42 @@ public class InitiativeTracker : MonoBehaviour
                 {
                     if (combatantInits[i] == combatantInits[i + 1]) // If two initiatives are the same then
                     {
+                        Debug.Log("Happened");
                         for (int k = 0; k < combatants.ToArray().Length; k++) // Start another for loop for the amount of combatants
                         {
-                            if (combatants[k].GetComponent<Stats>().getStat("Init") == combatantInits[i + 1]) // Find the first combatant which has the same initiative
+                            if (combatants[k].GetComponent<Stats>().getStat(Combatant_Stats.Initiative) == combatantInits[i]) // Find the first combatant which has the same initiative
                             {                               
-                                combatantInits[i + 1] = combatantInits[i + 1] + 1; // Change the initiative in the list to be up 1 so that the initiatives don't match
-                                combatants[k].GetComponent<Stats>().setStat("Init", 1); // Add 1 to the combatant's initiative so that the combatant's and the list of initiatives match
+                                Debug.Log("Happened 2");
+                                combatantInits[i] = combatantInits[i] + 1; // Change the initiative in the list to be up 1 so that the initiatives don't match
+                                combatants[k].GetComponent<Stats>().setStat(Combatant_Stats.Initiative, (combatants[k].GetComponent<Stats>().getStat(Combatant_Stats.Initiative) + 1)); // Add 1 to the combatant's initiative so that the combatant's and the list of initiatives match
+                                Debug.Log(k + " INIT: " + combatants[k].GetComponent<Stats>().getStat(Combatant_Stats.Initiative));
                                 break; // Break out of the for loop before we find the other combatant that has the same initiative
                             }
                         }
                     }
+
+                    if (i != 0)
+                    {
+                        Debug.Log((i-1) + " " + combatants[i-1].GetComponent<Stats>().getStat(Combatant_Stats.Initiative) + "  " + i + " " + combatants[i].GetComponent<Stats>().getStat(Combatant_Stats.Initiative) + "  " +  (i + 1) + " " + combatants[i + 1].GetComponent<Stats>().getStat(Combatant_Stats.Initiative));
+                    }
                 }
+
+               
 
                 for (int j = 0; j < combatantInits.ToArray().Length; j++) // Start a for loop for the amount of combatants
                 {
                     if (combatants[i] != null) // Check for whether there is a combatant in the spot on the list
-                    {
-                        
-                        if (combatants[i].GetComponent<Stats>().getStat("Init") == combatantInits[j]) // If the combatant's and the list's initiatives match up then
+                    {                       
+                        if (combatants[i].GetComponent<Stats>().getStat(Combatant_Stats.Initiative) == combatantInits[j]) // If the combatant's and the list's initiatives match up then
                         {
                             combatants[i].GetComponent<Combatant>().combatantNum = (combatants.ToArray().Length - 1) - j; // Set the combatant's number to be the increment of the for loop. This essentially sets their position in the initiative for combat
                             break; // Break the for loop. Just in case?
                         }
                     }
                 }
+                
             }
-        } // That's the messy code out of the way now 
+        }
         
 
         for (int i = 0; i < combatants.ToArray().Length; i++) // Loop for the amount of combatants

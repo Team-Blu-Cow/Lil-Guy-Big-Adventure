@@ -152,17 +152,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5210bfba295e7f24dbaa11e5d310f506, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  combatants:
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
+  combatants: []
+  combatantInits: 
 --- !u!4 &71968079
 Transform:
   m_ObjectHideFlags: 0
@@ -399,7 +390,7 @@ PrefabInstance:
       objectReference: {fileID: 71968078}
     - target: {fileID: 6127942090193602142, guid: dddb1748b38a99b4888117d6eccbe498, type: 3}
       propertyPath: combatantNum
-      value: 4
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6127942090193602143, guid: dddb1748b38a99b4888117d6eccbe498, type: 3}
       propertyPath: m_Name
@@ -657,7 +648,7 @@ PrefabInstance:
       objectReference: {fileID: 71968078}
     - target: {fileID: 3634225340204788173, guid: 750e043af4938e74493114592696db6a, type: 3}
       propertyPath: combatantNum
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3634225340204788175, guid: 750e043af4938e74493114592696db6a, type: 3}
       propertyPath: mod_init
@@ -909,7 +900,7 @@ PrefabInstance:
       objectReference: {fileID: 71968078}
     - target: {fileID: 6127942090193602142, guid: dddb1748b38a99b4888117d6eccbe498, type: 3}
       propertyPath: combatantNum
-      value: 3
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6127942090193602143, guid: dddb1748b38a99b4888117d6eccbe498, type: 3}
       propertyPath: m_Name
@@ -974,7 +965,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6773037149543772178, guid: 8cbe27ed55e90b847864376de199d9c1, type: 3}
       propertyPath: mod_init
-      value: 7
+      value: 20
       objectReference: {fileID: 0}
     - target: {fileID: 6773037149543772188, guid: 8cbe27ed55e90b847864376de199d9c1, type: 3}
       propertyPath: initTracker
@@ -1167,7 +1158,7 @@ PrefabInstance:
       objectReference: {fileID: 71968078}
     - target: {fileID: 6773037149543772188, guid: 8cbe27ed55e90b847864376de199d9c1, type: 3}
       propertyPath: combatantNum
-      value: 2
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6773037149543772189, guid: 8cbe27ed55e90b847864376de199d9c1, type: 3}
       propertyPath: m_Name
@@ -1380,7 +1371,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 195969708780494594, guid: 8493922f80fbdfe4fafbe3c07cd74d19, type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 0
+      value: 112.91
       objectReference: {fileID: 0}
     - target: {fileID: 195969708780494594, guid: 8493922f80fbdfe4fafbe3c07cd74d19, type: 3}
       propertyPath: m_AnchoredPosition.y
