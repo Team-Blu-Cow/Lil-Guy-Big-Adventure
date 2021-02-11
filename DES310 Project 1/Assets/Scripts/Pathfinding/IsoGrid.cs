@@ -3,15 +3,14 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Tilemaps;
 
-public class AStarGrid : MonoBehaviour
+public class IsoGrid : MonoBehaviour
 {
     // Public & Serializable Fields ***************************************************************
     [Header("Grid Settings")]
-    [SerializeField] public Vector2Int gridSize;
+    public Vector2Int gridSize;
 
     [Header("Node Settings")]
     public float nodeRadius;
-    public LayerMask unwalkableMask;
 
     [Header("References")]
     public Tilemap tileMap;
@@ -23,7 +22,7 @@ public class AStarGrid : MonoBehaviour
     // Private Fields *****************************************************************************
     private Dictionary<TileBase, TileData> dataFromTiles;
 
-    AStarNode[,] grid;
+    IsoNode[,] grid;
 
     float nodeDiameter;
     int gridSizeX, gridSizeY;
@@ -66,7 +65,7 @@ public class AStarGrid : MonoBehaviour
 
     public void CreateGrid()
     {
-        grid = new AStarNode[gridSizeX, gridSizeY];
+        grid = new IsoNode[gridSizeX, gridSizeY];
 
         for (int x = 0; x < gridSizeX; x++)
         {
@@ -87,7 +86,7 @@ public class AStarGrid : MonoBehaviour
                     // to un-walkable and this cell to walkable to allow
                     // objects to pass behind it.
                     walkable = true;
-                    grid[x+1, y+1] = new AStarNode(false, NodeToWorld(x+1,y+1,0), new Vector3Int(x+1, y+1, 0));
+                    grid[x+1, y+1] = new IsoNode(false, NodeToWorld(x+1,y+1,0), new Vector3Int(x+1, y+1, 0));
                 }
                 else
                 {
@@ -104,15 +103,15 @@ public class AStarGrid : MonoBehaviour
                 }
                 
                 if(grid[x,y] == null)
-                    grid[x, y] = new AStarNode(walkable, worldPoint, new Vector3Int(x,y,0));
+                    grid[x, y] = new IsoNode(walkable, worldPoint, new Vector3Int(x,y,0));
             }
         }
     }
 
     // Get Neighbors Method ***********************************************************************
-    public List<AStarNode> GetNeighbors(AStarNode _node)
+    public List<IsoNode> GetNeighbors(IsoNode _node)
     {
-        List<AStarNode> neighbors = new List<AStarNode>();
+        List<IsoNode> neighbors = new List<IsoNode>();
 
         int checkX, checkY;
 
@@ -165,7 +164,7 @@ public class AStarGrid : MonoBehaviour
             );
     }
 
-    public AStarNode WorldToNode(Vector3 _worldPos)
+    public IsoNode WorldToNode(Vector3 _worldPos)
     {
         float node_x, node_y;
         int int_x, int_y;
@@ -207,7 +206,7 @@ public class AStarGrid : MonoBehaviour
         if (grid != null && DisplayGridGizmos)
         {
             Vector3 worldTopLeft = transform.position - Vector3.right * gridSize.x / 2 + Vector3.up * gridSize.y / 2;
-            foreach (AStarNode node in grid)
+            foreach (IsoNode node in grid)
             {
                 Gizmos.color = (node.walkable) ? Color.white : Color.red;
                 Gizmos.DrawCube(node.worldPosition, Vector3.one * (nodeRadius / 2));

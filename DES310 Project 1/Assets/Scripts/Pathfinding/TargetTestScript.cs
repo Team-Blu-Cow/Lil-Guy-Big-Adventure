@@ -6,7 +6,7 @@ public class TargetTestScript : MonoBehaviour
 {
     [HideInInspector] public Vector3 mousePos;
     InputMaster input;
-    public AStarGrid grid;
+    public IsoGrid grid;
 
     private void Awake()
     {
@@ -35,6 +35,6 @@ public class TargetTestScript : MonoBehaviour
     void SetTargetPosition()
     {
         Vector3 nodePos = grid.WorldToNode(mousePos).worldPosition;
-        transform.position = new Vector3(nodePos.x,nodePos.y,1);
+        transform.position = new Vector3(nodePos.x, nodePos.y, 1);
     }
 }

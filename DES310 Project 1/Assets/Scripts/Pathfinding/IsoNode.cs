@@ -4,46 +4,38 @@ using UnityEngine;
 using System;
 
 [System.Serializable]
-public class AStarNode : IHeapItem<AStarNode>
+public class IsoNode : IHeapItem<IsoNode>
 {
+    // A* Members *********************************************************************************
     public bool walkable;
-
-    public Vector3 worldPosition;
-    public Vector3Int gridPosition;
-
-    public AStarNode parent;
+    public IsoNode parent;
     int m_heapIndex = 0;
 
     public int gCost;
     public int hCost;
     public int fCost
     {
-        get
-        {
-            return gCost + hCost;
-        }
+        get{return gCost + hCost;}
     }
 
     public int heapIndex
     {
-        get
-        {
-            return m_heapIndex;
-        }
-        set
-        {
-            m_heapIndex = value;
-        }
+        get { return m_heapIndex; }
+        set { m_heapIndex = value; }
     }
 
-    public AStarNode(bool _walkable, Vector3 _worldPos, Vector3Int _gridPosition)
+    // Position & Index Members *******************************************************************
+    public Vector3 worldPosition;
+    public Vector3Int gridPosition;
+
+    public IsoNode(bool _walkable, Vector3 _worldPos, Vector3Int _gridPosition)
     {
         walkable = _walkable;
         worldPosition = _worldPos;
         gridPosition = _gridPosition;
     }
     
-    public int CompareTo(AStarNode comparisonNode)
+    public int CompareTo(IsoNode comparisonNode)
     {
         int compare = fCost.CompareTo(comparisonNode.fCost);
         if (compare == 0)
