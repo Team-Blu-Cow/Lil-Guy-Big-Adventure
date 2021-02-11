@@ -84,7 +84,6 @@ public class CursorController : MonoBehaviour
         {
             hovering = true;
             hoverObject = collision.gameObject;
-            Debug.Log("ksdhjgf");
         }
     }
 
@@ -94,7 +93,6 @@ public class CursorController : MonoBehaviour
         {
             hovering = false;
             hoverObject = null;
-            Debug.Log("itewury");
         }
     }
 }

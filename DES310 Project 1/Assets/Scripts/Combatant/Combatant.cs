@@ -128,5 +128,13 @@ public class Combatant : MonoBehaviour
         moved = true;
         attacking = true;
     }
+
+    public void attackAbility(int abilityNum)
+    {
+        GetComponent<TestCombatSystem>().CastAbility(abilityNum);
+        attacked = true;
+        attacking = false;
+        initTracker.ChangeCurrentCombatant();
+    }
 }
 

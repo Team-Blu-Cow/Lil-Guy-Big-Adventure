@@ -154,6 +154,20 @@ public class InitiativeTracker : MonoBehaviour
         }
     }
 
+    public void attackCombatant(int abilityNum)
+    {
+        for (int i = 0; i < combatants.ToArray().Length; i++)
+        {
+            if (currentCombatantNum == combatants[i].GetComponent<Combatant>().combatantNum)
+            {
+                if (combatants[i].GetComponent<Combatant>().attacking == true)
+                {
+                    combatants[i].GetComponent<Combatant>().attackAbility(abilityNum);
+                }
+            }
+        }
+    }
+
     public GameObject getCurrentCombatant()
     {
         for(int i = 0; i < combatants.ToArray().Length; i++)
