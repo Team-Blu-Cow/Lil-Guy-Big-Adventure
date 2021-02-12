@@ -12,7 +12,6 @@ public class Combatant : MonoBehaviour
     public int abilitySelect = 0;
 
     public Item[] combatantItems;
-    public int currentItem = 0;
 
     public float[] resistances;
     public Quirks[] combatantQuirks;
@@ -40,8 +39,6 @@ public class Combatant : MonoBehaviour
     private void Awake()
     {
         controls = new InputManager();
-        controls.Keyboard.IncrementAbilitySelect.started += ctx => changeItem(1);
-        controls.Keyboard.DecrementAbilitySelect.started += ctx => changeItem(-1);
         controls.Keyboard.Changetoability1.started += ctx => changeAbilitySelect(0);
         controls.Keyboard.Changetoability2.started += ctx => changeAbilitySelect(1);
         controls.Keyboard.Changetoability3.started += ctx => changeAbilitySelect(2);
@@ -89,14 +86,6 @@ public class Combatant : MonoBehaviour
         abilitiesUsing[abilitySelect] = abilitiesLearnt[abilityNum];
     }
 
-    private void changeItem(int itemSwitch)
-    {
-        if ((itemSwitch == 1 && currentItem < 4) || (itemSwitch == -1 && currentItem > 0))
-        {
-            currentItem += itemSwitch;
-        }
-    }
-
     private void changeAbilitySelect(int num)
     {
         abilitySelect = num;
@@ -132,6 +121,14 @@ public class Combatant : MonoBehaviour
     public void attackAbility(int abilityNum)
     {
         GetComponent<TestCombatSystem>().CastAbility(abilityNum);
+        attacked = true;
+        attacking = false;
+        initTracker.ChangeCurrentCombatant();
+    }
+
+    public void UseItem(int itemNum)
+    {
+        GetComponent<TestCombatSystem>().UseItem(itemNum);
         attacked = true;
         attacking = false;
         initTracker.ChangeCurrentCombatant();

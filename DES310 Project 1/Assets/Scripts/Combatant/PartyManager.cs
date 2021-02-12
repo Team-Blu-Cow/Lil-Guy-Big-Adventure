@@ -66,7 +66,7 @@ public class PartyManager : MonoBehaviour
 
     public void combatantUseItem()
     {
-        combatants[currentCombatantNum - 1].GetComponent<TestCombatSystem>().UseItem();
+        
     }
 
     public void combatantSetAbility(int abilityNum)

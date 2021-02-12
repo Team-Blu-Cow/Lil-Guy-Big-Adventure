@@ -169,9 +169,8 @@ public class TestCombatSystem : MonoBehaviour
         }
     }
 
-    public void UseItem()
+    public void UseItem(int currentItem)
     {
-        int currentItem = combatant.currentItem;
         Debug.Log("Using Item...");        
         switch (items[currentItem].itemType)
         {
@@ -185,7 +184,6 @@ public class TestCombatSystem : MonoBehaviour
                 BuffItem(currentItem);
                 break;
         }
-
     }
 
     private void PoisonItem(int currentItem)
