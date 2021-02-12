@@ -4,8 +4,8 @@ using UnityEngine;
 
 public class Movement : MonoBehaviour
 {
-    InputManager controls; 
     public AStarGrid grid;
+    InputManager controls; 
     Transform target;
 
     bool RMouseDown = false;
@@ -61,5 +61,15 @@ public class Movement : MonoBehaviour
     {
         GetComponent<PathFindingUnit>().StopPath();
         LClick = true;
+
+        Vector2 mousePos = Camera.main.ScreenToWorldPoint(controls.Keyboard.Mouse.ReadValue<Vector2>());
+        RaycastHit2D hit = Physics2D.Raycast(mousePos, Vector2.zero);
+
+        Item item;
+        if (hit && hit.collider.TryGetComponent<Item>(out item))
+        {
+            Debug.Log(item.name);
+            item.PickUp(transform.position);            
+        }
     }
 }
