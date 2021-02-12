@@ -1,31 +1,35 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using TMPro;
+using System;
 
 public class ShowResistanceUI : MonoBehaviour
 {    
-    public void SetRes(PartyCombatant combatant)
+    public void SetRes(Combatant combatant)
     {
-        for (int i = 0; i < transform.childCount; i++)
+        int x = Enum.GetNames(typeof(Aspects.Aspect)).Length;
+        
+        for (int i = 0; i < x; i++)
         {
-            transform.GetChild(i).GetChild(0).gameObject.SetActive(false);
-            transform.GetChild(i).GetChild(1).gameObject.SetActive(false);
-            transform.GetChild(i).GetChild(2).gameObject.SetActive(false);
+            transform.GetChild(i).GetChild(0).GetComponent<TextMeshProUGUI>().enabled = false;
+            transform.GetChild(i).GetChild(1).GetComponent<TextMeshProUGUI>().enabled = false;
+            transform.GetChild(i).GetChild(2).GetComponent<TextMeshProUGUI>().enabled = false;
         }
 
-        for (int i = 0; i < transform.childCount; i++)
+        for (int i = 0; i < x; i++)
         {
-            if (combatant.GetCombatant().resistances[i] < 1)
+            if (combatant.resistances[i] < 1)
             {
-                transform.GetChild(i).GetChild(0).gameObject.SetActive(true);
+                transform.GetChild(i).GetChild(0).GetComponent<TextMeshProUGUI>().enabled =true;
             }
-            else if (combatant.GetCombatant().resistances[i] > 1)
+            else if (combatant.resistances[i] > 1)
             {
-                transform.GetChild(i).GetChild(1).gameObject.SetActive(true);
+                transform.GetChild(i).GetChild(1).GetComponent<TextMeshProUGUI>().enabled = true;
             }
-            else if (combatant.GetCombatant().resistances[i] <= 0)
+            else if (combatant.resistances[i] <= 0)
             {
-                transform.GetChild(i).GetChild(2).gameObject.SetActive(true);
+                transform.GetChild(i).GetChild(2).GetComponent<TextMeshProUGUI>().enabled = true;
             }
         }
     }

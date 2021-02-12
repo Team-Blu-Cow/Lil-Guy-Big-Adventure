@@ -8,6 +8,9 @@ public class PartyManager : MonoBehaviour
     public InputManager controls;
     public int currentCombatantNum = 1;
 
+    Color color;
+    Color white;
+
     private void Awake()
     {
         controls = new InputManager();
@@ -26,21 +29,31 @@ public class PartyManager : MonoBehaviour
 
     void Start()
     {
-        
+        white.r = 255;
+        white.g = 255;
+        white.b = 255;
+        white.a = 255;
+        color.r = 255;
+        color.g = 0;
+        color.b = 0;
+        color.a = 255;
     }
 
     void Update()
     {
-        for (int i = 0; i < 4; i++)
+
+        for(int i = 0; i < 4; i++)
         {
-            if (combatants[i].GetComponent<Combatant>().combatantNum == currentCombatantNum)
-            {
-                combatants[i].GetComponent<SpriteRenderer>().enabled = true;
-            }
-            else
-            {
-                combatants[i].GetComponent<SpriteRenderer>().enabled = false;
-            }
+            //if(currentCombatantNum == combatants[i].GetComponent<Combatant>().combatantNum)
+            //{
+            //    combatants[i].GetComponent<SpriteRenderer>().color = color;
+            //    combatants[i].GetComponent<Combatant>().fighting = true;
+            //}
+            //else
+            //{
+            //    combatants[i].GetComponent<SpriteRenderer>().color = white;
+            //    combatants[i].GetComponent<Combatant>().fighting = false;
+            //}
         }
     }
 

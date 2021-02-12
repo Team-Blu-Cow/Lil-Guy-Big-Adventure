@@ -14,6 +14,7 @@ public class ScreenManager : MonoBehaviour
     SwapScreenParty partyScreen;
     InventoryUI inventory;
     HoverStats inGameParty;
+    BeastiaryScreen beastiaryScreen;
     LevelLoader levelSwitch;
     public List<TMP_FontAsset> fonts;
 
@@ -31,6 +32,7 @@ public class ScreenManager : MonoBehaviour
 
         pause = GetComponentInChildren<PauseScreen>();
         combatantScreen = GetComponentInChildren<SwapScreenCombatant>();
+        beastiaryScreen = GetComponentInChildren<BeastiaryScreen>();
         partyScreen = GetComponentInChildren<SwapScreenParty>();
         inventory = GetComponentInChildren<InventoryUI>();
         inGameParty = GetComponentInChildren<HoverStats>();
@@ -67,6 +69,15 @@ public class ScreenManager : MonoBehaviour
     {
         inGameParty.ToggleCanvas(false);
         partyScreen.OpenScreen();
+        combatantScreen.CloseScreen();
+        combatantScreen.ToggleLearned(false);
+        pause.TogglePauseGame(false);
+    }
+    
+    public void ToggleBeastiaryScreen()
+    {
+        inGameParty.ToggleCanvas(!beastiaryScreen.ToggleScreen());
+        partyScreen.CloseScreen();
         combatantScreen.CloseScreen();
         combatantScreen.ToggleLearned(false);
         pause.TogglePauseGame(false);
