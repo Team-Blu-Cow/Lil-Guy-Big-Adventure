@@ -1,15 +1,17 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 using TMPro;
 
 public class BeastiaryScreen : MonoBehaviour
 {
     public List<GameObject> EnemiesMet;
+    public GameObject EnemyPrefab;
 
     [Header ("Pages")]
     public GameObject overview;
-    public GameObject creature;
+    public GameObject combatant;
 
     [Header ("Flip Page Objects")]
     public GameObject leftPage;
@@ -17,7 +19,7 @@ public class BeastiaryScreen : MonoBehaviour
     public GameObject newLeftPage;
     public GameObject newRightPage;
 
-    int currentCreature = 0;
+    int currentCombatant = 0;
 
     enum PageOrder
     {
@@ -29,7 +31,7 @@ public class BeastiaryScreen : MonoBehaviour
 
     public void FlipPageForward()
     {
-        if (currentCreature+1 < EnemiesMet.Count)
+        if (currentCombatant + 1 < EnemiesMet.Count)
         {
             leftPage.transform.localScale = new Vector3(0, 1, 1);
             newRightPage.transform.localScale = new Vector3(1, 1, 1);
@@ -38,7 +40,7 @@ public class BeastiaryScreen : MonoBehaviour
             LeanTween.scaleX(newRightPage, 0, 0.5f);
             LeanTween.delayedCall(0.5f, RightStart);
        
-            currentCreature++;   
+            currentCombatant++;   
             SetLeft(true);  
             SetRight(true);
         }
@@ -46,7 +48,7 @@ public class BeastiaryScreen : MonoBehaviour
 
     public void FlipPageBackward()
     {
-        if (currentCreature-1 >= 0)
+        if (currentCombatant-1 >= 0)
         {
             newRightPage.transform.localScale = new Vector3(0, 1, 1);
             leftPage.transform.localScale = new Vector3(1, 1, 1);
@@ -55,7 +57,7 @@ public class BeastiaryScreen : MonoBehaviour
             LeanTween.scaleX(leftPage, 0, 0.5f);
             LeanTween.delayedCall(0.5f, LeftStart);
 
-            currentCreature--;
+            currentCombatant--;
             SetLeft(false);
             SetRight(false);            
         }
@@ -87,9 +89,9 @@ public class BeastiaryScreen : MonoBehaviour
         else
             setNew = (int)PageOrder.newLeft;
 
-        Stats combatantStats = EnemiesMet[currentCreature].GetComponent<Stats>();
+        Stats combatantStats = EnemiesMet[currentCombatant].GetComponent<Stats>();
 
-        foreach (TextMeshProUGUI text in creature.transform.GetChild(setNew).GetComponentsInChildren<TextMeshProUGUI>())
+        foreach (TextMeshProUGUI text in combatant.transform.GetChild(setNew).GetComponentsInChildren<TextMeshProUGUI>())
         {
             if (text.name == "StatText")
             {
@@ -107,7 +109,10 @@ public class BeastiaryScreen : MonoBehaviour
             {
                 text.text = combatantStats.combatant_type.ToString();
             }
-        }        
+        }
+
+        combatant.transform.GetChild(setNew).GetComponentsInChildren<Image>()[1].sprite = EnemiesMet[currentCombatant].GetComponent<SpriteRenderer>().sprite;
+        combatant.transform.GetChild(setNew).GetComponentsInChildren<Image>()[1].SetNativeSize();
     }
     
     void SetRight(bool newPage)
@@ -118,7 +123,7 @@ public class BeastiaryScreen : MonoBehaviour
         else
             setNew = (int)PageOrder.newRight;
 
-        foreach (TextMeshProUGUI text in creature.transform.GetChild(setNew).GetComponentsInChildren<TextMeshProUGUI>())
+        foreach (TextMeshProUGUI text in combatant.transform.GetChild(setNew).GetComponentsInChildren<TextMeshProUGUI>())
         {
             if (text.name == ("Lore"))
             {
@@ -126,8 +131,8 @@ public class BeastiaryScreen : MonoBehaviour
             }
         }
 
-        Combatant test = EnemiesMet[currentCreature].GetComponent<Combatant>();
-        creature.transform.GetChild(setNew).GetComponentInChildren<ShowResistanceUI>().SetRes(test);
+        Combatant test = EnemiesMet[currentCombatant].GetComponent<Combatant>();
+        combatant.transform.GetChild(setNew).GetComponentInChildren<ShowResistanceUI>().SetRes(test);
     }
     
     public void OpenScreen()
@@ -143,21 +148,42 @@ public class BeastiaryScreen : MonoBehaviour
     public bool ToggleScreen()
     {
         GetComponent<Canvas>().enabled = !GetComponent<Canvas>().enabled;
+        UpdateSeen();
         return GetComponent<Canvas>().enabled;
     }
 
-    public void OpenCreature(int i)
+    public void OpenCombatant(int i)
     {
-        currentCreature = i;
+        currentCombatant = i;
         SetTexts();
 
         overview.GetComponent<Canvas>().enabled = false;
-        creature.GetComponent<Canvas>().enabled = true;
+        combatant.GetComponent<Canvas>().enabled = true;
     }
 
     public void CloseCreature()
     {
-        creature.GetComponent<Canvas>().enabled = false;
+        combatant.GetComponent<Canvas>().enabled = false;
         overview.GetComponent<Canvas>().enabled = true;
+    }
+
+    public void UpdateSeen()
+    {
+        foreach (Transform child in overview.transform.GetChild(2).GetComponentsInChildren<Transform>())
+        {
+            if(child.name != "Creatures")
+                Destroy(child.gameObject);
+        }
+
+        for (int i = 0; i < EnemiesMet.Count; i++)
+        {
+            GameObject newCombatant = Instantiate(EnemyPrefab, overview.transform.GetChild(2));
+            int x = new int();
+            x = i;
+            newCombatant.GetComponent<Button>().onClick.AddListener(() => { OpenCombatant(x); });
+
+            newCombatant.GetComponentInChildren<TextMeshProUGUI>().text = EnemiesMet[x].GetComponent<Stats>().combatant_type.ToString();
+            newCombatant.GetComponentInChildren<Image>().sprite = EnemiesMet[x].GetComponent<SpriteRenderer>().sprite;
+        }        
     }
 }
