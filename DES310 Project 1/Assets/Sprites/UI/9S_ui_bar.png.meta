@@ -1,19 +1,7 @@
 fileFormatVersion: 2
-guid: 0ffac5d96a153a74ea2577a392092a3f
+guid: 652c83ca573c682439f9220716ea52ff
 TextureImporter:
-  internalIDToNameTable:
-  - first:
-      213: -117094974223964185
-    second: monster sprites_0
-  - first:
-      213: -853318129285537788
-    second: monster sprites_1
-  - first:
-      213: 4892199899402239424
-    second: monster sprites_2
-  - first:
-      213: 4855066853780554660
-    second: monster sprites_3
+  internalIDToNameTable: []
   externalObjects: {}
   serializedVersion: 11
   mipmaps:
@@ -53,13 +41,13 @@ TextureImporter:
   nPOTScale: 0
   lightmap: 0
   compressionQuality: 50
-  spriteMode: 2
+  spriteMode: 1
   spriteExtrude: 1
-  spriteMeshType: 1
+  spriteMeshType: 0
   alignment: 0
   spritePivot: {x: 0.5, y: 0.5}
   spritePixelsToUnits: 64
-  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteBorder: {x: 4, y: 4, z: 4, w: 4}
   spriteGenerateFallbackPhysicsShape: 1
   alphaUsage: 1
   alphaIsTransparency: 1
@@ -113,91 +101,7 @@ TextureImporter:
     forceMaximumCompressionQuality_BC6H_BC7: 0
   spriteSheet:
     serializedVersion: 2
-    sprites:
-    - serializedVersion: 2
-      name: monster sprites_0
-      rect:
-        serializedVersion: 2
-        x: 13
-        y: 1
-        width: 40
-        height: 50
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 7e7a568cdbeff5ef0800000000000000
-      internalID: -117094974223964185
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: monster sprites_1
-      rect:
-        serializedVersion: 2
-        x: 83
-        y: 1
-        width: 33
-        height: 63
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 400e887bea76824f0800000000000000
-      internalID: -853318129285537788
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: monster sprites_2
-      rect:
-        serializedVersion: 2
-        x: 142
-        y: 1
-        width: 45
-        height: 51
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 0cd721673e594e340800000000000000
-      internalID: 4892199899402239424
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: monster sprites_3
-      rect:
-        serializedVersion: 2
-        x: 198
-        y: 0
-        width: 66
-        height: 66
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 4a30d5c8499a06340800000000000000
-      internalID: 4855066853780554660
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
+    sprites: []
     outline: []
     physicsShape: []
     bones: []

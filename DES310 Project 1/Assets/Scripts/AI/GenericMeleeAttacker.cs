@@ -193,7 +193,7 @@ namespace AI
         // TODO @matthew - this should use the combatants abilities insted of just dealing damage
         private void attack(GameObject enemy)
         {
-            enemy.GetComponent<Combatant>().do_damage(1, Combatant.DamageType.NORMAL);
-        }
+            enemy.GetComponent<Combatant>().do_damage(1, Aspects.Aspect.None);
+        } 
     }
 }

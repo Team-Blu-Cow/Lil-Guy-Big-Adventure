@@ -9,6 +9,8 @@ TagManager:
   - InventoryEquipt
   - LearnedAbility
   - UsingAbility
+  - Ally
+  - Enemy
   layers:
   - Default
   - TransparentFX
