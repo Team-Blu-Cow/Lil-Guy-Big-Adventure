@@ -11,7 +11,7 @@ public class GridHighLighter : MonoBehaviour
 
     [SerializeField] private Tilemap overlayTileMap;
     [SerializeField] private Tilemap worldTileMap;
-    [SerializeField] private IsoGrid grid;
+    [SerializeField] public IsoGrid grid;
     [SerializeField] private TileBase highlightTile;
 
     [SerializeField] private Color baseColor;
@@ -159,6 +159,11 @@ public class GridHighLighter : MonoBehaviour
         overlayTileMap.SetTileFlags(tile, TileFlags.None);
         overlayTileMap.SetColor(tile, colour);
         overlayTileMap.SetTileFlags(tile, TileFlags.LockColor);
+    }
+
+    public bool IsTileSelectable(IsoNode node)
+    {
+        return selectableTiles.Contains(node);
     }
 
 }

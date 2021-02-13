@@ -7,6 +7,7 @@ public class TargetTestScript : MonoBehaviour
     [HideInInspector] public Vector3 mousePos;
     InputMaster input;
     public IsoGrid grid;
+    public GridHighLighter gridHighlighter;
 
     private void Awake()
     {

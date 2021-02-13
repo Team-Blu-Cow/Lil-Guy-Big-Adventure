@@ -9,17 +9,33 @@ public class PathFindingUnit : MonoBehaviour
     [SerializeField] Vector3[] path;
     int targetIndex;
     bool currentlyPathFinding = false;
+    public GridHighLighter gridHighLighter;
+    
+    public void SetSelectableTiles(int range)
+    {
+        gridHighLighter.SetSelectableTiles(gridHighLighter.grid.WorldToNode(transform.position), range);
+    }
 
     public void RequestPath()
     {
         if (!currentlyPathFinding)
-            PathRequestManager.RequestPath(transform.position, target.position, OnPathFound);
+        {
+            if (gridHighLighter.IsTileSelectable(gridHighLighter.grid.WorldToNode(target.position)))
+                PathRequestManager.RequestPath(transform.position, target.position, OnPathFound);
+            else
+                Debug.Log("Tile is not a valid move position");
+        }   
     }
 
     public void RequestPath(Vector3 targetPos)
     {
         if (!currentlyPathFinding)
-            PathRequestManager.RequestPath(transform.position, targetPos, OnPathFound);
+        {
+            if (gridHighLighter.IsTileSelectable(gridHighLighter.grid.WorldToNode(targetPos)))
+                PathRequestManager.RequestPath(transform.position, targetPos, OnPathFound);
+            else
+                Debug.Log("Tile is not a valid move position");
+        }
     }
 
     public void OnPathFound(Vector3[] newPath, bool pathSuccess)

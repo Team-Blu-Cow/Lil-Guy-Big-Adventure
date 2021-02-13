@@ -9,6 +9,7 @@ public class IsoGrid : MonoBehaviour
     [Header("Grid Settings")]
     public Vector2Int gridSize;
     public Tilemap tileMap;
+    public GridHighLighter highlighter;
 
     [Header("Node Settings")]
     public float nodeRadius;
@@ -49,6 +50,8 @@ public class IsoGrid : MonoBehaviour
                 dataFromTiles.Add(tile, _tileData);
             }
         }
+
+        highlighter = gameObject.GetComponent<GridHighLighter>();
 
         InitGrid();
         CreateGrid();

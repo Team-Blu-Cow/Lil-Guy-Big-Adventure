@@ -236,6 +236,10 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 6192750022062757414}
     - target: {fileID: 529015817023027244, guid: 8a05b9418a932a4469459163e4aa1b48, type: 3}
+      propertyPath: GridGizmoOpacity
+      value: 0.1
+      objectReference: {fileID: 0}
+    - target: {fileID: 529015817023027244, guid: 8a05b9418a932a4469459163e4aa1b48, type: 3}
       propertyPath: DisplayGridGizmos
       value: 1
       objectReference: {fileID: 0}
@@ -523,6 +527,7 @@ MonoBehaviour:
   target: {fileID: 817614703}
   speed: 3
   path: []
+  gridHighLighter: {fileID: 1288114615}
 --- !u!114 &701210024 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 8568953702159863982, guid: c66f2800b46b2f74dbc65b39d10029c6, type: 3}
@@ -702,7 +707,8 @@ MonoBehaviour:
   baseColor: {r: 1, g: 1, b: 1, a: 1}
   unwalkableColor: {r: 1, g: 0, b: 0, a: 1}
   selectableColor: {r: 0, g: 1, b: 0.9026253, a: 1}
-  test: {x: 10, y: 10, z: 1}
+  test: {x: 2, y: 2, z: 1}
+  testMoveSpeed: 3
 --- !u!114 &1319603414 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 8562030309962286967, guid: f23845b4c2af1b14599fab3ddcd94e0a, type: 3}
@@ -807,14 +813,14 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1288114615}
-        m_TargetAssemblyTypeName: GridHighLighter, Assembly-CSharp
-        m_MethodName: SetSelectableTilesOnButton
-        m_Mode: 1
+      - m_Target: {fileID: 522555652}
+        m_TargetAssemblyTypeName: PathFindingUnit, Assembly-CSharp
+        m_MethodName: SetSelectableTiles
+        m_Mode: 3
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
+          m_IntArgument: 7
           m_FloatArgument: 0
           m_StringArgument: 
           m_BoolArgument: 0
@@ -2972,7 +2978,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Button
+  m_text: Follow Path
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
