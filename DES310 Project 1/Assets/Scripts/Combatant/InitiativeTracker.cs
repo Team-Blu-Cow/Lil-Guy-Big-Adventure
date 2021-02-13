@@ -31,8 +31,8 @@ public class InitiativeTracker : MonoBehaviour
     public CombatButton[] choiceButtons;
     //public CombatButton abilityConfirmButton;
     //public CombatButton itemConfirmButton;
-    //public CombatButton backButton;
     //public CombatButton waitConfirmButton;
+    //public CombatButton backButton;
 
     bool selecting = false;
     public bool isAlly = false;
@@ -160,8 +160,8 @@ public class InitiativeTracker : MonoBehaviour
             }
             else if (getCurrentCombatant().GetComponent<Combatant>().combatantState == Combatant_State.Moved)
             {
-                moveCancelButton.activateButton(new Vector3(110, -10, 0), combatantPos);
-                moveConfirmButton.activateButton(new Vector3(110, 20, 0), combatantPos);
+                moveButtons[0].activateButton(new Vector3(110, -10, 0), combatantPos);
+                moveButtons[1].activateButton(new Vector3(110, 20, 0), combatantPos);
             }
         }
 
@@ -178,11 +178,12 @@ public class InitiativeTracker : MonoBehaviour
             }
         }
 
-        if(selecting == true)
+        if (selecting == true)
         {
-            abilityConfirmButton.deactivateButton();
-            itemConfirmButton.deactivateButton();
-            waitConfirmButton.deactivateButton();
+            for (int i = 0; i < 3; i++)
+            {
+                choiceButtons[i].deactivateButton();
+            }
         }
     }
 
@@ -219,6 +220,7 @@ public class InitiativeTracker : MonoBehaviour
 
 
     // TODO figure out the enigma that is these following for loops. I should just be able to call the combatant using the current combatant num variable however it doesn't work. :/
+    // Ya dingus just use getCurrentCombatant()
     public void cancelMove()
     {
         for (int i = 0; i < combatants.ToArray().Length; i++)
@@ -226,8 +228,8 @@ public class InitiativeTracker : MonoBehaviour
             if (currentCombatantNum == combatants[i].GetComponent<Combatant>().combatantNum)
             {
                 combatants[i].GetComponent<Combatant>().cancelMove();
-                moveCancelButton.deactivateButton();
-                moveConfirmButton.deactivateButton();
+                moveButtons[0].deactivateButton();
+                moveButtons[1].deactivateButton();
                 selecting = false;
             }
         }
@@ -240,8 +242,8 @@ public class InitiativeTracker : MonoBehaviour
             if (currentCombatantNum == combatants[i].GetComponent<Combatant>().combatantNum)
             {
                 combatants[i].GetComponent<Combatant>().confirmMove();
-                moveCancelButton.deactivateButton();
-                moveConfirmButton.deactivateButton();
+                moveButtons[0].deactivateButton();
+                moveButtons[1].deactivateButton();
                 selecting = false;
             }
         }
@@ -258,11 +260,11 @@ public class InitiativeTracker : MonoBehaviour
                     if (combatants[i].GetComponent<Combatant>().combatantState == Combatant_State.Attacking)
                     {
                         combatants[i].GetComponent<Combatant>().attackAbility(abilityNum);
-                        abilityOneButton.deactivateButton();
-                        abilityTwoButton.deactivateButton();
-                        abilityThreeButton.deactivateButton();
-                        abilityFourButton.deactivateButton();
-                        backButton.deactivateButton();
+                        for(int j = 0; j < 4; j++)
+                        {
+                            abilityButtons[j].deactivateButton();
+                        }
+                        choiceButtons[3].deactivateButton();
                     }
                 }
                 else
@@ -282,12 +284,11 @@ public class InitiativeTracker : MonoBehaviour
                 if (combatants[i].GetComponent<Combatant>().combatantState == Combatant_State.Attacking)
                 {
                     combatants[i].GetComponent<Combatant>().UseItem(itemNum);
-                    itemOneButton.deactivateButton();
-                    itemTwoButton.deactivateButton();
-                    itemThreeButton.deactivateButton();
-                    itemFourButton.deactivateButton();
-                    itemFiveButton.deactivateButton();
-                    backButton.deactivateButton();
+                    for(int j = 0; j < 5; j++)
+                    {
+                        itemButtons[i].deactivateButton();
+                    }
+                    choiceButtons[3].deactivateButton();
                 }
             }
         }
@@ -308,37 +309,45 @@ public class InitiativeTracker : MonoBehaviour
 
     public void activateAbilityButtons()
     {
-        abilityOneButton.activateButton(new Vector3 (110,110,0), combatantPos);
-        abilityTwoButton.activateButton(new Vector3(110, 80, 0), combatantPos);
-        abilityThreeButton.activateButton(new Vector3(110, 50, 0), combatantPos);
-        abilityFourButton.activateButton(new Vector3(110, 20, 0), combatantPos);
-        backButton.activateButton(new Vector3(110, -10, 0), combatantPos);
+        int offsetY = 110;
+
+        for(int i = 0; i < 4; i++)
+        {
+            abilityButtons[i].activateButton(new Vector3(110, offsetY, 0), combatantPos);
+            offsetY -= 30;
+        }
+
+        choiceButtons[3].activateButton(new Vector3(110, offsetY, 0), combatantPos);
         selecting = true;
     }
 
     public void activateItemButtonss()
     {
-        itemOneButton.activateButton(new Vector3(110, 140, 0), combatantPos);
-        itemTwoButton.activateButton(new Vector3(110, 110, 0), combatantPos);
-        itemThreeButton.activateButton(new Vector3(110, 80, 0), combatantPos);
-        itemFourButton.activateButton(new Vector3(110, 50, 0), combatantPos);
-        itemFiveButton.activateButton(new Vector3(110, 20, 0), combatantPos);
-        backButton.activateButton(new Vector3(110, -10, 0), combatantPos);
+        int offsetY = 110;
+
+        for (int i = 0; i < 5; i++)
+        {
+            itemButtons[i].activateButton(new Vector3(110, offsetY, 0), combatantPos);
+            offsetY -= 30;
+        }
+
+        choiceButtons[3].activateButton(new Vector3(110, offsetY, 0), combatantPos);
         selecting = true;
     }
 
     public void useBackButton()
     {
-        abilityOneButton.deactivateButton();
-        abilityTwoButton.deactivateButton();
-        abilityThreeButton.deactivateButton();
-        abilityFourButton.deactivateButton();
-        itemOneButton.deactivateButton();
-        itemTwoButton.deactivateButton();
-        itemThreeButton.deactivateButton();
-        itemFourButton.deactivateButton();
-        itemFiveButton.deactivateButton();
-        backButton.deactivateButton();
+        for(int i = 0; i < 4; i++)
+        {
+            abilityButtons[i].deactivateButton();
+        }
+
+        for(int i = 0; i < 5; i++)
+        {
+            itemButtons[i].deactivateButton();
+        }
+
+        choiceButtons[3].deactivateButton();
         selecting = false;
     }
 
