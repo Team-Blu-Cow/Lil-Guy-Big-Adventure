@@ -2,6 +2,15 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+public enum Combatant_State
+{
+    Idle,
+    Moving,
+    Moved,
+    Attacking,
+    Attacked,
+}
+
 public class Combatant : MonoBehaviour
 {
     public int combatantNum;
@@ -25,6 +34,7 @@ public class Combatant : MonoBehaviour
 
     public bool attacking = false;
     public bool attacked = false;
+    public Combatant_State combatantState = Combatant_State.Idle;
 
     public InputManager controls;
 
@@ -123,7 +133,7 @@ public class Combatant : MonoBehaviour
         GetComponent<TestCombatSystem>().CastAbility(abilityNum);
         attacked = true;
         attacking = false;
-        initTracker.ChangeCurrentCombatant();
+        initTracker.ChangeCurrentCombatant();       
     }
 
     public void UseItem(int itemNum)

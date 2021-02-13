@@ -34,19 +34,22 @@ public class TestCombatSystem : MonoBehaviour
     public void CastAbility(int abilityNum)
     {
         Debug.Log("Casting Ability...");
-        switch (abilitiesUsing[abilityNum].abilityType)
+        if (enemy != null)
         {
-            case ability_type.Damage:
-                DamageAbility(abilityNum);
-                break;
-            case ability_type.Heal:
-                HealAbility(abilityNum);
-                break;
-            case ability_type.Buff:
-                BuffAbility(abilityNum);
-                break;
-            default:
-                break;
+            switch (abilitiesUsing[abilityNum].abilityType)
+            {
+                case ability_type.Damage:
+                    DamageAbility(abilityNum);
+                    break;
+                case ability_type.Heal:
+                    HealAbility(abilityNum);
+                    break;
+                case ability_type.Buff:
+                    BuffAbility(abilityNum);
+                    break;
+                default:
+                    break;
+            }
         }
 
     }

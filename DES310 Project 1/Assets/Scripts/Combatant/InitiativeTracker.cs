@@ -32,7 +32,8 @@ public class InitiativeTracker : MonoBehaviour
     bool selecting = false;
     public CombatButton waitConfirmButton;
 
-
+    public bool isAlly = false;
+    public bool enemyChanging = false;
 
     public Vector3 combatantPos;
     public Vector3 combatantWorldPos;
@@ -158,12 +159,36 @@ public class InitiativeTracker : MonoBehaviour
             }
         }
 
+        if(getCurrentCombatant().gameObject.tag == "Ally")
+        {
+            isAlly = true;
+        }
+        else
+        {
+            if (enemyChanging == false)
+            {
+                isAlly = false;
+                StartCoroutine(enemyStuff());
+            }
+        }
+
         if(selecting == true)
         {
             abilityConfirmButton.deactivateButton();
             itemConfirmButton.deactivateButton();
             waitConfirmButton.deactivateButton();
         }
+    }
+
+
+    public IEnumerator enemyStuff()
+    {
+        enemyChanging = true;
+        Debug.Log("HI");
+        yield return new WaitForSeconds(2.0f);
+        Debug.Log("HI AGAIN");
+        ChangeCurrentCombatant();
+        enemyChanging = false;
     }
 
     public void AddCombatant(GameObject combatant)
@@ -178,6 +203,14 @@ public class InitiativeTracker : MonoBehaviour
         if(currentCombatantNum == combatants.ToArray().Length)
         {
             currentCombatantNum = 0;
+
+            for(int i = 0; i < combatants.ToArray().Length; i++)
+            {
+                combatants[i].GetComponent<Combatant>().moving = false;
+                combatants[i].GetComponent<Combatant>().moved = false;
+                combatants[i].GetComponent<Combatant>().attacking = false;
+                combatants[i].GetComponent<Combatant>().attacked = false;
+            }
         }
     }
 
@@ -217,14 +250,21 @@ public class InitiativeTracker : MonoBehaviour
         {
             if (currentCombatantNum == combatants[i].GetComponent<Combatant>().combatantNum)
             {
-                if (combatants[i].GetComponent<Combatant>().attacking == true)
+                if (combatants[i].GetComponent<TestCombatSystem>().enemy != null)
                 {
-                    combatants[i].GetComponent<Combatant>().attackAbility(abilityNum);
-                    abilityOneButton.deactivateButton();
-                    abilityTwoButton.deactivateButton();
-                    abilityThreeButton.deactivateButton();
-                    abilityFourButton.deactivateButton();
-                    backButton.deactivateButton();
+                    if (combatants[i].GetComponent<Combatant>().attacking == true)
+                    {
+                        combatants[i].GetComponent<Combatant>().attackAbility(abilityNum);
+                        abilityOneButton.deactivateButton();
+                        abilityTwoButton.deactivateButton();
+                        abilityThreeButton.deactivateButton();
+                        abilityFourButton.deactivateButton();
+                        backButton.deactivateButton();
+                    }
+                }
+                else
+                {
+                    Debug.Log("No Target has been added");
                 }
             }
         }
