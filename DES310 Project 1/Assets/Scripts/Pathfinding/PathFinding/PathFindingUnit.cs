@@ -9,7 +9,7 @@ public class PathFindingUnit : MonoBehaviour
     [SerializeField] Vector3[] path;
     int targetIndex;
     bool currentlyPathFinding = false;
-    public GridHighLighter gridHighLighter;
+    [SerializeField] private GridHighLighter gridHighLighter;
     
     public void SetSelectableTiles(int range)
     {

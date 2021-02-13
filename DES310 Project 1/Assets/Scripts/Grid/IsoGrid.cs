@@ -6,19 +6,19 @@ using UnityEngine.Tilemaps;
 public class IsoGrid : MonoBehaviour
 {
     // Public & Serializable Fields ***************************************************************
-    [Header("Grid Settings")]
-    public Vector2Int gridSize;
-    public Tilemap tileMap;
-    public GridHighLighter highlighter;
+    // grid settings
+    [HideInInspector, SerializeField] private Vector2Int gridSize;
+    [HideInInspector, SerializeField] private Tilemap tileMap;
+    [HideInInspector, SerializeField] private GridHighLighter highlighter;
 
-    [Header("Node Settings")]
-    public float nodeRadius;
-    public List<TileData> tileData;
+    // node settings
+    [HideInInspector, SerializeField] private float nodeRadius;
+    [HideInInspector, SerializeField] private List<TileData> tileData;
 
-    [Header("Debug Options")]
-    public bool DisplayGridGizmos;
-    [Range(0,1)]public float GridGizmoOpacity = 0.25f;
-    public bool DisplayNodeGizmos;
+    // debug settings
+    [HideInInspector, SerializeField] private bool DisplayGridGizmos;
+    [Range(0,1), HideInInspector, SerializeField] private float GridGizmoOpacity = 0.25f;
+    [HideInInspector, SerializeField] private bool DisplayNodeGizmos;
 
     // Private Fields *****************************************************************************
     private Dictionary<TileBase, TileData> dataFromTiles;
