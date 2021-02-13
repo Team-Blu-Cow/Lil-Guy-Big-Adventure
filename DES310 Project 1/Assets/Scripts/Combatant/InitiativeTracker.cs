@@ -11,27 +11,30 @@ public class InitiativeTracker : MonoBehaviour
     int currentCombatantNum = 0;
     public List<int> combatantInits;
 
-    public CombatButton moveCancelButton;
-    public CombatButton moveConfirmButton;
+    public CombatButton[] moveButtons;
+    //public CombatButton moveCancelButton;
+    //public CombatButton moveConfirmButton;
 
-    public CombatButton abilityConfirmButton;
-    public CombatButton abilityOneButton;
-    public CombatButton abilityTwoButton;
-    public CombatButton abilityThreeButton;
-    public CombatButton abilityFourButton;
+    public CombatButton[] abilityButtons;
+    //public CombatButton abilityOneButton;
+    //public CombatButton abilityTwoButton;
+    //public CombatButton abilityThreeButton;
+    //public CombatButton abilityFourButton;
 
-    public CombatButton itemConfirmButton;
-    public CombatButton itemOneButton;
-    public CombatButton itemTwoButton;
-    public CombatButton itemThreeButton;
-    public CombatButton itemFourButton;
-    public CombatButton itemFiveButton;
+    public CombatButton[] itemButtons;
+    //public CombatButton itemOneButton;
+    //public CombatButton itemTwoButton;
+    //public CombatButton itemThreeButton;
+    //public CombatButton itemFourButton;
+    //public CombatButton itemFiveButton;
 
+    public CombatButton[] choiceButtons;
+    //public CombatButton abilityConfirmButton;
+    //public CombatButton itemConfirmButton;
+    //public CombatButton backButton;
+    //public CombatButton waitConfirmButton;
 
-    public CombatButton backButton;
     bool selecting = false;
-    public CombatButton waitConfirmButton;
-
     public bool isAlly = false;
     public bool enemyChanging = false;
 
@@ -140,22 +143,25 @@ public class InitiativeTracker : MonoBehaviour
         }
 
 
-        if(getCurrentCombatant().GetComponent<Combatant>().moved == true)
+        if(getCurrentCombatant().GetComponent<Combatant>().combatantState == Combatant_State.Moved || getCurrentCombatant().GetComponent<Combatant>().combatantState == Combatant_State.Attacking)
         {
 
             combatantWorldPos = Camera.main.WorldToScreenPoint(getCurrentCombatant().transform.position);
             combatantPos = new Vector3(combatantWorldPos.x, combatantWorldPos.y, -1);
 
-            if (getCurrentCombatant().GetComponent<Combatant>().attacking == false)
+            if (getCurrentCombatant().GetComponent<Combatant>().combatantState == Combatant_State.Attacking && selecting == false)
+            {
+                int offsetY = 50;
+                for(int i = 0; i < 3; i++)
+                {
+                    choiceButtons[i].activateButton(new Vector3(110, offsetY, 0), combatantPos);
+                    offsetY -= 30;
+                }
+            }
+            else if (getCurrentCombatant().GetComponent<Combatant>().combatantState == Combatant_State.Moved)
             {
                 moveCancelButton.activateButton(new Vector3(110, -10, 0), combatantPos);
                 moveConfirmButton.activateButton(new Vector3(110, 20, 0), combatantPos);
-            }
-            else if (getCurrentCombatant().GetComponent<Combatant>().attacking == true && selecting == false)
-            {
-                abilityConfirmButton.activateButton(new Vector3(110, 50, 0), combatantPos);
-                itemConfirmButton.activateButton(new Vector3(110, 20, 0), combatantPos);
-                waitConfirmButton.activateButton(new Vector3(110, -10, 0), combatantPos);
             }
         }
 
@@ -206,10 +212,7 @@ public class InitiativeTracker : MonoBehaviour
 
             for(int i = 0; i < combatants.ToArray().Length; i++)
             {
-                combatants[i].GetComponent<Combatant>().moving = false;
-                combatants[i].GetComponent<Combatant>().moved = false;
-                combatants[i].GetComponent<Combatant>().attacking = false;
-                combatants[i].GetComponent<Combatant>().attacked = false;
+                combatants[i].GetComponent<Combatant>().combatantState = Combatant_State.Idle;
             }
         }
     }
@@ -252,7 +255,7 @@ public class InitiativeTracker : MonoBehaviour
             {
                 if (combatants[i].GetComponent<TestCombatSystem>().enemy != null)
                 {
-                    if (combatants[i].GetComponent<Combatant>().attacking == true)
+                    if (combatants[i].GetComponent<Combatant>().combatantState == Combatant_State.Attacking)
                     {
                         combatants[i].GetComponent<Combatant>().attackAbility(abilityNum);
                         abilityOneButton.deactivateButton();
@@ -276,7 +279,7 @@ public class InitiativeTracker : MonoBehaviour
         {
             if (currentCombatantNum == combatants[i].GetComponent<Combatant>().combatantNum)
             {
-                if (combatants[i].GetComponent<Combatant>().attacking == true)
+                if (combatants[i].GetComponent<Combatant>().combatantState == Combatant_State.Attacking)
                 {
                     combatants[i].GetComponent<Combatant>().UseItem(itemNum);
                     itemOneButton.deactivateButton();
@@ -342,8 +345,7 @@ public class InitiativeTracker : MonoBehaviour
     public void useWaitButton()
     {
         ChangeCurrentCombatant();
-        getCurrentCombatant().GetComponent<Combatant>().attacking = false;
-        getCurrentCombatant().GetComponent<Combatant>().attacked = true;
+        getCurrentCombatant().GetComponent<Combatant>().combatantState = Combatant_State.Attacked;
         selecting = true;
     }
 }

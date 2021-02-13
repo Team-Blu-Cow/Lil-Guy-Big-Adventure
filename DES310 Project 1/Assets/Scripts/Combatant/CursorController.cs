@@ -50,11 +50,11 @@ public class CursorController : MonoBehaviour
             Debug.Log("Found Combatant");
             if (initTracker.getCurrentCombatant().GetComponent<PathFindingUnit>() != null)
             {
-                if (initTracker.getCurrentCombatant().GetComponent<Combatant>().moved != true)
+                if (initTracker.getCurrentCombatant().GetComponent<Combatant>().combatantState == Combatant_State.Idle)
                 {
                     Debug.Log("Finding Path");
                     initTracker.getCurrentCombatant().GetComponent<PathFindingUnit>().RequestPath();
-                    initTracker.getCurrentCombatant().GetComponent<Combatant>().moving = true;
+                    initTracker.getCurrentCombatant().GetComponent<Combatant>().combatantState = Combatant_State.Moving;
                     initTracker.getCurrentCombatant().GetComponent<Combatant>().oldPosition = initTracker.getCurrentCombatant().GetComponent<Transform>().position;
                 }
             }
@@ -80,7 +80,7 @@ public class CursorController : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (initTracker.getCurrentCombatant().GetComponent<Combatant>().attacking == true)
+        if (initTracker.getCurrentCombatant().GetComponent<Combatant>().combatantState == Combatant_State.Attacking)
         {
             hovering = true;
             hoverObject = collision.gameObject;
@@ -89,7 +89,7 @@ public class CursorController : MonoBehaviour
 
     private void OnTriggerExit2D(Collider2D collision)
     {
-        if (initTracker.getCurrentCombatant().GetComponent<Combatant>().attacking == true)
+        if (initTracker.getCurrentCombatant().GetComponent<Combatant>().combatantState== Combatant_State.Attacking)
         {
             hovering = false;
             hoverObject = null;
