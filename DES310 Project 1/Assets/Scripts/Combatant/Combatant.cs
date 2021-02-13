@@ -21,6 +21,8 @@ public class Combatant : MonoBehaviour
 
     public InputManager controls;
 
+    private Animator animator;
+
     /*
      would it not be better to put the Stats class here eg.
      
@@ -58,6 +60,8 @@ public class Combatant : MonoBehaviour
         abilitiesUsing[3] = abilitiesLearnt[3];
 
         initTracker.AddCombatant(this.gameObject);
+        animator = GetComponent<Animator>();
+
     }
 
     private void Update()
