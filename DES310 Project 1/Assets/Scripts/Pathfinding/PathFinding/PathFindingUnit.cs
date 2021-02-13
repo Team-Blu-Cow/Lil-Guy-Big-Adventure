@@ -16,6 +16,12 @@ public class PathFindingUnit : MonoBehaviour
             PathRequestManager.RequestPath(transform.position, target.position, OnPathFound);
     }
 
+    public void RequestPath(Vector3 targetPos)
+    {
+        if (!currentlyPathFinding)
+            PathRequestManager.RequestPath(transform.position, targetPos, OnPathFound);
+    }
+
     public void OnPathFound(Vector3[] newPath, bool pathSuccess)
     {
         if (pathSuccess)

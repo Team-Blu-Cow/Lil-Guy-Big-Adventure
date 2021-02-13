@@ -27,9 +27,17 @@ public class @InputMaster : IInputActionCollection, IDisposable
                     ""interactions"": """"
                 },
                 {
-                    ""name"": ""MouseClick"",
+                    ""name"": ""RightMouseClick"",
                     ""type"": ""Button"",
                     ""id"": ""7a4a121a-5cf1-4252-b9d0-f513c673660a"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """"
+                },
+                {
+                    ""name"": ""LeftMouseClick"",
+                    ""type"": ""Button"",
+                    ""id"": ""8666dbd6-5207-4179-b8c3-984348d3a203"",
                     ""expectedControlType"": ""Button"",
                     ""processors"": """",
                     ""interactions"": """"
@@ -54,7 +62,18 @@ public class @InputMaster : IInputActionCollection, IDisposable
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
-                    ""action"": ""MouseClick"",
+                    ""action"": ""RightMouseClick"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""9e1fa2f4-9121-4d51-8319-48efc10443cf"",
+                    ""path"": ""<Mouse>/leftButton"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""keyboard + mouse"",
+                    ""action"": ""LeftMouseClick"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 }
@@ -83,7 +102,8 @@ public class @InputMaster : IInputActionCollection, IDisposable
         // PathfinderTestControls
         m_PathfinderTestControls = asset.FindActionMap("PathfinderTestControls", throwIfNotFound: true);
         m_PathfinderTestControls_MousePos = m_PathfinderTestControls.FindAction("MousePos", throwIfNotFound: true);
-        m_PathfinderTestControls_MouseClick = m_PathfinderTestControls.FindAction("MouseClick", throwIfNotFound: true);
+        m_PathfinderTestControls_RightMouseClick = m_PathfinderTestControls.FindAction("RightMouseClick", throwIfNotFound: true);
+        m_PathfinderTestControls_LeftMouseClick = m_PathfinderTestControls.FindAction("LeftMouseClick", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -134,13 +154,15 @@ public class @InputMaster : IInputActionCollection, IDisposable
     private readonly InputActionMap m_PathfinderTestControls;
     private IPathfinderTestControlsActions m_PathfinderTestControlsActionsCallbackInterface;
     private readonly InputAction m_PathfinderTestControls_MousePos;
-    private readonly InputAction m_PathfinderTestControls_MouseClick;
+    private readonly InputAction m_PathfinderTestControls_RightMouseClick;
+    private readonly InputAction m_PathfinderTestControls_LeftMouseClick;
     public struct PathfinderTestControlsActions
     {
         private @InputMaster m_Wrapper;
         public PathfinderTestControlsActions(@InputMaster wrapper) { m_Wrapper = wrapper; }
         public InputAction @MousePos => m_Wrapper.m_PathfinderTestControls_MousePos;
-        public InputAction @MouseClick => m_Wrapper.m_PathfinderTestControls_MouseClick;
+        public InputAction @RightMouseClick => m_Wrapper.m_PathfinderTestControls_RightMouseClick;
+        public InputAction @LeftMouseClick => m_Wrapper.m_PathfinderTestControls_LeftMouseClick;
         public InputActionMap Get() { return m_Wrapper.m_PathfinderTestControls; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -153,9 +175,12 @@ public class @InputMaster : IInputActionCollection, IDisposable
                 @MousePos.started -= m_Wrapper.m_PathfinderTestControlsActionsCallbackInterface.OnMousePos;
                 @MousePos.performed -= m_Wrapper.m_PathfinderTestControlsActionsCallbackInterface.OnMousePos;
                 @MousePos.canceled -= m_Wrapper.m_PathfinderTestControlsActionsCallbackInterface.OnMousePos;
-                @MouseClick.started -= m_Wrapper.m_PathfinderTestControlsActionsCallbackInterface.OnMouseClick;
-                @MouseClick.performed -= m_Wrapper.m_PathfinderTestControlsActionsCallbackInterface.OnMouseClick;
-                @MouseClick.canceled -= m_Wrapper.m_PathfinderTestControlsActionsCallbackInterface.OnMouseClick;
+                @RightMouseClick.started -= m_Wrapper.m_PathfinderTestControlsActionsCallbackInterface.OnRightMouseClick;
+                @RightMouseClick.performed -= m_Wrapper.m_PathfinderTestControlsActionsCallbackInterface.OnRightMouseClick;
+                @RightMouseClick.canceled -= m_Wrapper.m_PathfinderTestControlsActionsCallbackInterface.OnRightMouseClick;
+                @LeftMouseClick.started -= m_Wrapper.m_PathfinderTestControlsActionsCallbackInterface.OnLeftMouseClick;
+                @LeftMouseClick.performed -= m_Wrapper.m_PathfinderTestControlsActionsCallbackInterface.OnLeftMouseClick;
+                @LeftMouseClick.canceled -= m_Wrapper.m_PathfinderTestControlsActionsCallbackInterface.OnLeftMouseClick;
             }
             m_Wrapper.m_PathfinderTestControlsActionsCallbackInterface = instance;
             if (instance != null)
@@ -163,9 +188,12 @@ public class @InputMaster : IInputActionCollection, IDisposable
                 @MousePos.started += instance.OnMousePos;
                 @MousePos.performed += instance.OnMousePos;
                 @MousePos.canceled += instance.OnMousePos;
-                @MouseClick.started += instance.OnMouseClick;
-                @MouseClick.performed += instance.OnMouseClick;
-                @MouseClick.canceled += instance.OnMouseClick;
+                @RightMouseClick.started += instance.OnRightMouseClick;
+                @RightMouseClick.performed += instance.OnRightMouseClick;
+                @RightMouseClick.canceled += instance.OnRightMouseClick;
+                @LeftMouseClick.started += instance.OnLeftMouseClick;
+                @LeftMouseClick.performed += instance.OnLeftMouseClick;
+                @LeftMouseClick.canceled += instance.OnLeftMouseClick;
             }
         }
     }
@@ -182,6 +210,7 @@ public class @InputMaster : IInputActionCollection, IDisposable
     public interface IPathfinderTestControlsActions
     {
         void OnMousePos(InputAction.CallbackContext context);
-        void OnMouseClick(InputAction.CallbackContext context);
+        void OnRightMouseClick(InputAction.CallbackContext context);
+        void OnLeftMouseClick(InputAction.CallbackContext context);
     }
 }

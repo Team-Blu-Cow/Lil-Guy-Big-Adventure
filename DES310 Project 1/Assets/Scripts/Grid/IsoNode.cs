@@ -8,6 +8,7 @@ public class IsoNode : IHeapItem<IsoNode>
 {
     // Universal Path Finding Members *************************************************************
     public bool walkable;
+    public bool occupied = false;
     public IsoNode parent;
 
     // A* Members *********************************************************************************
@@ -26,14 +27,9 @@ public class IsoNode : IHeapItem<IsoNode>
     }
 
     // BFS Members ********************************************************************************
-    public bool current = false;
-    public bool target = false;
     public bool selectable = false;
 
-    // list of adjacent tiles
-
-    public bool visited;
-    public int distance;
+    public int distance = 0;
 
     // Position & Index Members *******************************************************************
     public Vector3 worldPosition;
@@ -53,5 +49,16 @@ public class IsoNode : IHeapItem<IsoNode>
             compare = hCost.CompareTo(comparisonNode.hCost);
 
         return -compare;
+    }
+
+    public bool IsTraversable()
+    {
+        if (!walkable)
+            return false;
+        else if (occupied/*&& any other parameters */)
+        {
+            return false;
+        }
+        return true;
     }
 }

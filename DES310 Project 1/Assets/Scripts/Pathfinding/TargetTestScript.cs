@@ -12,7 +12,7 @@ public class TargetTestScript : MonoBehaviour
     {
         input = new InputMaster();
         input.PathfinderTestControls.MousePos.performed += ctx => SetCursorPosition(ctx.ReadValue<Vector2>());
-        input.PathfinderTestControls.MouseClick.started += ctx => SetTargetPosition();
+        input.PathfinderTestControls.RightMouseClick.started += ctx => SetTargetPosition();
     }
 
     private void OnEnable()
