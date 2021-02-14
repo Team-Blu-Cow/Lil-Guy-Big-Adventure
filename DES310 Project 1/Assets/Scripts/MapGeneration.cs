@@ -16,7 +16,7 @@ public class MapGeneration : MonoBehaviour
     [Header("Tile set")]
     public Tilemap tileMap;
     public TileBase[] tiles;
-    public AStarGrid grid;
+    public IsoGrid grid;
 
     [Header("Objects")]
     public Item[] items;
@@ -32,7 +32,7 @@ public class MapGeneration : MonoBehaviour
     List<GameObject> placedExits = new List<GameObject>(); 
 
     public void RenderMap()
-    {
+    {        
         Vector2 size = new Vector2(grid.gridSize.x, grid.gridSize.y);
         Direction enterDirection = 0;
 
@@ -168,7 +168,7 @@ public class MapGeneration : MonoBehaviour
             if (x.Count-1 == (int)enterDir)
             {
                 temp= x.Pop();
-                Player.position = grid.CellToWorld(new Vector3Int(-(int)temp.x-1, -(int)temp.y-1, 0));
+                Player.position = grid.CellToWorld(new Vector3Int(-(int)temp.x-1, -(int)temp.y-1, 0)) + new Vector3(0,-0.25f,0);
             }
             else
             {

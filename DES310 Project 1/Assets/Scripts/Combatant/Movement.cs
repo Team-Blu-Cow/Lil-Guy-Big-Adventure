@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class Movement : MonoBehaviour
 {
-    public AStarGrid grid;
+    public IsoGrid grid;
     InputManager controls; 
     Transform target;
 
@@ -73,9 +73,9 @@ public class Movement : MonoBehaviour
             }
             else if (hit.collider.gameObject.CompareTag("Exit"))
             {
-                AStarNode node = grid.WorldToNode(hit.collider.gameObject.transform.position);
+                IsoNode node = grid.WorldToNode(hit.collider.gameObject.transform.position);
 
-                foreach (AStarNode neighbor in grid.GetNeighbors(node))
+                foreach (IsoNode neighbor in grid.GetNeighbors(node))
                 {
                     if (neighbor.gridPosition == grid.WorldToNode(transform.position).gridPosition) //if it is a treasure
                     {

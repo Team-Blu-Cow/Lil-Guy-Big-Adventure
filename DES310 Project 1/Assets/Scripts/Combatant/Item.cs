@@ -40,10 +40,10 @@ public class Item : MonoBehaviour
     public void PickUp(Vector3 playerPos)
     {
         bool pickedUp = false;
-        AStarGrid grid = GameObject.FindObjectOfType<AStarGrid>();
-        AStarNode node = grid.WorldToNode(transform.position);
+        IsoGrid grid = GameObject.FindObjectOfType<IsoGrid>();
+        IsoNode node = grid.WorldToNode(transform.position);
 
-        foreach (AStarNode neighbor in grid.GetNeighbors(node))
+        foreach (IsoNode neighbor in grid.GetNeighbors(node))
         {
             if (neighbor.gridPosition == grid.WorldToNode(playerPos).gridPosition) //if it is a treasure
             {

@@ -7,7 +7,7 @@ public class IsoGrid : MonoBehaviour
 {
     // Public & Serializable Fields ***************************************************************
     // grid settings
-    [HideInInspector, SerializeField] private Vector2Int gridSize;
+    [HideInInspector, SerializeField] public Vector2Int gridSize;
     [HideInInspector, SerializeField] private Tilemap tileMap;
     [HideInInspector, SerializeField] private GridHighLighter highlighter;
 
