@@ -168,7 +168,7 @@ public class MapGeneration : MonoBehaviour
             else
             {
                 temp= x.Pop();
-                placedExits.Add(Instantiate(exit, grid.CellToWorld(new Vector3Int(-(int)temp.x, -(int)temp.y,0)), new Quaternion(0,0,0,0)).gameObject);
+                placedExits.Add(Instantiate(exit, grid.CellToWorld(new Vector3Int(-(int)temp.x, -(int)temp.y,0)), new Quaternion(0,0,0,0), transform).gameObject);
             }           
         }
         while (y.Count > 0)
@@ -182,7 +182,7 @@ public class MapGeneration : MonoBehaviour
             else
             {
                 temp = y.Pop();
-                placedExits.Add(Instantiate(exit, grid.CellToWorld(new Vector3Int(-(int)temp.x, -(int)temp.y, 0)), new Quaternion(0,0,0,0)).gameObject);
+                placedExits.Add(Instantiate(exit, grid.CellToWorld(new Vector3Int(-(int)temp.x, -(int)temp.y, 0)), new Quaternion(0,0,0,0), transform).gameObject);
             }
         }        
     }
