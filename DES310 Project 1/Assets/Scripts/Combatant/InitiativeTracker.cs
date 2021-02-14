@@ -111,10 +111,9 @@ public class InitiativeTracker : MonoBehaviour
                 {
                     combatants[i].GetComponent<SpriteRenderer>().color = Color.white; // Change the colour to white to show its not their turn
                     combatants[i].GetComponent<Combatant>().fighting = false; // Don't allow the combatant to fight
-                }              
+                }               
             }
         }
-
 
         if(getCurrentCombatant().GetComponent<Combatant>().combatantState == Combatant_State.Moved || getCurrentCombatant().GetComponent<Combatant>().combatantState == Combatant_State.Attacking)
         {

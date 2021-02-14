@@ -31,11 +31,12 @@ public class TestCombatSystem : MonoBehaviour
         items = combatant.combatantItems;
     }
 
+
     public void CastAbility(int abilityNum)
     {
         Debug.Log("Casting Ability...");
         if (enemy != null)
-        {
+        {           
             switch (abilitiesUsing[abilityNum].abilityType)
             {
                 case ability_type.Damage:
@@ -50,6 +51,7 @@ public class TestCombatSystem : MonoBehaviour
                 default:
                     break;
             }
+            enemy = null;
         }
 
     }
@@ -110,7 +112,7 @@ public class TestCombatSystem : MonoBehaviour
         }
 
         damage += poisonDamage;
-        enemy.GetComponent<Stats>().setStat(Combatant_Stats.HP, enemy.GetComponent<Stats>().getStat(Combatant_Stats.HP) + (int)-damage);
+        enemy.GetComponent<Combatant>().do_damage((int)damage, abilitiesUsing[abilityNum].abilityAspect);
         Debug.Log("Enemy HP: " + enemy.GetComponent<Stats>().getStat(Combatant_Stats.HP));
 
         Debug.Log("Dealt " + damage + " damage");
