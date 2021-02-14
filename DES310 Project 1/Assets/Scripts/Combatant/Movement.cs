@@ -45,7 +45,7 @@ public class Movement : MonoBehaviour
 
     void Move()
     {
-        Vector2 mousePos = Camera.main.ScreenToWorldPoint(controls.Keyboard.Mouse.ReadValue<Vector2>());
+        Vector2 mousePos = Camera.main.ScreenToWorldPoint(controls.Keyboard.MousePos.ReadValue<Vector2>());
         Vector3 nodePos = grid.WorldToNode(mousePos).worldPosition;
         Vector3 oldPos = target.position;
         target.position = new Vector3(nodePos.x, nodePos.y, 1);
@@ -61,7 +61,7 @@ public class Movement : MonoBehaviour
     {
         LClick = true;
 
-        Vector2 mousePos = Camera.main.ScreenToWorldPoint(controls.Keyboard.Mouse.ReadValue<Vector2>());
+        Vector2 mousePos = Camera.main.ScreenToWorldPoint(controls.Keyboard.MousePos.ReadValue<Vector2>());
         RaycastHit2D hit = Physics2D.Raycast(mousePos, Vector2.zero);
        
         if (hit)
