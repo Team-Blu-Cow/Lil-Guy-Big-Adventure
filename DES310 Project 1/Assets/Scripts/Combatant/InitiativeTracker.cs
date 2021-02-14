@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class InitiativeTracker : MonoBehaviour
 {
+    private CombatUI combatUI;
     public List<GameObject> combatants;
     public InputManager controls;
     int combatantNum = 0;
@@ -11,35 +12,8 @@ public class InitiativeTracker : MonoBehaviour
     int currentCombatantNum = 0;
     public List<int> combatantInits;
 
-    public CombatButton[] moveButtons;
-    //public CombatButton moveCancelButton;
-    //public CombatButton moveConfirmButton;
-
-    public CombatButton[] abilityButtons;
-    //public CombatButton abilityOneButton;
-    //public CombatButton abilityTwoButton;
-    //public CombatButton abilityThreeButton;
-    //public CombatButton abilityFourButton;
-
-    public CombatButton[] itemButtons;
-    //public CombatButton itemOneButton;
-    //public CombatButton itemTwoButton;
-    //public CombatButton itemThreeButton;
-    //public CombatButton itemFourButton;
-    //public CombatButton itemFiveButton;
-
-    public CombatButton[] choiceButtons;
-    //public CombatButton abilityConfirmButton;
-    //public CombatButton itemConfirmButton;
-    //public CombatButton waitConfirmButton;
-    //public CombatButton backButton;
-
     bool selecting = false;
-    public bool isAlly = false;
-    public bool enemyChanging = false;
-
-    public Vector3 combatantPos;
-    public Vector3 combatantWorldPos;
+    bool enemyChanging = false;
 
     private void Awake()
     {
@@ -59,6 +33,7 @@ public class InitiativeTracker : MonoBehaviour
 
     void Start()
     {
+        combatUI = GetComponent<CombatUI>();
     }
 
     // Update is called once per frame
@@ -87,12 +62,10 @@ public class InitiativeTracker : MonoBehaviour
                 {
                     if (combatantInits[i] == combatantInits[i + 1]) // If two initiatives are the same then
                     {
-                        Debug.Log("Happened");
                         for (int k = 0; k < combatants.ToArray().Length; k++) // Start another for loop for the amount of combatants
                         {
                             if (combatants[k].GetComponent<Stats>().getStat(Combatant_Stats.Initiative) == combatantInits[i]) // Find the first combatant which has the same initiative
                             {                               
-                                Debug.Log("Happened 2");
                                 combatantInits[i] = combatantInits[i] + 1; // Change the initiative in the list to be up 1 so that the initiatives don't match
                                 combatants[k].GetComponent<Stats>().setStat(Combatant_Stats.Initiative, (combatants[k].GetComponent<Stats>().getStat(Combatant_Stats.Initiative) + 1)); // Add 1 to the combatant's initiative so that the combatant's and the list of initiatives match
                                 Debug.Log(k + " INIT: " + combatants[k].GetComponent<Stats>().getStat(Combatant_Stats.Initiative));
@@ -146,54 +119,40 @@ public class InitiativeTracker : MonoBehaviour
         if(getCurrentCombatant().GetComponent<Combatant>().combatantState == Combatant_State.Moved || getCurrentCombatant().GetComponent<Combatant>().combatantState == Combatant_State.Attacking)
         {
 
-            combatantWorldPos = Camera.main.WorldToScreenPoint(getCurrentCombatant().transform.position);
-            combatantPos = new Vector3(combatantWorldPos.x, combatantWorldPos.y, -1);
-
             if (getCurrentCombatant().GetComponent<Combatant>().combatantState == Combatant_State.Attacking && selecting == false)
             {
-                int offsetY = 50;
-                for(int i = 0; i < 3; i++)
-                {
-                    choiceButtons[i].activateButton(new Vector3(110, offsetY, 0), combatantPos);
-                    offsetY -= 30;
-                }
+                combatUI.activateChoiceButtons();
             }
             else if (getCurrentCombatant().GetComponent<Combatant>().combatantState == Combatant_State.Moved)
             {
-                moveButtons[0].activateButton(new Vector3(110, -10, 0), combatantPos);
-                moveButtons[1].activateButton(new Vector3(110, 20, 0), combatantPos);
-            }
-        }
-
-        if(getCurrentCombatant().gameObject.tag == "Ally")
-        {
-            isAlly = true;
-        }
-        else
-        {
-            if (enemyChanging == false)
-            {
-                isAlly = false;
-                StartCoroutine(enemyStuff());
+                combatUI.activateMoveButtons();
             }
         }
 
         if (selecting == true)
         {
-            for (int i = 0; i < 3; i++)
+            combatUI.deactivateChoiceButtons();
+        }
+
+
+        if(getCurrentCombatant().gameObject.tag == "Ally")
+        {
+        }
+        else
+        {
+            if (enemyChanging == false)
             {
-                choiceButtons[i].deactivateButton();
+                StartCoroutine(enemyStuff());
             }
         }
+
     }
 
 
     public IEnumerator enemyStuff()
     {
         enemyChanging = true;
-        Debug.Log("HI");
         yield return new WaitForSeconds(2.0f);
-        Debug.Log("HI AGAIN");
         ChangeCurrentCombatant();
         enemyChanging = false;
     }
@@ -228,8 +187,7 @@ public class InitiativeTracker : MonoBehaviour
             if (currentCombatantNum == combatants[i].GetComponent<Combatant>().combatantNum)
             {
                 combatants[i].GetComponent<Combatant>().cancelMove();
-                moveButtons[0].deactivateButton();
-                moveButtons[1].deactivateButton();
+                combatUI.deactivateMoveButtons();
                 selecting = false;
             }
         }
@@ -242,8 +200,7 @@ public class InitiativeTracker : MonoBehaviour
             if (currentCombatantNum == combatants[i].GetComponent<Combatant>().combatantNum)
             {
                 combatants[i].GetComponent<Combatant>().confirmMove();
-                moveButtons[0].deactivateButton();
-                moveButtons[1].deactivateButton();
+                combatUI.deactivateMoveButtons();
                 selecting = false;
             }
         }
@@ -260,11 +217,7 @@ public class InitiativeTracker : MonoBehaviour
                     if (combatants[i].GetComponent<Combatant>().combatantState == Combatant_State.Attacking)
                     {
                         combatants[i].GetComponent<Combatant>().attackAbility(abilityNum);
-                        for(int j = 0; j < 4; j++)
-                        {
-                            abilityButtons[j].deactivateButton();
-                        }
-                        choiceButtons[3].deactivateButton();
+                        combatUI.deactivateAbilityButtons();
                     }
                 }
                 else
@@ -284,11 +237,7 @@ public class InitiativeTracker : MonoBehaviour
                 if (combatants[i].GetComponent<Combatant>().combatantState == Combatant_State.Attacking)
                 {
                     combatants[i].GetComponent<Combatant>().UseItem(itemNum);
-                    for(int j = 0; j < 5; j++)
-                    {
-                        itemButtons[i].deactivateButton();
-                    }
-                    choiceButtons[3].deactivateButton();
+                    combatUI.deactivateItemButtons();
                 }
             }
         }
@@ -309,45 +258,19 @@ public class InitiativeTracker : MonoBehaviour
 
     public void activateAbilityButtons()
     {
-        int offsetY = 110;
-
-        for(int i = 0; i < 4; i++)
-        {
-            abilityButtons[i].activateButton(new Vector3(110, offsetY, 0), combatantPos);
-            offsetY -= 30;
-        }
-
-        choiceButtons[3].activateButton(new Vector3(110, offsetY, 0), combatantPos);
+        combatUI.activateAbilityButtons();
         selecting = true;
     }
 
     public void activateItemButtonss()
     {
-        int offsetY = 110;
-
-        for (int i = 0; i < 5; i++)
-        {
-            itemButtons[i].activateButton(new Vector3(110, offsetY, 0), combatantPos);
-            offsetY -= 30;
-        }
-
-        choiceButtons[3].activateButton(new Vector3(110, offsetY, 0), combatantPos);
+        combatUI.activateItemButtons();
         selecting = true;
     }
 
     public void useBackButton()
     {
-        for(int i = 0; i < 4; i++)
-        {
-            abilityButtons[i].deactivateButton();
-        }
-
-        for(int i = 0; i < 5; i++)
-        {
-            itemButtons[i].deactivateButton();
-        }
-
-        choiceButtons[3].deactivateButton();
+        combatUI.useBackButton();
         selecting = false;
     }
 

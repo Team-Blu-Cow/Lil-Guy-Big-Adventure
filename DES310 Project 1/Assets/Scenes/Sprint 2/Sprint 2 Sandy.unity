@@ -288,21 +288,27 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   combatants: []
   combatantInits: 
-  moveCancelButton: {fileID: 2132456628}
-  moveConfirmButton: {fileID: 1302469964}
-  abilityConfirmButton: {fileID: 1826424264}
-  abilityOneButton: {fileID: 98882181}
-  abilityTwoButton: {fileID: 599024087}
-  abilityThreeButton: {fileID: 946150432}
-  abilityFourButton: {fileID: 622942867}
-  itemConfirmButton: {fileID: 568664254}
-  itemOneButton: {fileID: 1643049077}
-  itemTwoButton: {fileID: 855596181}
-  itemThreeButton: {fileID: 1225800354}
-  itemFourButton: {fileID: 2007669656}
-  itemFiveButton: {fileID: 1168656976}
-  backButton: {fileID: 1711794265}
-  waitConfirmButton: {fileID: 956587231}
+  moveButtons:
+  - {fileID: 2132456628}
+  - {fileID: 1302469964}
+  abilityButtons:
+  - {fileID: 98882181}
+  - {fileID: 599024087}
+  - {fileID: 946150432}
+  - {fileID: 622942867}
+  itemButtons:
+  - {fileID: 1643049077}
+  - {fileID: 855596181}
+  - {fileID: 1225800354}
+  - {fileID: 2007669656}
+  - {fileID: 1168656976}
+  choiceButtons:
+  - {fileID: 1826424264}
+  - {fileID: 568664254}
+  - {fileID: 956587231}
+  - {fileID: 1711794265}
+  isAlly: 0
+  enemyChanging: 0
   combatantPos: {x: 0, y: 0, z: 0}
   combatantWorldPos: {x: 0, y: 0, z: 0}
 --- !u!4 &71968079

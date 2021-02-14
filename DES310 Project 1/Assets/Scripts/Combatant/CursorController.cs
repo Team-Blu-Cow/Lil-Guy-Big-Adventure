@@ -44,15 +44,12 @@ public class CursorController : MonoBehaviour
 
     void MouseMove()
     {
-        Debug.Log("Clickety Clack");
         if (initTracker.getCurrentCombatant() != null)
         {
-            Debug.Log("Found Combatant");
             if (initTracker.getCurrentCombatant().GetComponent<PathFindingUnit>() != null)
             {
                 if (initTracker.getCurrentCombatant().GetComponent<Combatant>().combatantState == Combatant_State.Idle)
                 {
-                    Debug.Log("Finding Path");
                     initTracker.getCurrentCombatant().GetComponent<PathFindingUnit>().RequestPath();
                     initTracker.getCurrentCombatant().GetComponent<Combatant>().combatantState = Combatant_State.Moving;
                     initTracker.getCurrentCombatant().GetComponent<Combatant>().oldPosition = initTracker.getCurrentCombatant().GetComponent<Transform>().position;
