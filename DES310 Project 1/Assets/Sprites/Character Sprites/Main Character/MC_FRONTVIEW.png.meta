@@ -148,12 +148,12 @@ TextureImporter:
       name: MC_FRONTVIEW_0
       rect:
         serializedVersion: 2
-        x: 0
+        x: 16
         y: 0
-        width: 64
+        width: 35
         height: 64
-      alignment: 0
-      pivot: {x: 0, y: 0}
+      alignment: 9
+      pivot: {x: 0.5, y: 0.1}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -169,12 +169,12 @@ TextureImporter:
       name: MC_FRONTVIEW_1
       rect:
         serializedVersion: 2
-        x: 64
+        x: 80
         y: 0
-        width: 64
-        height: 64
-      alignment: 0
-      pivot: {x: 0, y: 0}
+        width: 35
+        height: 63
+      alignment: 9
+      pivot: {x: 0.5, y: 0.1}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -190,12 +190,12 @@ TextureImporter:
       name: MC_FRONTVIEW_2
       rect:
         serializedVersion: 2
-        x: 128
+        x: 144
         y: 0
-        width: 64
+        width: 35
         height: 64
-      alignment: 0
-      pivot: {x: 0, y: 0}
+      alignment: 9
+      pivot: {x: 0.5, y: 0.1}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -211,12 +211,12 @@ TextureImporter:
       name: MC_FRONTVIEW_3
       rect:
         serializedVersion: 2
-        x: 192
+        x: 208
         y: 0
-        width: 64
-        height: 64
-      alignment: 0
-      pivot: {x: 0, y: 0}
+        width: 35
+        height: 63
+      alignment: 9
+      pivot: {x: 0.5, y: 0.1}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -232,12 +232,12 @@ TextureImporter:
       name: MC_FRONTVIEW_4
       rect:
         serializedVersion: 2
-        x: 256
+        x: 272
         y: 0
-        width: 64
+        width: 35
         height: 64
-      alignment: 0
-      pivot: {x: 0, y: 0}
+      alignment: 9
+      pivot: {x: 0.5, y: 0.1}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -253,12 +253,12 @@ TextureImporter:
       name: MC_FRONTVIEW_5
       rect:
         serializedVersion: 2
-        x: 320
+        x: 336
         y: 0
-        width: 64
+        width: 35
         height: 64
-      alignment: 0
-      pivot: {x: 0, y: 0}
+      alignment: 9
+      pivot: {x: 0.5, y: 0.1}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -274,12 +274,12 @@ TextureImporter:
       name: MC_FRONTVIEW_6
       rect:
         serializedVersion: 2
-        x: 384
+        x: 400
         y: 0
-        width: 64
-        height: 64
-      alignment: 0
-      pivot: {x: 0, y: 0}
+        width: 35
+        height: 63
+      alignment: 9
+      pivot: {x: 0.5, y: 0.1}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -295,12 +295,12 @@ TextureImporter:
       name: MC_FRONTVIEW_7
       rect:
         serializedVersion: 2
-        x: 448
-        y: 0
-        width: 64
-        height: 64
-      alignment: 0
-      pivot: {x: 0, y: 0}
+        x: 464
+        y: 1
+        width: 35
+        height: 61
+      alignment: 9
+      pivot: {x: 0.5, y: 0.1}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -316,12 +316,12 @@ TextureImporter:
       name: MC_FRONTVIEW_8
       rect:
         serializedVersion: 2
-        x: 512
+        x: 526
         y: 0
-        width: 64
-        height: 64
-      alignment: 0
-      pivot: {x: 0, y: 0}
+        width: 35
+        height: 61
+      alignment: 9
+      pivot: {x: 0.5, y: 0.1}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -337,12 +337,12 @@ TextureImporter:
       name: MC_FRONTVIEW_9
       rect:
         serializedVersion: 2
-        x: 576
+        x: 591
         y: 0
-        width: 64
-        height: 64
-      alignment: 0
-      pivot: {x: 0, y: 0}
+        width: 35
+        height: 62
+      alignment: 9
+      pivot: {x: 0.5, y: 0.1}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -358,12 +358,12 @@ TextureImporter:
       name: MC_FRONTVIEW_10
       rect:
         serializedVersion: 2
-        x: 640
+        x: 656
         y: 0
-        width: 64
+        width: 35
         height: 64
-      alignment: 0
-      pivot: {x: 0, y: 0}
+      alignment: 9
+      pivot: {x: 0.5, y: 0.1}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -379,12 +379,12 @@ TextureImporter:
       name: MC_FRONTVIEW_11
       rect:
         serializedVersion: 2
-        x: 704
+        x: 720
         y: 0
-        width: 64
-        height: 64
-      alignment: 0
-      pivot: {x: 0, y: 0}
+        width: 35
+        height: 62
+      alignment: 9
+      pivot: {x: 0.5, y: 0.1}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -400,12 +400,12 @@ TextureImporter:
       name: MC_FRONTVIEW_12
       rect:
         serializedVersion: 2
-        x: 768
+        x: 784
         y: 0
-        width: 64
-        height: 64
-      alignment: 0
-      pivot: {x: 0, y: 0}
+        width: 40
+        height: 61
+      alignment: 9
+      pivot: {x: 0.5, y: 0.1}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -421,12 +421,12 @@ TextureImporter:
       name: MC_FRONTVIEW_13
       rect:
         serializedVersion: 2
-        x: 832
+        x: 848
         y: 0
-        width: 64
-        height: 64
-      alignment: 0
-      pivot: {x: 0, y: 0}
+        width: 40
+        height: 62
+      alignment: 9
+      pivot: {x: 0.5, y: 0.1}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []

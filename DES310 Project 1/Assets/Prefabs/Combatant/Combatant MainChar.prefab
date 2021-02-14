@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 3634225340204788175}
   - component: {fileID: 3634225340204788174}
   - component: {fileID: 3634225340204788173}
+  - component: {fileID: 6142369988557824416}
   m_Layer: 0
   m_Name: Combatant MainChar
   m_TagString: Untagged
@@ -156,7 +157,6 @@ MonoBehaviour:
   - {fileID: 0}
   - {fileID: 0}
   - {fileID: 0}
-  currentItem: 0
   resistances:
   - 1
   - 1
@@ -171,6 +171,24 @@ MonoBehaviour:
   - {fileID: 0}
   - {fileID: 0}
   initTracker: {fileID: 0}
-  moved: 0
-  moving: 0
   oldPosition: {x: 0, y: 0, z: 0}
+  combatantState: 0
+--- !u!95 &6142369988557824416
+Animator:
+  serializedVersion: 3
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3634225340204788172}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 977b28488f2f69f4c8661137582e0416, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0
