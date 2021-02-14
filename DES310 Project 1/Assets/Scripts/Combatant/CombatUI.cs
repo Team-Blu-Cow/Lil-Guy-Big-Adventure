@@ -8,25 +8,28 @@ public class CombatUI : MonoBehaviour
     public CombatButton[] abilityButtons;
     public CombatButton[] itemButtons;
     public CombatButton[] choiceButtons;
+    public RectTransform canvas;
 
     InitiativeTracker initTracker;
-    Vector3 combatantPos;
-    Vector3 combatantWorldPos;
+    Vector2 combatantPos;
+    Vector2 combatantScreenPos;
 
     private void Start()
     {
-        initTracker = GetComponent<InitiativeTracker>();
+        initTracker = gameObject.GetComponent<InitiativeTracker>();
         for(int i = 0; i < 4; i++)
         {
             abilityButtons[i].abilityButton = true;
         }
         choiceButtons[3].abilityButton = true;
     }
-
+        //RectTransformUtility.ScreenPointToLocalPointInRectangle(canvasRectTransform, combatantWorldPos, Camera.main, out combatantPos);
+        //ombatantPos = canvasRectTransform.TransformPoint(combatantPos);
     private void Update()
     {
-        combatantWorldPos = Camera.main.WorldToScreenPoint(initTracker.getCurrentCombatant().transform.position);
-        combatantPos = new Vector3(combatantWorldPos.x, combatantWorldPos.y, -1);
+        combatantScreenPos = Camera.main.WorldToViewportPoint(initTracker.getCurrentCombatant().transform.position);
+        combatantPos = new Vector2((combatantScreenPos.x * canvas.sizeDelta.x) - (canvas.sizeDelta.x * 0.5f), (combatantScreenPos.y * canvas.sizeDelta.y) - (canvas.sizeDelta.y * 0.5f));
+        Debug.Log(combatantPos);
     }
 
     public void deactivateChoiceButtons()

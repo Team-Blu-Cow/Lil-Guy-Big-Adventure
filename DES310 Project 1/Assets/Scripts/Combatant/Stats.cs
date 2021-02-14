@@ -47,7 +47,7 @@ public class Stats : MonoBehaviour
     private int base_def = 25;
     private int base_con = 25;
     private int base_luck = 5; // regular 1 in 20 e.g. d20 roll
-    private int base_speed = 25;
+    private int base_speed = 5;
     private int base_init = 25;
     private int base_hp = 25;
 

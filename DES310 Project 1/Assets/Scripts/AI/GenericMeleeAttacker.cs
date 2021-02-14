@@ -19,7 +19,7 @@ namespace AI
         private List<Vector3[]> path_list = new List<Vector3[]>();
         private AICore ai_core;
 
-        private int attack_range = 1;
+        public int attack_range = 1;
 
         // entry point, starts up coroutines and sets the turn_completed flag
         public override void run(AICore aiCore)
