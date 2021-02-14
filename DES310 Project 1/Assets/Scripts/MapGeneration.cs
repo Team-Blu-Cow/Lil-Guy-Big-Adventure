@@ -40,10 +40,15 @@ public class MapGeneration : MonoBehaviour
         tileMap.ClearAllTiles();
 
         // Clear items
-        placedItems.ForEach(Destroy);
+        for (int i = 0; i < placedItems.Count; i++)
+        {
+            if (placedItems[i].activeSelf)
+                Destroy(placedItems[i]);
+        }
         placedItems.Clear();
         
         // Clear exits
+       
         placedExits.ForEach(Destroy);
         placedExits.Clear();
 
