@@ -9,7 +9,11 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 1750531655768980445, guid: eae60b014ca9dbc47bc3b7a2af6c98db, type: 3}
       propertyPath: m_Name
-      value: DexterityPotion 1
+      value: MagicPotion
+      objectReference: {fileID: 0}
+    - target: {fileID: 6213852727469305250, guid: eae60b014ca9dbc47bc3b7a2af6c98db, type: 3}
+      propertyPath: itemName
+      value: Magic Potion
       objectReference: {fileID: 0}
     - target: {fileID: 6213852727469305250, guid: eae60b014ca9dbc47bc3b7a2af6c98db, type: 3}
       propertyPath: statBoost

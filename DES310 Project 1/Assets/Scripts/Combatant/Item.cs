@@ -31,6 +31,7 @@ public enum stat_boost
 
 public class Item : MonoBehaviour
 {
+    public string itemName;
     public item_type itemType;
     public item_duration itemDuration;
     public stat_boost statBoost;
