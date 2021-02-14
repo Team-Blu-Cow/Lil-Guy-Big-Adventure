@@ -59,17 +59,40 @@ public class Movement : MonoBehaviour
 
     private void Stop()
     {
-        GetComponent<PathFindingUnit>().StopPath();
         LClick = true;
 
         Vector2 mousePos = Camera.main.ScreenToWorldPoint(controls.Keyboard.Mouse.ReadValue<Vector2>());
         RaycastHit2D hit = Physics2D.Raycast(mousePos, Vector2.zero);
-
-        Item item;
-        if (hit && hit.collider.TryGetComponent<Item>(out item))
+       
+        if (hit)
         {
-            Debug.Log(item.name);
-            item.PickUp(transform.position);            
+            Item item;
+            if (hit.collider.TryGetComponent<Item>(out item))
+            {                
+                item.PickUp(transform.position);
+            }
+            else if (hit.collider.gameObject.CompareTag("Exit"))
+            {
+                AStarNode node = grid.WorldToNode(hit.collider.gameObject.transform.position);
+
+                foreach (AStarNode neighbor in grid.GetNeighbors(node))
+                {
+                    if (neighbor.gridPosition == grid.WorldToNode(transform.position).gridPosition) //if it is a treasure
+                    {
+                        FindObjectOfType<MapGeneration>().RenderMap();
+                        grid.CreateGrid();
+                    }
+                }
+                if (node.gridPosition == grid.WorldToNode(transform.position).gridPosition)
+                {
+                    FindObjectOfType<MapGeneration>().RenderMap();
+                    grid.CreateGrid();
+                }
+            }
         }
-    }
+        else
+        {
+            GetComponent<PathFindingUnit>().StopPath();
+        }
+}
 }
