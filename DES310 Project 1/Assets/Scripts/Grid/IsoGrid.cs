@@ -3,27 +3,27 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Tilemaps;
 
-public class AStarGrid : MonoBehaviour
+public class IsoGrid : MonoBehaviour
 {
     // Public & Serializable Fields ***************************************************************
-    [Header("Grid Settings")]
-    [SerializeField] public Vector2Int gridSize;
+    // grid settings
+    [HideInInspector, SerializeField] private Vector2Int gridSize;
+    [HideInInspector, SerializeField] private Tilemap tileMap;
+    [HideInInspector, SerializeField] private GridHighLighter highlighter;
 
-    [Header("Node Settings")]
-    public float nodeRadius;
-    public LayerMask unwalkableMask;
+    // node settings
+    [HideInInspector, SerializeField] private float nodeRadius;
+    [HideInInspector, SerializeField] private List<TileData> tileData;
 
-    [Header("References")]
-    public Tilemap tileMap;
-    public List<TileData> tileData;
-
-    [Header("Debug Options")]
-    public bool DisplayGridGizmos;
+    // debug settings
+    [HideInInspector, SerializeField] private bool DisplayGridGizmos;
+    [Range(0,1), HideInInspector, SerializeField] private float GridGizmoOpacity = 0.25f;
+    [HideInInspector, SerializeField] private bool DisplayNodeGizmos;
 
     // Private Fields *****************************************************************************
     private Dictionary<TileBase, TileData> dataFromTiles;
 
-    AStarNode[,] grid;
+    IsoNode[,] grid;
 
     float nodeDiameter;
     int gridSizeX, gridSizeY;
@@ -51,6 +51,8 @@ public class AStarGrid : MonoBehaviour
             }
         }
 
+        highlighter = gameObject.GetComponent<GridHighLighter>();
+
         InitGrid();
         CreateGrid();
     }
@@ -66,7 +68,7 @@ public class AStarGrid : MonoBehaviour
 
     public void CreateGrid()
     {
-        grid = new AStarNode[gridSizeX, gridSizeY];
+        grid = new IsoNode[gridSizeX, gridSizeY];
 
         for (int x = 0; x < gridSizeX; x++)
         {
@@ -87,7 +89,7 @@ public class AStarGrid : MonoBehaviour
                     // to un-walkable and this cell to walkable to allow
                     // objects to pass behind it.
                     walkable = true;
-                    grid[x+1, y+1] = new AStarNode(false, NodeToWorld(x+1,y+1,0), new Vector3Int(x+1, y+1, 0));
+                    grid[x+1, y+1] = new IsoNode(false, NodeToWorld(x+1,y+1,0), new Vector3Int(x+1, y+1, 0));
                 }
                 else
                 {
@@ -104,15 +106,23 @@ public class AStarGrid : MonoBehaviour
                 }
                 
                 if(grid[x,y] == null)
-                    grid[x, y] = new AStarNode(walkable, worldPoint, new Vector3Int(x,y,0));
+                    grid[x, y] = new IsoNode(walkable, worldPoint, new Vector3Int(x,y,0));
             }
         }
     }
 
-    // Get Neighbors Method ***********************************************************************
-    public List<AStarNode> GetNeighbors(AStarNode _node)
+    // Get Methods ********************************************************************************
+    public IsoNode GetNode(Vector3Int node)
     {
-        List<AStarNode> neighbors = new List<AStarNode>();
+        if (PointIsInGrid(node))
+            return grid[node.x, node.y];
+        else
+            return null;
+    }
+
+    public List<IsoNode> GetNeighbors(IsoNode _node)
+    {
+        List<IsoNode> neighbors = new List<IsoNode>();
 
         int checkX, checkY;
 
@@ -155,7 +165,50 @@ public class AStarGrid : MonoBehaviour
         return neighbors;
     }
 
-    // Coordinate Conversion Methods **************************************************************
+    public List<IsoNode> GetWalkableNodesInRange(Vector3 startPos, int range)
+    {
+        return GetWalkableNodesInRange(WorldToNode(startPos).gridPosition, range);
+    }
+
+
+    public List<IsoNode> GetWalkableNodesInRange(Vector3Int startTile, int range)
+    {
+        List<IsoNode> output = new List<IsoNode>();
+        List<IsoNode> marked = new List<IsoNode>();
+        Queue<IsoNode> processing = new Queue<IsoNode>();
+
+        IsoNode startNode = GetNode(startTile);
+        if (startNode == null)
+            return null;
+        startNode.distance = 0;
+
+        processing.Enqueue(startNode);
+        
+        while (processing.Count > 0)
+        {
+            IsoNode node = processing.Dequeue();
+
+            if(node.walkable && node.distance <= range && !marked.Contains(node))
+            {
+                if (node.walkable == true)
+                    output.Add(node);
+                marked.Add(node);
+
+                foreach (IsoNode neighbor in GetNeighbors(node))
+                {
+                    if (!marked.Contains(neighbor))
+                    {
+                        neighbor.distance = 1 + node.distance;
+                        processing.Enqueue(neighbor);
+                    }
+                }
+            }
+        }
+
+        return output;
+    }
+
+    // Util Methods *******************************************************************************
     private Vector3 NodeToWorld(float x, float y, float z)
     {
         return new Vector3(
@@ -165,7 +218,7 @@ public class AStarGrid : MonoBehaviour
             );
     }
 
-    public AStarNode WorldToNode(Vector3 _worldPos)
+    public IsoNode WorldToNode(Vector3 _worldPos)
     {
         float node_x, node_y;
         int int_x, int_y;
@@ -179,6 +232,16 @@ public class AStarGrid : MonoBehaviour
         return grid[int_x, int_y];
     }
 
+    public bool PointIsInGrid(Vector3Int point)
+    {
+        return (point.x >= 0 && point.x < gridSize.x && point.y >= 0 && point.y < gridSize.y);
+    }
+
+    public bool IsNodeTraversable(IsoNode node)
+    {
+        return node.IsTraversable();
+    }
+
     // Debug Gizmo Methods ************************************************************************
     private void OnDrawGizmos()
     {
@@ -187,27 +250,33 @@ public class AStarGrid : MonoBehaviour
         Vector3 startPos = transform.position;
         Vector3 targetPos = new Vector3(transform.position.x + (gridSize.x*nodeDiameter), transform.position.y - ((gridSize.x * nodeDiameter / 2f)), transform.position.z);
         Gizmos.DrawLine(startPos, targetPos);
-        Gizmos.color = new Color(1, 1, 1, 0.25f);
-        for (int i = 1; i < gridSize.y; i++)
+        if (DisplayGridGizmos)
+        {
+            Gizmos.color = new Color(1, 1, 1, GridGizmoOpacity);
+            for (int i = 1; i < gridSize.y; i++)
                 Gizmos.DrawLine(startPos + new Vector3(i * -nodeDiameter, i * (-nodeDiameter / 2f), 0), targetPos + new Vector3(i * -nodeDiameter, i * (-nodeDiameter / 2f), 0));
-        Gizmos.color = Color.white;
+            Gizmos.color = Color.white;
+        }
         Gizmos.DrawLine(startPos + new Vector3(gridSize.y * -nodeDiameter, gridSize.y * (-nodeDiameter / 2f), 0), targetPos + new Vector3(gridSize.y * -nodeDiameter, gridSize.y * (-nodeDiameter / 2f), 0));
         
         // draw vertical grid lines
         startPos = transform.position;
         targetPos = new Vector3(transform.position.x - (gridSize.y * nodeDiameter), transform.position.y - ((gridSize.y * nodeDiameter / 2f)), transform.position.z);
         Gizmos.DrawLine(startPos, targetPos);
-        Gizmos.color = new Color(1, 1, 1, 0.25f);
-        for (int i = 1; i < gridSize.x; i++)
+        if (DisplayGridGizmos)
+        {
+            Gizmos.color = new Color(1, 1, 1, GridGizmoOpacity);
+            for (int i = 1; i < gridSize.x; i++)
                 Gizmos.DrawLine(startPos + new Vector3(i * nodeDiameter, i * (-nodeDiameter / 2f), 0), targetPos + new Vector3(i * nodeDiameter, i * (-nodeDiameter / 2f), 0));
-        Gizmos.color = Color.white;
+            Gizmos.color = Color.white;
+        }
         Gizmos.DrawLine(startPos + new Vector3(gridSize.x * nodeDiameter, gridSize.x * (-nodeDiameter / 2f), 0), targetPos + new Vector3(gridSize.x * nodeDiameter, gridSize.x * (-nodeDiameter / 2f), 0));
 
         // draw nodes
-        if (grid != null && DisplayGridGizmos)
+        if (grid != null && DisplayNodeGizmos)
         {
             Vector3 worldTopLeft = transform.position - Vector3.right * gridSize.x / 2 + Vector3.up * gridSize.y / 2;
-            foreach (AStarNode node in grid)
+            foreach (IsoNode node in grid)
             {
                 Gizmos.color = (node.walkable) ? Color.white : Color.red;
                 Gizmos.DrawCube(node.worldPosition, Vector3.one * (nodeRadius / 2));

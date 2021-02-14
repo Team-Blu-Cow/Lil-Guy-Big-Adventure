@@ -6,13 +6,14 @@ public class TargetTestScript : MonoBehaviour
 {
     [HideInInspector] public Vector3 mousePos;
     InputMaster input;
-    public AStarGrid grid;
+    public IsoGrid grid;
+    public GridHighLighter gridHighlighter;
 
     private void Awake()
     {
         input = new InputMaster();
         input.PathfinderTestControls.MousePos.performed += ctx => SetCursorPosition(ctx.ReadValue<Vector2>());
-        input.PathfinderTestControls.MouseClick.started += ctx => SetTargetPosition();
+        input.PathfinderTestControls.RightMouseClick.started += ctx => SetTargetPosition();
     }
 
     private void OnEnable()
@@ -35,6 +36,6 @@ public class TargetTestScript : MonoBehaviour
     void SetTargetPosition()
     {
         Vector3 nodePos = grid.WorldToNode(mousePos).worldPosition;
-        transform.position = new Vector3(nodePos.x,nodePos.y,1);
+        transform.position = new Vector3(nodePos.x, nodePos.y, 1);
     }
 }

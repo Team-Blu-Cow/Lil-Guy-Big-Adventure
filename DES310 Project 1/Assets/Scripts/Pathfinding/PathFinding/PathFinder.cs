@@ -7,11 +7,11 @@ using System;
 public class PathFinder : MonoBehaviour
 {
     PathRequestManager requestManager;
-    AStarGrid grid;
+    IsoGrid grid;
 
     private void Awake()
     {
-        grid = gameObject.GetComponent<AStarGrid>();
+        grid = gameObject.GetComponent<IsoGrid>();
         requestManager = gameObject.GetComponent<PathRequestManager>();
     }
 
@@ -28,20 +28,20 @@ public class PathFinder : MonoBehaviour
         Vector3[] wayPoints = new Vector3[0];
         bool pathSuccess = false;
 
-        AStarNode startNode = grid.WorldToNode(startPos);
-        AStarNode targetNode = grid.WorldToNode(targetPos);
+        IsoNode startNode = grid.WorldToNode(startPos);
+        IsoNode targetNode = grid.WorldToNode(targetPos);
 
-        if (startNode.walkable && targetNode.walkable)
+        if (startNode.IsTraversable() && targetNode.IsTraversable())
         {
-            Heap<AStarNode> openSet = new Heap<AStarNode>(grid.MaxSize);
-            HashSet<AStarNode> closedSet = new HashSet<AStarNode>();
+            Heap<IsoNode> openSet = new Heap<IsoNode>(grid.MaxSize);
+            HashSet<IsoNode> closedSet = new HashSet<IsoNode>();
 
             openSet.Add(startNode);
 
             while (openSet.Count > 0)
             {
 
-                AStarNode currentNode = openSet.RemoveFirst();
+                IsoNode currentNode = openSet.RemoveFirst();
                 closedSet.Add(currentNode);
 
                 if (currentNode == targetNode)
@@ -52,9 +52,9 @@ public class PathFinder : MonoBehaviour
                     break;
                 }
 
-                foreach (AStarNode neighbour in grid.GetNeighbors(currentNode))
+                foreach (IsoNode neighbour in grid.GetNeighbors(currentNode))
                 {
-                    if (!neighbour.walkable || closedSet.Contains(neighbour))
+                    if (!neighbour.IsTraversable() || closedSet.Contains(neighbour))
                         continue;
 
                     int newMovementCostToNeighbour = currentNode.gCost + GetDistance(currentNode, neighbour);
@@ -82,10 +82,10 @@ public class PathFinder : MonoBehaviour
 
     }
 
-    Vector3[] RetracePath(AStarNode startNode, AStarNode endNode)
+    Vector3[] RetracePath(IsoNode startNode, IsoNode endNode)
     {
-        List<AStarNode> path = new List<AStarNode>();
-        AStarNode currentNode = endNode;
+        List<IsoNode> path = new List<IsoNode>();
+        IsoNode currentNode = endNode;
 
         while(currentNode != startNode)
         {
@@ -99,36 +99,24 @@ public class PathFinder : MonoBehaviour
         return waypoints;
     }
 
-    Vector3[] SimplifyPath(List<AStarNode> path)
+    Vector3[] SimplifyPath(List<IsoNode> path)
     {
         List<Vector3> waypoints = new List<Vector3>();
-        Vector2 directionOld = Vector2.zero;
 
         for(int i = 0; i < path.Count-1; i++)
         {
-            //Vector2 directionNew = new Vector2(path[i].gridPosition.x - path[i+1].gridPosition.x, path[i].gridPosition.y - path[i+1].gridPosition.y);
-            //if (directionNew != directionOld)
-            //{
-                waypoints.Add(new Vector3(path[i].worldPosition.x, path[i].worldPosition.y, 1));
-            //}
-            //directionOld = directionNew;
+            waypoints.Add(new Vector3(path[i].worldPosition.x, path[i].worldPosition.y, 2));
         }
 
         return waypoints.ToArray();
     }
 
-    int GetDistance(AStarNode nodeA, AStarNode nodeB)
+    int GetDistance(IsoNode nodeA, IsoNode nodeB)
     {
-        // TODO: change this, this is just for the tutorial
         int dstX = Mathf.Abs(nodeA.gridPosition.x - nodeB.gridPosition.x);
         int dstY = Mathf.Abs(nodeA.gridPosition.y - nodeB.gridPosition.y);
 
-        return (dstX*10) + (dstY*10);
-
-        /*if (dstX > dstY)
-            return 14 * dstY + 10 * (dstX - dstY);
-        else
-            return 14 * dstX + 10 * (dstY - dstX);//*/
+        return dstX + dstY;
     }
 
 }
