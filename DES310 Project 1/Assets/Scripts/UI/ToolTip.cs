@@ -38,7 +38,7 @@ public class ToolTip : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
 
     public void SetHeader()
     {
-        toolTip.GetComponentsInChildren<TextMeshProUGUI>()[0].text = slot.GetItem().name;
+        toolTip.GetComponentsInChildren<TextMeshProUGUI>()[0].text = slot.GetItem().itemName;
     }
 
     public void SetText()

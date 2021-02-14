@@ -44,6 +44,6 @@ public class HoverToolTip : MonoBehaviour
 
     public void SetResistance()
     {
-        GetComponentInChildren<ShowResistanceUI>().SetRes(transform.parent.GetComponentInParent<PartyCombatant>());
+        GetComponentInChildren<ShowResistanceUI>().SetRes(transform.parent.GetComponentInParent<PartyCombatant>().GetCombatant());
     }
 }

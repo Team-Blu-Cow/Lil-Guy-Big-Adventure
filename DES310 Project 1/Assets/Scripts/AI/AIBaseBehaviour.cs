@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Unity.Collections;
 
 namespace AI
 {
@@ -8,5 +9,9 @@ namespace AI
     public abstract class AIBaseBehavior : MonoBehaviour
     {
         public abstract void run(AICore aiCore);
+
+        // signifies if a combatant has completed all animation
+        [ReadOnly]
+        public bool turn_completed = true;
     }
 }

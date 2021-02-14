@@ -1,0 +1,62 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &6115622612907476002
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 6115622612907476012}
+  - component: {fileID: 6115622612907476013}
+  m_Layer: 0
+  m_Name: MapGen
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &6115622612907476012
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6115622612907476002}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -0.028235942, y: -4.1847124, z: -136.56187}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &6115622612907476013
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6115622612907476002}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1f194c452cd2d224385663dc166f4c05, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  tileMap: {fileID: 0}
+  tiles:
+  - {fileID: 11400000, guid: 4d55a95617d28264b953c21d2cbaeae9, type: 2}
+  - {fileID: 11400000, guid: 179b956609c91bd4395daff53401fb79, type: 2}
+  - {fileID: 11400000, guid: bc253797e2eef1945a0943bf8d8d9eb1, type: 2}
+  - {fileID: 11400000, guid: 3bf24260f8a2b7c459548db9775c4b9d, type: 2}
+  - {fileID: 11400000, guid: 95763ad4733b547409aeae0549174818, type: 2}
+  grid: {fileID: 0}
+  items:
+  - {fileID: 226318007042164463, guid: 5d23ddffa56797a42807f73dd7cc1d2a, type: 3}
+  - {fileID: 226318007042164463, guid: 1d025e1c074c7124cb7ee40ed0b4c5c1, type: 3}
+  - {fileID: 226318007042164463, guid: 2debfd843d48cfb4491b00eda5383ae4, type: 3}
+  - {fileID: 226318007042164463, guid: e9fda9c1d5ebadf4a81cba2e24120008, type: 3}
+  exit: {fileID: 0}
+  lowerBound: 0.1
+  upperBound: 0.7
+  multiplier: 0.25

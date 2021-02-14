@@ -15,7 +15,7 @@ public class SwapScreenCombatant : MonoBehaviour
         // Enable all screens
         for (int i = 1; i < 6; i++)
         {
-            transform.GetChild(i).gameObject.SetActive(true);
+            transform.GetChild(i).GetComponent<Canvas>().enabled = true;
         }
     }
 
@@ -24,10 +24,10 @@ public class SwapScreenCombatant : MonoBehaviour
         // Disable all screens
         for (int i = 1; i < 6; i++)
         {
-            transform.GetChild(i).gameObject.SetActive(false);
+            transform.GetChild(i).GetComponent<Canvas>().enabled = false;
         }
         // Re-enable required screen
-        screen.SetActive(true);
+        screen.GetComponent<Canvas>().enabled = true;
     }
 
     public void OpenScreen(PartyCombatant combatant)
@@ -41,7 +41,7 @@ public class SwapScreenCombatant : MonoBehaviour
         LeanTween.scale(gameObject, new Vector3(1, 1, 1), 0.5f);
 
         // Set the resistances on ui
-        GetComponentInChildren<ShowResistanceUI>().SetRes(combatant);
+        GetComponentInChildren<ShowResistanceUI>().SetRes(combatant.GetCombatant());
 
         // Set the name and health on the ui
         GameObject.Find("CombatantName").GetComponent<TextMeshProUGUI>().text = combatant.named + "(" + combatant.GetStats().getStat(Combatant_Stats.HP) + "/" + combatant.GetStats().getStat(Combatant_Stats.Constitution) + ")";
@@ -74,13 +74,31 @@ public class SwapScreenCombatant : MonoBehaviour
             // Enabe all screens
             for (int i = 1; i < 6; i++)
             {
-                transform.GetChild(i).gameObject.SetActive(true);
+                transform.GetChild(i).GetComponent<Canvas>().enabled = true;
             }
         });
 
         // Fade out background
         Image back = transform.parent.GetComponentInChildren<Image>();
         LeanTween.value(back.gameObject, a => back.color = a, new Color(0, 0, 0, 0.6f), new Color(0, 0, 0, 0), 0.5f);
+    }
+
+    public void ToggleLearned(bool toggle)
+    {
+        swapAbility.GetComponent<Canvas>().enabled = toggle;
+
+        foreach (Canvas canvas in swapAbility.GetComponentsInChildren<Canvas>())
+        {
+            canvas.enabled = toggle;
+        }
+    }
+    
+    public void FlipLearned()
+    {
+        foreach (Canvas canvas in swapAbility.GetComponentsInChildren<Canvas>())
+        {
+            canvas.enabled = !canvas.enabled;
+        }
     }
 
     void SetStatsModified(Stats combatantStats)
@@ -109,7 +127,7 @@ public class SwapScreenCombatant : MonoBehaviour
             "Initi: " + (combatantStats.getStat(Combatant_Stats.Initiative) - combatantStats.mod_init) + "\n";
     }
 
-    void SetAblities(Combatant abilities)
+    public void SetAblities(Combatant abilities)
     {
         int count = 0;
         

@@ -91,9 +91,19 @@ public class @InputManager : IInputActionCollection, IDisposable
                     ""interactions"": """"
                 },
                 {
-                    ""name"": ""MouseClick"",
+
+                    ""name"": ""LClick"",
                     ""type"": ""Button"",
-                    ""id"": ""b84af43a-1103-45f4-a688-f7e4e9b70675"",
+                    ""id"": ""b57e94b8-a9c4-4d11-add9-2d41970e24bb"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """"
+                },
+                {
+                    ""name"": ""RClick"",
+                    ""type"": ""Button"",
+                    ""id"": ""be6be9ba-96a8-4c8a-b985-41bc4936165b"",
+
                     ""expectedControlType"": ""Button"",
                     ""processors"": """",
                     ""interactions"": """"
@@ -209,6 +219,28 @@ public class @InputManager : IInputActionCollection, IDisposable
                     ""action"": ""MouseClick"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""32ace690-c01e-42f7-9dbd-2b4bc1c28094"",
+                    ""path"": ""<Mouse>/leftButton"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""LClick"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""cabd6af5-a2b5-47cf-8855-89336ec7e95e"",
+                    ""path"": ""<Mouse>/rightButton"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""RClick"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -225,8 +257,11 @@ public class @InputManager : IInputActionCollection, IDisposable
         m_Keyboard_DecrementAbilitySelect = m_Keyboard.FindAction("Decrement Ability Select", throwIfNotFound: true);
         m_Keyboard_ChangePartyMember = m_Keyboard.FindAction("Change Party Member", throwIfNotFound: true);
         m_Keyboard_Pause = m_Keyboard.FindAction("Pause", throwIfNotFound: true);
-        m_Keyboard_MousePos = m_Keyboard.FindAction("MousePos", throwIfNotFound: true);
-        m_Keyboard_MouseClick = m_Keyboard.FindAction("MouseClick", throwIfNotFound: true);
+
+        m_Keyboard_Mouse = m_Keyboard.FindAction("Mouse", throwIfNotFound: true);
+        m_Keyboard_LClick = m_Keyboard.FindAction("LClick", throwIfNotFound: true);
+        m_Keyboard_RClick = m_Keyboard.FindAction("RClick", throwIfNotFound: true);
+
     }
 
     public void Dispose()
@@ -284,8 +319,11 @@ public class @InputManager : IInputActionCollection, IDisposable
     private readonly InputAction m_Keyboard_DecrementAbilitySelect;
     private readonly InputAction m_Keyboard_ChangePartyMember;
     private readonly InputAction m_Keyboard_Pause;
-    private readonly InputAction m_Keyboard_MousePos;
-    private readonly InputAction m_Keyboard_MouseClick;
+
+    private readonly InputAction m_Keyboard_Mouse;
+    private readonly InputAction m_Keyboard_LClick;
+    private readonly InputAction m_Keyboard_RClick;
+
     public struct KeyboardActions
     {
         private @InputManager m_Wrapper;
@@ -298,8 +336,11 @@ public class @InputManager : IInputActionCollection, IDisposable
         public InputAction @DecrementAbilitySelect => m_Wrapper.m_Keyboard_DecrementAbilitySelect;
         public InputAction @ChangePartyMember => m_Wrapper.m_Keyboard_ChangePartyMember;
         public InputAction @Pause => m_Wrapper.m_Keyboard_Pause;
-        public InputAction @MousePos => m_Wrapper.m_Keyboard_MousePos;
-        public InputAction @MouseClick => m_Wrapper.m_Keyboard_MouseClick;
+
+        public InputAction @Mouse => m_Wrapper.m_Keyboard_Mouse;
+        public InputAction @LClick => m_Wrapper.m_Keyboard_LClick;
+        public InputAction @RClick => m_Wrapper.m_Keyboard_RClick;
+
         public InputActionMap Get() { return m_Wrapper.m_Keyboard; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -333,12 +374,17 @@ public class @InputManager : IInputActionCollection, IDisposable
                 @Pause.started -= m_Wrapper.m_KeyboardActionsCallbackInterface.OnPause;
                 @Pause.performed -= m_Wrapper.m_KeyboardActionsCallbackInterface.OnPause;
                 @Pause.canceled -= m_Wrapper.m_KeyboardActionsCallbackInterface.OnPause;
-                @MousePos.started -= m_Wrapper.m_KeyboardActionsCallbackInterface.OnMousePos;
-                @MousePos.performed -= m_Wrapper.m_KeyboardActionsCallbackInterface.OnMousePos;
-                @MousePos.canceled -= m_Wrapper.m_KeyboardActionsCallbackInterface.OnMousePos;
-                @MouseClick.started -= m_Wrapper.m_KeyboardActionsCallbackInterface.OnMouseClick;
-                @MouseClick.performed -= m_Wrapper.m_KeyboardActionsCallbackInterface.OnMouseClick;
-                @MouseClick.canceled -= m_Wrapper.m_KeyboardActionsCallbackInterface.OnMouseClick;
+
+                @Mouse.started -= m_Wrapper.m_KeyboardActionsCallbackInterface.OnMouse;
+                @Mouse.performed -= m_Wrapper.m_KeyboardActionsCallbackInterface.OnMouse;
+                @Mouse.canceled -= m_Wrapper.m_KeyboardActionsCallbackInterface.OnMouse;
+                @LClick.started -= m_Wrapper.m_KeyboardActionsCallbackInterface.OnLClick;
+                @LClick.performed -= m_Wrapper.m_KeyboardActionsCallbackInterface.OnLClick;
+                @LClick.canceled -= m_Wrapper.m_KeyboardActionsCallbackInterface.OnLClick;
+                @RClick.started -= m_Wrapper.m_KeyboardActionsCallbackInterface.OnRClick;
+                @RClick.performed -= m_Wrapper.m_KeyboardActionsCallbackInterface.OnRClick;
+                @RClick.canceled -= m_Wrapper.m_KeyboardActionsCallbackInterface.OnRClick;
+
             }
             m_Wrapper.m_KeyboardActionsCallbackInterface = instance;
             if (instance != null)
@@ -367,12 +413,17 @@ public class @InputManager : IInputActionCollection, IDisposable
                 @Pause.started += instance.OnPause;
                 @Pause.performed += instance.OnPause;
                 @Pause.canceled += instance.OnPause;
-                @MousePos.started += instance.OnMousePos;
-                @MousePos.performed += instance.OnMousePos;
-                @MousePos.canceled += instance.OnMousePos;
-                @MouseClick.started += instance.OnMouseClick;
-                @MouseClick.performed += instance.OnMouseClick;
-                @MouseClick.canceled += instance.OnMouseClick;
+
+                @Mouse.started += instance.OnMouse;
+                @Mouse.performed += instance.OnMouse;
+                @Mouse.canceled += instance.OnMouse;
+                @LClick.started += instance.OnLClick;
+                @LClick.performed += instance.OnLClick;
+                @LClick.canceled += instance.OnLClick;
+                @RClick.started += instance.OnRClick;
+                @RClick.performed += instance.OnRClick;
+                @RClick.canceled += instance.OnRClick;
+
             }
         }
     }
@@ -387,7 +438,10 @@ public class @InputManager : IInputActionCollection, IDisposable
         void OnDecrementAbilitySelect(InputAction.CallbackContext context);
         void OnChangePartyMember(InputAction.CallbackContext context);
         void OnPause(InputAction.CallbackContext context);
-        void OnMousePos(InputAction.CallbackContext context);
-        void OnMouseClick(InputAction.CallbackContext context);
+
+        void OnMouse(InputAction.CallbackContext context);
+        void OnLClick(InputAction.CallbackContext context);
+        void OnRClick(InputAction.CallbackContext context);
+
     }
 }

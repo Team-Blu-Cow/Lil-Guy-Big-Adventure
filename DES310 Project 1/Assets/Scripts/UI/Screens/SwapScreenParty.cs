@@ -28,7 +28,7 @@ public class SwapScreenParty : MonoBehaviour
         LeanTween.value(back.gameObject, a => back.color = a, new Color(0, 0, 0, 0), new Color(0, 0, 0, 0.6f), 0.5f);
 
         // Set what party members appear
-        for(int i = 0; i <  GameObject.Find("InGameCanvas/Party").transform.childCount; i++)
+        for(int i = 0; i <  GameObject.Find("InGame/Party").transform.childCount; i++)
         {
             SetPartyMember(i);
             transform.GetChild(0).GetChild(i).GetComponentInChildren<TextMeshProUGUI>().text = transform.GetChild(0).GetComponentsInChildren<PartyCombatant>()[i].named;
@@ -50,7 +50,7 @@ public class SwapScreenParty : MonoBehaviour
     void SetPartyMember(int i)
     {
         // get the child in he party section in the "InGameCanvas"
-        PartyCombatant combatant = GameObject.Find("InGameCanvas/Party").GetComponentsInChildren<PartyCombatant>()[i];
+        PartyCombatant combatant = GameObject.Find("InGame/Party").GetComponentsInChildren<PartyCombatant>()[i];
         transform.GetChild(0).GetComponentsInChildren<PartyCombatant>()[i].SetAll(combatant.GetCombatantGO(),combatant.GetStats(),combatant.GetCombatant(), combatant.named);
     }
 }
