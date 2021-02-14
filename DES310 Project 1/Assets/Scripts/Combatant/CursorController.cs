@@ -57,10 +57,10 @@ public class CursorController : MonoBehaviour
             }
 
             if(initTracker.getCurrentCombatant().GetComponent<TestCombatSystem>() != null)
-            {
+            {              
                 if(hovering == true)
                 {
-                    initTracker.getCurrentCombatant().GetComponent<TestCombatSystem>().enemy = hoverObject;
+                    Debug.Log("khjdsf");
                 }
             }
 
@@ -81,6 +81,8 @@ public class CursorController : MonoBehaviour
         {
             hovering = true;
             hoverObject = collision.gameObject;
+            initTracker.getCurrentCombatant().GetComponent<TestCombatSystem>().enemy = collision.gameObject;
+            Debug.Log(":)");
         }
     }
 
@@ -89,7 +91,8 @@ public class CursorController : MonoBehaviour
         if (initTracker.getCurrentCombatant().GetComponent<Combatant>().combatantState== Combatant_State.Attacking)
         {
             hovering = false;
-            hoverObject = null;
+            initTracker.getCurrentCombatant().GetComponent<TestCombatSystem>().enemy = null;
+            hoverObject = null;           
         }
     }
 }

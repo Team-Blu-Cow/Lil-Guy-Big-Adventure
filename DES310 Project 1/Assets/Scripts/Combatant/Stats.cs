@@ -41,18 +41,18 @@ public class Stats : MonoBehaviour
     public int mod_init;
 
     // base stats
-    private int base_str = 25;
-    private int base_dex = 25;
-    private int base_mag = 25;
-    private int base_def = 25;
-    private int base_con = 25;
+    private int base_str = 5;
+    private int base_dex = 5;
+    private int base_mag = 5;
+    private int base_def = 5;
+    private int base_con = 5;
     private int base_luck = 5; // regular 1 in 20 e.g. d20 roll
     private int base_speed = 5;
-    private int base_init = 25;
-    private int base_hp = 25;
+    private int base_init = 5;
+    private int current_hp;
 
     private void Start()
-    {
+    {        
         combatant = GetComponent<Combatant>();
         // Racial traits
         switch (combatant_type)
@@ -93,6 +93,7 @@ public class Stats : MonoBehaviour
                 break;
         };
 
+     
         base_str += mod_str;
         base_dex += mod_dex;
         base_mag += mod_mag;
@@ -101,6 +102,10 @@ public class Stats : MonoBehaviour
         base_luck += mod_luck;
         base_speed += mod_speed;
         base_init += mod_init;
+
+        base_con *= 10;
+        current_hp = base_con;
+
 
         quirkStats();
 
@@ -112,7 +117,7 @@ public class Stats : MonoBehaviour
         Debug.Log("luck: " + base_luck);
         Debug.Log("speed: " + base_speed);
         Debug.Log("init: " + base_init);
-        Debug.Log("HP: " + base_hp);
+        Debug.Log("HP: " + current_hp);
     }
 
     public int getStat(Combatant_Stats stat)
@@ -136,7 +141,7 @@ public class Stats : MonoBehaviour
             case Combatant_Stats.Initiative:
                 return base_init;
             case Combatant_Stats.HP:
-                return base_hp;
+                return current_hp;
             default:
                 Debug.Log("ERROR: Invalid Stat Name");
                 return 0;
@@ -172,7 +177,7 @@ public class Stats : MonoBehaviour
                 base_init = setStat;
                 break;
             case Combatant_Stats.HP:
-                base_hp = setStat;
+                current_hp = setStat;
                 break;
         }
     }

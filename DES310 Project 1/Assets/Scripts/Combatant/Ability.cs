@@ -27,7 +27,7 @@ public class Ability : MonoBehaviour
     public string abilityName;
     public ability_type abilityType;
     public stat_used statUsed;
-    public int abilityPower;
+    public float abilityPower;
     public int abilityRange;
     public int abilityArea;
     public Aspects.Aspect abilityAspect;    

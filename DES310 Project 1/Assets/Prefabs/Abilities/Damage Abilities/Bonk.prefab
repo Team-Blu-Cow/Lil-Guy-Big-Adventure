@@ -46,7 +46,7 @@ MonoBehaviour:
   abilityName: Bonk
   abilityType: 0
   statUsed: 0
-  abilityPower: 10
+  abilityPower: 1
   abilityRange: 1
   abilityArea: 1
   abilityAspect: 3
