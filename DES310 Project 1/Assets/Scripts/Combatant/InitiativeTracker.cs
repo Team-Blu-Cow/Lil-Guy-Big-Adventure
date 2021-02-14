@@ -54,6 +54,8 @@ public class InitiativeTracker : MonoBehaviour
             }
             combatantInits.Sort(); // Sort the list of combatant initiatives
 
+            getCurrentCombatant().GetComponent<PathFindingUnit>().SetSelectableTiles(getCurrentCombatant().GetComponent<Stats>().getStat(Combatant_Stats.Speed));
+
             // This needs to be after the sort
             for (int i = 0; i < combatants.ToArray().Length; i++) // Loop for the number of combatant's
             {
@@ -80,7 +82,7 @@ public class InitiativeTracker : MonoBehaviour
                     //}
                 }
 
-               
+                
 
                 for (int j = 0; j < combatantInits.ToArray().Length; j++) // Start a for loop for the amount of combatants
                 {
