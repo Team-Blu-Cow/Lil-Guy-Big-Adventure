@@ -31,8 +31,34 @@ public enum stat_boost
 
 public class Item : MonoBehaviour
 {
+    public string itemName;
     public item_type itemType;
     public item_duration itemDuration;
     public stat_boost statBoost;
     public int itemPower;
+
+    public void PickUp(Vector3 playerPos)
+    {
+        bool pickedUp = false;
+        AStarGrid grid = GameObject.FindObjectOfType<AStarGrid>();
+        AStarNode node = grid.WorldToNode(transform.position);
+
+        foreach (AStarNode neighbor in grid.GetNeighbors(node))
+        {
+            if (neighbor.gridPosition == grid.WorldToNode(playerPos).gridPosition) //if it is a treasure
+            {
+                //Collect
+                pickedUp = true;
+                Inventory.instance.Add(this);
+                gameObject.SetActive(false);
+                Debug.Log("Picked Up");
+            }
+        }
+
+        if (!pickedUp)
+        {
+            //Show cant pickup
+            Debug.Log("Cant pickup");
+        }
+    }
 }
