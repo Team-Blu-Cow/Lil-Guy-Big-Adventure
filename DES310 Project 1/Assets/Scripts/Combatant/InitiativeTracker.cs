@@ -177,70 +177,48 @@ public class InitiativeTracker : MonoBehaviour
         }
     }
 
-
-    // TODO figure out the enigma that is these following for loops. I should just be able to call the combatant using the current combatant num variable however it doesn't work. :/
-    // Ya dingus just use getCurrentCombatant()
     public void cancelMove()
     {
-        for (int i = 0; i < combatants.ToArray().Length; i++)
-        {
-            if (currentCombatantNum == combatants[i].GetComponent<Combatant>().combatantNum)
-            {
-                combatants[i].GetComponent<Combatant>().cancelMove();
-                combatUI.deactivateMoveButtons();
-                selecting = false;
-            }
-        }
+        getCurrentCombatant().GetComponent<Combatant>().cancelMove();
+        combatUI.deactivateMoveButtons();
+        selecting = false;
+
     }
 
     public void confirmMove()
     {
-        for (int i = 0; i < combatants.ToArray().Length; i++)
-        {
-            if (currentCombatantNum == combatants[i].GetComponent<Combatant>().combatantNum)
-            {
-                combatants[i].GetComponent<Combatant>().confirmMove();
-                combatUI.deactivateMoveButtons();
-                selecting = false;
-            }
-        }
+        getCurrentCombatant().GetComponent<Combatant>().confirmMove();
+        combatUI.deactivateMoveButtons();
+        selecting = false;
     }
 
     public void attackCombatant(int abilityNum)
     {
-        for (int i = 0; i < combatants.ToArray().Length; i++)
+
+        if (getCurrentCombatant().GetComponent<TestCombatSystem>().enemy != null)
         {
-            if (currentCombatantNum == combatants[i].GetComponent<Combatant>().combatantNum)
+            if (getCurrentCombatant().GetComponent<Combatant>().combatantState == Combatant_State.Attacking)
             {
-                if (combatants[i].GetComponent<TestCombatSystem>().enemy != null)
-                {
-                    if (combatants[i].GetComponent<Combatant>().combatantState == Combatant_State.Attacking)
-                    {
-                        combatants[i].GetComponent<Combatant>().attackAbility(abilityNum);
-                        combatUI.deactivateAbilityButtons();
-                    }
-                }
-                else
-                {
-                    Debug.Log("No Target has been added");
-                }
+                getCurrentCombatant().GetComponent<Combatant>().attackAbility(abilityNum);
+                combatUI.deactivateAbilityButtons();
             }
         }
+        else
+        {
+            Debug.Log("No Target has been added");
+        }
+
     }
 
     public void useItem(int itemNum)
     {
-        for (int i = 0; i < combatants.ToArray().Length; i++)
+
+        if (getCurrentCombatant().GetComponent<Combatant>().combatantState == Combatant_State.Attacking)
         {
-            if (currentCombatantNum == combatants[i].GetComponent<Combatant>().combatantNum)
-            {
-                if (combatants[i].GetComponent<Combatant>().combatantState == Combatant_State.Attacking)
-                {
-                    combatants[i].GetComponent<Combatant>().UseItem(itemNum);
-                    combatUI.deactivateItemButtons();
-                }
-            }
+            getCurrentCombatant().GetComponent<Combatant>().UseItem(itemNum);
+            combatUI.deactivateItemButtons();
         }
+
     }
 
     public GameObject getCurrentCombatant()
@@ -276,8 +254,8 @@ public class InitiativeTracker : MonoBehaviour
 
     public void useWaitButton()
     {
-        ChangeCurrentCombatant();
         getCurrentCombatant().GetComponent<Combatant>().combatantState = Combatant_State.Attacked;
+        ChangeCurrentCombatant();
         selecting = true;
     }
 }

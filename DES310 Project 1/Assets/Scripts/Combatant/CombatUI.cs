@@ -5,27 +5,9 @@ using UnityEngine;
 public class CombatUI : MonoBehaviour
 {
     public CombatButton[] moveButtons;
-    //public CombatButton moveCancelButton;
-    //public CombatButton moveConfirmButton;
-
     public CombatButton[] abilityButtons;
-    //public CombatButton abilityOneButton;
-    //public CombatButton abilityTwoButton;
-    //public CombatButton abilityThreeButton;
-    //public CombatButton abilityFourButton;
-
     public CombatButton[] itemButtons;
-    //public CombatButton itemOneButton;
-    //public CombatButton itemTwoButton;
-    //public CombatButton itemThreeButton;
-    //public CombatButton itemFourButton;
-    //public CombatButton itemFiveButton;
-
     public CombatButton[] choiceButtons;
-    //public CombatButton abilityConfirmButton;
-    //public CombatButton itemConfirmButton;
-    //public CombatButton waitConfirmButton;
-    //public CombatButton backButton;
 
     InitiativeTracker initTracker;
     Vector3 combatantPos;
@@ -34,29 +16,17 @@ public class CombatUI : MonoBehaviour
     private void Start()
     {
         initTracker = GetComponent<InitiativeTracker>();
+        for(int i = 0; i < 4; i++)
+        {
+            abilityButtons[i].abilityButton = true;
+        }
+        choiceButtons[3].abilityButton = true;
     }
 
     private void Update()
     {
         combatantWorldPos = Camera.main.WorldToScreenPoint(initTracker.getCurrentCombatant().transform.position);
         combatantPos = new Vector3(combatantWorldPos.x, combatantWorldPos.y, -1);
-    }
-
-
-    public void activateChoiceButtons()
-    {
-        int offsetY = 50;
-        for (int i = 0; i < 3; i++)
-        {
-            choiceButtons[i].activateButton(new Vector3(110, offsetY, 0), combatantPos);
-            offsetY -= 30;
-        }
-    }
-
-    public void activateMoveButtons()
-    {
-        moveButtons[0].activateButton(new Vector3(110, -10, 0), combatantPos);
-        moveButtons[1].activateButton(new Vector3(110, 20, 0), combatantPos);
     }
 
     public void deactivateChoiceButtons()
@@ -88,20 +58,36 @@ public class CombatUI : MonoBehaviour
         {
             itemButtons[j].deactivateButton();
         }
-        choiceButtons[3].deactivateButton();
+        choiceButtons[4].deactivateButton();
+    }
+
+    public void activateChoiceButtons()
+    {
+        int offsetY = 50;
+        for (int i = 0; i < 3; i++)
+        {
+            choiceButtons[i].activateButton(new Vector3(110, offsetY, 0), combatantPos);
+            offsetY -= 30;
+        }
+    }
+
+    public void activateMoveButtons()
+    {
+        moveButtons[0].activateButton(new Vector3(110, -10, 0), combatantPos);
+        moveButtons[1].activateButton(new Vector3(110, 20, 0), combatantPos);
     }
 
     public void activateAbilityButtons()
     {
-        int offsetY = 110;
+        int offsetY = 150;
 
         for (int i = 0; i < 4; i++)
         {
-            abilityButtons[i].activateButton(new Vector3(110, offsetY, 0), combatantPos);
+            abilityButtons[i].activateButton(new Vector3(-110, offsetY, 0), combatantPos);
             offsetY -= 30;
         }
 
-        choiceButtons[3].activateButton(new Vector3(110, offsetY, 0), combatantPos);
+        choiceButtons[3].activateButton(new Vector3(-110, offsetY, 0), combatantPos);
     }
 
     public void activateItemButtons()
@@ -114,7 +100,7 @@ public class CombatUI : MonoBehaviour
             offsetY -= 30;
         }
 
-        choiceButtons[3].activateButton(new Vector3(110, offsetY, 0), combatantPos);
+        choiceButtons[4].activateButton(new Vector3(110, offsetY, 0), combatantPos);
     }
 
     public void useBackButton()
@@ -130,5 +116,6 @@ public class CombatUI : MonoBehaviour
         }
 
         choiceButtons[3].deactivateButton();
+        choiceButtons[4].deactivateButton();
     }
 }
