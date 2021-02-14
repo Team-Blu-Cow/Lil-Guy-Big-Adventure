@@ -11,6 +11,7 @@ public class InitiativeTracker : MonoBehaviour
     bool sorted = false;
     int currentCombatantNum = 0;
     public List<int> combatantInits;
+    int combatantAbilityUsing = 0;
 
     bool selecting = false;
     bool enemyChanging = false;
@@ -19,6 +20,7 @@ public class InitiativeTracker : MonoBehaviour
     {
         controls = new InputManager();
         controls.Keyboard.ChangePartyMember.started += ctx => ChangeCurrentCombatant();
+        controls.Keyboard.LClick.performed += ctx => attackCombatant();
     }
 
     void OnEnable()
@@ -54,8 +56,6 @@ public class InitiativeTracker : MonoBehaviour
                 }
             }
             combatantInits.Sort(); // Sort the list of combatant initiatives
-
-            getCurrentCombatant().GetComponent<PathFindingUnit>().SetSelectableTiles(getCurrentCombatant().GetComponent<Stats>().getStat(Combatant_Stats.Speed));
 
             // This needs to be after the sort
             for (int i = 0; i < combatants.ToArray().Length; i++) // Loop for the number of combatant's
@@ -119,6 +119,13 @@ public class InitiativeTracker : MonoBehaviour
                 }               
             }
         }
+
+
+        if (getCurrentCombatant().GetComponent<Combatant>().combatantState == Combatant_State.Idle)
+        {
+            getCurrentCombatant().GetComponent<PathFindingUnit>().SetSelectableTiles(getCurrentCombatant().GetComponent<Stats>().getStat(Combatant_Stats.Speed));
+        }
+
 
         if(getCurrentCombatant().GetComponent<Combatant>().combatantState == Combatant_State.Moved || getCurrentCombatant().GetComponent<Combatant>().combatantState == Combatant_State.Attacking)
         {
@@ -197,20 +204,28 @@ public class InitiativeTracker : MonoBehaviour
         selecting = false;
     }
 
-    public void attackCombatant(int abilityNum)
+    public void setAbilityUsing(int abilityNum)
+    {
+        combatantAbilityUsing = abilityNum;
+    }
+
+    public void attackCombatant()
     {
 
-        if (getCurrentCombatant().GetComponent<TestCombatSystem>().enemy != null)
+        if (selecting == true)
         {
-            if (getCurrentCombatant().GetComponent<Combatant>().combatantState == Combatant_State.Attacking)
+            if (getCurrentCombatant().GetComponent<TestCombatSystem>().enemy != null)
             {
-                getCurrentCombatant().GetComponent<Combatant>().attackAbility(abilityNum);
-                combatUI.deactivateAbilityButtons();
+                if (getCurrentCombatant().GetComponent<Combatant>().combatantState == Combatant_State.Attacking)
+                {
+                    getCurrentCombatant().GetComponent<Combatant>().attackAbility(combatantAbilityUsing);
+                    combatUI.deactivateAbilityButtons();
+                }
             }
-        }
-        else
-        {
-            Debug.Log("No Target has been added");
+            else
+            {
+                Debug.Log("No Target has been added");
+            }
         }
 
     }

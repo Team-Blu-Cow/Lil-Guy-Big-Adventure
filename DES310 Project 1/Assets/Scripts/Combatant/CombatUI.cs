@@ -29,7 +29,6 @@ public class CombatUI : MonoBehaviour
     {
         combatantScreenPos = Camera.main.WorldToViewportPoint(initTracker.getCurrentCombatant().transform.position);
         combatantPos = new Vector2((combatantScreenPos.x * canvas.sizeDelta.x) - (canvas.sizeDelta.x * 0.5f), (combatantScreenPos.y * canvas.sizeDelta.y) - (canvas.sizeDelta.y * 0.5f));
-        Debug.Log(combatantPos);
     }
 
     public void deactivateChoiceButtons()

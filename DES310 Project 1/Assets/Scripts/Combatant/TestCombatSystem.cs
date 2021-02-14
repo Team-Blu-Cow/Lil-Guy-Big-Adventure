@@ -68,7 +68,7 @@ public class TestCombatSystem : MonoBehaviour
         switch (abilitiesUsing[abilityNum].statUsed)
         {
             case stat_used.Strength:
-                damage = abilitiesUsing[abilityNum].abilityPower + combatantStats.getStat(Combatant_Stats.Strength);
+                damage = abilitiesUsing[abilityNum].abilityPower * combatantStats.getStat(Combatant_Stats.Strength);
 
                 tempDamage = (float)damage * enemyResistances[aspectType];
 
@@ -79,7 +79,7 @@ public class TestCombatSystem : MonoBehaviour
                 break;
 
             case stat_used.Magic:
-                damage = abilitiesUsing[abilityNum].abilityPower + combatantStats.getStat(Combatant_Stats.Magic);
+                damage = abilitiesUsing[abilityNum].abilityPower * combatantStats.getStat(Combatant_Stats.Magic);
 
                 tempDamage = (float)damage * enemyResistances[aspectType];
 
@@ -90,7 +90,7 @@ public class TestCombatSystem : MonoBehaviour
                 break;
 
             case stat_used.Dexterity:
-                damage = abilitiesUsing[abilityNum].abilityPower + combatantStats.getStat(Combatant_Stats.Dexterity);
+                damage = abilitiesUsing[abilityNum].abilityPower * combatantStats.getStat(Combatant_Stats.Dexterity);
 
                 tempDamage = (float)damage * enemyResistances[aspectType];
 
@@ -122,7 +122,7 @@ public class TestCombatSystem : MonoBehaviour
 
     private void HealAbility(int abilityNum)
     {
-        int heal = abilitiesUsing[abilityNum].abilityPower + combatantStats.getStat(Combatant_Stats.Magic);
+        int heal = (int)abilitiesUsing[abilityNum].abilityPower * combatantStats.getStat(Combatant_Stats.Magic);
         if (abilitiesUsing[abilityNum].statUsed == stat_used.Magic)
         {
             combatantStats.setStat(Combatant_Stats.HP, combatantStats.getStat(Combatant_Stats.HP) + heal);
@@ -139,35 +139,35 @@ public class TestCombatSystem : MonoBehaviour
         switch (abilitiesUsing[abilityNum].statUsed)
         {
             case stat_used.Strength:
-                combatantStats.setStat(Combatant_Stats.Strength, combatantStats.getStat(Combatant_Stats.Strength) + abilitiesUsing[abilityNum].abilityPower);
+                combatantStats.setStat(Combatant_Stats.Strength, combatantStats.getStat(Combatant_Stats.Strength) + (int)abilitiesUsing[abilityNum].abilityPower);
                 Debug.Log("Strength has been buffed to " + combatantStats.getStat(Combatant_Stats.Strength));
                 break;
             case stat_used.Dexterity:
-                combatantStats.setStat(Combatant_Stats.Dexterity, combatantStats.getStat(Combatant_Stats.Dexterity) + abilitiesUsing[abilityNum].abilityPower);
+                combatantStats.setStat(Combatant_Stats.Dexterity, combatantStats.getStat(Combatant_Stats.Dexterity) + (int)abilitiesUsing[abilityNum].abilityPower);
                 Debug.Log("Strength has been buffed to " + combatantStats.getStat(Combatant_Stats.Dexterity));
                 break;
             case stat_used.Magic:
-                combatantStats.setStat(Combatant_Stats.Magic, combatantStats.getStat(Combatant_Stats.Magic) + abilitiesUsing[abilityNum].abilityPower);
+                combatantStats.setStat(Combatant_Stats.Magic, combatantStats.getStat(Combatant_Stats.Magic) + (int)abilitiesUsing[abilityNum].abilityPower);
                 Debug.Log("Strength has been buffed to " + combatantStats.getStat(Combatant_Stats.Magic));
                 break;
             case stat_used.Defence:
-                combatantStats.setStat(Combatant_Stats.Defence, combatantStats.getStat(Combatant_Stats.Defence) + abilitiesUsing[abilityNum].abilityPower);
+                combatantStats.setStat(Combatant_Stats.Defence, combatantStats.getStat(Combatant_Stats.Defence) + (int)abilitiesUsing[abilityNum].abilityPower);
                 Debug.Log("Strength has been buffed to " + combatantStats.getStat(Combatant_Stats.Defence));
                 break;
             case stat_used.Constitution:
-                combatantStats.setStat(Combatant_Stats.Constitution, combatantStats.getStat(Combatant_Stats.Constitution) + abilitiesUsing[abilityNum].abilityPower);
+                combatantStats.setStat(Combatant_Stats.Constitution, combatantStats.getStat(Combatant_Stats.Constitution) + (int)abilitiesUsing[abilityNum].abilityPower);
                 Debug.Log("Strength has been buffed to " + combatantStats.getStat(Combatant_Stats.Constitution));
                 break;
             case stat_used.Luck:
-                combatantStats.setStat(Combatant_Stats.Luck, combatantStats.getStat(Combatant_Stats.Luck) + abilitiesUsing[abilityNum].abilityPower);
+                combatantStats.setStat(Combatant_Stats.Luck, combatantStats.getStat(Combatant_Stats.Luck) + (int)abilitiesUsing[abilityNum].abilityPower);
                 Debug.Log("Strength has been buffed to " + combatantStats.getStat(Combatant_Stats.Luck));
                 break;
             case stat_used.Speed:
-                combatantStats.setStat(Combatant_Stats.Speed, combatantStats.getStat(Combatant_Stats.Speed) + abilitiesUsing[abilityNum].abilityPower);
+                combatantStats.setStat(Combatant_Stats.Speed, combatantStats.getStat(Combatant_Stats.Speed) + (int)abilitiesUsing[abilityNum].abilityPower);
                 Debug.Log("Strength has been buffed to " + combatantStats.getStat(Combatant_Stats.Speed));
                 break;
             case stat_used.Initiative:
-                combatantStats.setStat(Combatant_Stats.Initiative, combatantStats.getStat(Combatant_Stats.Initiative) + abilitiesUsing[abilityNum].abilityPower);
+                combatantStats.setStat(Combatant_Stats.Initiative, combatantStats.getStat(Combatant_Stats.Initiative) + (int)abilitiesUsing[abilityNum].abilityPower);
                 Debug.Log("Strength has been buffed to " + combatantStats.getStat(Combatant_Stats.Initiative));
                 break;
 

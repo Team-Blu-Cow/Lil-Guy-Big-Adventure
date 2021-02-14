@@ -46,7 +46,7 @@ MonoBehaviour:
   abilityName: Curse
   abilityType: 0
   statUsed: 1
-  abilityPower: 8
+  abilityPower: 1
   abilityRange: 1
   abilityArea: 1
   abilityAspect: 7
