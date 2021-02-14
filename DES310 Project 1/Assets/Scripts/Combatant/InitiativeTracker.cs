@@ -34,6 +34,7 @@ public class InitiativeTracker : MonoBehaviour
     void Start()
     {
         combatUI = GetComponent<CombatUI>();
+        getCurrentCombatant().GetComponent<PathFindingUnit>().SetSelectableTiles(4);
     }
 
     // Update is called once per frame
@@ -96,7 +97,9 @@ public class InitiativeTracker : MonoBehaviour
                 
             }
         }
-        
+
+
+
         // TODO Replace this with setting the current combatant being used as having an outline
         for (int i = 0; i < combatants.ToArray().Length; i++) // Loop for the amount of combatants
         {            
@@ -174,6 +177,7 @@ public class InitiativeTracker : MonoBehaviour
                 combatants[i].GetComponent<Combatant>().combatantState = Combatant_State.Idle;
             }
         }
+        getCurrentCombatant().GetComponent<PathFindingUnit>().SetSelectableTiles(4);
     }
 
     public void cancelMove()

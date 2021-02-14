@@ -18,7 +18,7 @@ public class CursorController : MonoBehaviour
 
         input = new InputManager();
         input.Keyboard.MousePos.performed += ctx => TargetMouse(ctx.ReadValue<Vector2>());
-        input.Keyboard.LClick.performed += ctx => MouseMove();
+        input.Keyboard.RClick.performed += ctx => MouseMove();
     }
 
     void OnEnable()
