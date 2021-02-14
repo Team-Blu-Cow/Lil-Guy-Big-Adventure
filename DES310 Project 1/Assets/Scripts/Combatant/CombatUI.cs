@@ -79,7 +79,7 @@ public class CombatUI : MonoBehaviour
 
     public void activateAbilityButtons()
     {
-        int offsetY = 150;
+        int offsetY = -30;
 
         for (int i = 0; i < 4; i++)
         {
