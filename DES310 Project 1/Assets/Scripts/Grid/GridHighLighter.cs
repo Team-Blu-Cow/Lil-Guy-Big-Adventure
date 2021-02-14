@@ -14,29 +14,30 @@ public class GridHighLighter : MonoBehaviour
     [SerializeField] private Tilemap overlayTileMap;
     [SerializeField] private Tilemap worldTileMap;
     [SerializeField] public IsoGrid grid { get; private set; }
-    [SerializeField] private TileBase highlightTile;
 
     [Header("Overlay Colours")]
-    [SerializeField] private Color baseColor;
-    [SerializeField] private Color unwalkableColor;
-    [SerializeField] private Color selectableColor;
+    [SerializeField] private Color baseColor        = Color.white;
+    [SerializeField] private Color unwalkableColor  = Color.red;
+    [SerializeField] private Color selectableColor  = new Color(0, 255, 194, 255);
 
     [Header("Debug Values")]
     [SerializeField] private Vector3Int test = new Vector3Int();
     [SerializeField] private int testMoveSpeed = 3;
 
     [Header("Path Rendering Data")]
-    [SerializeField] private Sprite[] sprites = new Sprite[10];
     [SerializeField] public Vector3[] path;
     [SerializeField] private GameObject pathNodePrefab;
 
     // Private Fields *****************************************************************************
-    [SerializeField] private List<IsoNode> selectableTiles = new List<IsoNode>();
+    private List<IsoNode> selectableTiles = new List<IsoNode>();
     private Vector3Int previouslySelectedTile = Vector3Int.zero;
 
     private InputMaster input;
 
     private List<GameObject> nodes;
+
+    private TileBase highlightTile;
+    private Sprite[] sprites;
 
     // Awake Method *******************************************************************************
     private void Awake()
@@ -46,6 +47,10 @@ public class GridHighLighter : MonoBehaviour
 
         if (grid == null)
             grid = GetComponent<IsoGrid>();
+
+        highlightTile = Resources.Load<TileBase>("Tile Palletes/Assets/tile_overlay");
+
+        sprites = Resources.LoadAll<Sprite>("Sprites/tile_overlay_arrow");
     }
 
     // Input System Methods ***********************************************************************

@@ -612,26 +612,13 @@ MonoBehaviour:
   overlayZHeight: 1
   overlayTileMap: {fileID: 1648093956}
   worldTileMap: {fileID: 6192750022062757414}
-  highlightTile: {fileID: 11400000, guid: 649013f4612b4e043aa92cb1053d482f, type: 2}
   baseColor: {r: 1, g: 1, b: 1, a: 1}
   unwalkableColor: {r: 1, g: 0, b: 0, a: 1}
   selectableColor: {r: 0, g: 1, b: 0.76030993, a: 1}
   test: {x: 2, y: 2, z: 1}
   testMoveSpeed: 3
-  sprites:
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
   path: []
   pathNodePrefab: {fileID: 0}
-  selectableTiles: []
 --- !u!114 &1319603414 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 8562030309962286967, guid: f23845b4c2af1b14599fab3ddcd94e0a, type: 3}
