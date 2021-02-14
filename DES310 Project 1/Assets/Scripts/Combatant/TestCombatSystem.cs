@@ -31,22 +31,27 @@ public class TestCombatSystem : MonoBehaviour
         items = combatant.combatantItems;
     }
 
+
     public void CastAbility(int abilityNum)
     {
         Debug.Log("Casting Ability...");
-        switch (abilitiesUsing[abilityNum].abilityType)
-        {
-            case ability_type.Damage:
-                DamageAbility(abilityNum);
-                break;
-            case ability_type.Heal:
-                HealAbility(abilityNum);
-                break;
-            case ability_type.Buff:
-                BuffAbility(abilityNum);
-                break;
-            default:
-                break;
+        if (enemy != null)
+        {           
+            switch (abilitiesUsing[abilityNum].abilityType)
+            {
+                case ability_type.Damage:
+                    DamageAbility(abilityNum);
+                    break;
+                case ability_type.Heal:
+                    HealAbility(abilityNum);
+                    break;
+                case ability_type.Buff:
+                    BuffAbility(abilityNum);
+                    break;
+                default:
+                    break;
+            }
+            enemy = null;
         }
 
     }
@@ -107,7 +112,7 @@ public class TestCombatSystem : MonoBehaviour
         }
 
         damage += poisonDamage;
-        enemy.GetComponent<Stats>().setStat(Combatant_Stats.HP, enemy.GetComponent<Stats>().getStat(Combatant_Stats.HP) + (int)-damage);
+        enemy.GetComponent<Combatant>().do_damage((int)damage, abilitiesUsing[abilityNum].abilityAspect);
         Debug.Log("Enemy HP: " + enemy.GetComponent<Stats>().getStat(Combatant_Stats.HP));
 
         Debug.Log("Dealt " + damage + " damage");
@@ -169,9 +174,8 @@ public class TestCombatSystem : MonoBehaviour
         }
     }
 
-    public void UseItem()
+    public void UseItem(int currentItem)
     {
-        int currentItem = combatant.currentItem;
         Debug.Log("Using Item...");        
         switch (items[currentItem].itemType)
         {
@@ -185,7 +189,6 @@ public class TestCombatSystem : MonoBehaviour
                 BuffItem(currentItem);
                 break;
         }
-
     }
 
     private void PoisonItem(int currentItem)

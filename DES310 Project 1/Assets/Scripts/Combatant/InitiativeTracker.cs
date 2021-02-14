@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class InitiativeTracker : MonoBehaviour
 {
+    private CombatUI combatUI;
     public List<GameObject> combatants;
     public InputManager controls;
     int combatantNum = 0;
@@ -11,8 +12,8 @@ public class InitiativeTracker : MonoBehaviour
     int currentCombatantNum = 0;
     public List<int> combatantInits;
 
-    Color color;
-    Color white;
+    bool selecting = false;
+    bool enemyChanging = false;
 
     private void Awake()
     {
@@ -32,14 +33,7 @@ public class InitiativeTracker : MonoBehaviour
 
     void Start()
     {
-        white.r = 255;
-        white.g = 255;
-        white.b = 255;
-        white.a = 255;
-        color.r = 255;
-        color.g = 0;
-        color.b = 0;
-        color.a = 255;
+        combatUI = GetComponent<CombatUI>();
     }
 
     // Update is called once per frame
@@ -68,12 +62,10 @@ public class InitiativeTracker : MonoBehaviour
                 {
                     if (combatantInits[i] == combatantInits[i + 1]) // If two initiatives are the same then
                     {
-                        Debug.Log("Happened");
                         for (int k = 0; k < combatants.ToArray().Length; k++) // Start another for loop for the amount of combatants
                         {
                             if (combatants[k].GetComponent<Stats>().getStat(Combatant_Stats.Initiative) == combatantInits[i]) // Find the first combatant which has the same initiative
                             {                               
-                                Debug.Log("Happened 2");
                                 combatantInits[i] = combatantInits[i] + 1; // Change the initiative in the list to be up 1 so that the initiatives don't match
                                 combatants[k].GetComponent<Stats>().setStat(Combatant_Stats.Initiative, (combatants[k].GetComponent<Stats>().getStat(Combatant_Stats.Initiative) + 1)); // Add 1 to the combatant's initiative so that the combatant's and the list of initiatives match
                                 Debug.Log(k + " INIT: " + combatants[k].GetComponent<Stats>().getStat(Combatant_Stats.Initiative));
@@ -82,10 +74,10 @@ public class InitiativeTracker : MonoBehaviour
                         }
                     }
 
-                    if (i != 0)
-                    {
-                        Debug.Log((i-1) + " " + combatants[i-1].GetComponent<Stats>().getStat(Combatant_Stats.Initiative) + "  " + i + " " + combatants[i].GetComponent<Stats>().getStat(Combatant_Stats.Initiative) + "  " +  (i + 1) + " " + combatants[i + 1].GetComponent<Stats>().getStat(Combatant_Stats.Initiative));
-                    }
+                    //if (i != 0)
+                    //{
+                    //    Debug.Log((i-1) + " " + combatants[i-1].GetComponent<Stats>().getStat(Combatant_Stats.Initiative) + "  " + i + " " + combatants[i].GetComponent<Stats>().getStat(Combatant_Stats.Initiative) + "  " +  (i + 1) + " " + combatants[i + 1].GetComponent<Stats>().getStat(Combatant_Stats.Initiative));
+                    //}
                 }
 
                
@@ -105,23 +97,63 @@ public class InitiativeTracker : MonoBehaviour
             }
         }
         
-
+        // TODO Replace this with setting the current combatant being used as having an outline
         for (int i = 0; i < combatants.ToArray().Length; i++) // Loop for the amount of combatants
         {            
             if (combatants[i] != null) // Check for whether there is a combatant in the spot on the list
             {
                 if (currentCombatantNum == combatants[i].GetComponent<Combatant>().combatantNum) // If the current combatant number is the same as the combatant in the list's number then
                 {
-                    combatants[i].GetComponent<SpriteRenderer>().color = color; // Change the colour to red to show it is their turn (TEMPORARY)
+                    combatants[i].GetComponent<SpriteRenderer>().color = Color.red; // Change the colour to red to show it is their turn (TEMPORARY)
                     combatants[i].GetComponent<Combatant>().fighting = true; // Allow the combatant to fight
                 }
                 else // If not then
                 {
-                    combatants[i].GetComponent<SpriteRenderer>().color = white; // Change the colour to white to show its not their turn
+                    combatants[i].GetComponent<SpriteRenderer>().color = Color.white; // Change the colour to white to show its not their turn
                     combatants[i].GetComponent<Combatant>().fighting = false; // Don't allow the combatant to fight
-                }
+                }               
             }
         }
+
+        if(getCurrentCombatant().GetComponent<Combatant>().combatantState == Combatant_State.Moved || getCurrentCombatant().GetComponent<Combatant>().combatantState == Combatant_State.Attacking)
+        {
+
+            if (getCurrentCombatant().GetComponent<Combatant>().combatantState == Combatant_State.Attacking && selecting == false)
+            {
+                combatUI.activateChoiceButtons();
+            }
+            else if (getCurrentCombatant().GetComponent<Combatant>().combatantState == Combatant_State.Moved)
+            {
+                combatUI.activateMoveButtons();
+            }
+        }
+
+        if (selecting == true)
+        {
+            combatUI.deactivateChoiceButtons();
+        }
+
+
+        if(getCurrentCombatant().gameObject.tag == "Ally")
+        {
+        }
+        else
+        {
+            if (enemyChanging == false)
+            {
+                StartCoroutine(enemyStuff());
+            }
+        }
+
+    }
+
+
+    public IEnumerator enemyStuff()
+    {
+        enemyChanging = true;
+        yield return new WaitForSeconds(2.0f);
+        ChangeCurrentCombatant();
+        enemyChanging = false;
     }
 
     public void AddCombatant(GameObject combatant)
@@ -133,9 +165,96 @@ public class InitiativeTracker : MonoBehaviour
     public void ChangeCurrentCombatant()
     {
         currentCombatantNum++;
-        if(currentCombatantNum == 8)
+        if(currentCombatantNum == combatants.ToArray().Length)
         {
             currentCombatantNum = 0;
+
+            for(int i = 0; i < combatants.ToArray().Length; i++)
+            {
+                combatants[i].GetComponent<Combatant>().combatantState = Combatant_State.Idle;
+            }
         }
+    }
+
+    public void cancelMove()
+    {
+        getCurrentCombatant().GetComponent<Combatant>().cancelMove();
+        combatUI.deactivateMoveButtons();
+        selecting = false;
+
+    }
+
+    public void confirmMove()
+    {
+        getCurrentCombatant().GetComponent<Combatant>().confirmMove();
+        combatUI.deactivateMoveButtons();
+        selecting = false;
+    }
+
+    public void attackCombatant(int abilityNum)
+    {
+
+        if (getCurrentCombatant().GetComponent<TestCombatSystem>().enemy != null)
+        {
+            if (getCurrentCombatant().GetComponent<Combatant>().combatantState == Combatant_State.Attacking)
+            {
+                getCurrentCombatant().GetComponent<Combatant>().attackAbility(abilityNum);
+                combatUI.deactivateAbilityButtons();
+            }
+        }
+        else
+        {
+            Debug.Log("No Target has been added");
+        }
+
+    }
+
+    public void useItem(int itemNum)
+    {
+
+        if (getCurrentCombatant().GetComponent<Combatant>().combatantState == Combatant_State.Attacking)
+        {
+            getCurrentCombatant().GetComponent<Combatant>().UseItem(itemNum);
+            combatUI.deactivateItemButtons();
+        }
+
+    }
+
+    public GameObject getCurrentCombatant()
+    {
+        for(int i = 0; i < combatants.ToArray().Length; i++)
+        {
+            if(currentCombatantNum == combatants[i].GetComponent<Combatant>().combatantNum)
+            {
+                return combatants[i];
+            }           
+        }
+
+        return null;
+    }
+
+    public void activateAbilityButtons()
+    {
+        combatUI.activateAbilityButtons();
+        selecting = true;
+    }
+
+    public void activateItemButtonss()
+    {
+        combatUI.activateItemButtons();
+        selecting = true;
+    }
+
+    public void useBackButton()
+    {
+        combatUI.useBackButton();
+        selecting = false;
+    }
+
+    public void useWaitButton()
+    {
+        getCurrentCombatant().GetComponent<Combatant>().combatantState = Combatant_State.Attacked;
+        ChangeCurrentCombatant();
+        selecting = true;
     }
 }

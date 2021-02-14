@@ -2,6 +2,15 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+public enum Combatant_State
+{
+    Idle,
+    Moving,
+    Moved,
+    Attacking,
+    Attacked,
+}
+
 public class Combatant : MonoBehaviour
 {
     public int combatantNum;
@@ -12,12 +21,14 @@ public class Combatant : MonoBehaviour
     public int abilitySelect = 0;
 
     public Item[] combatantItems;
-    public int currentItem = 0;
 
     public float[] resistances;
-
     public Quirks[] combatantQuirks;
+
     public InitiativeTracker initTracker;
+
+    public Vector3 oldPosition;
+    public Combatant_State combatantState = Combatant_State.Idle;
 
     public InputManager controls;
 
@@ -32,8 +43,6 @@ public class Combatant : MonoBehaviour
     private void Awake()
     {
         controls = new InputManager();
-        controls.Keyboard.IncrementAbilitySelect.started += ctx => changeItem(1);
-        controls.Keyboard.DecrementAbilitySelect.started += ctx => changeItem(-1);
         controls.Keyboard.Changetoability1.started += ctx => changeAbilitySelect(0);
         controls.Keyboard.Changetoability2.started += ctx => changeAbilitySelect(1);
         controls.Keyboard.Changetoability3.started += ctx => changeAbilitySelect(2);
@@ -62,20 +71,22 @@ public class Combatant : MonoBehaviour
 
     private void Update()
     {
+        
+        if(combatantState == Combatant_State.Moving)
+        {
+            Transform targetT = GetComponent<PathFindingUnit>().target;
 
+            // TODO rethinkg this if statement. Looks ugly :( (Sorry if statement)
+            if(transform.position.x > targetT.position.x - 0.5f && transform.position.x < targetT.position.x + 0.5f && transform.position.y > targetT.position.y - 0.5f && transform.position.y < targetT.position.x + 0.5f)
+            {
+                combatantState = Combatant_State.Moved;   
+            }
+        }
     }
 
     public void SetAbilityUsed(int abilityNum)
     {
         abilitiesUsing[abilitySelect] = abilitiesLearnt[abilityNum];
-    }
-
-    private void changeItem(int itemSwitch)
-    {
-        if ((itemSwitch == 1 && currentItem < 4) || (itemSwitch == -1 && currentItem > 0))
-        {
-            currentItem += itemSwitch;
-        }
     }
 
     private void changeAbilitySelect(int num)
@@ -92,6 +103,34 @@ public class Combatant : MonoBehaviour
     public void do_heal(int heal)
     {
         GetComponent<Stats>().setStat(Combatant_Stats.HP, GetComponent<Stats>().getStat(Combatant_Stats.HP) + heal);
+    }
+
+    public void cancelMove()
+    {
+        if(combatantState == Combatant_State.Moved)
+        {
+            combatantState = Combatant_State.Idle;
+            transform.position = oldPosition;
+        }
+    }
+
+    public void confirmMove()
+    {
+        combatantState = Combatant_State.Attacking;
+    }
+
+    public void attackAbility(int abilityNum)
+    {
+        GetComponent<TestCombatSystem>().CastAbility(abilityNum);
+        combatantState = Combatant_State.Attacked;
+        initTracker.ChangeCurrentCombatant();       
+    }
+
+    public void UseItem(int itemNum)
+    {
+        GetComponent<TestCombatSystem>().UseItem(itemNum);
+        combatantState = Combatant_State.Attacked;
+        initTracker.ChangeCurrentCombatant();
     }
 }
 

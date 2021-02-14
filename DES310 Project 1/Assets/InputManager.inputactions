@@ -70,7 +70,7 @@
                     "interactions": ""
                 },
                 {
-                    "name": "Mouse",
+                    "name": "MousePos",
                     "type": "Value",
                     "id": "5dced9c4-7b43-43ee-89ea-b38031a3e3fb",
                     "expectedControlType": "Vector2",
@@ -78,6 +78,7 @@
                     "interactions": ""
                 },
                 {
+
                     "name": "LClick",
                     "type": "Button",
                     "id": "b57e94b8-a9c4-4d11-add9-2d41970e24bb",
@@ -89,6 +90,7 @@
                     "name": "RClick",
                     "type": "Button",
                     "id": "be6be9ba-96a8-4c8a-b985-41bc4936165b",
+
                     "expectedControlType": "Button",
                     "processors": "",
                     "interactions": ""
@@ -190,7 +192,18 @@
                     "interactions": "",
                     "processors": "",
                     "groups": "",
-                    "action": "Mouse",
+                    "action": "MousePos",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "6815ae55-ebde-44db-941e-c47bba9737e4",
+                    "path": "<Mouse>/leftButton",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "MouseClick",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },
