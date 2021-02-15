@@ -1252,12 +1252,13 @@ MonoBehaviour:
   currentCombatant: {fileID: 0}
   recievedMoveCommand: 0
   receivedActionCommand: 0
+  selectedAbility: 0
   targetPos: {x: 0, y: 0, z: 0}
   uiPos: {x: 0, y: 0}
   battleState: 0
   combatantState: 0
   gridHighLighter: {fileID: 1218121438}
-  combatUI: {fileID: 0}
+  combatUI: {fileID: 143049155}
 --- !u!4 &143049154
 Transform:
   m_ObjectHideFlags: 0
@@ -1525,7 +1526,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 143049153}
         m_TargetAssemblyTypeName: BattleManager, Assembly-CSharp
-        m_MethodName: OnSelectAbility
+        m_MethodName: OnChooseAbility
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -8164,9 +8165,9 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: InitiativeTracker, Assembly-CSharp
-        m_MethodName: setAbilityUsing
+      - m_Target: {fileID: 143049153}
+        m_TargetAssemblyTypeName: BattleManager, Assembly-CSharp
+        m_MethodName: OnSelectAbility
         m_Mode: 3
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -8560,9 +8561,9 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: InitiativeTracker, Assembly-CSharp
-        m_MethodName: setAbilityUsing
+      - m_Target: {fileID: 143049153}
+        m_TargetAssemblyTypeName: BattleManager, Assembly-CSharp
+        m_MethodName: OnSelectAbility
         m_Mode: 3
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -9883,6 +9884,7 @@ MonoBehaviour:
   baseColor: {r: 1, g: 1, b: 1, a: 1}
   unwalkableColor: {r: 1, g: 0, b: 0, a: 1}
   selectableColor: {r: 0, g: 1, b: 0.76030993, a: 1}
+  abilityRangeColor: {r: 0.016251087, g: 0, b: 1, a: 255}
   test: {x: 2, y: 2, z: 1}
   testMoveSpeed: 3
   path: []
@@ -9909,7 +9911,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 31b855971d2bd7a41aec77d2076497a2, type: 2}
   DisplayGridGizmos: 1
   GridGizmoOpacity: 0.1
-  DisplayNodeGizmos: 0
+  DisplayNodeGizmos: 1
 --- !u!1 &1226033684
 GameObject:
   m_ObjectHideFlags: 0
@@ -11052,9 +11054,9 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: InitiativeTracker, Assembly-CSharp
-        m_MethodName: setAbilityUsing
+      - m_Target: {fileID: 143049153}
+        m_TargetAssemblyTypeName: BattleManager, Assembly-CSharp
+        m_MethodName: OnSelectAbility
         m_Mode: 3
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -15711,9 +15713,9 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: InitiativeTracker, Assembly-CSharp
-        m_MethodName: setAbilityUsing
+      - m_Target: {fileID: 143049153}
+        m_TargetAssemblyTypeName: BattleManager, Assembly-CSharp
+        m_MethodName: OnSelectAbility
         m_Mode: 3
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -16190,7 +16192,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 112.91, y: 0}
+  m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 205.82, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1158668276547518294

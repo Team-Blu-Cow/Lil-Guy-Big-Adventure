@@ -10,10 +10,23 @@ public class PathFindingUnit : MonoBehaviour
     int targetIndex;
     bool currentlyPathFinding = false;
     [SerializeField] private GridHighLighter gridHighLighter;
-    
-    public void SetSelectableTiles(int range)
+
+    private void Start()
     {
-        gridHighLighter.SetSelectableTiles(gridHighLighter.grid.WorldToNode(transform.position), range);
+        IsoNode node = gridHighLighter.grid.WorldToNode(transform.position);
+        OccupyTile(gameObject);
+    }
+
+    public void OccupyTile(GameObject me)
+    {
+        IsoNode node = gridHighLighter.grid.WorldToNode(transform.position);
+        node.SetOccupied(me);
+    }
+
+    public void SetSelectableTiles(int range, bool includeOccupied = false)
+    {
+        OccupyTile(null);
+        gridHighLighter.SetSelectableTiles(gridHighLighter.grid.WorldToNode(transform.position), range, includeOccupied);
     }
 
     public void RequestPath()

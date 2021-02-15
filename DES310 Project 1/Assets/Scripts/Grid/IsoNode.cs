@@ -9,6 +9,9 @@ public class IsoNode : IHeapItem<IsoNode>
     // Universal Path Finding Members *************************************************************
     public bool walkable;
     public bool occupied = false;
+
+    public GameObject occupier;
+
     public IsoNode parent;
 
     // A* Members *********************************************************************************
@@ -60,5 +63,19 @@ public class IsoNode : IHeapItem<IsoNode>
             return false;
         }
         return true;
+    }
+
+    public void SetOccupied(GameObject _occupier)
+    {
+        if(_occupier == null)
+        {
+            occupied = false;
+            occupier = null;
+        }
+        else
+        {
+            occupied = true;
+            occupier = _occupier;
+        }
     }
 }

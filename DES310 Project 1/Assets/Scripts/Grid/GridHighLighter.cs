@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Tilemaps;
 
+public enum SelectableTileColor { MOVEMENT, ABILITY}
+
 [System.Serializable]
 public class GridHighLighter : MonoBehaviour
 {
@@ -19,6 +21,9 @@ public class GridHighLighter : MonoBehaviour
     [SerializeField] private Color baseColor        = Color.white;
     [SerializeField] private Color unwalkableColor  = Color.red;
     [SerializeField] private Color selectableColor  = new Color(0, 255, 194, 255);
+    [SerializeField] private Color abilityRangeColor = Color.blue;
+
+    private Color currentColor;
 
     [Header("Debug Values")]
     [SerializeField] private Vector3Int test = new Vector3Int();
@@ -51,6 +56,8 @@ public class GridHighLighter : MonoBehaviour
         highlightTile = Resources.Load<TileBase>("Tile Palletes/Assets/tile_overlay");
 
         sprites = Resources.LoadAll<Sprite>("Sprites/tile_overlay_arrow");
+
+        currentColor = selectableColor;
     }
 
     // Input System Methods ***********************************************************************
@@ -119,18 +126,18 @@ public class GridHighLighter : MonoBehaviour
             if (tileCoordinate != previouslySelectedTile)
             {
                 overlayTileMap.SetTile(tileCoordinate, highlightTile);
-                SetTileColour(tileCoordinate, selectableColor);
+                SetTileColour(tileCoordinate, currentColor);
             }
         }
     }
 
     // Set Selectable Tiles Method ****************************************************************
-    public void SetSelectableTiles(IsoNode node, int moveSpeed)
+    public void SetSelectableTiles(IsoNode node, int range, bool includeOccupied = false)
     {
-        SetSelectableTiles(node.gridPosition, moveSpeed);
+        SetSelectableTiles(node.gridPosition, range, includeOccupied);
     }
 
-    public void SetSelectableTiles(Vector3Int startPos, int moveSpeed)
+    public void SetSelectableTiles(Vector3Int startPos, int range, bool includeOccupied = false)
     {
         if (startPos == null)
         {
@@ -140,7 +147,10 @@ public class GridHighLighter : MonoBehaviour
 
         List<IsoNode> newSelectableNodes;
 
-        newSelectableNodes = grid.GetWalkableNodesInRange(startPos, moveSpeed);
+        if (includeOccupied)
+            newSelectableNodes = grid.GetTargetableNodesInRange(startPos, range);
+        else
+            newSelectableNodes = grid.GetWalkableNodesInRange(startPos, range);
         if (newSelectableNodes == null)
             return;
 
@@ -211,6 +221,28 @@ public class GridHighLighter : MonoBehaviour
     public bool IsTileSelectable(IsoNode node)
     {
         return selectableTiles.Contains(node);
+    }
+
+    public bool IsTileOccupied(IsoNode node)
+    {
+        if (selectableTiles.Contains(node))
+            return node.occupied;
+        return false;
+    }
+
+    public void SetColour(SelectableTileColor colorOption)
+    {
+        switch (colorOption)
+        {
+            case SelectableTileColor.MOVEMENT:
+                currentColor = selectableColor;
+                break;
+
+            case SelectableTileColor.ABILITY:
+                currentColor = abilityRangeColor;
+                break;
+        }
+
     }
 
 }

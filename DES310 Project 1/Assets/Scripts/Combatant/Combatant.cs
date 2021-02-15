@@ -127,14 +127,14 @@ public class Combatant : MonoBehaviour
     {
         GetComponent<TestCombatSystem>().CastAbility(abilityNum);
         combatantState = Combatant_State.Attacked;
-        initTracker.ChangeCurrentCombatant();       
+        //initTracker.ChangeCurrentCombatant();       
     }
 
     public void UseItem(int itemNum)
     {
         GetComponent<TestCombatSystem>().UseItem(itemNum);
         combatantState = Combatant_State.Attacked;
-        initTracker.ChangeCurrentCombatant();
+        //initTracker.ChangeCurrentCombatant();
     }
 }
 

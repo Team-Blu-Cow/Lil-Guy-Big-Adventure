@@ -3,8 +3,9 @@ using System.Collections.Generic;
 using UnityEngine;
 using System;
 
-public enum BattleState {SLEEPING, START, IN_BATTLE, FINISHED }
+public enum BattleState { SLEEPING, START, IN_BATTLE, FINISHED }
 public enum CombatantState { START, MOVE, ACTION, END }
+public enum ActionState { NOT_SELECTED, WAIT, ABILITY, ITEM }
 public class BattleManager : MonoBehaviour
 {
     public GameObject[] enemyCombatants;
@@ -14,14 +15,17 @@ public class BattleManager : MonoBehaviour
     [SerializeField] Queue<GameObject> battleQueue;
     public GameObject currentCombatant = null;
 
-    public bool recievedMoveCommand = false;
-    public bool receivedActionCommand = false;
+    private bool recievedMoveCommand = false;
+    private bool receivedActionCommand = false;
+    private int selectedAbility = 0;
+    private int selectedItem;
 
     public Vector3 targetPos;
     public Vector2 uiPos;
 
-    public BattleState battleState;
-    public CombatantState combatantState;
+    [SerializeField] private BattleState battleState;
+    [SerializeField] private CombatantState combatantState;
+    [SerializeField] private ActionState actionState;
 
     //public InitiativeTracker initTracker;
     [SerializeField] private GridHighLighter gridHighLighter;
@@ -114,6 +118,7 @@ public class BattleManager : MonoBehaviour
                         break;
 
                     case CombatantState.ACTION:
+                        RecieveAction(mousePos);
                         break;
                 }
                 break;
@@ -171,13 +176,41 @@ public class BattleManager : MonoBehaviour
     // COMBATANT STATE METHODS                                                                                                                    //
     //--------------------------------------------------------------------------------------------------------------------------------------------//
 
-    // Start Turn Phase ***************************************************************************
+    // Utility Functions ***************************************************************************************************************************
+    
+    // use this function instead of manually altering the variable
+    // so that other system variables can be edited along side state changes
+    void SetCombatantState(CombatantState state)
+    {
+        combatantState = state;
+
+        switch (state)
+        {
+            case CombatantState.MOVE:
+                gridHighLighter.SetColour(SelectableTileColor.MOVEMENT);
+                break;
+
+            case CombatantState.ACTION:
+                actionState = ActionState.NOT_SELECTED;
+                gridHighLighter.SetColour(SelectableTileColor.ABILITY);
+                break;
+
+            case CombatantState.END:
+                combatUI.deactivateAbilityButtons();
+                combatUI.deactivateItemButtons();
+                combatUI.deactivateChoiceButtons();
+                break;
+        }
+
+    }
+
+    // Start Turn Phase ****************************************************************************************************************************
     void StartTurn()
     {
         CycleQueue();
         currentCombatant.GetComponent<PathFindingUnit>().SetSelectableTiles(currentCombatant.GetComponent<Stats>().getStat(Combatant_Stats.Speed));
 
-        combatantState = CombatantState.MOVE;
+        SetCombatantState(CombatantState.MOVE);
 
         Debug.Log("Start Turn");
 
@@ -192,7 +225,7 @@ public class BattleManager : MonoBehaviour
         }
     }
 
-    // Move Phase *********************************************************************************
+    // Move Phase **********************************************************************************************************************************
     void TurnMovePhase()
     {
         // do move stuff? not sure if this function is actually required. for AI maybe?
@@ -203,13 +236,13 @@ public class BattleManager : MonoBehaviour
     IEnumerator AIMove()
     {
         yield return new WaitForSeconds(5.0f);
-        combatantState = CombatantState.ACTION;
+        SetCombatantState(CombatantState.ACTION);
     }
 
     public void RecieveMove(Vector3 mousePos)
     {
-        if (!recievedMoveCommand)
-        {
+        //if (!recievedMoveCommand)
+        //{
 	        if (currentCombatant.tag == "Ally" && gridHighLighter.IsTileSelectable(gridHighLighter.grid.WorldToNode(mousePos)))
 	        {
                 uiPos = combatUI.WorldToCanvasSpace(mousePos);
@@ -218,7 +251,7 @@ public class BattleManager : MonoBehaviour
 	            combatUI.activateMoveButtons(uiPos);
 	            recievedMoveCommand = true;
 	        }
-        }
+        //}
     }
 
     public void OnConfirmMove()
@@ -229,7 +262,7 @@ public class BattleManager : MonoBehaviour
         currentCombatant.GetComponent<PathFindingUnit>().RequestPath(new Vector2(targetPos.x, targetPos.y));
 
         gridHighLighter.ClearSelectableTiles();
-        combatantState = CombatantState.ACTION;
+        SetCombatantState(CombatantState.ACTION);
         combatUI.activateChoiceButtons(uiPos);
     }
 
@@ -239,47 +272,122 @@ public class BattleManager : MonoBehaviour
         recievedMoveCommand = false;
     }
 
-    // Action Phase *******************************************************************************
+    // Action Phase ********************************************************************************************************************************
     void TurnActionPhase()
     {
         // same as move phase function, unsure if this is needed
 
         if (currentCombatant.tag == "Enemy")
-            combatantState = CombatantState.END;
+            SetCombatantState(CombatantState.END);
     }
 
     IEnumerator AIAction()
     {
         yield return new WaitForSeconds(0.5f);
-        combatantState = CombatantState.END;
+        SetCombatantState(CombatantState.END);
     }
 
-    public void OnSelectAbility()
+    public void RecieveAction(Vector3 mousePos)
+    {
+        switch (actionState)
+        {
+            case ActionState.ABILITY:
+            {
+                IsoNode node = gridHighLighter.grid.WorldToNode(mousePos);
+                if (gridHighLighter.IsTileOccupied(node))
+                {
+                    // TODO edit this to allow for healing to target allies ect.
+                    if (node.occupier.tag == "Enemy")
+                    {
+                        UseAbility(node.occupier, selectedAbility);
+                        break;
+                    }
+                }
+                break;
+            }
+
+            /*case ActionState.ITEM:
+            {
+                currentCombatant.GetComponent<Combatant>().UseItem()
+                break;
+            }//*/
+
+        }
+
+    }
+
+    void UseAbility(GameObject target, int abilityIndex)
+    {
+        currentCombatant.GetComponent<TestCombatSystem>().enemy = target;
+        currentCombatant.GetComponent<Combatant>().attackAbility(abilityIndex);
+
+        // TODO: play animation or whatever
+
+        SetCombatantState(CombatantState.END);
+    }
+
+    public void OnChooseAbility()
     {
         combatUI.activateAbilityButtons();
+        combatUI.deactivateItemButtons();
+        actionState = ActionState.ABILITY;
+        if (currentCombatant.GetComponent<Combatant>().abilitiesLearnt[selectedAbility] != null)
+            currentCombatant.GetComponent<PathFindingUnit>().SetSelectableTiles(currentCombatant.GetComponent<Combatant>().abilitiesLearnt[selectedAbility].abilityRange, true);
+    }
+
+    public void OnSelectAbility(int abilityIndex)
+    {
+        selectedAbility = abilityIndex;
+        if (currentCombatant.GetComponent<Combatant>().abilitiesLearnt[selectedAbility] != null)
+            currentCombatant.GetComponent<PathFindingUnit>().SetSelectableTiles(currentCombatant.GetComponent<Combatant>().abilitiesLearnt[selectedAbility].abilityRange, true);
+    }
+
+    public void OnChooseItem()
+    {
+        combatUI.activateItemButtons();
+        combatUI.deactivateAbilityButtons();
+        actionState = ActionState.ITEM;
+    }
+
+    public void OnSelectItem(int itemIndex)
+    {
+        selectedItem = itemIndex;
+        if(currentCombatant.GetComponent<Combatant>().combatantItems[itemIndex] != null)
+        {
+            currentCombatant.GetComponent<Combatant>().UseItem(itemIndex);
+
+            // TODO: play animation or whatever
+
+            SetCombatantState(CombatantState.END);
+        }
+            
     }
 
     public void OnBackButton()
     {
         combatUI.useBackButton();
+        gridHighLighter.ClearSelectableTiles();
+        actionState = ActionState.NOT_SELECTED;
     }
 
     public void OnWait()
     {
-        combatUI.deactivateAbilityButtons();
-        combatUI.deactivateItemButtons();
-        combatUI.deactivateChoiceButtons();
-        combatantState = CombatantState.END;
+        actionState = ActionState.WAIT;
+        SetCombatantState(CombatantState.END);
     }
 
 
-    // End Phase  *********************************************************************************
+    // End Phase  **********************************************************************************************************************************
     void EndTurn()
     {
         // check if player has won or lost
 
-        combatantState = CombatantState.START;
+        currentCombatant.GetComponent<PathFindingUnit>().OccupyTile(currentCombatant);
+
+        SetCombatantState(CombatantState.START);
         Debug.Log("End Turn");
     }
+
+
 
 }

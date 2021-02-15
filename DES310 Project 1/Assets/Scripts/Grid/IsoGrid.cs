@@ -188,9 +188,46 @@ public class IsoGrid : MonoBehaviour
         {
             IsoNode node = processing.Dequeue();
 
-            if(node.walkable && node.distance <= range && !marked.Contains(node))
+            if(node.IsTraversable() && node.distance <= range && !marked.Contains(node))
             {
-                if (node.walkable == true)
+                if (node.IsTraversable() == true)
+                    output.Add(node);
+                marked.Add(node);
+
+                foreach (IsoNode neighbor in GetNeighbors(node))
+                {
+                    if (!marked.Contains(neighbor))
+                    {
+                        neighbor.distance = 1 + node.distance;
+                        processing.Enqueue(neighbor);
+                    }
+                }
+            }
+        }
+
+        return output;
+    }
+
+    public List<IsoNode> GetTargetableNodesInRange(Vector3Int startTile, int range)
+    {
+        List<IsoNode> output = new List<IsoNode>();
+        List<IsoNode> marked = new List<IsoNode>();
+        Queue<IsoNode> processing = new Queue<IsoNode>();
+
+        IsoNode startNode = GetNode(startTile);
+        if (startNode == null)
+            return null;
+        startNode.distance = 0;
+
+        processing.Enqueue(startNode);
+
+        while (processing.Count > 0)
+        {
+            IsoNode node = processing.Dequeue();
+
+            if ((node.IsTraversable() || node.occupied) && node.distance <= range && !marked.Contains(node))
+            {
+                if (node.IsTraversable() == true || node.occupied)
                     output.Add(node);
                 marked.Add(node);
 
@@ -278,7 +315,7 @@ public class IsoGrid : MonoBehaviour
             Vector3 worldTopLeft = transform.position - Vector3.right * gridSize.x / 2 + Vector3.up * gridSize.y / 2;
             foreach (IsoNode node in grid)
             {
-                Gizmos.color = (node.walkable) ? Color.white : Color.red;
+                Gizmos.color = (node.IsTraversable()) ? Color.white : Color.red;
                 Gizmos.DrawCube(node.worldPosition, Vector3.one * (nodeRadius / 2));
             }
         }
