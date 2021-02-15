@@ -23,8 +23,7 @@ public class CombatUI : MonoBehaviour
         }
         choiceButtons[3].abilityButton = true;
     }
-        //RectTransformUtility.ScreenPointToLocalPointInRectangle(canvasRectTransform, combatantWorldPos, Camera.main, out combatantPos);
-        //ombatantPos = canvasRectTransform.TransformPoint(combatantPos);
+
     private void Update()
     {
         //combatantScreenPos = Camera.main.WorldToViewportPoint(initTracker.getCurrentCombatant().transform.position);
@@ -121,11 +120,41 @@ public class CombatUI : MonoBehaviour
 
         for (int i = 0; i < 5; i++)
         {
-            itemButtons[i].activateButton(new Vector3(110, offsetY, 0), combatantPos);
+            itemButtons[i].activateButton(new Vector3(0, 0, 0), combatantPos);
             offsetY -= 30;
         }
 
         choiceButtons[4].activateButton(new Vector3(110, offsetY, 0), combatantPos);
+    }
+
+    public void activateItemButtons(Vector2 pos)
+    {
+        int offsetY = 50;
+        for (int i = 0; i < 5; i++)
+        {
+            itemButtons[i].activateButton(new Vector3(110, offsetY, 0), pos);
+            offsetY -= 30;
+        }
+
+        choiceButtons[4].activateButton(new Vector3(110, offsetY, 0), pos);
+    }
+
+    public void useBackButton(Vector2 pos)
+    {
+        for (int i = 0; i < 4; i++)
+        {
+            abilityButtons[i].deactivateButton();
+        }
+
+        for (int i = 0; i < 5; i++)
+        {
+            itemButtons[i].deactivateButton();
+        }
+
+        choiceButtons[3].deactivateButton();
+        choiceButtons[4].deactivateButton();
+
+        activateChoiceButtons(pos);      
     }
 
     public void useBackButton()
