@@ -1250,15 +1250,14 @@ MonoBehaviour:
   playerParty: {fileID: 299488561}
   combatants: []
   currentCombatant: {fileID: 0}
-  recievedMoveCommand: 0
-  receivedActionCommand: 0
-  selectedAbility: 0
   targetPos: {x: 0, y: 0, z: 0}
   uiPos: {x: 0, y: 0}
   battleState: 0
   combatantState: 0
+  actionState: 0
   gridHighLighter: {fileID: 1218121438}
   combatUI: {fileID: 143049155}
+  ai_core: {fileID: 1732287706}
 --- !u!4 &143049154
 Transform:
   m_ObjectHideFlags: 0
@@ -2361,7 +2360,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6127942090193602138, guid: dddb1748b38a99b4888117d6eccbe498, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 0
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 6127942090193602138, guid: dddb1748b38a99b4888117d6eccbe498, type: 3}
       propertyPath: m_LocalRotation.w
@@ -2756,7 +2755,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6127942090193602138, guid: dddb1748b38a99b4888117d6eccbe498, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 0
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 6127942090193602138, guid: dddb1748b38a99b4888117d6eccbe498, type: 3}
       propertyPath: m_LocalRotation.w
@@ -13423,8 +13422,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ai_list: []
   party_list:
-  - {fileID: 0}
-  pathfinder: {fileID: 0}
+  - {fileID: 522555646}
+  pathfinder: {fileID: 1218121436}
 --- !u!1 &1734543357
 GameObject:
   m_ObjectHideFlags: 0
@@ -16192,7 +16191,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 112.91, y: 0}
   m_SizeDelta: {x: 205.82, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1158668276547518294
