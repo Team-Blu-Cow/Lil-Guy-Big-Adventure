@@ -336,7 +336,7 @@ public class BattleManager : MonoBehaviour
     public void OnChooseAbility()
     {
         combatUI.activateAbilityButtons();
-        combatUI.deactivateItemButtons();
+        combatUI.deactivateChoiceButtons();
         actionState = ActionState.ABILITY;
         if (currentCombatant.GetComponent<Combatant>().abilitiesLearnt[selectedAbility] != null)
             currentCombatant.GetComponent<PathFindingUnit>().SetSelectableTiles(currentCombatant.GetComponent<Combatant>().abilitiesLearnt[selectedAbility].abilityRange, true);
@@ -351,8 +351,8 @@ public class BattleManager : MonoBehaviour
 
     public void OnChooseItem()
     {
-        combatUI.activateItemButtons();
-        combatUI.deactivateAbilityButtons();
+        combatUI.activateItemButtons(uiPos);
+        combatUI.deactivateChoiceButtons();
         actionState = ActionState.ITEM;
     }
 
@@ -372,7 +372,7 @@ public class BattleManager : MonoBehaviour
 
     public void OnBackButton()
     {
-        combatUI.useBackButton();
+        combatUI.useBackButton(uiPos);
         gridHighLighter.ClearSelectableTiles();
         actionState = ActionState.NOT_SELECTED;
     }

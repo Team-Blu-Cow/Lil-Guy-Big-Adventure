@@ -1250,15 +1250,14 @@ MonoBehaviour:
   playerParty: {fileID: 299488561}
   combatants: []
   currentCombatant: {fileID: 0}
-  recievedMoveCommand: 0
-  receivedActionCommand: 0
-  selectedAbility: 0
   targetPos: {x: 0, y: 0, z: 0}
   uiPos: {x: 0, y: 0}
   battleState: 0
   combatantState: 0
+  actionState: 0
   gridHighLighter: {fileID: 1218121438}
   combatUI: {fileID: 143049155}
+  ai_core: {fileID: 1732287706}
 --- !u!4 &143049154
 Transform:
   m_ObjectHideFlags: 0
@@ -3739,9 +3738,9 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: InitiativeTracker, Assembly-CSharp
-        m_MethodName: useItem
+      - m_Target: {fileID: 143049153}
+        m_TargetAssemblyTypeName: BattleManager, Assembly-CSharp
+        m_MethodName: OnSelectItem
         m_Mode: 3
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -5104,9 +5103,9 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: InitiativeTracker, Assembly-CSharp
-        m_MethodName: useItem
+      - m_Target: {fileID: 143049153}
+        m_TargetAssemblyTypeName: BattleManager, Assembly-CSharp
+        m_MethodName: OnSelectItem
         m_Mode: 3
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -10231,9 +10230,9 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: InitiativeTracker, Assembly-CSharp
-        m_MethodName: useItem
+      - m_Target: {fileID: 143049153}
+        m_TargetAssemblyTypeName: BattleManager, Assembly-CSharp
+        m_MethodName: OnSelectItem
         m_Mode: 3
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -10453,9 +10452,9 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: InitiativeTracker, Assembly-CSharp
-        m_MethodName: useItem
+      - m_Target: {fileID: 143049153}
+        m_TargetAssemblyTypeName: BattleManager, Assembly-CSharp
+        m_MethodName: OnSelectItem
         m_Mode: 3
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -11662,9 +11661,9 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: InitiativeTracker, Assembly-CSharp
-        m_MethodName: useItem
+      - m_Target: {fileID: 143049153}
+        m_TargetAssemblyTypeName: BattleManager, Assembly-CSharp
+        m_MethodName: OnSelectItem
         m_Mode: 3
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -13856,9 +13855,9 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: InitiativeTracker, Assembly-CSharp
-        m_MethodName: activateItemButtonss
+      - m_Target: {fileID: 143049153}
+        m_TargetAssemblyTypeName: BattleManager, Assembly-CSharp
+        m_MethodName: OnChooseItem
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -15004,9 +15003,9 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: InitiativeTracker, Assembly-CSharp
-        m_MethodName: useBackButton
+      - m_Target: {fileID: 143049153}
+        m_TargetAssemblyTypeName: BattleManager, Assembly-CSharp
+        m_MethodName: OnBackButton
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -16192,7 +16191,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 112.91, y: 0}
   m_SizeDelta: {x: 205.82, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1158668276547518294
