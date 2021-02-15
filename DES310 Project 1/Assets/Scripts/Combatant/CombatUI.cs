@@ -16,7 +16,7 @@ public class CombatUI : MonoBehaviour
 
     private void Start()
     {
-        initTracker = gameObject.GetComponent<InitiativeTracker>();
+        //initTracker = gameObject.GetComponent<InitiativeTracker>();
         for(int i = 0; i < 4; i++)
         {
             abilityButtons[i].abilityButton = true;
@@ -27,8 +27,15 @@ public class CombatUI : MonoBehaviour
         //ombatantPos = canvasRectTransform.TransformPoint(combatantPos);
     private void Update()
     {
-        combatantScreenPos = Camera.main.WorldToViewportPoint(initTracker.getCurrentCombatant().transform.position);
-        combatantPos = new Vector2((combatantScreenPos.x * canvas.sizeDelta.x) - (canvas.sizeDelta.x * 0.5f), (combatantScreenPos.y * canvas.sizeDelta.y) - (canvas.sizeDelta.y * 0.5f));
+        //combatantScreenPos = Camera.main.WorldToViewportPoint(initTracker.getCurrentCombatant().transform.position);
+        //combatantPos = new Vector2((combatantScreenPos.x * canvas.sizeDelta.x) - (canvas.sizeDelta.x * 0.5f), (combatantScreenPos.y * canvas.sizeDelta.y) - (canvas.sizeDelta.y * 0.5f));
+    }
+
+    public Vector2 WorldToCanvasSpace(Vector3 worldPos)
+    {
+        Vector2 viewPortPos = Camera.main.WorldToViewportPoint(worldPos);
+        Vector2 canvasPos = new Vector2((viewPortPos.x * canvas.sizeDelta.x) - (canvas.sizeDelta.x * 0.5f), (viewPortPos.y * canvas.sizeDelta.y) - (canvas.sizeDelta.y * 0.5f));
+        return canvasPos;
     }
 
     public void deactivateChoiceButtons()
@@ -73,10 +80,26 @@ public class CombatUI : MonoBehaviour
         }
     }
 
+    public void activateChoiceButtons(Vector2 pos)
+    {
+        int offsetY = 50;
+        for (int i = 0; i < 3; i++)
+        {
+            choiceButtons[i].activateButton(new Vector3(110, offsetY, 0), pos);
+            offsetY -= 30;
+        }
+    }
+
     public void activateMoveButtons()
     {
         moveButtons[0].activateButton(new Vector3(110, -10, 0), combatantPos);
         moveButtons[1].activateButton(new Vector3(110, 20, 0), combatantPos);
+    }
+
+    public void activateMoveButtons(Vector2 pos)
+    {
+        moveButtons[0].activateButton(new Vector3(110, -10, 0), pos);
+        moveButtons[1].activateButton(new Vector3(110, 20, 0), pos);
     }
 
     public void activateAbilityButtons()

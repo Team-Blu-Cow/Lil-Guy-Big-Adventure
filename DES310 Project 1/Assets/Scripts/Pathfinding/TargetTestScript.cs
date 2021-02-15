@@ -13,7 +13,7 @@ public class TargetTestScript : MonoBehaviour
     {
         input = new InputMaster();
         input.PathfinderTestControls.MousePos.performed += ctx => SetCursorPosition(ctx.ReadValue<Vector2>());
-        input.PathfinderTestControls.RightMouseClick.started += ctx => SetTargetPosition();
+        //input.PathfinderTestControls.RightMouseClick.started += ctx => SetTargetPosition();
     }
 
     private void OnEnable()
@@ -28,14 +28,14 @@ public class TargetTestScript : MonoBehaviour
 
     void SetCursorPosition(Vector2 pos)
     {
-        Vector2 worldPos;
-        worldPos = Camera.main.ScreenToWorldPoint(pos);
-        mousePos = new Vector3(worldPos.x, worldPos.y, 1);
+        //Vector2 worldPos;
+        //worldPos = Camera.main.ScreenToWorldPoint(pos);
+        //mousePos = new Vector3(worldPos.x, worldPos.y, 1);
     }
 
     void SetTargetPosition()
     {
-        Vector3 nodePos = grid.WorldToNode(mousePos).worldPosition;
-        transform.position = new Vector3(nodePos.x, nodePos.y, 1);
+        //Vector3 nodePos = grid.WorldToNode(mousePos).worldPosition;
+        //transform.position = new Vector3(nodePos.x, nodePos.y, 1);
     }
 }

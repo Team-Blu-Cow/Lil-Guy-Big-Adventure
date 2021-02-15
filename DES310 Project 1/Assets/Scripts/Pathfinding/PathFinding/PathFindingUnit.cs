@@ -27,15 +27,23 @@ public class PathFindingUnit : MonoBehaviour
         }   
     }
 
-    public void RequestPath(Vector3 targetPos)
+    public bool RequestPath(Vector3 targetPos)
     {
         if (!currentlyPathFinding)
         {
             if (gridHighLighter.IsTileSelectable(gridHighLighter.grid.WorldToNode(targetPos)))
+            {
                 PathRequestManager.RequestPath(transform.position, targetPos, OnPathFound);
+                return true;
+            }
             else
+            {
                 Debug.Log("Tile is not a valid move position");
+                return false;
+            }
         }
+
+        return false;
     }
 
     public void OnPathFound(Vector3[] newPath, bool pathSuccess)

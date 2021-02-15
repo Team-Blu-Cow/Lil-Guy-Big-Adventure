@@ -68,7 +68,7 @@ public class Combatant : MonoBehaviour
         abilitiesUsing[2] = abilitiesLearnt[2];
         abilitiesUsing[3] = abilitiesLearnt[3];
 
-        initTracker.AddCombatant(this.gameObject);
+        //initTracker.AddCombatant(this.gameObject);
         animator = GetComponent<Animator>();
 
     }

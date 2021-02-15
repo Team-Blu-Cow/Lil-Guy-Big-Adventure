@@ -5,12 +5,14 @@ using UnityEngine;
 public class CursorController : MonoBehaviour
 {
     [HideInInspector] public InputManager input;
-    [HideInInspector] public Vector3 mousePos;
+    public Vector3 mousePos = Vector3.zero;
     [HideInInspector] public Transform thisTransform;
     public InitiativeTracker initTracker;
     private GameObject currentCombatant;
     private bool hovering = false;
     private GameObject hoverObject;
+
+    [SerializeField] public BattleManager battleManager;
 
     void Awake()
     {
@@ -18,7 +20,8 @@ public class CursorController : MonoBehaviour
 
         input = new InputManager();
         input.Keyboard.MousePos.performed += ctx => TargetMouse(ctx.ReadValue<Vector2>());
-        input.Keyboard.RClick.performed += ctx => MouseMove();
+        input.Keyboard.RClick.performed += ctx => MouseRightClick();
+        input.Keyboard.LClick.performed += ctx => MouseLeftClick();
     }
 
     void OnEnable()
@@ -33,18 +36,25 @@ public class CursorController : MonoBehaviour
 
     void TargetMouse(Vector2 position)
     {
-        if (initTracker.getCurrentCombatant() != null)
-        {
+        //if (initTracker.getCurrentCombatant() != null)
+        //{
             Vector2 worldPos;
             worldPos = Camera.main.ScreenToWorldPoint(position);
             mousePos = new Vector3(worldPos.x, worldPos.y, -1);
-        }
+        //}
 
     }
 
-    void MouseMove()
+    void MouseLeftClick()
     {
-        if (initTracker.getCurrentCombatant() != null)
+
+    }
+
+    void MouseRightClick()
+    {
+        battleManager.RecieveMouseClick(mousePos);
+
+        /*if (initTracker.getCurrentCombatant() != null)
         {
             if (initTracker.getCurrentCombatant().GetComponent<PathFindingUnit>() != null)
             {
@@ -60,11 +70,11 @@ public class CursorController : MonoBehaviour
             {              
                 if(hovering == true)
                 {
-                    Debug.Log("khjdsf");
+                    //Debug.Log("khjdsf");
                 }
             }
 
-        }
+        }//*/
     }
 
     private void Update()
@@ -77,22 +87,22 @@ public class CursorController : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (initTracker.getCurrentCombatant().GetComponent<Combatant>().combatantState == Combatant_State.Attacking)
+        /*if (initTracker.getCurrentCombatant().GetComponent<Combatant>().combatantState == Combatant_State.Attacking)
         {
             hovering = true;
             hoverObject = collision.gameObject;
             initTracker.getCurrentCombatant().GetComponent<TestCombatSystem>().enemy = collision.gameObject;
             Debug.Log(":)");
-        }
+        }*/
     }
 
     private void OnTriggerExit2D(Collider2D collision)
     {
-        if (initTracker.getCurrentCombatant().GetComponent<Combatant>().combatantState== Combatant_State.Attacking)
+        /*if (initTracker.getCurrentCombatant().GetComponent<Combatant>().combatantState== Combatant_State.Attacking)
         {
             hovering = false;
             initTracker.getCurrentCombatant().GetComponent<TestCombatSystem>().enemy = null;
             hoverObject = null;           
-        }
+        }*/
     }
 }

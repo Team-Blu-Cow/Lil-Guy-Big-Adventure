@@ -160,6 +160,19 @@ public class GridHighLighter : MonoBehaviour
         selectableTiles = newSelectableNodes;
     }
 
+    public void ClearSelectableTiles()
+    {
+        foreach(IsoNode node in selectableTiles)
+        {
+            Vector3 logicalGridWorldCoords = new Vector3(node.worldPosition.x, node.worldPosition.y, overlayZHeight);
+            Vector3Int tileCoordinate = overlayTileMap.WorldToCell(logicalGridWorldCoords);
+
+            overlayTileMap.SetTile(tileCoordinate, null);
+        }
+
+        selectableTiles = new List<IsoNode>();
+    }
+
     // Path Rendering Methods *********************************************************************
     public void GetPath(Vector3 startPos, Vector3 endPos)
     {

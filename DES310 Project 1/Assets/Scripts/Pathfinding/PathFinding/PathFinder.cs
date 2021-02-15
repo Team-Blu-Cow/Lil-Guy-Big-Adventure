@@ -22,8 +22,8 @@ public class PathFinder : MonoBehaviour
 
     IEnumerator FindPath(Vector3 startPos, Vector3 targetPos)
     {
-        Stopwatch sw = new Stopwatch();
-        sw.Start();
+        //Stopwatch sw = new Stopwatch();
+        //sw.Start();
 
         Vector3[] wayPoints = new Vector3[0];
         bool pathSuccess = false;
@@ -46,8 +46,8 @@ public class PathFinder : MonoBehaviour
 
                 if (currentNode == targetNode)
                 {
-                    sw.Stop();
-                    UnityEngine.Debug.Log("Path found in: " + sw.ElapsedMilliseconds + "ms");
+                    //sw.Stop();
+                    //UnityEngine.Debug.Log("Path found in: " + sw.ElapsedMilliseconds + "ms");
                     pathSuccess = true;
                     break;
                 }

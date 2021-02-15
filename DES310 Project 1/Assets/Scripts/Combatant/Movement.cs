@@ -17,9 +17,9 @@ public class Movement : MonoBehaviour
         target = GetComponent<PathFindingUnit>().target;
 
         controls = new InputManager();
-        controls.Keyboard.RClick.started += ctx => { RMouseDown = true; };
-        controls.Keyboard.RClick.canceled += ctx => { RMouseDown = false; };
-        controls.Keyboard.LClick.performed += ctx => Stop();
+        //controls.Keyboard.RClick.started += ctx => { RMouseDown = true; };
+        //controls.Keyboard.RClick.canceled += ctx => { RMouseDown = false; };
+        //controls.Keyboard.LClick.performed += ctx => Stop();
     }
 
     private void OnEnable()
@@ -45,7 +45,7 @@ public class Movement : MonoBehaviour
 
     void Move()
     {
-        Vector2 mousePos = Camera.main.ScreenToWorldPoint(controls.Keyboard.MousePos.ReadValue<Vector2>());
+        /*Vector2 mousePos = Camera.main.ScreenToWorldPoint(controls.Keyboard.MousePos.ReadValue<Vector2>());
         Vector3 nodePos = grid.WorldToNode(mousePos).worldPosition;
         Vector3 oldPos = target.position;
         target.position = new Vector3(nodePos.x, nodePos.y, 1);
@@ -54,7 +54,7 @@ public class Movement : MonoBehaviour
         {
             GetComponent<PathFindingUnit>().StartPath();
             LClick = false;
-        }
+        }*/
     }
 
     private void Stop()

@@ -6,6 +6,7 @@ public class InitiativeTracker : MonoBehaviour
 {
     private CombatUI combatUI;
     public List<GameObject> combatants;
+    public Combatant[] combatantArray;
     public InputManager controls;
     int combatantNum = 0;
     bool sorted = false;
@@ -15,6 +16,8 @@ public class InitiativeTracker : MonoBehaviour
 
     bool selecting = false;
     bool enemyChanging = false;
+
+    int currentCombatant;
 
     private void Awake()
     {
@@ -36,14 +39,26 @@ public class InitiativeTracker : MonoBehaviour
     void Start()
     {
         combatUI = GetComponent<CombatUI>();
-        getCurrentCombatant().GetComponent<PathFindingUnit>().SetSelectableTiles(4);
+        //getCurrentCombatant().GetComponent<PathFindingUnit>().SetSelectableTiles(4);
+    }
+
+    public void getCombatants()
+    {
+        combatantArray = FindObjectsOfType<Combatant>();
+
+        foreach (var combatant in combatantArray)
+        {
+            AddCombatant(combatant.gameObject);
+        }
     }
 
     // Update is called once per frame
     void Update()
     {
+        
+
         // The following code is a bit of a mess, I am sorry :(
-        if (sorted == false) // If the combatant's initiatives have not been sorted
+        /*if (sorted == false) // If the combatant's initiatives have not been sorted
         {
             sorted = true; // Set the sort to true as we will sort them in this if statement
 
@@ -98,8 +113,11 @@ public class InitiativeTracker : MonoBehaviour
                 }
                 
             }
-        }
-
+        }//*/
+        
+        // Jay: got rid of boofed sorting nonsense
+        // this above stuff is utter stupidity (sorry sandy)
+        SortInitiativeList();
 
 
         // TODO Replace this with setting the current combatant being used as having an outline
@@ -123,7 +141,7 @@ public class InitiativeTracker : MonoBehaviour
 
         if (getCurrentCombatant().GetComponent<Combatant>().combatantState == Combatant_State.Idle)
         {
-            getCurrentCombatant().GetComponent<PathFindingUnit>().SetSelectableTiles(getCurrentCombatant().GetComponent<Stats>().getStat(Combatant_Stats.Speed));
+            //getCurrentCombatant().GetComponent<PathFindingUnit>().SetSelectableTiles(getCurrentCombatant().GetComponent<Stats>().getStat(Combatant_Stats.Speed));
         }
 
 
@@ -277,5 +295,37 @@ public class InitiativeTracker : MonoBehaviour
         getCurrentCombatant().GetComponent<Combatant>().combatantState = Combatant_State.Attacked;
         ChangeCurrentCombatant();
         selecting = true;
+    }
+
+    public void SortInitiativeList()
+    {
+        bool swapped = true;
+
+        while(swapped)
+        {
+            swapped = false;
+
+            for (int j = 1; j < combatants.Count; j++)
+            {
+                if (combatants[j-1].GetComponent<Stats>().getStat(Combatant_Stats.Initiative) < combatants[j].GetComponent<Stats>().getStat(Combatant_Stats.Initiative))
+                {
+                    Swap(combatants, j-1, j);
+                    swapped = true;
+                }
+            }
+        }
+
+        for (int i = 0; i < combatants.Count; i++)
+        {
+            combatants[i].GetComponent<Combatant>().combatantNum = i;
+        }
+
+    }
+
+    public void Swap<T>(IList<T> list, int indexA, int indexB)
+    {
+        T tmp = list[indexA];
+        list[indexA] = list[indexB];
+        list[indexB] = tmp;
     }
 }
