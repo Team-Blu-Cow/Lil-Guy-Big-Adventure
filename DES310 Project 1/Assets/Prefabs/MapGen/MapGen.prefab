@@ -8,8 +8,9 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 6115622612907476012}
+  - component: {fileID: 1694948238466163465}
   - component: {fileID: 6115622612907476013}
+  - component: {fileID: 3714503264295672921}
   m_Layer: 0
   m_Name: MapGen
   m_TagString: Untagged
@@ -17,7 +18,7 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!4 &6115622612907476012
+--- !u!4 &1694948238466163465
 Transform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -50,13 +51,24 @@ MonoBehaviour:
   - {fileID: 11400000, guid: bc253797e2eef1945a0943bf8d8d9eb1, type: 2}
   - {fileID: 11400000, guid: 3bf24260f8a2b7c459548db9775c4b9d, type: 2}
   - {fileID: 11400000, guid: 95763ad4733b547409aeae0549174818, type: 2}
+  - {fileID: 11400000, guid: c1644504c5c7e204bbcc74edacf579ff, type: 2}
   grid: {fileID: 0}
   items:
   - {fileID: 226318007042164463, guid: 5d23ddffa56797a42807f73dd7cc1d2a, type: 3}
   - {fileID: 226318007042164463, guid: 1d025e1c074c7124cb7ee40ed0b4c5c1, type: 3}
   - {fileID: 226318007042164463, guid: 2debfd843d48cfb4491b00eda5383ae4, type: 3}
   - {fileID: 226318007042164463, guid: e9fda9c1d5ebadf4a81cba2e24120008, type: 3}
-  exit: {fileID: 0}
+  exit: {fileID: 1491999878102104973, guid: 0f2dd28ddd989c943a57694a28cd6384, type: 3}
+  Player: {fileID: 0}
   lowerBound: 0.1
   upperBound: 0.7
   multiplier: 0.25
+  radius: 0.75
+--- !u!222 &3714503264295672921
+CanvasRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6115622612907476002}
+  m_CullTransparentMesh: 1
