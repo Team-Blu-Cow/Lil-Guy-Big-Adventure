@@ -31,6 +31,9 @@ public class BattleManager : MonoBehaviour
     [SerializeField] private GridHighLighter gridHighLighter;
     [SerializeField] private CombatUI combatUI;
 
+    [SerializeField] private AI.AICore ai_core;
+
+
     // Start is called before the first frame update
     void Start()
     {
@@ -221,7 +224,7 @@ public class BattleManager : MonoBehaviour
         else if (currentCombatant.tag == "Enemy")
         {
             Debug.Log("Enemy Move Phase");
-            StartCoroutine(AIMove());
+            AIMove();
         }
     }
 
@@ -233,10 +236,14 @@ public class BattleManager : MonoBehaviour
         // grid highlighter draw arrow
     }
 
-    IEnumerator AIMove()
+    void AIMove()
     {
-        yield return new WaitForSeconds(5.0f);
         SetCombatantState(CombatantState.ACTION);
+        AI.AIBaseBehavior behaviour = currentCombatant.GetComponent<AI.AIBaseBehavior>();
+        if (behaviour)
+        {
+            behaviour.run(ai_core);
+        }
     }
 
     public void RecieveMove(Vector3 mousePos)
@@ -329,7 +336,7 @@ public class BattleManager : MonoBehaviour
     public void OnChooseAbility()
     {
         combatUI.activateAbilityButtons();
-        combatUI.deactivateItemButtons();
+        combatUI.deactivateChoiceButtons();
         actionState = ActionState.ABILITY;
         if (currentCombatant.GetComponent<Combatant>().abilitiesLearnt[selectedAbility] != null)
             currentCombatant.GetComponent<PathFindingUnit>().SetSelectableTiles(currentCombatant.GetComponent<Combatant>().abilitiesLearnt[selectedAbility].abilityRange, true);
@@ -344,8 +351,8 @@ public class BattleManager : MonoBehaviour
 
     public void OnChooseItem()
     {
-        combatUI.activateItemButtons();
-        combatUI.deactivateAbilityButtons();
+        combatUI.activateItemButtons(uiPos);
+        combatUI.deactivateChoiceButtons();
         actionState = ActionState.ITEM;
     }
 
@@ -365,7 +372,7 @@ public class BattleManager : MonoBehaviour
 
     public void OnBackButton()
     {
-        combatUI.useBackButton();
+        combatUI.useBackButton(uiPos);
         gridHighLighter.ClearSelectableTiles();
         actionState = ActionState.NOT_SELECTED;
     }

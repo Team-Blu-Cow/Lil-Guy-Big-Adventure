@@ -58,10 +58,15 @@ public class IsoNode : IHeapItem<IsoNode>
     {
         if (!walkable)
             return false;
-        else if (occupied/*&& any other parameters */)
-        {
-            return false;
-        }
+
+        // this was breaking ai pathfinding
+        // ai need to be able to find a path to another party memeber
+
+        // else if (occupied/*&& any other parameters */)
+        // {
+        //     return false;
+        // }
+        
         return true;
     }
 

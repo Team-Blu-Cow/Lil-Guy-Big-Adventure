@@ -58,6 +58,7 @@ namespace AI
                 {
                     // move towards enemy
                     StartCoroutine(move(closest_path));
+                    path_list.Clear();
                 }
             }
 
@@ -193,7 +194,14 @@ namespace AI
         // TODO @matthew - this should use the combatants abilities insted of just dealing damage
         private void attack(GameObject enemy)
         {
-            enemy.GetComponent<Combatant>().do_damage(1, Aspects.Aspect.None);
+            if(enemy)
+            {
+                enemy.GetComponent<Combatant>().do_damage(1, Aspects.Aspect.None);
+            }
+            else
+            {
+                Debug.Log("AI: enemy reference was null");
+            }
         } 
     }
 }

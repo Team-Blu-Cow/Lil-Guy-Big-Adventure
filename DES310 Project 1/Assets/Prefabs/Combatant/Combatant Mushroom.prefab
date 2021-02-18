@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 6127942090193602136}
   - component: {fileID: 6127942090193602137}
   - component: {fileID: 6127942090193602142}
+  - component: {fileID: 759902561942005103}
   m_Layer: 0
   m_Name: Combatant Mushroom
   m_TagString: Untagged
@@ -156,7 +157,6 @@ MonoBehaviour:
   - {fileID: 0}
   - {fileID: 0}
   - {fileID: 0}
-  currentItem: 0
   resistances:
   - 1
   - 2
@@ -171,6 +171,21 @@ MonoBehaviour:
   - {fileID: 0}
   - {fileID: 0}
   initTracker: {fileID: 0}
-  moved: 0
-  moving: 0
   oldPosition: {x: 0, y: 0, z: 0}
+  combatantState: 0
+--- !u!114 &759902561942005103
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6127942090193602143}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4dfd2858b38515948ab9d3eead944062, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  turn_completed: 1
+  movement_distance: 1
+  speed: 1
+  attack_range: 1

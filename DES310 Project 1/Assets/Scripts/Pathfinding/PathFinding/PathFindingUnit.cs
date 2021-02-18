@@ -89,26 +89,36 @@ public class PathFindingUnit : MonoBehaviour
 
     IEnumerator FollowPath()
     {
-        Vector3 currentWaypoint = path[0];
-
-        while (true)
+        if(path != null)
         {
-            if (transform.position == currentWaypoint)
+            if(path.Length > 0)
             {
-                targetIndex++;
-                if (targetIndex >= path.Length)
-                {
-                    targetIndex = 0;
-                    path = new Vector3[0];
-                    currentlyPathFinding = false;
-                    yield break;
-                }
-                currentWaypoint = path[targetIndex];
-            }
+                Vector3 currentWaypoint = path[0];
 
-            transform.position = Vector3.MoveTowards(transform.position, currentWaypoint, speed*Time.deltaTime);
-            yield return null;
+                while (true)
+                {
+                    if (transform.position == currentWaypoint)
+                    {
+                        targetIndex++;
+                        if (targetIndex >= path.Length)
+                        {
+                            targetIndex = 0;
+                            path = new Vector3[0];
+                            currentlyPathFinding = false;
+                            yield break;
+                        }
+                        currentWaypoint = path[targetIndex];
+                    }
+
+                    transform.position = Vector3.MoveTowards(transform.position, currentWaypoint, speed * Time.deltaTime);
+                    yield return null;
+                }
+            }
         }
+
+
+        currentlyPathFinding = false;
+        yield return null;
     }
 
     public void OnDrawGizmos()
