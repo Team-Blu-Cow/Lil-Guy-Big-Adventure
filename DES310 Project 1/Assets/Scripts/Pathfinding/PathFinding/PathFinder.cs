@@ -9,6 +9,9 @@ public class PathFinder : MonoBehaviour
     PathRequestManager requestManager;
     IsoGrid grid;
 
+    public IsoGrid GetGrid() { return grid; }
+
+
     private void Awake()
     {
         grid = gameObject.GetComponent<IsoGrid>();

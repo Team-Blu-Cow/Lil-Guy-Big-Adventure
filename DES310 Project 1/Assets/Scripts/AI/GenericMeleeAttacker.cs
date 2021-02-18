@@ -19,6 +19,9 @@ namespace AI
         private List<Vector3[]> path_list = new List<Vector3[]>();
         private AICore ai_core;
 
+        private List<IsoNode> node_list = new List<IsoNode>();
+
+
         public int attack_range = 1;
 
         // entry point, starts up coroutines and sets the turn_completed flag
@@ -47,6 +50,12 @@ namespace AI
             if (paths_finished == path_count)
             {
                 Vector3[] closest_path = FindClosestPartyMemberPath(path_list);
+
+                foreach(IsoNode node in node_list)
+                {
+                    node.occupied = true;
+                }
+                node_list.Clear();
 
                 if (IsEnemyInAttackRange(closest_path))
                 {
@@ -147,9 +156,16 @@ namespace AI
             if (pathFinder)
             {
                 mutex.WaitOne();
+
                 foreach (GameObject actor in aiCore.party_list)
                 {
                     Vector3 end_pos = actor.GetComponent<Transform>().position;
+
+                    IsoNode node = pathFinder.GetGrid().WorldToNode(end_pos);
+                    node.occupied = false;
+
+                    node_list.Add(node);
+
                     PathRequestManager.RequestPath(start_pos, end_pos, OnPathFound);
                     path_count++;
                 }
