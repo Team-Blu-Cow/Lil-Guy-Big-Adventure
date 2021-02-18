@@ -20,6 +20,7 @@ public class BattleManager : MonoBehaviour
     private int selectedAbility = 0;
     private int selectedItem;
 
+
     public Vector3 targetPos;
     public Vector2 uiPos;
 
@@ -395,6 +396,14 @@ public class BattleManager : MonoBehaviour
         Debug.Log("End Turn");
     }
 
+    public Queue<GameObject> getBattleQueue()
+    {
+        return battleQueue;
+    }
 
+    public CombatantState getCombatantState()
+    {
+        return combatantState;
+    }
 
 }
