@@ -8,7 +8,7 @@ namespace AI
     public class GenericMeleeAttacker : AIBaseBehavior
     {
         public float speed = 1f;
-        public int attack_range = 1;
+        // public int attack_range = 1;
 
         public override void Move(AICore aiCore, int distance = 1)
         {
@@ -31,6 +31,25 @@ namespace AI
             // TODO @matthew
             // check target is in range
             // deal damage
+
+            Vector3[] path = FindShortestPathToEnemy(aiCore);
+            if(path != null)
+            {
+                if (IsInAttackRange(path))
+                {
+                    if(GetAbility(0) != null)
+                    {
+                        Vector3 targetLoc = path[path.Length - 1];
+                        IsoNode node = aiCore.pathfinder.GetGrid().WorldToNode(targetLoc);
+
+                        if(node != null && node.occupier != null)
+                        {                            
+                            GetComponent<TestCombatSystem>().enemy = node.occupier;
+                            GetComponent<Combatant>().attackAbility(0);
+                        }
+                    }
+                }
+            }
 
             turn_completed = true;
         }
@@ -80,7 +99,7 @@ namespace AI
 
         bool IsInAttackRange(Vector3[] path)
         {
-            if (path.Length > attack_range)
+            if (path.Length > AbilityAttackRange(0))
                 return false;
             else
                 return true;
@@ -99,6 +118,13 @@ namespace AI
                     break;
                 }
 
+                if (path.Length - targetIndex <= AbilityAttackRange(0))
+                {
+                    break;
+                }
+
+
+
                 if (transform.position == currentWaypoint)
                 {
                     targetIndex++;
@@ -110,7 +136,7 @@ namespace AI
                     {
                         break;
                     }
-                    if (path.Length - targetIndex <= attack_range)
+                    if (path.Length - targetIndex <= AbilityAttackRange(0))
                     {
                         break;
                     }
@@ -125,6 +151,39 @@ namespace AI
             }
             turn_completed = true;
         }
+
+        // TEMP - to be removed when a proper AI is written
+        Ability GetAbility(int index)
+        {
+            Ability[] abilities = GetComponent<Combatant>().abilitiesUsing;
+            if (abilities != null)
+            {
+                if(abilities.Length > index)
+                {
+                    if (abilities[index] != null)
+                    {
+                        return abilities[index];
+                    }
+                }
+            }
+
+            return null;
+        }
+
+        // TEMP - to be removed when a proper AI is written
+        int AbilityAttackRange(int index)
+        {
+
+            Ability ability = GetAbility(index);
+            
+            if(ability != null)
+                return ability.abilityRange;
+            else
+                return 0;
+        }
+
+
+
     }
 }
 

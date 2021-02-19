@@ -300,18 +300,20 @@ public class BattleManager : MonoBehaviour
         // same as move phase function, unsure if this is needed
 
         if (currentCombatant.tag == "Enemy")
+        {
+            AI.AIBaseBehavior behaviour = currentCombatant.GetComponent<AI.AIBaseBehavior>();
+            if (behaviour)
+            {
+                behaviour.Attack(ai_core);
+            }
             SetCombatantState(CombatantState.END);
+        }
     }
 
     IEnumerator AIAction()
     {
         yield return new WaitForSeconds(0.5f);
         SetCombatantState(CombatantState.END);
-        AI.AIBaseBehavior behaviour = currentCombatant.GetComponent<AI.AIBaseBehavior>();
-        if (behaviour)
-        {
-            behaviour.Attack(ai_core);
-        }
     }
 
     public void RecieveAction(Vector3 mousePos)
