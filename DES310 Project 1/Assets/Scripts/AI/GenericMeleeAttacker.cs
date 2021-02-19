@@ -3,183 +3,144 @@ using System.Collections.Generic;
 using System.Threading;
 using UnityEngine;
 
-// TODO @matthew - can attack after moving
-
 namespace AI
 {
     public class GenericMeleeAttacker : AIBaseBehavior
     {
-        public int movement_distance = 1;
         public float speed = 1f;
+        // public int attack_range = 1;
 
-        private PathFinder pathFinder;
-        private Mutex mutex = new Mutex(); // coroutines are still run single threaded, this may be overkill
-        private int paths_finished = 0;
-        private int path_count = 0;
-        private List<Vector3[]> path_list = new List<Vector3[]>();
-        private AICore ai_core;
-
-        public int attack_range = 1;
-
-        // entry point, starts up coroutines and sets the turn_completed flag
-        public override void run(AICore aiCore)
+        public override void Move(AICore aiCore, int distance = 1)
         {
-            ai_core = aiCore;
-            pathFinder = aiCore.pathfinder;
-            paths_finished = 0;
-            path_count = 0;
             turn_completed = false;
-            BeginPathfindingCoroutines(aiCore);
+            Vector3[] path = FindShortestPathToEnemy(aiCore);
+           
+            if(path != null)
+            {
+                StartCoroutine(MoveCoroutine(path, distance));
+            }
+            else
+            {
+                turn_completed = true;
+            }
         }
-
-        // run by the pathfinding system when a path is found or its determined impossible
-        private void OnPathFound(Vector3[] newPath, bool pathSuccess)
+        public override void Attack(AICore aiCore)
         {
-            mutex.WaitOne();// blocks until all paths have been added to the queue
+            turn_completed = false;
 
-            if (pathSuccess)
+            // TODO @matthew
+            // check target is in range
+            // deal damage
+
+            Vector3[] path = FindShortestPathToEnemy(aiCore);
+            if(path != null)
             {
-                path_list.Add(newPath);
-            }
-            paths_finished++;
-
-            // only run after the final path has been found
-            if (paths_finished == path_count)
-            {
-                Vector3[] closest_path = FindClosestPartyMemberPath(path_list);
-
-                if (IsEnemyInAttackRange(closest_path))
+                if (IsInAttackRange(path))
                 {
-                    // target is in ajacent tile
-                    GameObject enemy = GetPartyMemberObjectFromPath(closest_path, ai_core);
-                    attack(enemy);
-                }
-                else
-                {
-                    // move towards enemy
-                    StartCoroutine(move(closest_path));
-                    path_list.Clear();
+                    if(GetAbility(0) != null)
+                    {
+                        Vector3 targetLoc = path[path.Length - 1];
+                        IsoNode node = aiCore.pathfinder.GetGrid().WorldToNode(targetLoc);
+
+                        if(node != null && node.occupier != null)
+                        {                            
+                            GetComponent<TestCombatSystem>().enemy = node.occupier;
+                            GetComponent<Combatant>().attackAbility(0);
+                        }
+                    }
                 }
             }
 
-            mutex.ReleaseMutex();
             turn_completed = true;
         }
 
-        private Vector3[] FindClosestPartyMemberPath(List<Vector3[]> list)
+        Vector3[] FindShortestPathToEnemy(AICore aiCore)
         {
-            Vector3[] closest = null;
+            List<Vector3[]> path_list = new List<Vector3[]>();
 
-            foreach (Vector3[] path in list)
+            Vector3 position = GetComponent<Transform>().position;
+
+            // find paths
+            foreach (GameObject actor in aiCore.party_list)
             {
-                if (closest == null)
+                Vector3 actor_pos = actor.GetComponent<Transform>().position;
+
+                // set target node to unoccupied
+                IsoNode node = aiCore.pathfinder.GetGrid().WorldToNode(actor_pos);
+                node.occupied = false;
+
+
+                Vector3[] path = aiCore.pathfinder.FindPath(position, actor_pos);
+                if (path != null)
                 {
-                    closest = path;
+                    path_list.Add(path);
+                }
+
+                node.occupied = true;
+            }
+
+            Vector3[] shortest = null;
+            foreach (Vector3[] path in path_list)
+            {
+                if (shortest == null)
+                {
+                    shortest = path;
                     continue;
                 }
 
-                if (path.Length < closest.Length)
+                if (path.Length < shortest.Length)
                 {
-                    closest = path;
+                    shortest = path;
                 }
             }
 
-            return closest;
+            return shortest;
         }
 
-        // get a reference to the combatant at the end of the path
-        // this could be done by storing the object when requesting the path but that requires a refactor of other system
-        // this will be good enough
-        private GameObject GetPartyMemberObjectFromPath(Vector3[] path, AICore aiCore)
+        bool IsInAttackRange(Vector3[] path)
         {
-            if (path == null)
-                return null;
-
-            if (path.Length == 0)
-                return null;
-
-            Vector3 pos = path[path.Length - 1];
-            foreach (GameObject entity in aiCore.party_list)
-            {
-                if (entity.GetComponent<Transform>().position == pos)
-                {
-                    return entity;
-                }
-            }
-            return null;
-        }
-
-        // checks if a enemy is in a attack range of the combatants current location
-        private bool IsEnemyInAttackRange(Vector3[] path)
-        {
-            if (path == null)
-                return false;
-
-            if (path.Length > attack_range)
+            if (path.Length > AbilityAttackRange(0))
                 return false;
             else
                 return true;
-        }
-
-        // checks if an enemy is in attack rage on a given tile on the path
-        private bool IsEnemyInAttackRange(Vector3[] path, int next_position)
-        {
-            if (path == null)
-                return false;
-
-            if (path.Length - next_position > attack_range)
-                return false;
-            else
-                return true;
-        }
-
-        // sets up the coroutines that calculate the path
-        private void BeginPathfindingCoroutines(AICore aiCore)
-        {
-            if (aiCore == null)
-                return;
-
-            if (aiCore.party_list.Count == 0)
-                return;
-
-            Vector3 start_pos = GetComponent<Transform>().position;
-            path_count = 0;
-            if (pathFinder)
-            {
-                mutex.WaitOne();
-                foreach (GameObject actor in aiCore.party_list)
-                {
-                    Vector3 end_pos = actor.GetComponent<Transform>().position;
-                    PathRequestManager.RequestPath(start_pos, end_pos, OnPathFound);
-                    path_count++;
-                }
-                mutex.ReleaseMutex();
-            }
         }
 
         // moves the ai along the path
-        private IEnumerator move(Vector3[] path)
+        private IEnumerator MoveCoroutine(Vector3[] path, int movement_distance)
         {
             int targetIndex = 0;
             Vector3 currentWaypoint = path[targetIndex];
 
             while (true)
             {
+                if (path.Length == 1)
+                {
+                    break;
+                }
+
+                if (path.Length - targetIndex <= AbilityAttackRange(0))
+                {
+                    break;
+                }
+
+
+
                 if (transform.position == currentWaypoint)
                 {
                     targetIndex++;
                     if (targetIndex >= path.Length)
                     {
-                        yield break;
+                        break;
                     }
                     if (targetIndex == movement_distance)
                     {
-                        yield break;
+                        break;
                     }
-                    if (IsEnemyInAttackRange(path, targetIndex))
+                    if (path.Length - targetIndex <= AbilityAttackRange(0))
                     {
-                        yield break;
+                        break;
                     }
+
 
                     currentWaypoint = path[targetIndex];
                 }
@@ -188,20 +149,42 @@ namespace AI
 
                 yield return null;
             }
+            turn_completed = true;
         }
 
-        // deal damage to the enemy
-        // TODO @matthew - this should use the combatants abilities insted of just dealing damage
-        private void attack(GameObject enemy)
+        // TEMP - to be removed when a proper AI is written
+        Ability GetAbility(int index)
         {
-            if(enemy)
+            Ability[] abilities = GetComponent<Combatant>().abilitiesUsing;
+            if (abilities != null)
             {
-                enemy.GetComponent<Combatant>().do_damage(1, Aspects.Aspect.None);
+                if(abilities.Length > index)
+                {
+                    if (abilities[index] != null)
+                    {
+                        return abilities[index];
+                    }
+                }
             }
+
+            return null;
+        }
+
+        // TEMP - to be removed when a proper AI is written
+        int AbilityAttackRange(int index)
+        {
+
+            Ability ability = GetAbility(index);
+            
+            if(ability != null)
+                return ability.abilityRange;
             else
-            {
-                Debug.Log("AI: enemy reference was null");
-            }
-        } 
+                return 0;
+        }
+
+
+
     }
 }
+
+

@@ -109,15 +109,17 @@ public class Stats : MonoBehaviour
 
         quirkStats();
 
-        Debug.Log("Str: " + base_str);
-        Debug.Log("dex: " + base_dex);
-        Debug.Log("mag: " + base_mag);
-        Debug.Log("def: " + base_def);
-        Debug.Log("con: " + base_con);
-        Debug.Log("luck: " + base_luck);
-        Debug.Log("speed: " + base_speed);
-        Debug.Log("init: " + base_init);
-        Debug.Log("HP: " + current_hp);
+        // pls dont, thanks, you can see this shit in the editor
+
+        //Debug.Log("Str: " + base_str);
+        //Debug.Log("dex: " + base_dex);
+        //Debug.Log("mag: " + base_mag);
+        //Debug.Log("def: " + base_def);
+        //Debug.Log("con: " + base_con);
+        //Debug.Log("luck: " + base_luck);
+        //Debug.Log("speed: " + base_speed);
+        //Debug.Log("init: " + base_init);
+        //Debug.Log("HP: " + current_hp);
     }
 
     public int getStat(Combatant_Stats stat)

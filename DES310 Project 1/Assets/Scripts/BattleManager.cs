@@ -210,7 +210,12 @@ public class BattleManager : MonoBehaviour
     // Start Turn Phase ****************************************************************************************************************************
     void StartTurn()
     {
+
+
         CycleQueue();
+
+
+
         currentCombatant.GetComponent<PathFindingUnit>().SetSelectableTiles(currentCombatant.GetComponent<Stats>().getStat(Combatant_Stats.Speed));
 
         SetCombatantState(CombatantState.MOVE);
@@ -231,18 +236,28 @@ public class BattleManager : MonoBehaviour
     // Move Phase **********************************************************************************************************************************
     void TurnMovePhase()
     {
-        // do move stuff? not sure if this function is actually required. for AI maybe?
-
-        // grid highlighter draw arrow
+        if(currentCombatant.gameObject.tag == "Enemy")
+        {
+            AI.AIBaseBehavior behaviour = currentCombatant.GetComponent<AI.AIBaseBehavior>();
+            if(behaviour)
+            {
+                if(behaviour.turn_completed)
+                {
+                    SetCombatantState(CombatantState.ACTION);
+                }
+            }
+        }
     }
 
     void AIMove()
     {
-        SetCombatantState(CombatantState.ACTION);
+        //SetCombatantState(CombatantState.ACTION);
         AI.AIBaseBehavior behaviour = currentCombatant.GetComponent<AI.AIBaseBehavior>();
         if (behaviour)
         {
-            behaviour.run(ai_core);
+            int speed = currentCombatant.GetComponent<Stats>().getStat(Combatant_Stats.Speed);
+
+            behaviour.Move(ai_core, speed);
         }
     }
 
@@ -285,7 +300,14 @@ public class BattleManager : MonoBehaviour
         // same as move phase function, unsure if this is needed
 
         if (currentCombatant.tag == "Enemy")
+        {
+            AI.AIBaseBehavior behaviour = currentCombatant.GetComponent<AI.AIBaseBehavior>();
+            if (behaviour)
+            {
+                behaviour.Attack(ai_core);
+            }
             SetCombatantState(CombatantState.END);
+        }
     }
 
     IEnumerator AIAction()
