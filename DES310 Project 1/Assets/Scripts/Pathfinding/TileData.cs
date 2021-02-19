@@ -9,4 +9,5 @@ public class TileData : ScriptableObject
     public TileBase[] tiles;
 
     public bool walkable;
+    public bool OmniDirectional = true;
 }

@@ -98,9 +98,10 @@ public class IsoGrid : MonoBehaviour
 
                     if (tileMap.HasTile(currentCell))
                     {
-                        TileBase currentTile = tileMap.GetTile(currentCell);
-                        if (dataFromTiles.ContainsKey(currentTile))
-                            walkable = dataFromTiles[currentTile].walkable;
+                        /*TileBase currentTile = tileMap.GetTile(currentCell);
+                        if (dataFromTiles.ContainsKey(currentTile))*/
+                        if (TileHasData(currentCell))
+                            walkable = dataFromTiles[tileMap.GetTile(currentCell)].walkable;
 
                     }
                 }
@@ -246,7 +247,15 @@ public class IsoGrid : MonoBehaviour
     }
 
     // Util Methods *******************************************************************************
-    public Vector3 NodeToWorld(float x, float y, float z)
+    private bool TileHasData(Vector3Int currentCell)
+    {
+        TileBase currentTile = tileMap.GetTile(currentCell);
+        if (dataFromTiles.ContainsKey(currentTile))
+            return true;
+        return false;
+    }
+
+    private Vector3 NodeToWorld(float x, float y, float z)
     {
         return new Vector3(
             (transform.position.x) + (x-y) * (nodeDiameter),

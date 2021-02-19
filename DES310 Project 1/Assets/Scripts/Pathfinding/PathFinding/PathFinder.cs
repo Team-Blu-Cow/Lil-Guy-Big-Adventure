@@ -9,6 +9,9 @@ public class PathFinder : MonoBehaviour
     PathRequestManager requestManager;
     IsoGrid grid;
 
+    public IsoGrid GetGrid() { return grid; }
+
+
     private void Awake()
     {
         grid = gameObject.GetComponent<IsoGrid>();
@@ -17,10 +20,22 @@ public class PathFinder : MonoBehaviour
 
     public void StartFindPath(Vector3 startPos, Vector3 targetPos)
     {
-        StartCoroutine(FindPath(startPos, targetPos));
+        StartCoroutine(CoroutineFindPath(startPos, targetPos));
     }
 
-    IEnumerator FindPath(Vector3 startPos, Vector3 targetPos)
+    IEnumerator CoroutineFindPath(Vector3 startPos, Vector3 targetPos)
+    {
+        Vector3[] path = FindPath(startPos, targetPos);
+        yield return null;
+
+        bool pathSuccess = false;
+        if (path != null)
+            pathSuccess = true;
+
+        requestManager.FinishedProcessingPath(path, pathSuccess);
+    }
+
+    public Vector3[] FindPath(Vector3 startPos, Vector3 targetPos)
     {
         //Stopwatch sw = new Stopwatch();
         //sw.Start();
@@ -73,13 +88,12 @@ public class PathFinder : MonoBehaviour
                 }
             }
         }
-        yield return null;
         if (pathSuccess)
         {
             wayPoints = RetracePath(startNode, targetNode);
+            return wayPoints;
         }
-        requestManager.FinishedProcessingPath(wayPoints, pathSuccess);
-
+        return null;
     }
 
     Vector3[] RetracePath(IsoNode startNode, IsoNode endNode)
