@@ -99,27 +99,25 @@ public class MapGeneration : MonoBehaviour
         Queue<Vector3> lakePlace = new Queue<Vector3>();
 
         //Loop through the width of the map
-        for (int x = 0; x < size.x; x++)
+        for (int x = 1; x < size.x-1; x++)
         {
             //Loop through the height of the map
-            for (int y = 0; y < size.y; y++)
+            for (int y = 1; y < size.y-1; y++)
             {
                 float dx = Mathf.Abs(x - (size.x / 2)), dy = Mathf.Abs(y - (size.y / 2));
                 float d = Mathf.Sqrt((dx * dx) + (dy * dy));
 
                 if (map[x, y] > 0.01 * d * d)
                 {
-                    if (map[x, y] <= lowerBound) // No tile
+                    if (map[x,y] <= lowerBound)
                     {
-                        // Clear tile and add to the "lake" queue for use later
-                        tileMap.SetTile(new Vector3Int(-x - 1, -y - 1, 0), null);
-                        lakePlace.Enqueue(new Vector3(x - 1, y - 1, 1));
+                        tileMap.SetTile(new Vector3Int(-x , -y , 0), null); 
                     }
-                    else if (map[x, y] <= upperBound) // Level 1 tile
+                    if (map[x, y] <= upperBound) // Level 1 tile
                     {
                         // Set tile to a random grass
-                        tileMap.SetTile(new Vector3Int(-x - 1, -y - 1, 0), tiles[Random.Range(0, 3)]); 
-                        tileMap.SetTile(new Vector3Int(-x - 1, -y - 1, -2), tiles[4]);
+                        tileMap.SetTile(new Vector3Int(-x , -y , 0), tiles[Random.Range(0, 3)]); 
+                        tileMap.SetTile(new Vector3Int(-x , -y , -2), tiles[4]);
                                                 
                         if (Random.Range(0, 50) == 0) // Place items at a random rate
                         {
@@ -129,18 +127,20 @@ public class MapGeneration : MonoBehaviour
                     }
                     else if (map[x, y] <= 0.8f)
                     {
-                        tileMap.SetTile(new Vector3Int(-x - 1, -y - 1, 0), tiles[5]);
+                        tileMap.SetTile(new Vector3Int(-x , -y , 0), tiles[5]);
                     }
                     else  // Level 2 tile
                     {
-                        tileMap.SetTile(new Vector3Int(-x + 1, -y + 1, 2), tiles[Random.Range(0, 3)]);
-                        tileMap.SetTile(new Vector3Int(-x+1, -y+1, 0), tiles[4]);
+                        tileMap.SetTile(new Vector3Int(-x , -y , 2), tiles[Random.Range(0, 3)]);
+                        tileMap.SetTile(new Vector3Int(-x, -y, 0), tiles[4]);
+                        tileMap.SetTile(new Vector3Int(-x , -y , -2), null);
+
                     }
                 }
             }
         }
 
-        CreateLake(lakePlace, size);
+        //CreateLake(lakePlace, size);
         //CreatePath();
         grid.CreateGrid();
 
@@ -163,20 +163,17 @@ public class MapGeneration : MonoBehaviour
             PathRequestManager.RequestPath(Player.position, exit.transform.position, OnPathFound);
         }
 
-        LeanTween.delayedCall(0.3f, RemakeMap);
-    }
-
-    void RemakeMap()
-    {
-        if (avalibleExit == 0)
-        {
-            RenderMap();
-        }
-        else
-        {
-            LeanTween.value(transition.gameObject, a => transition.color = a, new Color(0, 0, 0, 1), new Color(0, 0, 0, 0f), 0.3f);
-            travelledRegions++;
-        }
+        LeanTween.delayedCall(0.3f, () => { 
+            if (avalibleExit < 3) 
+            { 
+                RenderMap();
+            }
+            else
+            {
+                LeanTween.value(transition.gameObject, a => transition.color = a, new Color(0, 0, 0, 1), new Color(0, 0, 0, 0f), 0.3f);
+                travelledRegions++;
+            }
+        });
     }
 
     void OnPathFound(Vector3[] newPath, bool pathSuccess)
@@ -207,9 +204,9 @@ public class MapGeneration : MonoBehaviour
                     nodeList.Enqueue(new Vector3(currentPoint.x, currentPoint.y - 1, currentPoint.z + 1f));
 
                 //set tile to null
-                tileMap.SetTile(new Vector3Int((int)-currentPoint.x, (int)-currentPoint.y, 0), null);
-                tileMap.SetTile(new Vector3Int((int)-currentPoint.x, (int)-currentPoint.y, -2), null);
-                tileMap.SetTile(new Vector3Int((int)-currentPoint.x, (int)-currentPoint.y, 2), null);                              
+                tileMap.SetTile(new Vector3Int((int)-currentPoint.x, (int)-currentPoint.y, 0), tiles[6]);
+                //tileMap.SetTile(new Vector3Int((int)-currentPoint.x, (int)-currentPoint.y, -2), null);
+                //tileMap.SetTile(new Vector3Int((int)-currentPoint.x, (int)-currentPoint.y, 2), null);                              
             }
         }
     }
@@ -218,6 +215,7 @@ public class MapGeneration : MonoBehaviour
     {
         List<Vector2> exitPos = new List<Vector2>();
 
+        // Exit 1 /////////
         int count = 0;
         while (exitPos.Count == 0 && count < grid.gridSize.y)
         {            
@@ -232,7 +230,8 @@ public class MapGeneration : MonoBehaviour
         }
         AddExit(exitPos[Random.Range(0,exitPos.Count)], "Exit0", 180);
         exitPos.Clear();
-        
+
+        // Exit 2 /////////
         count = grid.gridSize.y-1;
         while (exitPos.Count == 0 && count > 0)
         {            
@@ -248,6 +247,7 @@ public class MapGeneration : MonoBehaviour
         AddExit(exitPos[Random.Range(0,exitPos.Count)], "Exit1", 180);
         exitPos.Clear();
 
+        // Exit 3 /////////
         count = 0;
         while (exitPos.Count == 0 && count < grid.gridSize.x)
         {
@@ -262,7 +262,8 @@ public class MapGeneration : MonoBehaviour
         }
         AddExit(exitPos[Random.Range(0, exitPos.Count)], "Exit2", 180);
         exitPos.Clear();
-        
+
+        // Exit 4 /////////
         count = grid.gridSize.x-1;
         while (exitPos.Count == 0 && count > 0)
         {
@@ -281,12 +282,14 @@ public class MapGeneration : MonoBehaviour
 
     private void AddExit(Vector2 position, string tag, float rotation)
     {
+        // sets the player to the position where they entered and doesnt spawn an exit on them
         if ((int)enterDirection == tag[4]-48)
         {
             Player.position = grid.NodeToWorld(position.x, position.y - 0.25f, 2);
             return;
         }
 
+        // Create a new exit and set the tag to what has been passed in
         GameObject tempExit = Instantiate(exit, grid.NodeToWorld(position.x, position.y, 2), Quaternion.Euler(0f, rotation, 0f), transform).gameObject;
         tempExit.tag = tag;
         placedExits.Add(tempExit);
