@@ -12,5 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 485b1506856aebe49ab328ea01417ba4, type: 3}
   m_Name: Tree
   m_EditorClassIdentifier: 
-  tiles: []
+  tiles:
+  - {fileID: 11400000, guid: c1644504c5c7e204bbcc74edacf579ff, type: 2}
+  - {fileID: 11400000, guid: f27b3489eb9901845988795849156fc7, type: 2}
+  - {fileID: 11400000, guid: c9ad89e65b516af4a83a454c1b9f0aac, type: 2}
   walkable: 0
