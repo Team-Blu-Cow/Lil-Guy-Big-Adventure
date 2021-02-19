@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 using UnityEngine.Tilemaps;
 
 public class MapGeneration : MonoBehaviour
@@ -27,10 +28,13 @@ public class MapGeneration : MonoBehaviour
     [SerializeField] float lowerBound = 0.1f;
     [SerializeField] float upperBound = 0.7f;
     [SerializeField] float multiplier = 0.75f;
-
     [SerializeField] float radius = 5f;
 
+    [SerializeField] Image transition;
+
+    [Header ("InGame Objects")]
     List<GameObject> placedItems = new List<GameObject>();
+    List<Vector3Int> itemsPositions = new List<Vector3Int>();
     List<GameObject> placedExits = new List<GameObject>();
 
     List<Vector2> treeGrid = new List<Vector2>();
@@ -39,12 +43,16 @@ public class MapGeneration : MonoBehaviour
     private int travelledRegions;
     Direction enterDirection = 0;
 
+    public void StartSwap(int dir)
+    {
+        LeanTween.value(transition.gameObject, a => transition.color = a, new Color(0, 0, 0, 0), new Color(0, 0, 0, 1f), 0.3f).setOnComplete(RenderMap);
+        enterDirection = (Direction)dir;
+    }
 
-    public void RenderMap(int direction)
+    public void RenderMap()
     {
         Vector2 size = new Vector2(grid.gridSize.x, grid.gridSize.y);
         // PoissonDisc(grid.gridSize.x, grid.gridSize.y); // Doesnt work really just did some boofed stuff wiht the perlin noise map to place trees instead
-        enterDirection = (Direction)direction;
 
         //Clear the current tileset
         tileMap.ClearAllTiles();
@@ -56,20 +64,18 @@ public class MapGeneration : MonoBehaviour
                 Destroy(placedItems[i]);
         }
         placedItems.Clear();
+        itemsPositions.Clear();
 
         // Clear exits
         placedExits.ForEach(Destroy);
-        placedExits.Clear();
-
-        float maxRange = 0;
-        if (travelledRegions >= 1)
-            maxRange = 100 * (1 / (float)travelledRegions);
+        placedExits.Clear();   
 
         // Check if it should be a campfire
-        if (travelledRegions >= 3 && Random.Range(0, (int)maxRange) < 10)
+        if (travelledRegions >= 3 && Random.Range(0, 100 * (1 / (float)travelledRegions)) < 10)
         {
             //Swap to campfire scene?
             travelledRegions = 0;
+            LeanTween.value(transition.gameObject, a => transition.color = a, new Color(0, 0, 0, 1), new Color(0, 0, 0, 0f), 0.2f);
             return;
         }
 
@@ -91,8 +97,6 @@ public class MapGeneration : MonoBehaviour
         int itemsPlaced = 0;
         // map gen positons to be used later
         Queue<Vector3> lakePlace = new Queue<Vector3>();
-        Stack<Vector2> exitsX = new Stack<Vector2>();
-        Stack<Vector2> exitsY = new Stack<Vector2>();
 
         //Loop through the width of the map
         for (int x = 0; x < size.x; x++)
@@ -116,29 +120,10 @@ public class MapGeneration : MonoBehaviour
                         // Set tile to a random grass
                         tileMap.SetTile(new Vector3Int(-x - 1, -y - 1, 0), tiles[Random.Range(0, 3)]); 
                         tileMap.SetTile(new Vector3Int(-x - 1, -y - 1, -2), tiles[4]);
-
-
-                        // If its in the center then add to the exit place
-                        if (x == size.x / 2)
+                                                
+                        if (Random.Range(0, 50) == 0) // Place items at a random rate
                         {
-                            if (exitsX.Count >= 2) // remove the last one as we wat the fist and last poitions on that row
-                            {
-                                exitsX.Pop();
-                            }
-                            exitsX.Push(new Vector2(x, y)); // add the new position
-                        }
-                        else if (y == size.x / 2)
-                        {
-                            if (exitsY.Count >= 2)
-                            {
-                                exitsY.Pop();
-                            }
-                            exitsY.Push(new Vector2(x, y));
-                        }
-                        else if (Random.Range(0, 50) == 0 && itemsPlaced < 3) // Place items at a random rate but no more than 3
-                        {
-                            placedItems.Add(Instantiate(items[Random.Range(0, items.Length)], FindObjectOfType<Grid>().CellToWorld(new Vector3Int(-x , -y , 2)), new Quaternion(0, 0, 0, 0)).gameObject);
-                            itemsPlaced++;
+                            itemsPositions.Add(new Vector3Int(x , y , 2));                            
                         }
 
                     }
@@ -157,9 +142,20 @@ public class MapGeneration : MonoBehaviour
 
         CreateLake(lakePlace, size);
         //CreatePath();
-        PlaceExits(enterDirection, exitsX, exitsY);
-
         grid.CreateGrid();
+
+        PlaceExits();
+
+        foreach (Vector3Int pos in itemsPositions)
+        {
+            if (grid.GetNode(new Vector3Int(pos.x, pos.y, 2)).IsTraversable())
+            {
+                placedItems.Add(Instantiate(items[Random.Range(0, items.Length)], grid.NodeToWorld(pos.x, pos.y, pos.z), new Quaternion(0, 0, 0, 0)).gameObject);
+                itemsPlaced++;
+            }
+            if (itemsPlaced > 3)
+                break;
+        }
 
         avalibleExit = 0;
         foreach (GameObject exit in placedExits)
@@ -174,10 +170,11 @@ public class MapGeneration : MonoBehaviour
     {
         if (avalibleExit == 0)
         {
-            RenderMap((int)enterDirection);
+            RenderMap();
         }
         else
         {
+            LeanTween.value(transition.gameObject, a => transition.color = a, new Color(0, 0, 0, 1), new Color(0, 0, 0, 0f), 0.3f);
             travelledRegions++;
         }
     }
@@ -195,7 +192,7 @@ public class MapGeneration : MonoBehaviour
         while (nodeList.Count > 0)
         {
             Vector3 currentPoint = nodeList.Dequeue();
-            if (Random.Range(0, (int)currentPoint.z) == 0)
+            if (Random.Range(0, (int)currentPoint.z) < 1)
             {
                 if (currentPoint.x + 1 < size.x)
                     nodeList.Enqueue(new Vector3(currentPoint.x + 1, currentPoint.y, currentPoint.z + 1f));
@@ -217,61 +214,82 @@ public class MapGeneration : MonoBehaviour
         }
     }
 
-    void PlaceExits(Direction enterDir, Stack<Vector2> x, Stack<Vector2> y)
+    void PlaceExits()
     {
-        Grid grid = FindObjectOfType<Grid>();
-        
-        while (x.Count > 0)
-        {
-            Vector2 temp;
-            if (x.Count - 1 == (int)enterDir)
+        List<Vector2> exitPos = new List<Vector2>();
+
+        int count = 0;
+        while (exitPos.Count == 0 && count < grid.gridSize.y)
+        {            
+            for (int i = 0; i < grid.gridSize.x; i++)
             {
-                temp = x.Pop();
-                Player.position = grid.CellToWorld(new Vector3Int(-(int)temp.x - 1, -(int)temp.y - 1, 2)) + new Vector3(0, -0.25f, 0);
+                if (grid.GetNode(new Vector3Int(i, count, 0)).IsTraversable()) 
+                {
+                    exitPos.Add(new Vector2(i, count));
+                }
             }
-            else
-            {
-                temp = x.Pop();
-                if (x.Count == 1)
-                {
-                    GameObject tempExit = Instantiate(exit, grid.CellToWorld(new Vector3Int(-(int)temp.x, -(int)temp.y, 0)), Quaternion.Euler(0f, 180f, 0f), transform).gameObject;
-                    tempExit.tag = "Exit0";
-                    placedExits.Add(tempExit);
-                }
-                else
-                {
-                    GameObject tempExit = Instantiate(exit, grid.CellToWorld(new Vector3Int(-(int)temp.x, -(int)temp.y, 0)), Quaternion.Euler(0f, 0f, 0f), transform).gameObject;
-                    tempExit.tag = "Exit1";
-                    placedExits.Add(tempExit);
-                }
-            }           
+            count++;
         }
-        while (y.Count > 0)
+        AddExit(exitPos[Random.Range(0,exitPos.Count)], "Exit0", 180);
+        exitPos.Clear();
+        
+        count = grid.gridSize.y-1;
+        while (exitPos.Count == 0 && count > 0)
+        {            
+            for (int i = 0; i < grid.gridSize.x; i++)
+            {
+                if (grid.GetNode(new Vector3Int(i, count, 0)).IsTraversable()) 
+                {
+                    exitPos.Add(new Vector2(i, count));
+                }
+            }
+            count--;
+        }
+        AddExit(exitPos[Random.Range(0,exitPos.Count)], "Exit1", 180);
+        exitPos.Clear();
+
+        count = 0;
+        while (exitPos.Count == 0 && count < grid.gridSize.x)
         {
-            Vector2 temp;
-            if (y.Count + 1 == (int)enterDir)
+            for (int i = 0; i < grid.gridSize.y; i++)
             {
-                temp = y.Pop();
-                Player.position = grid.CellToWorld(new Vector3Int(-(int)temp.x -1, -(int)temp.y-1, 2)) + new Vector3(0, -0.25f, 0);
-            }
-            else
-            {
-                temp = y.Pop();
-                
-                if (y.Count != 1)
+                if (grid.GetNode(new Vector3Int(count, i, 0)).IsTraversable())
                 {
-                    GameObject tempExit = Instantiate(exit, grid.CellToWorld(new Vector3Int(-(int)temp.x, -(int)temp.y, 0)), Quaternion.Euler(0f, 0f, 0f), transform).gameObject;
-                    tempExit.tag = "Exit3";
-                    placedExits.Add(tempExit);
-                }
-                else
-                {
-                    GameObject tempExit = Instantiate(exit, grid.CellToWorld(new Vector3Int(-(int)temp.x, -(int)temp.y, 0)), Quaternion.Euler(0f, 0f, 0f), transform).gameObject;
-                    tempExit.tag = "Exit2";
-                    placedExits.Add(tempExit);
+                    exitPos.Add(new Vector2(count, i));
                 }
             }
-        }        
+            count++;
+        }
+        AddExit(exitPos[Random.Range(0, exitPos.Count)], "Exit2", 180);
+        exitPos.Clear();
+        
+        count = grid.gridSize.x-1;
+        while (exitPos.Count == 0 && count > 0)
+        {
+            for (int i = 0; i < grid.gridSize.y; i++)
+            {
+                if (grid.GetNode(new Vector3Int(count, i, 0)).IsTraversable())
+                {
+                    exitPos.Add(new Vector2(count, i));
+                }
+            }
+            count--;
+        }
+        AddExit(exitPos[Random.Range(0, exitPos.Count)], "Exit3", 180);
+        exitPos.Clear();
+    }
+
+    private void AddExit(Vector2 position, string tag, float rotation)
+    {
+        if ((int)enterDirection == tag[4]-48)
+        {
+            Player.position = grid.NodeToWorld(position.x, position.y - 0.25f, 2);
+            return;
+        }
+
+        GameObject tempExit = Instantiate(exit, grid.NodeToWorld(position.x, position.y, 2), Quaternion.Euler(0f, rotation, 0f), transform).gameObject;
+        tempExit.tag = tag;
+        placedExits.Add(tempExit);
     }
 
     void CreatePath()

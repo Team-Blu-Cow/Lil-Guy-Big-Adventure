@@ -83,13 +83,13 @@ public class Movement : MonoBehaviour
                     {
                         if (neighbor.gridPosition == grid.WorldToNode(transform.position).gridPosition) //if it is a treasure
                         {
-                            FindObjectOfType<MapGeneration>().RenderMap(i);
+                            FindObjectOfType<MapGeneration>().StartSwap(i);
                             grid.CreateGrid();
                         }
                     }
                     if (node.gridPosition == grid.WorldToNode(transform.position).gridPosition)
                     {
-                        FindObjectOfType<MapGeneration>().RenderMap(i);
+                        FindObjectOfType<MapGeneration>().StartSwap(i);
                         grid.CreateGrid();
                     }
                 }

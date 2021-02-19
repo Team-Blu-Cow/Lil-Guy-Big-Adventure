@@ -246,7 +246,7 @@ public class IsoGrid : MonoBehaviour
     }
 
     // Util Methods *******************************************************************************
-    private Vector3 NodeToWorld(float x, float y, float z)
+    public Vector3 NodeToWorld(float x, float y, float z)
     {
         return new Vector3(
             (transform.position.x) + (x-y) * (nodeDiameter),
