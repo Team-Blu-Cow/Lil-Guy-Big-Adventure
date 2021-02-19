@@ -210,11 +210,7 @@ public class BattleManager : MonoBehaviour
     // Start Turn Phase ****************************************************************************************************************************
     void StartTurn()
     {
-
-
         CycleQueue();
-
-
 
         currentCombatant.GetComponent<PathFindingUnit>().SetSelectableTiles(currentCombatant.GetComponent<Stats>().getStat(Combatant_Stats.Speed));
 

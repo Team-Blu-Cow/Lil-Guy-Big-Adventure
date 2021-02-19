@@ -9,6 +9,7 @@ public class IsoGrid : MonoBehaviour
     // grid settings
     [HideInInspector, SerializeField] public Vector2Int gridSize;
     [HideInInspector, SerializeField] private Tilemap tileMap;
+    [HideInInspector, SerializeField] private Tilemap detailTileMap;
     [HideInInspector, SerializeField] private GridHighLighter highlighter;
 
     // node settings
@@ -98,11 +99,10 @@ public class IsoGrid : MonoBehaviour
 
                     if (tileMap.HasTile(currentCell))
                     {
-                        /*TileBase currentTile = tileMap.GetTile(currentCell);
-                        if (dataFromTiles.ContainsKey(currentTile))*/
-                        if (TileHasData(currentCell))
+                        if (TileHasData(tileMap,currentCell))
                             walkable = dataFromTiles[tileMap.GetTile(currentCell)].walkable;
-
+                        if (TileHasData(detailTileMap, currentCell))
+                            walkable = dataFromTiles[detailTileMap.GetTile(currentCell)].walkable;
                     }
                 }
                 
@@ -247,15 +247,15 @@ public class IsoGrid : MonoBehaviour
     }
 
     // Util Methods *******************************************************************************
-    private bool TileHasData(Vector3Int currentCell)
+    private bool TileHasData(Tilemap map, Vector3Int currentCell)
     {
-        TileBase currentTile = tileMap.GetTile(currentCell);
-        if (dataFromTiles.ContainsKey(currentTile))
+        TileBase currentTile = map.GetTile(currentCell);
+        if (currentTile != null && dataFromTiles.ContainsKey(currentTile))
             return true;
         return false;
     }
 
-    private Vector3 NodeToWorld(float x, float y, float z)
+    public Vector3 NodeToWorld(float x, float y, float z)
     {
         return new Vector3(
             (transform.position.x) + (x-y) * (nodeDiameter),

@@ -12,5 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 485b1506856aebe49ab328ea01417ba4, type: 3}
   m_Name: Bridge
   m_EditorClassIdentifier: 
-  tiles: []
-  walkable: 0
+  tiles:
+  - {fileID: 11400000, guid: db92c4c1a1dd2b847b985b05fcb0f614, type: 2}
+  walkable: 1
+  OmniDirectional: 0

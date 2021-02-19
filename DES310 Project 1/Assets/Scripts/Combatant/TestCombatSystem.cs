@@ -5,7 +5,6 @@ using UnityEngine.EventSystems;
 
 public class TestCombatSystem : MonoBehaviour
 {
-
     public GameObject enemy;
 
     private Combatant combatant;
