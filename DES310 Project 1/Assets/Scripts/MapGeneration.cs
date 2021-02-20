@@ -14,9 +14,16 @@ public class MapGeneration : MonoBehaviour
         BottomRight,
     }
 
-    [Header("Tile set")]
-    [SerializeField] Tilemap tileMap;
-    [SerializeField] TileBase[] tiles;
+    [Header("Tile Maps")]
+    [SerializeField] Tilemap tileMapFloor;
+    [SerializeField] Tilemap tileMapTerrain;
+    
+    [Header("Tile Sets")]
+    [SerializeField] TileData grassTiles;
+    [SerializeField] TileData treeTiles;
+    [SerializeField] TileData rockTiles;
+    [SerializeField] TileData bridgeTiles;
+
     [SerializeField] IsoGrid grid;
 
     [Header("Objects")]
@@ -43,6 +50,10 @@ public class MapGeneration : MonoBehaviour
     private int travelledRegions;
     Direction enterDirection = 0;
 
+    private void Awake()
+    {
+    }
+
     public void StartSwap(int dir)
     {
         LeanTween.value(transition.gameObject, a => transition.color = a, new Color(0, 0, 0, 0), new Color(0, 0, 0, 1f), 0.3f).setOnComplete(RenderMap);
@@ -55,7 +66,8 @@ public class MapGeneration : MonoBehaviour
         // PoissonDisc(grid.gridSize.x, grid.gridSize.y); // Doesnt work really just did some boofed stuff wiht the perlin noise map to place trees instead
 
         //Clear the current tileset
-        tileMap.ClearAllTiles();
+        tileMapFloor.ClearAllTiles();
+        tileMapTerrain.ClearAllTiles();
 
         // Clear items
         for (int i = 0; i < placedItems.Count; i++)
@@ -111,13 +123,15 @@ public class MapGeneration : MonoBehaviour
                 {
                     if (map[x,y] <= lowerBound)
                     {
-                        tileMap.SetTile(new Vector3Int(-x , -y , 0), null); 
+                        tileMapFloor.SetTile(new Vector3Int(-x , -y , 0), null);
+                        lakePlace.Enqueue(new Vector3(x, y, 1));
                     }
                     if (map[x, y] <= upperBound) // Level 1 tile
                     {
                         // Set tile to a random grass
-                        tileMap.SetTile(new Vector3Int(-x , -y , 0), tiles[Random.Range(0, 3)]); 
-                        tileMap.SetTile(new Vector3Int(-x , -y , -2), tiles[4]);
+                        tileMapFloor.SetTile(new Vector3Int(-x , -y , 0), grassTiles.tiles[Random.Range(0, 7)]);
+
+                        //tileMap.SetTile(new Vector3Int(-x , -y , -2), tiles[0].tiles[Random.Range(0, tiles[0].tiles.Length)]); // set under rock on 1/3or so of tiles
                                                 
                         if (Random.Range(0, 50) == 0) // Place items at a random rate
                         {
@@ -127,20 +141,25 @@ public class MapGeneration : MonoBehaviour
                     }
                     else if (map[x, y] <= 0.8f)
                     {
-                        tileMap.SetTile(new Vector3Int(-x , -y , 0), tiles[5]);
+                        tileMapFloor.SetTile(new Vector3Int(-x , -y , 0), grassTiles.tiles[Random.Range(0, 5)]);
+                        tileMapTerrain.SetTile(new Vector3Int(-x , -y , 0), treeTiles.tiles[Random.Range(0, 2)]);
+
+                        if (Random.Range(0, 2) == 0)
+                        {
+                            Matrix4x4 matrix = Matrix4x4.TRS(Vector3.zero, Quaternion.Euler(0f, 0f, 0f), new Vector3(-1, 1, 1));
+                            tileMapTerrain.SetTransformMatrix(new Vector3Int(-x, -y, 0), matrix);                           
+                        }
                     }
                     else  // Level 2 tile
                     {
-                        tileMap.SetTile(new Vector3Int(-x , -y , 2), tiles[Random.Range(0, 3)]);
-                        tileMap.SetTile(new Vector3Int(-x, -y, 0), tiles[4]);
-                        tileMap.SetTile(new Vector3Int(-x , -y , -2), null);
+                        tileMapFloor.SetTile(new Vector3Int(-x , -y , 2), grassTiles.tiles[Random.Range(7, 11)]);
 
                     }
                 }
             }
         }
 
-        //CreateLake(lakePlace, size);
+        CreateLake(lakePlace, size);
         //CreatePath();
         grid.CreateGrid();
 
@@ -204,9 +223,9 @@ public class MapGeneration : MonoBehaviour
                     nodeList.Enqueue(new Vector3(currentPoint.x, currentPoint.y - 1, currentPoint.z + 1f));
 
                 //set tile to null
-                tileMap.SetTile(new Vector3Int((int)-currentPoint.x, (int)-currentPoint.y, 0), tiles[6]);
-                //tileMap.SetTile(new Vector3Int((int)-currentPoint.x, (int)-currentPoint.y, -2), null);
-                //tileMap.SetTile(new Vector3Int((int)-currentPoint.x, (int)-currentPoint.y, 2), null);                              
+                tileMapFloor.SetTile(new Vector3Int((int)-currentPoint.x, (int)-currentPoint.y, 0), null);
+                tileMapTerrain.SetTile(new Vector3Int((int)-currentPoint.x, (int)-currentPoint.y, 0), null);
+                tileMapFloor.SetTile(new Vector3Int((int)-currentPoint.x, (int)-currentPoint.y, 2), null);                              
             }
         }
     }
@@ -228,7 +247,7 @@ public class MapGeneration : MonoBehaviour
             }
             count++;
         }
-        AddExit(exitPos[Random.Range(0,exitPos.Count)], "Exit0", 180);
+        AddExit(exitPos[Random.Range(0,exitPos.Count)], "Exit" + (int)Direction.TopLeft, 180);
         exitPos.Clear();
 
         // Exit 2 /////////
@@ -244,7 +263,7 @@ public class MapGeneration : MonoBehaviour
             }
             count--;
         }
-        AddExit(exitPos[Random.Range(0,exitPos.Count)], "Exit1", 180);
+        AddExit(exitPos[Random.Range(0,exitPos.Count)], "Exit" + (int)Direction.BottomRight, 180);
         exitPos.Clear();
 
         // Exit 3 /////////
@@ -255,12 +274,13 @@ public class MapGeneration : MonoBehaviour
             {
                 if (grid.GetNode(new Vector3Int(count, i, 0)).IsTraversable())
                 {
-                    exitPos.Add(new Vector2(count, i));
+                    exitPos.Add(new Vector2(count, i)); 
+
                 }
             }
             count++;
         }
-        AddExit(exitPos[Random.Range(0, exitPos.Count)], "Exit2", 180);
+        AddExit(exitPos[Random.Range(0, exitPos.Count)], "Exit" + (int)Direction.TopRight, 180);
         exitPos.Clear();
 
         // Exit 4 /////////
@@ -276,8 +296,64 @@ public class MapGeneration : MonoBehaviour
             }
             count--;
         }
-        AddExit(exitPos[Random.Range(0, exitPos.Count)], "Exit3", 180);
+        AddExit(exitPos[Random.Range(0, exitPos.Count)], "Exit" + (int)Direction.BottomLeft, 180);
         exitPos.Clear();
+    }
+
+    void PlaceBridges(Direction direction, Vector3Int startPos)
+    {
+        switch (direction)
+        {
+            case Direction.TopLeft: // place bridge going -y
+
+                for (int i = 0; i < grid.gridSize.x / 2; i++)
+                {
+                    if (tileMapFloor.GetTile(new Vector3Int(-i, -startPos.y, 0)) == null)
+                    {
+                        tileMapFloor.SetTile(new Vector3Int(-i, -startPos.y, 0), bridgeTiles.tiles[0]);
+                    }
+                }
+                break;
+            case Direction.BottomLeft:// place bridge going +y  
+                
+                for (int i = 0; i < grid.gridSize.y / 2; i++)
+                {
+                    if (tileMapFloor.GetTile(new Vector3Int(-startPos.x, -i, 0)) == null)
+                    {
+                        tileMapFloor.SetTile(new Vector3Int(-startPos.x, -i, 0), bridgeTiles.tiles[0]);
+                        Matrix4x4 matrix = Matrix4x4.TRS(Vector3.zero, Quaternion.Euler(0f, 0f, 0f), new Vector3(-1, 1, 1));
+                        tileMapFloor.SetTransformMatrix(new Vector3Int(-startPos.x, -i, 0), matrix);
+                    }
+                }
+                break;
+            case Direction.TopRight:// place bridge going -x
+
+                for (int i = grid.gridSize.y; i > grid.gridSize.y / 2; i--)
+                {
+                    if (tileMapFloor.GetTile(new Vector3Int(-startPos.x, -i, 0)) == null)
+                    {
+                        tileMapFloor.SetTile(new Vector3Int(-startPos.x, -i, 0), bridgeTiles.tiles[0]);
+                        Matrix4x4 matrix = Matrix4x4.TRS(Vector3.zero, Quaternion.Euler(0f, 0f, 0f), new Vector3(-1, 1, 1));
+                        tileMapFloor.SetTransformMatrix(new Vector3Int(-startPos.x, -i, 0), matrix);
+                    }
+                }
+                
+                break;
+            case Direction.BottomRight:// place bridge going +x
+
+                for (int i = grid.gridSize.x; i > grid.gridSize.x / 2; i--)
+                {
+                    if (tileMapFloor.GetTile(new Vector3Int(-i, -startPos.y, 0)) == null)
+                    {
+                        tileMapFloor.SetTile(new Vector3Int(-i, -startPos.y, 0), bridgeTiles.tiles[0]);
+                    }
+                }
+
+                break;
+            default:
+                break;
+        }
+
     }
 
     private void AddExit(Vector2 position, string tag, float rotation)
@@ -289,10 +365,14 @@ public class MapGeneration : MonoBehaviour
             return;
         }
 
+        PlaceBridges((Direction)(tag[4] - 48), new Vector3Int((int)position.x, (int)position.y,0));
+        
         // Create a new exit and set the tag to what has been passed in
         GameObject tempExit = Instantiate(exit, grid.NodeToWorld(position.x, position.y, 2), Quaternion.Euler(0f, rotation, 0f), transform).gameObject;
         tempExit.tag = tag;
+        //PlaceBridges((Direction)(tag[4] - 48), grid.WorldToNode(tempExit.transform.position).gridPosition);        
         placedExits.Add(tempExit);
+
     }
 
     void CreatePath()
