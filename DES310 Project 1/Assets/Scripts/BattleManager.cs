@@ -14,6 +14,7 @@ public class BattleManager : MonoBehaviour
     [SerializeField] List<GameObject> combatants;
     [SerializeField] Queue<GameObject> battleQueue;
     public GameObject currentCombatant = null;
+    public GameObject selectedCombatant = null;
 
     private bool recievedMoveCommand = false;
     private bool receivedActionCommand = false;
@@ -24,6 +25,7 @@ public class BattleManager : MonoBehaviour
     [HideInInspector] public bool animEffectComplete = false;
 
     public Vector3 targetPos;
+    public Vector3 cursorPos;
     public Vector2 uiPos;
 
     [SerializeField] private BattleState battleState;
@@ -113,7 +115,7 @@ public class BattleManager : MonoBehaviour
     // INPUT METHODS                                                                                                                              //
     //--------------------------------------------------------------------------------------------------------------------------------------------//
 
-    public void RecieveMouseClick(Vector3 mousePos)
+    public void RecieveMouseRightClick(Vector3 mousePos)
     {
         switch (battleState)
         {
@@ -156,6 +158,8 @@ public class BattleManager : MonoBehaviour
 
     void InBattle()
     {
+        
+
         switch (combatantState)
         {
             case CombatantState.START:
@@ -175,9 +179,24 @@ public class BattleManager : MonoBehaviour
                 break;
         }
 
+        //CheckMousePos();
+
     }
 
-    
+    void CheckMousePos()
+    {
+        IsoNode hoverNode = gridHighLighter.grid.WorldToNode(cursorPos);
+
+
+        if (hoverNode.occupied == true)
+        {
+            hoverNode.occupier.GetComponent<PathFindingUnit>().SetSelectableTiles(currentCombatant.GetComponent<Stats>().getStat(Combatant_Stats.Speed));
+        }
+        else
+        {
+            currentCombatant.GetComponent<PathFindingUnit>().SetSelectableTiles(currentCombatant.GetComponent<Stats>().getStat(Combatant_Stats.Speed));
+        }
+    }
 
     //--------------------------------------------------------------------------------------------------------------------------------------------//
     // COMBATANT STATE METHODS                                                                                                                    //

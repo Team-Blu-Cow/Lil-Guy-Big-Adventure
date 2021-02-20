@@ -36,13 +36,11 @@ public class CursorController : MonoBehaviour
 
     void TargetMouse(Vector2 position)
     {
-        //if (initTracker.getCurrentCombatant() != null)
-        //{
-            Vector2 worldPos;
-            worldPos = Camera.main.ScreenToWorldPoint(position);
-            mousePos = new Vector3(worldPos.x, worldPos.y, 0);
-        //}
+        Vector2 worldPos;
+        worldPos = Camera.main.ScreenToWorldPoint(position);
+        mousePos = new Vector3(worldPos.x, worldPos.y, 0);
 
+        battleManager.cursorPos = mousePos;
     }
 
     void MouseLeftClick()
@@ -52,29 +50,7 @@ public class CursorController : MonoBehaviour
 
     void MouseRightClick()
     {
-        battleManager.RecieveMouseClick(mousePos);
-
-        /*if (initTracker.getCurrentCombatant() != null)
-        {
-            if (initTracker.getCurrentCombatant().GetComponent<PathFindingUnit>() != null)
-            {
-                if (initTracker.getCurrentCombatant().GetComponent<Combatant>().combatantState == Combatant_State.Idle)
-                {
-                    initTracker.getCurrentCombatant().GetComponent<PathFindingUnit>().RequestPath();
-                    initTracker.getCurrentCombatant().GetComponent<Combatant>().combatantState = Combatant_State.Moving;
-                    initTracker.getCurrentCombatant().GetComponent<Combatant>().oldPosition = initTracker.getCurrentCombatant().GetComponent<Transform>().position;
-                }
-            }
-
-            if(initTracker.getCurrentCombatant().GetComponent<TestCombatSystem>() != null)
-            {              
-                if(hovering == true)
-                {
-                    //Debug.Log("khjdsf");
-                }
-            }
-
-        }//*/
+        battleManager.RecieveMouseRightClick(mousePos);
     }
 
     private void Update()
