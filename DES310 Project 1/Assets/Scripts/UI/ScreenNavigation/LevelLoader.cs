@@ -5,7 +5,13 @@ using UnityEngine.SceneManagement;
 
 public class LevelLoader : MonoBehaviour
 {
-    public Animator transition;
+    private Animator transition;
+    [SerializeField] [Range(1, 100)] private float transitionTime = 1f;
+
+    private void Start()
+    {
+        transition = GetComponentInChildren<Animator>();
+    }
 
     public void SwitchScene(string in_Scene)
     {
@@ -15,7 +21,7 @@ public class LevelLoader : MonoBehaviour
     private IEnumerator LoadLevel(string in_Scene)
     {
         transition.SetTrigger("Start");
-        yield return new WaitForSeconds(1);
+        yield return new WaitForSeconds(transitionTime);
         SceneManager.LoadScene(in_Scene);
     }
 
