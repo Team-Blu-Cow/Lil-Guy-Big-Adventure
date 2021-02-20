@@ -6,9 +6,7 @@ using UnityEngine.UI;
 public class InitiativeUI : MonoBehaviour
 {
     public BattleManager battleManager;
-    public int initPlace;
-    public GameObject[] battleQueue;
-    bool imageSet = false;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -18,23 +16,28 @@ public class InitiativeUI : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-
-        if (battleManager.getCombatantState() == CombatantState.END)
-        {
-            imageSet = false;
-        }
+        int count = 0;
 
         if (battleManager.getBattleQueue() != null)
         {
-            if (imageSet == false)
+            while (count < 5)
             {
-                battleQueue = battleManager.getBattleQueue().ToArray();
-                if (initPlace < battleQueue.Length)
+                Queue <GameObject> battleQueue = new Queue<GameObject>(battleManager.getBattleQueue());
+
+                for (int i = 0; i < battleQueue.Count - 1; i++)
                 {
-                    GetComponent<Image>().sprite = battleQueue[initPlace].GetComponent<SpriteRenderer>().sprite;
-                    GetComponent<Image>().SetNativeSize();
-                    imageSet = true;
-                }               
+                    battleQueue.Enqueue(battleQueue.Dequeue());
+                }
+
+                while (battleQueue.Count != 0 && count < 5)
+                {
+                    Image initImage = transform.GetChild(count).GetChild(0).GetComponent<Image>();
+                    GameObject combatant = battleQueue.Dequeue();
+                    initImage.sprite = combatant.GetComponent<SpriteRenderer>().sprite;
+                    initImage.SetNativeSize();
+                    count++;
+                }
+
             }
         }
 
