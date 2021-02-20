@@ -14,5 +14,5 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   tiles:
   - {fileID: 11400000, guid: db92c4c1a1dd2b847b985b05fcb0f614, type: 2}
-  walkable: 0
-  OmniDirectional: 1
+  walkable: 1
+  OmniDirectional: 0

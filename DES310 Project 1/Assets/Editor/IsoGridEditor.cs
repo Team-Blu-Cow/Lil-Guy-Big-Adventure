@@ -9,6 +9,7 @@ public class IsoGridEditor : Editor
 
     SerializedProperty gridSize;
     SerializedProperty tileMap;
+    SerializedProperty detailTileMap;
     SerializedProperty highlighter;
 
     SerializedProperty nodeRadius;
@@ -22,6 +23,7 @@ public class IsoGridEditor : Editor
     {
         gridSize            = serializedObject.FindProperty("gridSize");
         tileMap             = serializedObject.FindProperty("tileMap");
+        detailTileMap       = serializedObject.FindProperty("detailTileMap");
         highlighter         = serializedObject.FindProperty("highlighter");
 
         nodeRadius          = serializedObject.FindProperty("nodeRadius");
@@ -45,6 +47,7 @@ public class IsoGridEditor : Editor
         {
             EditorGUILayout.PropertyField(gridSize);
             EditorGUILayout.PropertyField(tileMap);
+            EditorGUILayout.PropertyField(detailTileMap);
             EditorGUILayout.PropertyField(highlighter);
             EditorGUILayout.Space(10);
         }
