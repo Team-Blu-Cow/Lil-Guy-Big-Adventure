@@ -75,38 +75,30 @@ public class IsoGrid : MonoBehaviour
         {
             for (int y = 0; y < gridSizeY; y++)
             {
-                // TODO: this is hella jank and doesn't support the 
-                // ability to move between layers. will probably have
-                // to be overhauled later.
-
                 bool walkable = false;
 
                 // check higher layer for tile
-                Vector3 worldPoint = NodeToWorld(x, y, 2);
-                Vector3Int currentCell = tileMap.WorldToCell(worldPoint);
+                Vector3 worldPoint = NodeToWorld(x, y, 0);
+                Vector3Int currentCell = tileMap.WorldToCell(worldPoint + new Vector3Int(0,0,2));
                 if (tileMap.HasTile(currentCell))
                 {
                     // if higher layer exists, set tile below (at [x+1,y+1])
                     // to un-walkable and this cell to walkable to allow
                     // objects to pass behind it.
-                    walkable = true;
                     grid[x+1, y+1] = new IsoNode(false, NodeToWorld(x+1,y+1,0), new Vector3Int(x+1, y+1, 0));
                 }
-                else
-                {
-                    worldPoint = NodeToWorld(x, y, 0);
-                    currentCell = tileMap.WorldToCell(worldPoint);
 
-                    if (tileMap.HasTile(currentCell))
-                    {
-                        if (TileHasData(tileMap,currentCell))
-                            walkable = dataFromTiles[tileMap.GetTile(currentCell)].walkable;
-                        if (TileHasData(detailTileMap, currentCell))
-                            walkable = dataFromTiles[detailTileMap.GetTile(currentCell)].walkable;
-                    }
+                currentCell = tileMap.WorldToCell(worldPoint);
+
+                if (tileMap.HasTile(currentCell))
+                {
+                    if (TileHasData(tileMap, currentCell))
+                        walkable = dataFromTiles[tileMap.GetTile(currentCell)].walkable;
+                    if (TileHasData(detailTileMap, currentCell))
+                        walkable = dataFromTiles[detailTileMap.GetTile(currentCell)].walkable;
                 }
-                
-                if(grid[x,y] == null)
+
+                if (grid[x,y] == null)
                     grid[x, y] = new IsoNode(walkable, worldPoint, new Vector3Int(x,y,0));
             }
         }
@@ -123,45 +115,44 @@ public class IsoGrid : MonoBehaviour
 
     public List<IsoNode> GetNeighbors(IsoNode _node)
     {
+        // N,E,S,T
+        bool[] directions = new bool[4] {true, true, true, true};
+
+        Vector3Int currentCell = NodeToTile(_node.gridPosition.x, _node.gridPosition.y, _node.gridPosition.z);
+
+        if (!TileIsOmniDirectional(currentCell))
+        {
+            if (tileMap.GetTransformMatrix(currentCell).lossyScale.x < 0)
+            {
+                // disable north/south movement
+                directions[0] = false;
+                directions[3] = false;
+            }
+            else
+            {
+                // disable east/west movement
+                directions[1] = false;
+                directions[2] = false;
+            }
+        }
+
         List<IsoNode> neighbors = new List<IsoNode>();
 
-        int checkX, checkY;
-
         // north neighbor
-        checkX = _node.gridPosition.x;
-        checkY = _node.gridPosition.y + 1;
-
-        if (checkX >= 0 && checkX < gridSizeX && checkY >= 0 && checkY < gridSizeY)
-        {
-            neighbors.Add(grid[checkX, checkY]);
-        }
+        if(directions[0])
+            neighbors.Add(GetNodeFromOffset(_node, 0, -1));
 
         // south neighbor
-        checkX = _node.gridPosition.x;
-        checkY = _node.gridPosition.y - 1;
-
-        if (checkX >= 0 && checkX < gridSizeX && checkY >= 0 && checkY < gridSizeY)
-        {
-            neighbors.Add(grid[checkX, checkY]);
-        }
+        if(directions[3])
+            neighbors.Add(GetNodeFromOffset(_node, 0, 1));
 
         // east neighbor
-        checkX = _node.gridPosition.x + 1;
-        checkY = _node.gridPosition.y;
-
-        if (checkX >= 0 && checkX < gridSizeX && checkY >= 0 && checkY < gridSizeY)
-        {
-            neighbors.Add(grid[checkX, checkY]);
-        }
+        if(directions[1])
+            neighbors.Add(GetNodeFromOffset(_node, 1, 0));
 
         // west neighbor
-        checkX = _node.gridPosition.x - 1;
-        checkY = _node.gridPosition.y;
-
-        if (checkX >= 0 && checkX < gridSizeX && checkY >= 0 && checkY < gridSizeY)
-        {
-            neighbors.Add(grid[checkX, checkY]);
-        }
+        if(directions[2])
+            neighbors.Add(GetNodeFromOffset(_node, -1, 0));
 
         return neighbors;
     }
@@ -170,7 +161,6 @@ public class IsoGrid : MonoBehaviour
     {
         return GetWalkableNodesInRange(WorldToNode(startPos).gridPosition, range);
     }
-
 
     public List<IsoNode> GetWalkableNodesInRange(Vector3Int startTile, int range)
     {
@@ -197,7 +187,7 @@ public class IsoGrid : MonoBehaviour
 
                 foreach (IsoNode neighbor in GetNeighbors(node))
                 {
-                    if (!marked.Contains(neighbor))
+                    if (neighbor != null && !marked.Contains(neighbor))
                     {
                         neighbor.distance = 1 + node.distance;
                         processing.Enqueue(neighbor);
@@ -247,6 +237,51 @@ public class IsoGrid : MonoBehaviour
     }
 
     // Util Methods *******************************************************************************
+    private IsoNode GetNodeFromOffset(IsoNode _node, int x_offset, int y_offset)
+    {
+        int checkX = _node.gridPosition.x + x_offset;
+        int checkY = _node.gridPosition.y + y_offset;
+
+        if ((checkX >= 0 && checkX < gridSizeX && checkY >= 0 && checkY < gridSizeY))
+        {
+            Vector3Int currentCell = NodeToTile(checkX, checkY, _node.gridPosition.z);
+
+            if(!TileIsOmniDirectional(currentCell))
+            {
+                if (tileMap.GetTransformMatrix(currentCell).lossyScale.x < 0)
+                {
+                    if (x_offset != 0 && y_offset == 0)
+                        return grid[checkX, checkY];
+                    else
+                        return null;
+                }
+                else
+                {
+                    if (x_offset == 0 && y_offset != 0)
+                        return grid[checkX, checkY];
+                    else
+                        return null;
+                }   
+            }
+
+            return grid[checkX, checkY];
+        }
+        return null;
+    }
+
+    private bool TileIsOmniDirectional(Vector3Int currentCell)
+    {
+        if (tileMap.HasTile(currentCell) && TileHasData(tileMap, currentCell))
+        {
+            if (!dataFromTiles[tileMap.GetTile(currentCell)].OmniDirectional)
+            {
+                return false;
+            }
+        }
+
+        return true;
+    }
+
     private bool TileHasData(Tilemap map, Vector3Int currentCell)
     {
         TileBase currentTile = map.GetTile(currentCell);
@@ -276,6 +311,16 @@ public class IsoGrid : MonoBehaviour
         int_y = Mathf.Clamp(Mathf.RoundToInt(node_y) - 1,0,gridSizeY-1);
 
         return grid[int_x, int_y];
+    }
+
+    public Vector3Int NodeToTile(float x, float y, float z)
+    {
+        return tileMap.WorldToCell(NodeToWorld(x, y, z));
+    }
+
+    public Vector3Int NodeToTile(Vector3Int pos)
+    {
+        return NodeToTile(pos.x, pos.y, pos.z);
     }
 
     public bool PointIsInGrid(Vector3Int point)

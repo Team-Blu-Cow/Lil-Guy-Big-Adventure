@@ -69,6 +69,9 @@ public class PathFinder : MonoBehaviour
 
                 foreach (IsoNode neighbour in grid.GetNeighbors(currentNode))
                 {
+                    if (neighbour == null)
+                        continue;
+
                     if (!neighbour.IsTraversable() || closedSet.Contains(neighbour))
                         continue;
 
