@@ -23,12 +23,29 @@ public enum stat_used
 
 public class Ability : MonoBehaviour
 {
-
     public string abilityName;
     public ability_type abilityType;
     public stat_used statUsed;
     public float abilityPower;
     public int abilityRange;
     public int abilityArea;
-    public Aspects.Aspect abilityAspect;    
+    public Aspects.Aspect abilityAspect;
+
+    public float animDelay = 0f;
+    public float animSpeed = 1f;
+
+    [HideInInspector] public BattleManager bManager;
+
+    public void PlayAnim()
+    {
+        Animator animator = this.GetComponent<Animator>();
+        animator.speed = animSpeed;
+        Destroy(gameObject, animator.GetCurrentAnimatorStateInfo(0).length + animDelay);
+    }
+
+    private void OnDestroy()
+    {
+        if (bManager != null)
+            bManager.animEffectComplete = true;
+    }
 }

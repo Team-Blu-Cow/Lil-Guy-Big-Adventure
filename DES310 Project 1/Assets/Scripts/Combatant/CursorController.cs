@@ -40,14 +40,14 @@ public class CursorController : MonoBehaviour
         //{
             Vector2 worldPos;
             worldPos = Camera.main.ScreenToWorldPoint(position);
-            mousePos = new Vector3(worldPos.x, worldPos.y, -1);
+            mousePos = new Vector3(worldPos.x, worldPos.y, 0);
         //}
 
     }
 
     void MouseLeftClick()
     {
-
+        //gameObject.GetComponent<DmgPopupTestScript>().CreatePopup(mousePos);
     }
 
     void MouseRightClick()
