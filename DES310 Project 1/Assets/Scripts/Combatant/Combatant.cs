@@ -11,6 +11,8 @@ public enum Combatant_State
     Attacked,
 }
 
+
+
 public class Combatant : MonoBehaviour
 {
     public int combatantNum;

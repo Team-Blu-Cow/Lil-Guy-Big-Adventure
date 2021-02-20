@@ -1139,7 +1139,6 @@ MonoBehaviour:
   enemyCombatants:
   - {fileID: 1684284266}
   - {fileID: 1463625452}
-  - {fileID: 1198586375}
   playerParty: {fileID: 299488561}
   combatants: []
   currentCombatant: {fileID: 0}
@@ -2750,7 +2749,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 6127942090193602138, guid: dddb1748b38a99b4888117d6eccbe498, type: 3}
       propertyPath: m_RootOrder
-      value: 5
+      value: 6
       objectReference: {fileID: 0}
     - target: {fileID: 6127942090193602138, guid: dddb1748b38a99b4888117d6eccbe498, type: 3}
       propertyPath: m_LocalPosition.x
@@ -5486,9 +5485,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   battleManager: {fileID: 143049153}
-  initPlace: 3
+  initPlace: 1
   battleQueue: []
-  combatantSprite: {fileID: 0}
 --- !u!1001 &891736435
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -9372,9 +9370,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   battleManager: {fileID: 143049153}
-  initPlace: 4
+  initPlace: 0
   battleQueue: []
-  combatantSprite: {fileID: 0}
 --- !u!1 &1111125559
 GameObject:
   m_ObjectHideFlags: 0
@@ -10746,9 +10743,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   battleManager: {fileID: 143049153}
-  initPlace: 1
+  initPlace: 3
   battleQueue: []
-  combatantSprite: {fileID: 0}
 --- !u!1 &1297161270
 GameObject:
   m_ObjectHideFlags: 0
@@ -11046,7 +11042,7 @@ Transform:
   - {fileID: 77412574}
   - {fileID: 1732287705}
   m_Father: {fileID: 0}
-  m_RootOrder: 6
+  m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1394639020
 GameObject:
@@ -12332,9 +12328,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   battleManager: {fileID: 143049153}
-  initPlace: 0
+  initPlace: 4
   battleQueue: []
-  combatantSprite: {fileID: 0}
 --- !u!1 &1463625452 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 6127942090193602143, guid: dddb1748b38a99b4888117d6eccbe498, type: 3}
@@ -17470,7 +17465,6 @@ MonoBehaviour:
   battleManager: {fileID: 143049153}
   initPlace: 2
   battleQueue: []
-  combatantSprite: {fileID: 0}
 --- !u!224 &195969707040870797
 RectTransform:
   m_ObjectHideFlags: 0
@@ -17485,9 +17479,9 @@ RectTransform:
   m_Father: {fileID: 8183143970664515197}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 112.91, y: 0}
+  m_AnchorMin: {x: 0, y: 1}
+  m_AnchorMax: {x: 0, y: 1}
+  m_AnchoredPosition: {x: 112.91, y: -56.1379}
   m_SizeDelta: {x: 205.82, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1158668276547518294

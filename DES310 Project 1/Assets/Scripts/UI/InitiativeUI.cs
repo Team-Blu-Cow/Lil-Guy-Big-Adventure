@@ -8,7 +8,6 @@ public class InitiativeUI : MonoBehaviour
     public BattleManager battleManager;
     public int initPlace;
     public GameObject[] battleQueue;
-    public Sprite combatantSprite;
     bool imageSet = false;
     // Start is called before the first frame update
     void Start()
@@ -32,8 +31,8 @@ public class InitiativeUI : MonoBehaviour
                 battleQueue = battleManager.getBattleQueue().ToArray();
                 if (initPlace < battleQueue.Length)
                 {
-                    combatantSprite = battleQueue[initPlace].GetComponent<SpriteRenderer>().sprite;
-                    GetComponent<Image>().sprite = combatantSprite;
+                    GetComponent<Image>().sprite = battleQueue[initPlace].GetComponent<SpriteRenderer>().sprite;
+                    GetComponent<Image>().SetNativeSize();
                     imageSet = true;
                 }               
             }
