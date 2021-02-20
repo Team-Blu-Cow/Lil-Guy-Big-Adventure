@@ -3,6 +3,37 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
+public struct AbilityResult
+{
+    private float m_overallDamage;
+    private bool m_crit;
+
+    public float oDamage
+    {
+        get
+        {
+            return m_overallDamage;
+        }
+        set
+        {
+            m_overallDamage = value;
+        }
+    }
+
+    public bool crit
+    {
+        get
+        {
+            return m_crit;
+        }
+        set
+        {
+            m_crit = value;
+        }
+    }
+    
+}
+
 public class TestCombatSystem : MonoBehaviour
 {
 
@@ -16,7 +47,6 @@ public class TestCombatSystem : MonoBehaviour
     private Item[] items;
     private Quirks[] quirks;
 
-    float damage = 0;
     float poisonDamage = 0;
 
 
@@ -56,47 +86,49 @@ public class TestCombatSystem : MonoBehaviour
 
     }
 
-    private void DamageAbility(int abilityNum)
+    private AbilityResult DamageAbility(int abilityNum)
     {
         Quirks[] enemyQuirks = enemy.GetComponent<Combatant>().combatantQuirks;
         float[] enemyResistances = enemy.GetComponent<Combatant>().resistances;
+        AbilityResult abilityResult = new AbilityResult();
+        bool isCrit = false;
 
         int aspectType = (int)abilitiesUsing[abilityNum].abilityAspect;
 
-        float tempDamage = 0;
+        float damage = 0;
 
         switch (abilitiesUsing[abilityNum].statUsed)
         {
             case stat_used.Strength:
                 damage = abilitiesUsing[abilityNum].abilityPower * combatantStats.getStat(Combatant_Stats.Strength);
 
-                tempDamage = (float)damage * enemyResistances[aspectType];
+                damage = damage * enemyResistances[aspectType];
 
                 for (int i = 0; i < 3; i++)
                 {
-                    tempDamage *= CheckQuirkTypeResistances(enemyQuirks[i], aspectType);
+                    damage *= CheckQuirkTypeResistances(enemyQuirks[i], aspectType);
                 }
                 break;
 
             case stat_used.Magic:
                 damage = abilitiesUsing[abilityNum].abilityPower * combatantStats.getStat(Combatant_Stats.Magic);
 
-                tempDamage = (float)damage * enemyResistances[aspectType];
+                damage = damage * enemyResistances[aspectType];
 
                 for (int i = 0; i < 3; i++)
                 {
-                    tempDamage *= CheckQuirkTypeResistances(enemyQuirks[i], aspectType);
+                    damage *= CheckQuirkTypeResistances(enemyQuirks[i], aspectType);
                 }
                 break;
 
             case stat_used.Dexterity:
                 damage = abilitiesUsing[abilityNum].abilityPower * combatantStats.getStat(Combatant_Stats.Dexterity);
 
-                tempDamage = (float)damage * enemyResistances[aspectType];
+                damage = damage * enemyResistances[aspectType];
 
                 for (int i = 0; i < 3; i++)
                 {
-                    tempDamage *= CheckQuirkTypeResistances(enemyQuirks[i], aspectType);
+                    damage *= CheckQuirkTypeResistances(enemyQuirks[i], aspectType);
                 }
                 break;
 
@@ -104,20 +136,24 @@ public class TestCombatSystem : MonoBehaviour
                 break;
         }
 
-        damage = (int)tempDamage;
-
         if (Random.Range(1, 100) < combatantStats.getStat(Combatant_Stats.Luck))
         {
             damage *= 2;
+            isCrit = true;
         }
+
 
         damage += poisonDamage;
         enemy.GetComponent<Combatant>().do_damage((int)damage, abilitiesUsing[abilityNum].abilityAspect);
         Debug.Log("Enemy HP: " + enemy.GetComponent<Stats>().getStat(Combatant_Stats.HP));
-
         Debug.Log("Dealt " + damage + " damage");
+
+        abilityResult.oDamage = damage;
+        abilityResult.crit = isCrit;
+
         poisonDamage = 0;
-        damage = 0;
+
+        return abilityResult;
     }
 
     private void HealAbility(int abilityNum)
