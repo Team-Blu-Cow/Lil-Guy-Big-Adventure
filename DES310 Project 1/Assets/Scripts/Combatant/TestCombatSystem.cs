@@ -3,6 +3,37 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
+public struct AbilityResult
+{
+    private float m_overallDamage;
+    private bool m_crit;
+
+    public float oDamage
+    {
+        get
+        {
+            return m_overallDamage;
+        }
+        set
+        {
+            m_overallDamage = value;
+        }
+    }
+
+    public bool crit
+    {
+        get
+        {
+            return m_crit;
+        }
+        set
+        {
+            m_crit = value;
+        }
+    }
+    
+}
+
 public class TestCombatSystem : MonoBehaviour
 {
     public GameObject enemy;
@@ -15,7 +46,6 @@ public class TestCombatSystem : MonoBehaviour
     private Item[] items;
     private Quirks[] quirks;
 
-    float damage = 0;
     float poisonDamage = 0;
 
 
@@ -55,47 +85,49 @@ public class TestCombatSystem : MonoBehaviour
 
     }
 
-    private void DamageAbility(int abilityNum)
+    private AbilityResult DamageAbility(int abilityNum)
     {
         Quirks[] enemyQuirks = enemy.GetComponent<Combatant>().combatantQuirks;
         float[] enemyResistances = enemy.GetComponent<Combatant>().resistances;
+        AbilityResult abilityResult = new AbilityResult();
+        bool isCrit = false;
 
         int aspectType = (int)abilitiesUsing[abilityNum].abilityAspect;
 
-        float tempDamage = 0;
+        float damage = 0;
 
         switch (abilitiesUsing[abilityNum].statUsed)
         {
             case stat_used.Strength:
                 damage = abilitiesUsing[abilityNum].abilityPower * combatantStats.getStat(Combatant_Stats.Strength);
 
-                tempDamage = (float)damage * enemyResistances[aspectType];
+                damage = damage * enemyResistances[aspectType];
 
                 for (int i = 0; i < 3; i++)
                 {
-                    tempDamage *= CheckQuirkTypeResistances(enemyQuirks[i], aspectType);
+                    damage *= CheckQuirkTypeResistances(enemyQuirks[i], aspectType);
                 }
                 break;
 
             case stat_used.Magic:
                 damage = abilitiesUsing[abilityNum].abilityPower * combatantStats.getStat(Combatant_Stats.Magic);
 
-                tempDamage = (float)damage * enemyResistances[aspectType];
+                damage = damage * enemyResistances[aspectType];
 
                 for (int i = 0; i < 3; i++)
                 {
-                    tempDamage *= CheckQuirkTypeResistances(enemyQuirks[i], aspectType);
+                    damage *= CheckQuirkTypeResistances(enemyQuirks[i], aspectType);
                 }
                 break;
 
             case stat_used.Dexterity:
                 damage = abilitiesUsing[abilityNum].abilityPower * combatantStats.getStat(Combatant_Stats.Dexterity);
 
-                tempDamage = (float)damage * enemyResistances[aspectType];
+                damage = damage * enemyResistances[aspectType];
 
                 for (int i = 0; i < 3; i++)
                 {
-                    tempDamage *= CheckQuirkTypeResistances(enemyQuirks[i], aspectType);
+                    damage *= CheckQuirkTypeResistances(enemyQuirks[i], aspectType);
                 }
                 break;
 
@@ -103,25 +135,38 @@ public class TestCombatSystem : MonoBehaviour
                 break;
         }
 
-        damage = (int)tempDamage;
-
         if (Random.Range(1, 100) < combatantStats.getStat(Combatant_Stats.Luck))
         {
             damage *= 2;
+            isCrit = true;
         }
+
 
         damage += poisonDamage;
         enemy.GetComponent<Combatant>().do_damage((int)damage, abilitiesUsing[abilityNum].abilityAspect);
-        Debug.Log("Enemy HP: " + enemy.GetComponent<Stats>().getStat(Combatant_Stats.HP));
+        //Debug.Log("Enemy HP: " + enemy.GetComponent<Stats>().getStat(Combatant_Stats.HP));
+        //Debug.Log("Dealt " + damage + " damage");
 
-        Debug.Log("Dealt " + damage + " damage");
+        abilityResult.oDamage = damage;
+        abilityResult.crit = isCrit;
+
         poisonDamage = 0;
-        damage = 0;
+
+        return abilityResult;
     }
 
-    private void HealAbility(int abilityNum)
+    private AbilityResult HealAbility(int abilityNum)
     {
+        bool isCrit = false;
+        AbilityResult abilityResult = new AbilityResult();
         int heal = (int)abilitiesUsing[abilityNum].abilityPower * combatantStats.getStat(Combatant_Stats.Magic);
+
+        if (Random.Range(1, 100) < combatantStats.getStat(Combatant_Stats.Luck))
+        {
+            heal *= 2;
+            isCrit = true;
+        }
+
         if (abilitiesUsing[abilityNum].statUsed == stat_used.Magic)
         {
             combatantStats.setStat(Combatant_Stats.HP, combatantStats.getStat(Combatant_Stats.HP) + heal);
@@ -130,47 +175,67 @@ public class TestCombatSystem : MonoBehaviour
                 combatantStats.setStat(Combatant_Stats.HP, combatantStats.getStat(Combatant_Stats.Constitution));
             }
         }
-        Debug.Log("Healed " + heal + " points of health");
+
+        abilityResult.oDamage = heal;
+        abilityResult.crit = isCrit;
+        
+        //Debug.Log("Healed " + heal + " points of health");
+
+        return abilityResult;
     }
 
-    private void BuffAbility(int abilityNum)
+    private AbilityResult BuffAbility(int abilityNum)
     {
+        bool isCrit = false;
+        AbilityResult abilityResult = new AbilityResult();
+        int buff = (int)abilitiesUsing[abilityNum].abilityPower;
+
+        if (Random.Range(1, 100) < combatantStats.getStat(Combatant_Stats.Luck))
+        {
+            buff *= 2;
+            isCrit = true;
+        }
+
         switch (abilitiesUsing[abilityNum].statUsed)
         {
             case stat_used.Strength:
-                combatantStats.setStat(Combatant_Stats.Strength, combatantStats.getStat(Combatant_Stats.Strength) + (int)abilitiesUsing[abilityNum].abilityPower);
-                Debug.Log("Strength has been buffed to " + combatantStats.getStat(Combatant_Stats.Strength));
+                combatantStats.setStat(Combatant_Stats.Strength, combatantStats.getStat(Combatant_Stats.Strength) + buff);
+                //Debug.Log("Strength has been buffed to " + combatantStats.getStat(Combatant_Stats.Strength));
                 break;
             case stat_used.Dexterity:
-                combatantStats.setStat(Combatant_Stats.Dexterity, combatantStats.getStat(Combatant_Stats.Dexterity) + (int)abilitiesUsing[abilityNum].abilityPower);
-                Debug.Log("Strength has been buffed to " + combatantStats.getStat(Combatant_Stats.Dexterity));
+                combatantStats.setStat(Combatant_Stats.Dexterity, combatantStats.getStat(Combatant_Stats.Dexterity) + buff);
+                //Debug.Log("Strength has been buffed to " + combatantStats.getStat(Combatant_Stats.Dexterity));
                 break;
             case stat_used.Magic:
-                combatantStats.setStat(Combatant_Stats.Magic, combatantStats.getStat(Combatant_Stats.Magic) + (int)abilitiesUsing[abilityNum].abilityPower);
-                Debug.Log("Strength has been buffed to " + combatantStats.getStat(Combatant_Stats.Magic));
+                combatantStats.setStat(Combatant_Stats.Magic, combatantStats.getStat(Combatant_Stats.Magic) + buff);
+                //Debug.Log("Strength has been buffed to " + combatantStats.getStat(Combatant_Stats.Magic));
                 break;
             case stat_used.Defence:
-                combatantStats.setStat(Combatant_Stats.Defence, combatantStats.getStat(Combatant_Stats.Defence) + (int)abilitiesUsing[abilityNum].abilityPower);
-                Debug.Log("Strength has been buffed to " + combatantStats.getStat(Combatant_Stats.Defence));
+                combatantStats.setStat(Combatant_Stats.Defence, combatantStats.getStat(Combatant_Stats.Defence) + buff);
+                //Debug.Log("Strength has been buffed to " + combatantStats.getStat(Combatant_Stats.Defence));
                 break;
             case stat_used.Constitution:
-                combatantStats.setStat(Combatant_Stats.Constitution, combatantStats.getStat(Combatant_Stats.Constitution) + (int)abilitiesUsing[abilityNum].abilityPower);
-                Debug.Log("Strength has been buffed to " + combatantStats.getStat(Combatant_Stats.Constitution));
+                combatantStats.setStat(Combatant_Stats.Constitution, combatantStats.getStat(Combatant_Stats.Constitution) + buff);
+                //Debug.Log("Strength has been buffed to " + combatantStats.getStat(Combatant_Stats.Constitution));
                 break;
             case stat_used.Luck:
-                combatantStats.setStat(Combatant_Stats.Luck, combatantStats.getStat(Combatant_Stats.Luck) + (int)abilitiesUsing[abilityNum].abilityPower);
-                Debug.Log("Strength has been buffed to " + combatantStats.getStat(Combatant_Stats.Luck));
+                combatantStats.setStat(Combatant_Stats.Luck, combatantStats.getStat(Combatant_Stats.Luck) + buff);
+                //Debug.Log("Strength has been buffed to " + combatantStats.getStat(Combatant_Stats.Luck));
                 break;
             case stat_used.Speed:
-                combatantStats.setStat(Combatant_Stats.Speed, combatantStats.getStat(Combatant_Stats.Speed) + (int)abilitiesUsing[abilityNum].abilityPower);
-                Debug.Log("Strength has been buffed to " + combatantStats.getStat(Combatant_Stats.Speed));
+                combatantStats.setStat(Combatant_Stats.Speed, combatantStats.getStat(Combatant_Stats.Speed) + buff);
+                //Debug.Log("Strength has been buffed to " + combatantStats.getStat(Combatant_Stats.Speed));
                 break;
             case stat_used.Initiative:
-                combatantStats.setStat(Combatant_Stats.Initiative, combatantStats.getStat(Combatant_Stats.Initiative) + (int)abilitiesUsing[abilityNum].abilityPower);
-                Debug.Log("Strength has been buffed to " + combatantStats.getStat(Combatant_Stats.Initiative));
+                combatantStats.setStat(Combatant_Stats.Initiative, combatantStats.getStat(Combatant_Stats.Initiative) + buff);
+                //Debug.Log("Strength has been buffed to " + combatantStats.getStat(Combatant_Stats.Initiative));
                 break;
-
         }
+
+        abilityResult.oDamage = buff;
+        abilityResult.crit = isCrit;
+
+        return abilityResult;
     }
 
     public void UseItem(int currentItem)

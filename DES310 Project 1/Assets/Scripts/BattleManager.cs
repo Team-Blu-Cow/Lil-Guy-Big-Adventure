@@ -23,7 +23,7 @@ public class BattleManager : MonoBehaviour
 
     private Vector3 abilityTargetPos;
     [HideInInspector] public bool animEffectComplete = false;
-
+	
     public Vector3 targetPos;
     public Vector3 cursorPos;
     public Vector2 uiPos;
@@ -473,6 +473,14 @@ public class BattleManager : MonoBehaviour
         //Debug.Log("End Turn");
     }
 
+    public Queue<GameObject> getBattleQueue()
+    {
+        return battleQueue;
+    }
 
+    public CombatantState getCombatantState()
+    {
+        return combatantState;
+    }
 
 }

@@ -9,7 +9,7 @@ public class CombatUI : MonoBehaviour
     public CombatButton[] itemButtons;
     public CombatButton[] choiceButtons;
     public RectTransform canvas;
-
+    
     InitiativeTracker initTracker;
     Vector2 combatantPos;
     Vector2 combatantScreenPos;
@@ -28,6 +28,7 @@ public class CombatUI : MonoBehaviour
     {
         //combatantScreenPos = Camera.main.WorldToViewportPoint(initTracker.getCurrentCombatant().transform.position);
         //combatantPos = new Vector2((combatantScreenPos.x * canvas.sizeDelta.x) - (canvas.sizeDelta.x * 0.5f), (combatantScreenPos.y * canvas.sizeDelta.y) - (canvas.sizeDelta.y * 0.5f));
+        // transform.GetChild(0);
     }
 
     public Vector2 WorldToCanvasSpace(Vector3 worldPos)
