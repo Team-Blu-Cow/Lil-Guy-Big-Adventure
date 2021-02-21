@@ -160,7 +160,7 @@ MonoBehaviour:
   - {fileID: 0}
   resistances:
   - 1
-  - 2
+  - 1
   - 0.5
   - 2
   - 0
@@ -203,4 +203,6 @@ MonoBehaviour:
   target: {fileID: 0}
   speed: 0.5
   path: []
+  currentlyPathFinding: 0
+  PathFinished: 0
   gridHighLighter: {fileID: 0}
