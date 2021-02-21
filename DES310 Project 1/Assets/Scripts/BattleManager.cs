@@ -27,12 +27,15 @@ public class BattleManager : MonoBehaviour
     public Vector2 uiPos;
 
     [SerializeField] private BattleState battleState;
-    [SerializeField] private CombatantState combatantState;
+    public BattleState BattleState { get { return BattleState; } set { battleState = value; } }
+    [SerializeField] private CombatantState combatantState; 
+    public CombatantState CombatantState { get { return combatantState; } set { combatantState = value; } }
     [SerializeField] private ActionState actionState;
 
     //public InitiativeTracker initTracker;
     [SerializeField] private GridHighLighter gridHighLighter;
     [SerializeField] private CombatUI combatUI;
+    public CombatUI CombatUI { get { return combatUI; } }
 
     [SerializeField] private AI.AICore ai_core;
 

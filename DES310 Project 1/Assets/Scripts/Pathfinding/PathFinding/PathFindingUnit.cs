@@ -10,6 +10,7 @@ public class PathFindingUnit : MonoBehaviour
     int targetIndex;
     bool currentlyPathFinding = false;
     [SerializeField] private GridHighLighter gridHighLighter;
+    public GridHighLighter GridHighLighter { get {return gridHighLighter; } set {gridHighLighter = value; } }
 
     private void Start()
     {

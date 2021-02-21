@@ -144,6 +144,7 @@ public class MapGeneration : MonoBehaviour
                     }
                     else if (map[x, y] <= 0.8f)
                     {
+                        // Set a tree tile
                         tileMapFloor.SetTile(new Vector3Int(-x, -y, 0), grassTiles.tiles[Random.Range(0, 5)]);
                         tileMapTerrain.SetTile(new Vector3Int(-x, -y, 0), treeTiles.tiles[Random.Range(0, 2)]);
 
@@ -188,6 +189,9 @@ public class MapGeneration : MonoBehaviour
             {
                 LeanTween.value(transition.gameObject, a => transition.color = a, new Color(0, 0, 0, 1), new Color(0, 0, 0, 0f), 0.3f);
                 travelledRegions++;
+                battleManager.BattleState = BattleState.START;
+                battleManager.CombatantState = CombatantState.START;
+                battleManager.CombatUI.deactivateChoiceButtons();
             }
         });
     }
@@ -261,8 +265,9 @@ public class MapGeneration : MonoBehaviour
                 Vector2 enemyPos = new Vector2(Random.Range(0, size.x), Random.Range(0, size.y));
                 if (grid.GetNode(new Vector3Int((int)enemyPos.x, (int)enemyPos.y, 2)).IsTraversable())
                 {
-                    GameObject enemy = Instantiate(enemies[Random.Range(0, enemies.Length)], grid.NodeToWorld(enemyPos.x, enemyPos.y, 2), new Quaternion(0, 0, 0, 0), transform.GetChild(2)).gameObject;
+                    GameObject enemy = Instantiate(enemies[Random.Range(0, enemies.Length)], grid.NodeToWorld((int)enemyPos.x, (int)enemyPos.y, 2), new Quaternion(0, 0, 0, 0), transform.GetChild(2)).gameObject;
                     battleManager.enemyCombatants.Add(enemy);
+                    enemy.GetComponent<PathFindingUnit>().GridHighLighter = grid.GetComponent<GridHighLighter>();
                     placedEnemies.Add(enemy);
                     break;
                 }
