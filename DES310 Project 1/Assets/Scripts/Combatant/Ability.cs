@@ -31,12 +31,13 @@ public class Ability : MonoBehaviour
     public int abilityArea;
     public Aspects.Aspect abilityAspect;
 
-    public float animDelay = 0f;
-    public float animSpeed = 1f;
+    public float scale = 0.5f;
+    public float time = 2f;
+    public GameObject Anim; 
 
-    [HideInInspector] public BattleManager bManager;
+    /*[HideInInspector] public BattleManager bManager;*/
 
-    public void PlayAnim()
+    /*public void PlayAnim()
     {
         Animator animator = this.GetComponent<Animator>();
         animator.speed = animSpeed;
@@ -47,5 +48,5 @@ public class Ability : MonoBehaviour
     {
         if (bManager != null)
             bManager.animEffectComplete = true;
-    }
+    }*/
 }

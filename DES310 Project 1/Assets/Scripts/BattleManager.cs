@@ -327,7 +327,7 @@ public class BattleManager : MonoBehaviour
             //if (actionState == ActionState.ABILITY)
              //   DamagePopup.Create(abilityTargetPos, 300);
 
-            StartCoroutine(Wait(1));
+            StartCoroutine(WaitThenFinish(1));
         }
             
 
@@ -335,7 +335,9 @@ public class BattleManager : MonoBehaviour
             SetCombatantState(CombatantState.END);
     }
 
-    IEnumerator Wait(float seconds)
+    
+
+    IEnumerator WaitThenFinish(float seconds)
     {
         yield return new WaitForSeconds(seconds);
         actionState = ActionState.FINISHED;
@@ -350,7 +352,9 @@ public class BattleManager : MonoBehaviour
             AbilityResult result = behaviour.Attack(ai_core);
             if(result.target != null)
             {
-	            AnimateAbility(result.target.transform.position, result.abilityIndex);
+                abilityTargetPos = result.target.transform.position;
+
+                AnimateAbility(abilityTargetPos, result.abilityIndex);
 	            StartCoroutine(ShowDamagePopup(0.2f, (int)result.oDamage, result.crit));
             }
             else
@@ -412,11 +416,24 @@ public class BattleManager : MonoBehaviour
     public void AnimateAbility(Vector3 animPos, int abilityIndex)
     {
         // draw animation effect 
-        GameObject ability = Instantiate(currentCombatant.GetComponent<Combatant>().abilitiesUsing[abilityIndex].gameObject, animPos, Quaternion.identity);
+        /*GameObject ability = Instantiate(currentCombatant.GetComponent<Combatant>().abilitiesUsing[abilityIndex].gameObject, animPos, Quaternion.identity);
         ability.GetComponent<Ability>().bManager = this;
         ability.transform.localScale = new Vector3(2f, 2f, 2f);
         ability.GetComponent<SpriteRenderer>().sortingOrder = 1;
-        ability.GetComponent<Ability>().PlayAnim();
+        ability.GetComponent<Ability>().PlayAnim();*/
+        if (currentCombatant.GetComponent<Combatant>().abilitiesUsing[abilityIndex].Anim != null)
+        {
+            animPos = new Vector3(animPos.x, animPos.y-0.125f, 3);
+            GameObject ability = Instantiate(currentCombatant.GetComponent<Combatant>().abilitiesUsing[abilityIndex].Anim, animPos, Quaternion.identity);
+            ability.transform.localScale = Vector3.one * currentCombatant.GetComponent<Combatant>().abilitiesUsing[abilityIndex].scale;
+            StartCoroutine(WaitForAnim(currentCombatant.GetComponent<Combatant>().abilitiesUsing[abilityIndex].time));
+        }
+    }
+
+    IEnumerator WaitForAnim(float seconds)
+    {
+        yield return new WaitForSeconds(seconds);
+        animEffectComplete = true;
     }
 
     public void OnChooseAbility()
