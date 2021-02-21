@@ -46,6 +46,8 @@ namespace AI
                         {                            
                             GetComponent<TestCombatSystem>().enemy = node.occupier;
                             result = GetComponent<Combatant>().attackAbility(0);
+                            result.target = node.occupier;
+                            result.abilityIndex = 0;
                         }
                     }
                 }

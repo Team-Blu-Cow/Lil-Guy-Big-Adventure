@@ -347,13 +347,21 @@ public class BattleManager : MonoBehaviour
         if (behaviour)
         {
             actionState = ActionState.ABILITY;
-            behaviour.Attack(ai_core);
-
-            AnimateAbility(target.transform.position, abilityIndex);
-            StartCoroutine(ShowDamagePopup(0.2f, (int)result.oDamage, result.crit));
+            AbilityResult result = behaviour.Attack(ai_core);
+            if(result.target != null)
+            {
+	            AnimateAbility(result.target.transform.position, result.abilityIndex);
+	            StartCoroutine(ShowDamagePopup(0.2f, (int)result.oDamage, result.crit));
+            }
+            else
+            {
+                actionState = ActionState.FINISHED;
+            }
         }
-
-        actionState = ActionState.FINISHED;
+        else
+        {
+            actionState = ActionState.FINISHED;
+        }
     }
 
     public void RecieveAction(Vector3 mousePos)
