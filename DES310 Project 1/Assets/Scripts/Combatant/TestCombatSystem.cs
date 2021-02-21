@@ -7,6 +7,8 @@ public struct AbilityResult
 {
     private float m_overallDamage;
     private bool m_crit;
+    private GameObject m_target;
+    private int m_abilityIndex;
 
     public float oDamage
     {
@@ -31,6 +33,34 @@ public struct AbilityResult
             m_crit = value;
         }
     }
+
+    public GameObject target
+    {
+        get
+        {
+            return m_target;
+        }
+
+        set
+        {
+            m_target = value;
+        }
+    }
+
+    public int abilityIndex
+    {
+        get
+        {
+            return m_abilityIndex;
+        }
+
+        set
+        {
+            m_abilityIndex = value;
+        }
+    }
+
+
     
 }
 

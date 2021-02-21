@@ -17,29 +17,31 @@ public class InitiativeUI : MonoBehaviour
     void Update()
     {
         int count = 0;
-
-        if (battleManager.getBattleQueue() != null)
+        if (battleManager.BattleState == BattleState.IN_BATTLE)
         {
-            while (count < 5)
-            {
-                Queue <GameObject> battleQueue = new Queue<GameObject>(battleManager.getBattleQueue());
-
-                for (int i = 0; i < battleQueue.Count - 1; i++)
-                {
-                    battleQueue.Enqueue(battleQueue.Dequeue());
-                }
-
-                while (battleQueue.Count != 0 && count < 5)
-                {
-                    Image initImage = transform.GetChild(count).GetChild(0).GetComponent<Image>();
-                    GameObject combatant = battleQueue.Dequeue();
-                    initImage.sprite = combatant.GetComponent<SpriteRenderer>().sprite;
-                    initImage.SetNativeSize();
-                    count++;
-                }
-
-            }
-        }
+			if (battleManager.getBattleQueue() != null)
+	        {
+	            while (count < 5)
+	            {
+	                Queue <GameObject> battleQueue = new Queue<GameObject>(battleManager.getBattleQueue());
+	
+	                for (int i = 0; i < battleQueue.Count - 1; i++)
+	                {
+	                    battleQueue.Enqueue(battleQueue.Dequeue());
+	                }
+	
+	                while (battleQueue.Count != 0 && count < 5)
+	                {
+	                    Image initImage = transform.GetChild(count).GetChild(0).GetComponent<Image>();
+	                    GameObject combatant = battleQueue.Dequeue();
+	                    initImage.sprite = combatant.GetComponent<SpriteRenderer>().sprite;
+	                    initImage.SetNativeSize();
+	                    count++;
+	                }
+	
+	            }
+	        }
+		}
 
     }
 }

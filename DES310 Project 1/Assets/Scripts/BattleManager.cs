@@ -30,7 +30,7 @@ public class BattleManager : MonoBehaviour
     public Vector2 uiPos;
 
     [SerializeField] private BattleState battleState;
-    public BattleState BattleState { get { return BattleState; } set { battleState = value; } }
+    public BattleState BattleState { get { return battleState; } set { battleState = value; } }
     [SerializeField] private CombatantState combatantState; 
     public CombatantState CombatantState { get { return combatantState; } set { combatantState = value; } }
     [SerializeField] private ActionState actionState;
@@ -348,6 +348,9 @@ public class BattleManager : MonoBehaviour
         {
             actionState = ActionState.ABILITY;
             behaviour.Attack(ai_core);
+
+            AnimateAbility(target.transform.position, abilityIndex);
+            StartCoroutine(ShowDamagePopup(0.2f, (int)result.oDamage, result.crit));
         }
 
         actionState = ActionState.FINISHED;

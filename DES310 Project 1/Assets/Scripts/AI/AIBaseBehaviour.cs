@@ -11,7 +11,7 @@ namespace AI
         //public abstract void run(AICore aiCore);
 
         public abstract void Move(AICore aiCore, int distance);
-        public abstract void Attack(AICore aiCore);
+        public abstract AbilityResult Attack(AICore aiCore);
 
 
         // signifies if a combatant has completed all animation

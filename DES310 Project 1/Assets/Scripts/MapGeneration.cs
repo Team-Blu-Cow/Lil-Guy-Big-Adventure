@@ -67,6 +67,7 @@ public class MapGeneration : MonoBehaviour
 
     public void RenderMap()
     {
+        battleManager.BattleState = BattleState.FINISHED;
         Vector2 size = new Vector2(grid.gridSize.x, grid.gridSize.y);
         // PoissonDisc(grid.gridSize.x, grid.gridSize.y); // Doesnt work really just did some boofed stuff wiht the perlin noise map to place trees instead
 

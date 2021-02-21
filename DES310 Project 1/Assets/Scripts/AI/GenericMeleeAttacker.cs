@@ -24,10 +24,10 @@ namespace AI
                 turn_completed = true;
             }
         }
-        public override void Attack(AICore aiCore)
+        public override AbilityResult Attack(AICore aiCore)
         {
             turn_completed = false;
-
+            AbilityResult result = new AbilityResult();
             // TODO @matthew
             // check target is in range
             // deal damage
@@ -45,13 +45,14 @@ namespace AI
                         if(node != null && node.occupier != null)
                         {                            
                             GetComponent<TestCombatSystem>().enemy = node.occupier;
-                            GetComponent<Combatant>().attackAbility(0);
+                            result = GetComponent<Combatant>().attackAbility(0);
                         }
                     }
                 }
             }
-
+            
             turn_completed = true;
+            return result;
         }
 
         Vector3[] FindShortestPathToEnemy(AICore aiCore)

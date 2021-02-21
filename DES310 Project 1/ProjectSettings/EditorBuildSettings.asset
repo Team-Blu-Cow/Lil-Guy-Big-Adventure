@@ -6,21 +6,12 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 1
-    path: Assets/Scenes/Sprint 1/SampleScene.unity
-    guid: 2cda990e2423bbf4892e6590ba056729
-  - enabled: 1
-    path: Assets/Scenes/Sprint 1/SpellChecker.unity
-    guid: 67afd9598e6ff3b43a4b9ee932f2320b
+    path: Assets/Scenes/Sprint 3/SplashScreen.unity
+    guid: 43cf732645d165c40a08cffa4cada66c
   - enabled: 1
     path: Assets/Scenes/Sprint 1/MainMenu.unity
     guid: 1eed9786fb1c9b048bdafa219df709af
   - enabled: 1
-    path: Assets/Scenes/Sprint 1/UItesting.unity
-    guid: 1ac53c54246252b47b887327dd3d655c
-  - enabled: 1
-    path: Assets/Scenes/Sprint 3/Sprint 3 Base.unity
-    guid: 1c80c8108ebcb8443a941e24d9c22e6f
-  - enabled: 1
-    path: Assets/Scenes/Sprint 3/MainMenuTesting.unity
-    guid: f99ef75c1ec54eb49abd3bdf9515d535
+    path: Assets/Scenes/Sprint 3/Sprint 3 Jay.unity
+    guid: 47e776f9ec2f3ee43bede93847330876
   m_configObjects: {}
