@@ -61,7 +61,7 @@ public class TestCombatSystem : MonoBehaviour
     }
 
 
-    public void CastAbility(int abilityNum)
+    public AbilityResult CastAbility(int abilityNum)
     {
         Debug.Log("Casting Ability...");
         if (enemy != null)
@@ -69,20 +69,17 @@ public class TestCombatSystem : MonoBehaviour
             switch (abilitiesUsing[abilityNum].abilityType)
             {
                 case ability_type.Damage:
-                    DamageAbility(abilityNum);
-                    break;
+                    return DamageAbility(abilityNum);
                 case ability_type.Heal:
-                    HealAbility(abilityNum);
-                    break;
+                    return HealAbility(abilityNum);
                 case ability_type.Buff:
-                    BuffAbility(abilityNum);
-                    break;
+                    return BuffAbility(abilityNum);
                 default:
                     break;
             }
             enemy = null;
         }
-
+        return new AbilityResult();
     }
 
     private AbilityResult DamageAbility(int abilityNum)

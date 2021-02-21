@@ -8,7 +8,8 @@ public class PathFindingUnit : MonoBehaviour
     [SerializeField] float speed = 0.5f;
     [SerializeField] Vector3[] path;
     int targetIndex;
-    bool currentlyPathFinding = false;
+    [HideInInspector] public bool currentlyPathFinding = false;
+    [HideInInspector] public bool PathFinished = false;
     [SerializeField] private GridHighLighter gridHighLighter;
 
     private void Start()
@@ -105,6 +106,7 @@ public class PathFindingUnit : MonoBehaviour
                             targetIndex = 0;
                             path = new Vector3[0];
                             currentlyPathFinding = false;
+                            PathFinished = true;
                             yield break;
                         }
                         currentWaypoint = path[targetIndex];
@@ -118,6 +120,7 @@ public class PathFindingUnit : MonoBehaviour
 
 
         currentlyPathFinding = false;
+        PathFinished = true;
         yield return null;
     }
 

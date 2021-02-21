@@ -16,6 +16,7 @@ public class BattleManager : MonoBehaviour
     public GameObject currentCombatant = null;
     public GameObject selectedCombatant = null;
 
+    private bool currentlyMoving = false;
     private bool recievedMoveCommand = false;
     private bool receivedActionCommand = false;
     private int selectedAbility = 0;
@@ -179,23 +180,6 @@ public class BattleManager : MonoBehaviour
                 break;
         }
 
-        //CheckMousePos();
-
-    }
-
-    void CheckMousePos()
-    {
-        IsoNode hoverNode = gridHighLighter.grid.WorldToNode(cursorPos);
-
-
-        if (hoverNode.occupied == true)
-        {
-            hoverNode.occupier.GetComponent<PathFindingUnit>().SetSelectableTiles(currentCombatant.GetComponent<Stats>().getStat(Combatant_Stats.Speed));
-        }
-        else
-        {
-            currentCombatant.GetComponent<PathFindingUnit>().SetSelectableTiles(currentCombatant.GetComponent<Stats>().getStat(Combatant_Stats.Speed));
-        }
     }
 
     //--------------------------------------------------------------------------------------------------------------------------------------------//
@@ -256,16 +240,27 @@ public class BattleManager : MonoBehaviour
     // Move Phase **********************************************************************************************************************************
     void TurnMovePhase()
     {
-        if(currentCombatant.gameObject.tag == "Enemy")
+        if (currentCombatant.gameObject.tag == "Enemy")
         {
             AI.AIBaseBehavior behaviour = currentCombatant.GetComponent<AI.AIBaseBehavior>();
-            if(behaviour)
+            if (behaviour)
             {
-                if(behaviour.turn_completed)
+                if (behaviour.turn_completed)
                 {
                     SetCombatantState(CombatantState.ACTION);
                 }
             }
+        }
+        else
+        {
+            if(currentCombatant.GetComponent<PathFindingUnit>().PathFinished == true && currentlyMoving == true)
+            {
+                currentlyMoving = false;
+                currentCombatant.GetComponent<PathFindingUnit>().PathFinished = false;
+                SetCombatantState(CombatantState.ACTION);
+                combatUI.activateChoiceButtons(uiPos);
+            }
+
         }
     }
 
@@ -283,17 +278,13 @@ public class BattleManager : MonoBehaviour
 
     public void RecieveMove(Vector3 mousePos)
     {
-        //if (!recievedMoveCommand)
-        //{
-	        if (currentCombatant.tag == "Ally" && gridHighLighter.IsTileSelectable(gridHighLighter.grid.WorldToNode(mousePos)))
-	        {
-                uiPos = combatUI.WorldToCanvasSpace(mousePos);
+        if (currentCombatant.tag == "Ally" && gridHighLighter.IsTileSelectable(gridHighLighter.grid.WorldToNode(mousePos)))
+        {
+            uiPos = combatUI.WorldToCanvasSpace(mousePos);
 
-                targetPos = mousePos;
-	            combatUI.activateMoveButtons(uiPos);
-	            recievedMoveCommand = true;
-	        }
-        //}
+            targetPos = mousePos;
+            combatUI.activateMoveButtons(uiPos);
+        }
     }
 
     public void OnConfirmMove()
@@ -304,8 +295,9 @@ public class BattleManager : MonoBehaviour
         currentCombatant.GetComponent<PathFindingUnit>().RequestPath(new Vector2(targetPos.x, targetPos.y));
 
         gridHighLighter.ClearSelectableTiles();
-        SetCombatantState(CombatantState.ACTION);
-        combatUI.activateChoiceButtons(uiPos);
+        currentlyMoving = true;
+        //SetCombatantState(CombatantState.ACTION);
+        //combatUI.activateChoiceButtons(uiPos);
     }
 
     public void OnCancelMove()
@@ -387,17 +379,17 @@ public class BattleManager : MonoBehaviour
     void UseAbility(GameObject target, int abilityIndex)
     {
         currentCombatant.GetComponent<TestCombatSystem>().enemy = target;
-        currentCombatant.GetComponent<Combatant>().attackAbility(abilityIndex);
+        AbilityResult result = currentCombatant.GetComponent<Combatant>().attackAbility(abilityIndex);
 
         abilityTargetPos = target.transform.position;
 
         AnimateAbility(target.transform.position,abilityIndex);
-        StartCoroutine(ShowDamagePopup(0.2f, 300));
+        StartCoroutine(ShowDamagePopup(0.2f, (int)result.oDamage, result.crit));
     }
-    IEnumerator ShowDamagePopup(float seconds, int dmgNum)
+    IEnumerator ShowDamagePopup(float seconds, int dmgNum, bool crit)
     {
         yield return new WaitForSeconds(seconds);
-        DamagePopup.Create(abilityTargetPos, dmgNum);
+        DamagePopup.Create(abilityTargetPos, dmgNum, crit);
     }
 
     public void AnimateAbility(Vector3 animPos, int abilityIndex)

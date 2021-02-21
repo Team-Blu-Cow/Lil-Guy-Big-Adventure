@@ -122,10 +122,11 @@ public class Combatant : MonoBehaviour
         combatantState = Combatant_State.Attacking;
     }
 
-    public void attackAbility(int abilityNum)
+    public AbilityResult attackAbility(int abilityNum)
     {
-        GetComponent<TestCombatSystem>().CastAbility(abilityNum);
         combatantState = Combatant_State.Attacked;
+        return GetComponent<TestCombatSystem>().CastAbility(abilityNum);
+        
         //initTracker.ChangeCurrentCombatant();       
     }
 
