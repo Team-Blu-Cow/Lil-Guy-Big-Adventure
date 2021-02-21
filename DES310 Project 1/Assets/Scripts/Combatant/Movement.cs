@@ -14,12 +14,12 @@ public class Movement : MonoBehaviour
 
     private void Awake()
     {
-        target = GetComponent<PathFindingUnit>().target;
-
+        //target = GetComponent<PathFindingUnit>().target;
         controls = new InputManager();
+
         //controls.Keyboard.RClick.started += ctx => { RMouseDown = true; };
         //controls.Keyboard.RClick.canceled += ctx => { RMouseDown = false; };
-        controls.Keyboard.LClick.performed += ctx => Stop();
+        controls.Keyboard.LClick.performed += ctx => LeftDown();
     }
 
     private void OnEnable()
@@ -57,7 +57,7 @@ public class Movement : MonoBehaviour
         }*/
     }
 
-    private void Stop()
+    private void LeftDown()
     {
         LClick = true;
 
@@ -87,6 +87,7 @@ public class Movement : MonoBehaviour
                             grid.CreateGrid();
                         }
                     }
+
                     if (node.gridPosition == grid.WorldToNode(transform.position).gridPosition)
                     {
                         FindObjectOfType<MapGeneration>().StartSwap(i);

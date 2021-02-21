@@ -8,7 +8,7 @@ public enum CombatantState { START, MOVE, ACTION, END }
 public enum ActionState { NOT_SELECTED, WAIT, ABILITY, ITEM, FINISHED }
 public class BattleManager : MonoBehaviour
 {
-    public GameObject[] enemyCombatants;
+    public List<GameObject> enemyCombatants;
     [SerializeField] private PlayerPartyManager playerParty;
 
     [SerializeField] List<GameObject> combatants;

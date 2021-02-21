@@ -28,6 +28,7 @@ public class MapGeneration : MonoBehaviour
 
     [Header("Objects")]
     [SerializeField] Item[] items;
+    [SerializeField] GameObject[] enemies;
     [SerializeField] GameObject exit;
     [SerializeField] Transform Player;
 
@@ -35,18 +36,22 @@ public class MapGeneration : MonoBehaviour
     [SerializeField] float lowerBound = 0.1f;
     [SerializeField] float upperBound = 0.7f;
     [SerializeField] float multiplier = 0.75f;
-    [SerializeField] float radius = 5f;
 
+    [Header("transition")]
     [SerializeField] Image transition;
 
     [Header ("InGame Objects")]
     List<GameObject> placedItems = new List<GameObject>();
-    List<Vector3Int> itemsPositions = new List<Vector3Int>();
     List<GameObject> placedExits = new List<GameObject>();
+    List<GameObject> placedEnemies = new List<GameObject>();
 
+    [Header ("Perlin noise")]
     List<Vector2> treeGrid = new List<Vector2>();
-    private int avalibleExit;
+    [SerializeField] float radius = 5f;
 
+    [SerializeField] BattleManager battleManager;
+
+    private int avalibleExit;
     private int travelledRegions;
     Direction enterDirection = 0;
 
@@ -76,11 +81,15 @@ public class MapGeneration : MonoBehaviour
                 Destroy(placedItems[i]);
         }
         placedItems.Clear();
-        itemsPositions.Clear();
 
         // Clear exits
         placedExits.ForEach(Destroy);
         placedExits.Clear();
+
+        // Clear enemies
+        battleManager.enemyCombatants.Clear();
+        placedEnemies.ForEach(Destroy);
+        placedEnemies.Clear();
 
         // Check if it should be a campfire
         if (travelledRegions >= 3 && Random.Range(0, 100 * (1 / (float)travelledRegions)) < 10)
@@ -132,12 +141,6 @@ public class MapGeneration : MonoBehaviour
 
                         if (Random.Range(0, 3) == 0)
                             tileMapFloor.SetTile(new Vector3Int(-x, -y, -2), rockTiles.tiles[Random.Range(0, rockTiles.tiles.Length)]); // set under rock on some tiles
-
-                        if (Random.Range(0, 50) == 0) // Place items at a random rate
-                        {
-                            itemsPositions.Add(new Vector3Int(x, y, 2));
-                        }
-
                     }
                     else if (map[x, y] <= 0.8f)
                     {
@@ -165,7 +168,7 @@ public class MapGeneration : MonoBehaviour
 
         PlaceExits();
         PlaceItems(size);
-        //PlaceEnemies(size);
+        PlaceEnemies(size);
 
         grid.CreateGrid();
 
@@ -223,7 +226,7 @@ public class MapGeneration : MonoBehaviour
                 Vector2 itemPos = new Vector2(Random.Range(0, size.x), Random.Range(0, size.y));
                 if (grid.GetNode(new Vector3Int((int)itemPos.x, (int)itemPos.y, 2)).IsTraversable())
                 {
-                    placedItems.Add(Instantiate(items[Random.Range(0, items.Length)], grid.NodeToWorld(itemPos.x, itemPos.y, 2), new Quaternion(0, 0, 0, 0)).gameObject);
+                    placedItems.Add(Instantiate(items[Random.Range(0, items.Length)], grid.NodeToWorld(itemPos.x, itemPos.y, 2), new Quaternion(0, 0, 0, 0), transform.GetChild(1)).gameObject);
                     break;
                 }
                 n++;
@@ -255,10 +258,12 @@ public class MapGeneration : MonoBehaviour
             int n = 0;
             while (n < attempts)
             {
-                Vector2 itemPos = new Vector2(Random.Range(0, size.x), Random.Range(0, size.y));
-                if (grid.GetNode(new Vector3Int((int)itemPos.x, (int)itemPos.y, 2)).IsTraversable())
+                Vector2 enemyPos = new Vector2(Random.Range(0, size.x), Random.Range(0, size.y));
+                if (grid.GetNode(new Vector3Int((int)enemyPos.x, (int)enemyPos.y, 2)).IsTraversable())
                 {
-                    
+                    GameObject enemy = Instantiate(enemies[Random.Range(0, enemies.Length)], grid.NodeToWorld(enemyPos.x, enemyPos.y, 2), new Quaternion(0, 0, 0, 0), transform.GetChild(2)).gameObject;
+                    battleManager.enemyCombatants.Add(enemy);
+                    placedEnemies.Add(enemy);
                     break;
                 }
                 n++;
@@ -372,14 +377,14 @@ public class MapGeneration : MonoBehaviour
         switch (direction)
         {
             case Direction.TopLeft: // place bridge going -x
-                for (int i = 0; i < grid.gridSize.x / 2; i++)
+                for (int i = 1; i < grid.gridSize.x / 2; i++)
                 {
                     if (tileMapFloor.GetTile(new Vector3Int(-i, -startPos.x-1, 0)) == null)
                     {
                         tileMapFloor.SetTile(new Vector3Int(-i, -startPos.x-1, 0), bridgeTiles.tiles[0]);
                     }
                 }
-                tempExit = Instantiate(exit, grid.NodeToWorld(startPos.x, startPos.y, 2), Quaternion.Euler(0f, 0f, 0f), transform).gameObject;
+                tempExit = Instantiate(exit, grid.NodeToWorld(startPos.x, 0, 2), Quaternion.Euler(0f, 0f, 0f), transform.GetChild(0)).gameObject;
 
                 break;
             case Direction.BottomLeft:// place bridge going +y  
@@ -392,11 +397,11 @@ public class MapGeneration : MonoBehaviour
                         tileMapFloor.SetTransformMatrix(new Vector3Int(-startPos.y-1, -i, 0), matrix); 
                     }
                 }
-                tempExit = Instantiate(exit, grid.NodeToWorld(startPos.x, startPos.y, 2), Quaternion.Euler(0f, 180f, 0f), transform).gameObject;
+                tempExit = Instantiate(exit, grid.NodeToWorld(grid.gridSize.y-1, startPos.y, 2), Quaternion.Euler(0f, 180f, 0f), transform.GetChild(0)).gameObject;
 
                 break;
             case Direction.TopRight:// place bridge going -y
-                for (int i = 0; i < grid.gridSize.y / 2; i++)
+                for (int i = 1; i < grid.gridSize.y / 2; i++)
                 {
                     if (tileMapFloor.GetTile(new Vector3Int(-startPos.y-1, -i, 0)) == null)
                     {
@@ -405,7 +410,7 @@ public class MapGeneration : MonoBehaviour
                         tileMapFloor.SetTransformMatrix(new Vector3Int(-startPos.y-1, -i, 0), matrix);
                     }
                 }
-                tempExit = Instantiate(exit, grid.NodeToWorld(startPos.x, startPos.y, 2), Quaternion.Euler(0f, 0f, 0f), transform).gameObject;
+                tempExit = Instantiate(exit, grid.NodeToWorld(0, startPos.y, 2), Quaternion.Euler(0f, 0f, 0f), transform.GetChild(0)).gameObject;
 
                 break;
             case Direction.BottomRight:// place bridge going +x
@@ -416,7 +421,7 @@ public class MapGeneration : MonoBehaviour
                         tileMapFloor.SetTile(new Vector3Int(-i, -startPos.x-1, 0), bridgeTiles.tiles[0]);
                     }
                 }
-                tempExit = Instantiate(exit, grid.NodeToWorld(startPos.x, startPos.y, 2), Quaternion.Euler(0f, 180f, 0f), transform).gameObject;
+                tempExit = Instantiate(exit, grid.NodeToWorld(startPos.x, grid.gridSize.x-1, 2), Quaternion.Euler(0f, 180f, 0f), transform.GetChild(0)).gameObject;
 
                 break;
             default:
