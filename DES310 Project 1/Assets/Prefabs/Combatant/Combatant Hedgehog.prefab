@@ -13,7 +13,8 @@ GameObject:
   - component: {fileID: 6773037149543772178}
   - component: {fileID: 6773037149543772179}
   - component: {fileID: 6773037149543772188}
-  - component: {fileID: 3805698479469352293}
+  - component: {fileID: 4852137156740604941}
+  - component: {fileID: -4300726453543012566}
   m_Layer: 0
   m_Name: Combatant Hedgehog
   m_TagString: Untagged
@@ -29,7 +30,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6773037149543772189}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -0.93, y: -4.04, z: 2}
+  m_LocalPosition: {x: -0.93, y: -4.04, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -74,7 +75,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 0
+  m_SortingOrder: 1
   m_Sprite: {fileID: 4892199899402239424, guid: 0ffac5d96a153a74ea2577a392092a3f, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
@@ -107,7 +108,6 @@ MonoBehaviour:
   mod_luck: 0
   mod_speed: 0
   mod_init: 0
-  current_hp: 0
 --- !u!114 &6773037149543772179
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -138,12 +138,12 @@ MonoBehaviour:
   abilitiesLearnt:
   - {fileID: 6415157679997736242, guid: 4ad215bfc1d267e4b94812cac229849c, type: 3}
   - {fileID: 8470993346599219810, guid: 2b64caf0437a65d46b58169fa52bf05c, type: 3}
-  - {fileID: 7554008989877738898, guid: b650e52a81d528340acf9e155f7d322d, type: 3}
+  - {fileID: 1295323363145865118, guid: 7a897855e66033443a9d9a720159986e, type: 3}
   - {fileID: 797643238814864423, guid: cd30167977283bf428dc9280685ad506, type: 3}
   - {fileID: 7907028290374525569, guid: 8f4fe241390a34b4b93cd49652214aba, type: 3}
   - {fileID: 5996287974686429391, guid: 6ed4f6c5e347bda4987283013d72b722, type: 3}
   - {fileID: 876702254931070579, guid: 6506a54066584794f8766f4a6838dd4c, type: 3}
-  - {fileID: 1295323363145865118, guid: 7a897855e66033443a9d9a720159986e, type: 3}
+  - {fileID: 7554008989877738898, guid: b650e52a81d528340acf9e155f7d322d, type: 3}
   - {fileID: 8458301428264756310, guid: 0fad40dff84cff145a9de3540c00e247, type: 3}
   - {fileID: 3881450970988834570, guid: 11735339609afe24492c64ef037ee36a, type: 3}
   abilitiesUsing:
@@ -163,7 +163,7 @@ MonoBehaviour:
   - 2
   - 0.5
   - 1
-  - 0.5
+  - 1
   - 1
   - 0.5
   - 2
@@ -174,7 +174,21 @@ MonoBehaviour:
   initTracker: {fileID: 0}
   oldPosition: {x: 0, y: 0, z: 0}
   combatantState: 0
---- !u!114 &3805698479469352293
+--- !u!114 &4852137156740604941
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6773037149543772189}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4dfd2858b38515948ab9d3eead944062, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  turn_completed: 1
+  speed: 3
+--- !u!114 &-4300726453543012566
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}

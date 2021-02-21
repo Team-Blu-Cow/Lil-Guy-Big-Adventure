@@ -160,7 +160,7 @@ MonoBehaviour:
   - {fileID: 0}
   resistances:
   - 1
-  - 1
+  - 0.5
   - 1
   - 2
   - 1

@@ -163,8 +163,8 @@ MonoBehaviour:
   - 2
   - 0.5
   - 2
-  - 0
   - 0.5
+  - 1
   - 2
   - 1
   combatantQuirks:
@@ -201,7 +201,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   target: {fileID: 0}
-  speed: 0.5
+  speed: 3
   path: []
   currentlyPathFinding: 0
   PathFinished: 0

@@ -1,6 +1,6 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!1001 &7263803100342487596
+--- !u!1001 &4148255637612013158
 PrefabInstance:
   m_ObjectHideFlags: 0
   serializedVersion: 2
@@ -9,7 +9,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 2763622926591302449, guid: 9285a0b73e54ff44aa137bb4373dd6c7, type: 3}
       propertyPath: m_Name
-      value: Thunder Bash 2.0
+      value: Wind Bolt 2.0
       objectReference: {fileID: 0}
     - target: {fileID: 5201257747284835472, guid: 9285a0b73e54ff44aa137bb4373dd6c7, type: 3}
       propertyPath: m_RootOrder
@@ -56,12 +56,20 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7558335817995306079, guid: 9285a0b73e54ff44aa137bb4373dd6c7, type: 3}
+      propertyPath: statUsed
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7558335817995306079, guid: 9285a0b73e54ff44aa137bb4373dd6c7, type: 3}
       propertyPath: abilityName
-      value: Thunder Bash
+      value: Wind Bolt
       objectReference: {fileID: 0}
     - target: {fileID: 7558335817995306079, guid: 9285a0b73e54ff44aa137bb4373dd6c7, type: 3}
       propertyPath: abilityPower
-      value: 1.2
+      value: 0.8
+      objectReference: {fileID: 0}
+    - target: {fileID: 7558335817995306079, guid: 9285a0b73e54ff44aa137bb4373dd6c7, type: 3}
+      propertyPath: abilityRange
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 7558335817995306079, guid: 9285a0b73e54ff44aa137bb4373dd6c7, type: 3}
       propertyPath: abilityAspect

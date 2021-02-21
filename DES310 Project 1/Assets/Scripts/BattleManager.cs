@@ -491,6 +491,7 @@ public class BattleManager : MonoBehaviour
     public void OnSelectAbility(int abilityIndex)
     {
         selectedAbility = abilityIndex;
+        combatUI.colorAbilityButton(abilityIndex);
         if (currentCombatant.GetComponent<Combatant>().abilitiesLearnt[selectedAbility] != null)
             currentCombatant.GetComponent<PathFindingUnit>().SetSelectableTiles(currentCombatant.GetComponent<Combatant>().abilitiesLearnt[selectedAbility].abilityRange, true);
     }

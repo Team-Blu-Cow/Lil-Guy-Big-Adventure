@@ -62,7 +62,7 @@ public class Stats : MonoBehaviour
                 base_dex += 3;
                 base_mag += 3;
                 base_def += 3;
-                base_con += 3;
+                base_con += 7;
                 base_luck += 3;
                 base_speed += 3;
                 base_init += 3;               
