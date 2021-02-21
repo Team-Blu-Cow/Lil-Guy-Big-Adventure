@@ -11,7 +11,10 @@ TagManager:
   - UsingAbility
   - Ally
   - Enemy
-  - Exit
+  - Exit0
+  - Exit1
+  - Exit2
+  - Exit3
   layers:
   - Default
   - TransparentFX

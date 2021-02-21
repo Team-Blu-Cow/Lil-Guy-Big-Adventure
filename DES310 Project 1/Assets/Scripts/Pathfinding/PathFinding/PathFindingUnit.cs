@@ -11,6 +11,7 @@ public class PathFindingUnit : MonoBehaviour
     [HideInInspector] public bool currentlyPathFinding = false;
     [HideInInspector] public bool PathFinished = false;
     [SerializeField] private GridHighLighter gridHighLighter;
+    public GridHighLighter GridHighLighter { get {return gridHighLighter; } set {gridHighLighter = value; } }
 
     private void Start()
     {

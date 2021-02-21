@@ -10,7 +10,6 @@ using TMPro;
 public class LearnedAbility : MonoBehaviour, IPointerDownHandler,IPointerUpHandler
 {
     bool dragging = false;
-    public GameObject textGO;
     int abilitySelect = 0;
 
     // Update is called once per frame
@@ -18,7 +17,7 @@ public class LearnedAbility : MonoBehaviour, IPointerDownHandler,IPointerUpHandl
     {
         if (dragging)
         { 
-            textGO.GetComponent<RectTransform>().position = (Mouse.current.position.ReadValue());
+            GetComponentsInChildren<RectTransform>()[2].position = (Mouse.current.position.ReadValue());
         }
     }
 
@@ -27,31 +26,14 @@ public class LearnedAbility : MonoBehaviour, IPointerDownHandler,IPointerUpHandl
         if (eventData.pointerCurrentRaycast.gameObject.CompareTag("LearnedAbility") && gameObject.activeSelf)
         {
             dragging = true;
-            textGO.GetComponent<LayoutElement>().ignoreLayout = true;
+            GetComponentInChildren<LayoutElement>().ignoreLayout = true;
 
-            if (eventData.pointerCurrentRaycast.gameObject.name.Contains("1"))
+            for (int i = 0; i < 10; i++)
             {
-                abilitySelect = 0;
-            }
-            else if (eventData.pointerCurrentRaycast.gameObject.name.Contains("2"))
-            {
-                abilitySelect = 1;
-            }  
-            else if (eventData.pointerCurrentRaycast.gameObject.name.Contains("3"))
-            {
-                abilitySelect = 2;
-            }  
-            else if (eventData.pointerCurrentRaycast.gameObject.name.Contains("4"))
-            {
-                abilitySelect = 3;
-            }  
-            else if (eventData.pointerCurrentRaycast.gameObject.name.Contains("5"))
-            {
-                abilitySelect = 4;
-            } 
-            else if (eventData.pointerCurrentRaycast.gameObject.name.Contains("6"))
-            {
-                abilitySelect = 5;
+                if (eventData.pointerCurrentRaycast.gameObject.name.Contains((i+1).ToString()))
+                {
+                    abilitySelect = i;
+                }
             }
         }
     }
@@ -66,40 +48,31 @@ public class LearnedAbility : MonoBehaviour, IPointerDownHandler,IPointerUpHandl
             {
                 Combatant combatant = eventGO.transform.parent.GetComponentInParent<PartyCombatant>().GetCombatant();
 
-                if (eventGO.name.Contains("1"))
+                for (int i = 0; i < 10; i++)
                 {
-                    combatant.abilitiesUsing[0] = combatant.abilitiesLearnt[abilitySelect];
-                }
-                else if (eventGO.name.Contains("2"))
-                {
-                    combatant.abilitiesUsing[1] = combatant.abilitiesLearnt[abilitySelect];
-                }
-                else if (eventGO.name.Contains("3"))
-                {
-                    combatant.abilitiesUsing[2] = combatant.abilitiesLearnt[abilitySelect];
-                }
-                else if (eventGO.name.Contains("4"))
-                {
-                    combatant.abilitiesUsing[3] = combatant.abilitiesLearnt[abilitySelect];
+                    if (eventGO.name.Contains((i + 1).ToString()))
+                    {
+                        combatant.abilitiesUsing[i] = combatant.abilitiesLearnt[abilitySelect];
+                    }
                 }
                 ScreenManager.screenManager.GetCombatantScreen().SetAblities(combatant);
             }
         }
 
         dragging = false;
-        textGO.GetComponent<LayoutElement>().ignoreLayout = false;
+        GetComponentInChildren<LayoutElement>().ignoreLayout = false;
     }
 
     public void SetAbility(Combatant combatantIn, int index)
     {
-        textGO.SetActive(true);
+        gameObject.SetActive(true);
         if (combatantIn.abilitiesLearnt[index])
         {
-            textGO.GetComponent<TextMeshProUGUI>().text = combatantIn.abilitiesLearnt[index].abilityName;
+            GetComponentsInChildren<TextMeshProUGUI>()[1].text = combatantIn.abilitiesLearnt[index].abilityName;
         }
         else
         {
-            textGO.SetActive(false);
+            gameObject.SetActive(false);
         }
     }
 }

@@ -14,12 +14,12 @@ public class Movement : MonoBehaviour
 
     private void Awake()
     {
-        target = GetComponent<PathFindingUnit>().target;
-
+        //target = GetComponent<PathFindingUnit>().target;
         controls = new InputManager();
+
         //controls.Keyboard.RClick.started += ctx => { RMouseDown = true; };
         //controls.Keyboard.RClick.canceled += ctx => { RMouseDown = false; };
-        //controls.Keyboard.LClick.performed += ctx => Stop();
+        controls.Keyboard.LClick.performed += ctx => LeftDown();
     }
 
     private void OnEnable()
@@ -57,42 +57,51 @@ public class Movement : MonoBehaviour
         }*/
     }
 
-    private void Stop()
+    private void LeftDown()
     {
         LClick = true;
 
         Vector2 mousePos = Camera.main.ScreenToWorldPoint(controls.Keyboard.MousePos.ReadValue<Vector2>());
-        RaycastHit2D hit = Physics2D.Raycast(mousePos, Vector2.zero);
-       
-        if (hit)
-        {
-            Item item;
-            if (hit.collider.TryGetComponent<Item>(out item))
-            {                
-                item.PickUp(transform.position);
-            }
-            else if (hit.collider.gameObject.CompareTag("Exit"))
-            {
-                IsoNode node = grid.WorldToNode(hit.collider.gameObject.transform.position);
+        RaycastHit2D[] hits = Physics2D.RaycastAll(mousePos, Vector2.zero);
 
-                foreach (IsoNode neighbor in grid.GetNeighbors(node))
+        foreach (RaycastHit2D hit in hits)
+        {
+            if (hit)
+            {
+                Item item;
+                if (hit.collider.TryGetComponent<Item>(out item))
                 {
-                    if (neighbor.gridPosition == grid.WorldToNode(transform.position).gridPosition) //if it is a treasure
+                    item.PickUp(transform.position);
+                }
+                else if (hit.collider.gameObject.transform.tag.Contains("Exit"))
+                {
+                    IsoNode node = grid.WorldToNode(hit.collider.gameObject.transform.position);
+
+                    int i = hit.collider.gameObject.transform.tag.ToString()[4] - 48;
+
+                    foreach (IsoNode neighbor in grid.GetNeighbors(node))
                     {
-                        FindObjectOfType<MapGeneration>().RenderMap();
+                        if (neighbor != null)
+                        {
+                            if (neighbor.gridPosition == grid.WorldToNode(transform.position).gridPosition) //if it is a treasure
+                            {
+                                FindObjectOfType<MapGeneration>().StartSwap(i);
+                                grid.CreateGrid();
+                            }
+                        }
+                    }
+
+                    if (node.gridPosition == grid.WorldToNode(transform.position).gridPosition)
+                    {
+                        FindObjectOfType<MapGeneration>().StartSwap(i);
                         grid.CreateGrid();
                     }
                 }
-                if (node.gridPosition == grid.WorldToNode(transform.position).gridPosition)
-                {
-                    FindObjectOfType<MapGeneration>().RenderMap();
-                    grid.CreateGrid();
-                }
+            }
+            else
+            {
+                //GetComponent<PathFindingUnit>().StopPath();
             }
         }
-        else
-        {
-            GetComponent<PathFindingUnit>().StopPath();
-        }
-}
+    }
 }
