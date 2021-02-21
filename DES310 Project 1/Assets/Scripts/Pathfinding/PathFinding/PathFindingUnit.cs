@@ -15,7 +15,7 @@ public class PathFindingUnit : MonoBehaviour
 
     private void Start()
     {
-        IsoNode node = gridHighLighter.grid.WorldToNode(transform.position);
+        //IsoNode node = gridHighLighter.grid.WorldToNode(transform.position);
         OccupyTile(gameObject);
     }
 

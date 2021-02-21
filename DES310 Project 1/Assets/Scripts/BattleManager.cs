@@ -145,7 +145,10 @@ public class BattleManager : MonoBehaviour
     {
         combatants = new List<GameObject>();
 
-        combatants.AddRange(enemyCombatants);
+        if (enemyCombatants != null)
+        {
+            combatants.AddRange(enemyCombatants);
+        }
         foreach (var member in playerParty.party)
         {
             if (member != null)
