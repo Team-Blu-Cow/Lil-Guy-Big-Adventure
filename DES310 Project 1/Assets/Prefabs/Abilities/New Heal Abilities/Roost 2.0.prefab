@@ -9,7 +9,19 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 3208555930781126318, guid: 29e6f028a9235684f9057aa4265ce237, type: 3}
       propertyPath: m_Name
-      value: HealAbilityBase
+      value: Roost 2.0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5484001219173464798, guid: 29e6f028a9235684f9057aa4265ce237, type: 3}
+      propertyPath: abilityName
+      value: Roost
+      objectReference: {fileID: 0}
+    - target: {fileID: 5484001219173464798, guid: 29e6f028a9235684f9057aa4265ce237, type: 3}
+      propertyPath: abilityPower
+      value: 14
+      objectReference: {fileID: 0}
+    - target: {fileID: 5484001219173464798, guid: 29e6f028a9235684f9057aa4265ce237, type: 3}
+      propertyPath: abilityRange
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 5901836838492752482, guid: 29e6f028a9235684f9057aa4265ce237, type: 3}
       propertyPath: m_RootOrder

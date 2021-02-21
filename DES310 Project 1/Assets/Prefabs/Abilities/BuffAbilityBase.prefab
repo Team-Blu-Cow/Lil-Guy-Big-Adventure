@@ -46,7 +46,7 @@ MonoBehaviour:
   abilityName: Buff Ability
   abilityType: 2
   statUsed: 0
-  abilityPower: 10
+  abilityPower: 8
   abilityRange: 2
   abilityArea: 1
   abilityAspect: 0

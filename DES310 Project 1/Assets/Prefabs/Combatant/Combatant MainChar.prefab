@@ -136,16 +136,16 @@ MonoBehaviour:
   combatantNum: 0
   fighting: 0
   abilitiesLearnt:
-  - {fileID: 5698106485274030700, guid: f7ff168d4c5c0d743a6cdc484b19a655, type: 3}
-  - {fileID: 59315777748466869, guid: c98aef7c405d86f41aeb6405b2394f14, type: 3}
-  - {fileID: 7120605139938990703, guid: a347f7fdd53bb4c4b8bea5e4e502b20c, type: 3}
-  - {fileID: 4127371302415139829, guid: bca79481931bc4946ab44bbcd4c71e7c, type: 3}
-  - {fileID: 7886505244828302474, guid: 769ff905fe3e5224899d34d3b5e908e1, type: 3}
-  - {fileID: 5718559904706204719, guid: 92a833e8735324f449bafcd9e7338c24, type: 3}
-  - {fileID: 4479123558592471871, guid: 055ff4cf38ab1ca45973c3b741f7a363, type: 3}
-  - {fileID: 4923941434505344459, guid: f2feed4898e34114ea686597062b6024, type: 3}
-  - {fileID: 4122182617893688231, guid: 98e9cb1c29a067b4c94b9dd849d2692c, type: 3}
-  - {fileID: 5537657579118160485, guid: 0d4df216a4714ae4d92c5e6d37be1fb4, type: 3}
+  - {fileID: 7330357067154717427, guid: 73221df6f1556724c90a36110123d2e1, type: 3}
+  - {fileID: 5173025126576702271, guid: e19b5518816ddef49a18ebb68d8780ba, type: 3}
+  - {fileID: 4907401747735708768, guid: f8c0eb4770f9fc4429c2aedfa4d18834, type: 3}
+  - {fileID: 2936241848379702815, guid: 6af5812377a1c1440b85024975dda723, type: 3}
+  - {fileID: 5869609677974200889, guid: 01758146b0d1a984a83d39c1f65fa4bc, type: 3}
+  - {fileID: 7907028290374525569, guid: 8f4fe241390a34b4b93cd49652214aba, type: 3}
+  - {fileID: 4936621593814097672, guid: a22a4990832c7724cb39a697e59b5b56, type: 3}
+  - {fileID: 5191128471141890007, guid: b0cb7c8be9d6e1a48ae35080b0f510f2, type: 3}
+  - {fileID: 3881450970988834570, guid: 11735339609afe24492c64ef037ee36a, type: 3}
+  - {fileID: 8458301428264756310, guid: 0fad40dff84cff145a9de3540c00e247, type: 3}
   abilitiesUsing:
   - {fileID: 0}
   - {fileID: 0}

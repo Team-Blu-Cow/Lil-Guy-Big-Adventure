@@ -1,6 +1,6 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!1001 &4823000096066800600
+--- !u!1001 &2095650838065441171
 PrefabInstance:
   m_ObjectHideFlags: 0
   serializedVersion: 2
@@ -51,9 +51,17 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 5332105020813991935, guid: f1ac77972231724409155544421b8438, type: 3}
+      propertyPath: statUsed
+      value: 7
+      objectReference: {fileID: 0}
+    - target: {fileID: 5332105020813991935, guid: f1ac77972231724409155544421b8438, type: 3}
+      propertyPath: abilityName
+      value: Alertify
+      objectReference: {fileID: 0}
     - target: {fileID: 8554319350582257330, guid: f1ac77972231724409155544421b8438, type: 3}
       propertyPath: m_Name
-      value: BuffAbilityBase
+      value: Alertify 2.0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: f1ac77972231724409155544421b8438, type: 3}

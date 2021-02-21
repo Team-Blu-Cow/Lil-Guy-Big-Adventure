@@ -1,6 +1,6 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!1001 &8636831641578490514
+--- !u!1001 &3199523098310679383
 PrefabInstance:
   m_ObjectHideFlags: 0
   serializedVersion: 2
@@ -9,7 +9,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 2763622926591302449, guid: 9285a0b73e54ff44aa137bb4373dd6c7, type: 3}
       propertyPath: m_Name
-      value: DamageAbilityBase
+      value: Smite 2.0
       objectReference: {fileID: 0}
     - target: {fileID: 5201257747284835472, guid: 9285a0b73e54ff44aa137bb4373dd6c7, type: 3}
       propertyPath: m_RootOrder
@@ -54,6 +54,18 @@ PrefabInstance:
     - target: {fileID: 5201257747284835472, guid: 9285a0b73e54ff44aa137bb4373dd6c7, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7558335817995306079, guid: 9285a0b73e54ff44aa137bb4373dd6c7, type: 3}
+      propertyPath: abilityName
+      value: Smite
+      objectReference: {fileID: 0}
+    - target: {fileID: 7558335817995306079, guid: 9285a0b73e54ff44aa137bb4373dd6c7, type: 3}
+      propertyPath: abilityPower
+      value: 1.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 7558335817995306079, guid: 9285a0b73e54ff44aa137bb4373dd6c7, type: 3}
+      propertyPath: abilityAspect
+      value: 6
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 9285a0b73e54ff44aa137bb4373dd6c7, type: 3}

@@ -134,16 +134,16 @@ MonoBehaviour:
   combatantNum: 0
   fighting: 0
   abilitiesLearnt:
-  - {fileID: 7632445334358283110, guid: 280eb9c2bf1eff2469706a1f57e9b00e, type: 3}
-  - {fileID: 6774111850687725502, guid: 3fdc620ae2051994087ca3718d777812, type: 3}
-  - {fileID: 4745861011935703193, guid: 2a27fb41b80cf0a41a8da1bce09d7398, type: 3}
-  - {fileID: 7621755303866497837, guid: ed6d8f7b3e03e77439047930c939c658, type: 3}
-  - {fileID: 5718559904706204719, guid: 92a833e8735324f449bafcd9e7338c24, type: 3}
-  - {fileID: 2483171667143396990, guid: ceb76beb843e844458da32978c5b8821, type: 3}
-  - {fileID: 7238972045844023524, guid: f0844c83be89f284da307e92fe8d7b89, type: 3}
-  - {fileID: 3628418852468515646, guid: 3a200c7c805eb7d4a9aef68282ff42d4, type: 3}
-  - {fileID: 5537657579118160485, guid: 0d4df216a4714ae4d92c5e6d37be1fb4, type: 3}
-  - {fileID: 4122182617893688231, guid: 98e9cb1c29a067b4c94b9dd849d2692c, type: 3}
+  - {fileID: 6415157679997736242, guid: 4ad215bfc1d267e4b94812cac229849c, type: 3}
+  - {fileID: 8470993346599219810, guid: 2b64caf0437a65d46b58169fa52bf05c, type: 3}
+  - {fileID: 7554008989877738898, guid: b650e52a81d528340acf9e155f7d322d, type: 3}
+  - {fileID: 797643238814864423, guid: cd30167977283bf428dc9280685ad506, type: 3}
+  - {fileID: 7907028290374525569, guid: 8f4fe241390a34b4b93cd49652214aba, type: 3}
+  - {fileID: 5996287974686429391, guid: 6ed4f6c5e347bda4987283013d72b722, type: 3}
+  - {fileID: 876702254931070579, guid: 6506a54066584794f8766f4a6838dd4c, type: 3}
+  - {fileID: 1295323363145865118, guid: 7a897855e66033443a9d9a720159986e, type: 3}
+  - {fileID: 8458301428264756310, guid: 0fad40dff84cff145a9de3540c00e247, type: 3}
+  - {fileID: 3881450970988834570, guid: 11735339609afe24492c64ef037ee36a, type: 3}
   abilitiesUsing:
   - {fileID: 0}
   - {fileID: 0}
@@ -156,7 +156,6 @@ MonoBehaviour:
   - {fileID: 0}
   - {fileID: 0}
   - {fileID: 0}
-  currentItem: 0
   resistances:
   - 1
   - 2
@@ -171,6 +170,5 @@ MonoBehaviour:
   - {fileID: 0}
   - {fileID: 0}
   initTracker: {fileID: 0}
-  moved: 0
-  moving: 0
   oldPosition: {x: 0, y: 0, z: 0}
+  combatantState: 0
