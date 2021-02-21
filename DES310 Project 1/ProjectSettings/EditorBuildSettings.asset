@@ -17,4 +17,10 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/Sprint 1/UItesting.unity
     guid: 1ac53c54246252b47b887327dd3d655c
+  - enabled: 1
+    path: Assets/Scenes/Sprint 3/Sprint 3 Base.unity
+    guid: 1c80c8108ebcb8443a941e24d9c22e6f
+  - enabled: 1
+    path: Assets/Scenes/Sprint 3/MainMenuTesting.unity
+    guid: f99ef75c1ec54eb49abd3bdf9515d535
   m_configObjects: {}
