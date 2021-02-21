@@ -1,0 +1,3 @@
+This video game uses these sounds from freesound:
+"breeze.wav" by keweldog ( https://freesound.org/people/keweldog/sounds/181801/ ) licensed under CC0 1.0
+"Cicada 1.aif" by le_abbaye_Noirlac ( https://freesound.org/people/le_abbaye_Noirlac/sounds/129475/ ) licensed under CCBY 3.0
