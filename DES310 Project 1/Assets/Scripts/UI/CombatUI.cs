@@ -174,7 +174,7 @@ public class CombatUI : MonoBehaviour
     public void colorAbilityButton(int abilityButtonNum)
     {
         var colors = abilityButtons[abilityButtonNum].GetComponent<Button>().colors;
-        colors.selectedColor = Color.red;
+        colors.selectedColor = Color.grey;
         abilityButtons[abilityButtonNum].GetComponent<Button>().colors = colors;
     }
 }
