@@ -604,9 +604,33 @@ PrefabInstance:
     m_TransformParent: {fileID: 0}
     m_Modifications:
     - target: {fileID: 1652678421251567976, guid: c2aa42c7ebcfa8245af701e4c5e978dc, type: 3}
+      propertyPath: oneShots.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1652678421251567976, guid: c2aa42c7ebcfa8245af701e4c5e978dc, type: 3}
       propertyPath: music.Array.data[0].group
       value: 
       objectReference: {fileID: 2580403833928542978, guid: 9504455385ab4c345bd561d05428f082, type: 2}
+    - target: {fileID: 1652678421251567976, guid: c2aa42c7ebcfa8245af701e4c5e978dc, type: 3}
+      propertyPath: oneShots.Array.data[0].clip
+      value: 
+      objectReference: {fileID: 8300000, guid: c5ab37521e1b5614486c808535cb4289, type: 3}
+    - target: {fileID: 1652678421251567976, guid: c2aa42c7ebcfa8245af701e4c5e978dc, type: 3}
+      propertyPath: oneShots.Array.data[0].name
+      value: Ambient Fire
+      objectReference: {fileID: 0}
+    - target: {fileID: 1652678421251567976, guid: c2aa42c7ebcfa8245af701e4c5e978dc, type: 3}
+      propertyPath: oneShots.Array.data[0].group
+      value: 
+      objectReference: {fileID: -9112270504475850036, guid: 9504455385ab4c345bd561d05428f082, type: 2}
+    - target: {fileID: 1652678421251567976, guid: c2aa42c7ebcfa8245af701e4c5e978dc, type: 3}
+      propertyPath: oneShots.Array.data[0].loops
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1652678421251567976, guid: c2aa42c7ebcfa8245af701e4c5e978dc, type: 3}
+      propertyPath: oneShots.Array.data[0].volume
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 1652678421251567976, guid: c2aa42c7ebcfa8245af701e4c5e978dc, type: 3}
       propertyPath: music.Array.data[0].musicMixer
       value: 
