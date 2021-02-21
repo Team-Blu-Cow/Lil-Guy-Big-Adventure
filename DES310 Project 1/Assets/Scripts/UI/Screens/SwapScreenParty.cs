@@ -6,6 +6,10 @@ using UnityEngine;
 
 public class SwapScreenParty : MonoBehaviour
 {
+    [SerializeField] GameObject partyMember;
+    [SerializeField] GameObject[] party;
+    List<GameObject> members = new List<GameObject>();
+
     // Start is called before the first frame update
     void Start()
     {
@@ -19,6 +23,10 @@ public class SwapScreenParty : MonoBehaviour
     {
         // Enable canvas
         transform.GetComponentInParent<Canvas>().enabled = true;
+        foreach (GameObject member in members)
+        {
+            Destroy(member);
+        }
 
         // Scale in the screen
         LeanTween.scale(gameObject, new Vector3(1, 1, 1), 0.5f);
@@ -28,12 +36,18 @@ public class SwapScreenParty : MonoBehaviour
         LeanTween.value(back.gameObject, a => back.color = a, new Color(0, 0, 0, 0), new Color(0, 0, 0, 0.6f), 0.5f);
 
         // Set what party members appear
-        for(int i = 0; i <  GameObject.Find("InGame/Party").transform.childCount; i++)
+        for(int i = 0; i <  party.Length; i++)
         {
-            SetPartyMember(i);
-            transform.GetChild(0).GetChild(i).GetComponentInChildren<TextMeshProUGUI>().text = transform.GetChild(0).GetComponentsInChildren<PartyCombatant>()[i].named;
-        }
+            GameObject tempPartyMember = Instantiate(partyMember, transform.GetChild(0));
+            members.Add(tempPartyMember);
+            tempPartyMember.GetComponentInChildren<PartyCombatant>().SetAll(party[i], party[i].GetComponent<Stats>(), party[i].GetComponent<Combatant>(), "Name");
+            tempPartyMember.GetComponentInChildren<TextMeshProUGUI>().text = transform.GetChild(0).GetComponentsInChildren<PartyCombatant>()[i].named;
+            tempPartyMember.GetComponentInChildren<Image>().sprite = transform.GetChild(0).GetComponentsInChildren<PartyCombatant>()[i].GetCombatantGO().GetComponent<SpriteRenderer>().sprite;
+            tempPartyMember.GetComponentInChildren<Image>().SetNativeSize();
+            tempPartyMember.GetComponent<Button>().onClick.AddListener(() => { ScreenManager.screenManager.OpenCombatantScreen(tempPartyMember.GetComponentInChildren<PartyCombatant>()); });
+            tempPartyMember.GetComponent<Button>().onClick.AddListener(CloseScreen);
 
+        }
     }
 
     // Close the whole screen
@@ -45,12 +59,5 @@ public class SwapScreenParty : MonoBehaviour
         // Fade out the black background
         Image back = transform.parent.GetComponentInChildren<Image>();
         LeanTween.value(back.gameObject, a => back.color = a, new Color(0, 0, 0, 0.6f), new Color(0, 0, 0, 0), 0.5f);
-    }
-
-    void SetPartyMember(int i)
-    {
-        // get the child in he party section in the "InGameCanvas"
-        PartyCombatant combatant = GameObject.Find("InGame/Party").GetComponentsInChildren<PartyCombatant>()[i];
-        transform.GetChild(0).GetComponentsInChildren<PartyCombatant>()[i].SetAll(combatant.GetCombatantGO(),combatant.GetStats(),combatant.GetCombatant(), combatant.named);
     }
 }
