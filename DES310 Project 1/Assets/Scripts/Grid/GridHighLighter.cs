@@ -34,7 +34,7 @@ public class GridHighLighter : MonoBehaviour
     [SerializeField] private GameObject pathNodePrefab;
 
     // Private Fields *****************************************************************************
-    private List<IsoNode> selectableTiles = new List<IsoNode>();
+    [SerializeField] private List<IsoNode> selectableTiles = new List<IsoNode>();
     private Vector3Int previouslySelectedTile = Vector3Int.zero;
 
     private InputMaster input;

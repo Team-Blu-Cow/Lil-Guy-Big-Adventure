@@ -86,6 +86,10 @@ public class BattleManager : MonoBehaviour
     void CycleQueue()
     {
         currentCombatant = battleQueue.Dequeue();
+        while (currentCombatant.activeSelf == false)
+        {
+            currentCombatant = battleQueue.Dequeue();
+        }
         battleQueue.Enqueue(currentCombatant);
     }
 
@@ -113,6 +117,30 @@ public class BattleManager : MonoBehaviour
         T tmp = list[indexA];
         list[indexA] = list[indexB];
         list[indexB] = tmp;
+    }
+
+    public void CheckIfCombatantDead(GameObject combatant)
+    {
+        if(combatant != null && combatants.Contains(combatant)&& combatant.GetComponent<Combatant>().GetComponent<Stats>().getStat(Combatant_Stats.HP) <= 0)
+        {
+            
+            if(combatant.GetComponent<Combatant>().GetComponent<Stats>().combatant_type == Combatant_Type.Human)
+            {
+                // KILL MAIN CHARACTER
+                Debug.Log("Player died, you suck!");
+            }
+            else
+            {
+                if (combatant.tag == "Enemy")
+                    enemyCombatants.Remove(combatant);
+                else
+                    //TODO: remove combatant from player's party
+
+                combatants.Remove(combatant);
+                combatant.GetComponent<PathFindingUnit>().OccupyTile(null);
+                combatant.SetActive(false);
+            }
+        }
     }
 
     //--------------------------------------------------------------------------------------------------------------------------------------------//
@@ -145,6 +173,8 @@ public class BattleManager : MonoBehaviour
     {
         combatants = new List<GameObject>();
 
+        ai_core.party_list = new List<GameObject>();
+
         if (enemyCombatants != null)
         {
             combatants.AddRange(enemyCombatants);
@@ -152,7 +182,11 @@ public class BattleManager : MonoBehaviour
         foreach (var member in playerParty.party)
         {
             if (member != null)
+            {
                 combatants.Add(member);
+                ai_core.party_list.Add(member);
+            }
+                
         }
 
         SortBattleInitiative();
@@ -224,6 +258,8 @@ public class BattleManager : MonoBehaviour
     // Start Turn Phase ****************************************************************************************************************************
     void StartTurn()
     {
+        receivedActionCommand = false;
+
         CycleQueue();
 
         currentCombatant.GetComponent<PathFindingUnit>().SetSelectableTiles(currentCombatant.GetComponent<Stats>().getStat(Combatant_Stats.Speed));
@@ -335,8 +371,6 @@ public class BattleManager : MonoBehaviour
             SetCombatantState(CombatantState.END);
     }
 
-    
-
     IEnumerator WaitThenFinish(float seconds)
     {
         yield return new WaitForSeconds(seconds);
@@ -353,6 +387,8 @@ public class BattleManager : MonoBehaviour
             if(result.target != null)
             {
                 abilityTargetPos = result.target.transform.position;
+
+                CheckIfCombatantDead(result.target);
 
                 AnimateAbility(abilityTargetPos, result.abilityIndex);
 	            StartCoroutine(ShowDamagePopup(0.2f, (int)result.oDamage, result.crit));
@@ -374,15 +410,20 @@ public class BattleManager : MonoBehaviour
         {
             case ActionState.ABILITY:
             {
-                IsoNode node = gridHighLighter.grid.WorldToNode(mousePos);
-                if (gridHighLighter.IsTileOccupied(node))
-                {
-                    // TODO edit this to allow for healing to target allies ect.
-                    if (node.occupier.tag == "Enemy")
+                
+	            IsoNode node = gridHighLighter.grid.WorldToNode(mousePos);
+	            if (gridHighLighter.IsTileOccupied(node))
+	            {
+                    if (receivedActionCommand == false)
                     {
-                        UseAbility(node.occupier, selectedAbility);
-                        break;
-                    }
+                        receivedActionCommand = true;
+                        // TODO edit this to allow for healing to target allies ect.
+                        if (node.occupier.tag == "Enemy")
+	                    {
+	                        UseAbility(node.occupier, selectedAbility);
+	                        break;
+	                    }
+	                }
                 }
                 break;
             }
@@ -403,6 +444,8 @@ public class BattleManager : MonoBehaviour
         AbilityResult result = currentCombatant.GetComponent<Combatant>().attackAbility(abilityIndex);
 
         abilityTargetPos = target.transform.position;
+
+        CheckIfCombatantDead(target);
 
         AnimateAbility(target.transform.position,abilityIndex);
         StartCoroutine(ShowDamagePopup(0.2f, (int)result.oDamage, result.crit));
