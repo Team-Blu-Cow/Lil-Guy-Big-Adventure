@@ -17,8 +17,8 @@ public class splashScreen : MonoBehaviour
 
     private IEnumerator SplashScreenOrder()
     {
-        yield return new WaitForSeconds(1f);
         audioManager.Play("Main Theme");
+        yield return new WaitForSeconds(1f);
         yield return new WaitForSeconds(2f);
         levelLoader.SwitchScene("MainMenu");
     }

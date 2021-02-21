@@ -10,6 +10,7 @@ public class AudioManager : MonoBehaviour
     public OneShot[] oneShots;
 
     public static AudioManager instance;
+    public AudioMixer mixer;
 
     // Start is called before the first frame update
     private void Awake()
@@ -43,6 +44,7 @@ public class AudioManager : MonoBehaviour
             s.endSource.loop = false;
             s.endSource.playOnAwake = false;
             s.endSource.volume = s.volume;
+            s.initAudio();
         }
 
         foreach (OneShot s in oneShots)
@@ -94,5 +96,11 @@ public class AudioManager : MonoBehaviour
     public void StartChildCoroutine(IEnumerator coroutineMethod)
     {
         StartCoroutine(coroutineMethod);
+    }
+
+    public void setVolume(string in_name, float in_vol)
+    {
+        float logValue = Mathf.Log10(in_vol) * 20; // converts linear slider value to decibel log curve
+        mixer.SetFloat(in_name, logValue);
     }
 }

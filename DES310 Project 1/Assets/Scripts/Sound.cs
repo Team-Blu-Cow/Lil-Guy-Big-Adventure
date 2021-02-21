@@ -16,6 +16,22 @@ public class Music
     [HideInInspector] public AudioSource loopSource;
     [HideInInspector] public AudioSource endSource;
 
+    public AudioMixerGroup group;
+
+    public void initAudio()
+    {
+        if (group != null)
+        {
+            startSource.outputAudioMixerGroup = group;
+            loopSource.outputAudioMixerGroup = group;
+            endSource.outputAudioMixerGroup = group;
+        }
+        else
+        {
+            Debug.Log("WARNING: " + name + "has not been assigned a mixer group!");
+        }
+    }
+
     public IEnumerator Play()
     {
         startSource.Play();

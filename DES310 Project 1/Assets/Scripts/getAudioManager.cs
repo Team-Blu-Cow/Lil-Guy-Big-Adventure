@@ -16,4 +16,22 @@ public class getAudioManager : MonoBehaviour
         instance = GameObject.Find("AudioManager").GetComponent<AudioManager>();
         instance.Stop(in_string);
     }
+
+    public void setMusicVolume(float in_vol)
+    {
+        instance = GameObject.Find("AudioManager").GetComponent<AudioManager>();
+        instance.setVolume("MusicVolume", in_vol);
+    }
+
+    public void setMasterVolume(float in_vol)
+    {
+        instance = GameObject.Find("AudioManager").GetComponent<AudioManager>();
+        instance.setVolume("MasterVolume", in_vol);
+    }
+
+    public void setSFXVolume(float in_vol)
+    {
+        instance = GameObject.Find("AudioManager").GetComponent<AudioManager>();
+        instance.setVolume("SFXVolume", in_vol);
+    }
 }

@@ -52,4 +52,6 @@ MonoBehaviour:
     startSource: {fileID: 0}
     loopSource: {fileID: 0}
     endSource: {fileID: 0}
+    group: {fileID: 0}
   oneShots: []
+  mixer: {fileID: 24100000, guid: 9504455385ab4c345bd561d05428f082, type: 2}

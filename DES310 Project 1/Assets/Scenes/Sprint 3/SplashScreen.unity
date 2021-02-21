@@ -396,7 +396,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6110773559837541995, guid: f528adbd3dee80e499d25c6f225c68cb, type: 3}
       propertyPath: transitionTime
-      value: 2.285
+      value: 1.285
       objectReference: {fileID: 0}
     - target: {fileID: 6110773559837541995, guid: f528adbd3dee80e499d25c6f225c68cb, type: 3}
       propertyPath: transitionWaitTime
@@ -603,6 +603,14 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 1652678421251567976, guid: c2aa42c7ebcfa8245af701e4c5e978dc, type: 3}
+      propertyPath: music.Array.data[0].group
+      value: 
+      objectReference: {fileID: 2580403833928542978, guid: 9504455385ab4c345bd561d05428f082, type: 2}
+    - target: {fileID: 1652678421251567976, guid: c2aa42c7ebcfa8245af701e4c5e978dc, type: 3}
+      propertyPath: music.Array.data[0].musicMixer
+      value: 
+      objectReference: {fileID: 24100000, guid: 9504455385ab4c345bd561d05428f082, type: 2}
     - target: {fileID: 1652678421251567982, guid: c2aa42c7ebcfa8245af701e4c5e978dc, type: 3}
       propertyPath: m_Name
       value: AudioManager
