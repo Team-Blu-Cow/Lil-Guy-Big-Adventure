@@ -47,19 +47,43 @@ public class Music
 
     public IEnumerator FadeOut()
     {
-        //bool done = false;
-        //while (!done)
-        //{
-        //    volume -= Time.deltaTime;
-        //    if (volume <= 0f)
-        //    {
-        //        //Stop();
-        //        //volume = 1f;
-        //        done = true;
-        //    }
-        //}
-        Debug.LogWarning("Deprecated lmao");
-        yield return null;
+        {
+            float currentTime = 0;
+            float start = loopSource.volume;
+
+            while (currentTime < 1)
+            {
+                currentTime += Time.deltaTime;
+                startSource.volume = Mathf.Lerp(start, 0f, currentTime / 1);
+                loopSource.volume = Mathf.Lerp(start, 0f, currentTime / 1);
+                endSource.volume = Mathf.Lerp(start, 0f, currentTime / 1);
+                yield return null;
+            }
+            Stop();
+            startSource.volume = 1f;
+            loopSource.volume = 1f;
+            endSource.volume = 1f;
+            yield break;
+        }
+    }
+
+    public IEnumerator FadeIn()
+    {
+        {
+            GameObject.Find("AudioManager").GetComponent<AudioManager>().Play(name);
+            float currentTime = 0;
+            float start = 0f;
+
+            while (currentTime < 1)
+            {
+                currentTime += Time.deltaTime;
+                startSource.volume = Mathf.Lerp(start, 1f, currentTime / 1);
+                loopSource.volume = Mathf.Lerp(start, 1f, currentTime / 1);
+                endSource.volume = Mathf.Lerp(start, 1f, currentTime / 1);
+                yield return null;
+            }
+            yield break;
+        }
     }
 }
 
@@ -97,19 +121,36 @@ public class OneShot
 
     public IEnumerator FadeOut()
     {
-        //bool done = false;
-        //while (!done)
-        //{
-        //    volume -= Time.deltaTime * 0.1f;
-        //    if (volume <= 0f)
-        //    {
-        //        Stop();
-        //        volume = 1f;
-        //        done = true;
-        //    }
-        //}
-        //
-        Debug.LogWarning("Deprecated lmao");
-        yield return null;
+        {
+            float currentTime = 0;
+            float start = source.volume;
+
+            while (currentTime < 1)
+            {
+                currentTime += Time.deltaTime;
+                source.volume = Mathf.Lerp(start, 0f, currentTime / 1);
+                yield return null;
+            }
+            Stop();
+            source.volume = 1f;
+            yield break;
+        }
+    }
+
+    public IEnumerator FadeIn()
+    {
+        {
+            Play();
+            float currentTime = 0;
+            float start = 0f;
+
+            while (currentTime < 1)
+            {
+                currentTime += Time.deltaTime;
+                source.volume = Mathf.Lerp(start, 1f, currentTime / 1);
+                yield return null;
+            }
+            yield break;
+        }
     }
 }
