@@ -581,6 +581,7 @@ public class BattleManager : MonoBehaviour
             }
         }
 
+        gridHighLighter.ClearSelectableTiles();
         Debug.Log("battle won");
     }
 
