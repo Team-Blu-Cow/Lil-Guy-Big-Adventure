@@ -232,11 +232,11 @@ public class InitiativeTracker : MonoBehaviour
 
         if (selecting == true)
         {
-            if (getCurrentCombatant().GetComponent<TestCombatSystem>().enemy != null)
+            if (getCurrentCombatant().GetComponent<CombatSystem>().target != null)
             {
                 if (getCurrentCombatant().GetComponent<Combatant>().combatantState == Combatant_State.Attacking)
                 {
-                    getCurrentCombatant().GetComponent<Combatant>().attackAbility(combatantAbilityUsing);
+                    getCurrentCombatant().GetComponent<Combatant>().UseAbility(combatantAbilityUsing);
                     combatUI.deactivateAbilityButtons();
                 }
             }
@@ -253,7 +253,7 @@ public class InitiativeTracker : MonoBehaviour
 
         if (getCurrentCombatant().GetComponent<Combatant>().combatantState == Combatant_State.Attacking)
         {
-            getCurrentCombatant().GetComponent<Combatant>().UseItem(itemNum);
+            //getCurrentCombatant().GetComponent<Combatant>().UseItem(itemNum);
             combatUI.deactivateItemButtons();
         }
 
@@ -307,7 +307,7 @@ public class InitiativeTracker : MonoBehaviour
 
             for (int j = 1; j < combatants.Count; j++)
             {
-                if (combatants[j-1].GetComponent<Stats>().getStat(Combatant_Stats.Initiative) < combatants[j].GetComponent<Stats>().getStat(Combatant_Stats.Initiative))
+                if (combatants[j-1].GetComponent<Stats>().GetStat(Combatant_Stats.Initiative) < combatants[j].GetComponent<Stats>().GetStat(Combatant_Stats.Initiative))
                 {
                     Swap(combatants, j-1, j);
                     swapped = true;

@@ -9,10 +9,10 @@ public class CombatUI : MonoBehaviour
 
     [SerializeField] GameObject BaseGO;
 
-    List<CombatButton> abilityButtons = new List<CombatButton>();
-    List<CombatButton> itemButtons = new List<CombatButton>();
-    List<CombatButton> moveButtons = new List<CombatButton>();
-    List<CombatButton> choiceButtons = new List<CombatButton>();
+    GameObject abilityButtons;
+    GameObject itemButtons;
+    GameObject moveButtons;
+    GameObject choiceButtons;
 
     RectTransform canvas;
 
@@ -22,15 +22,10 @@ public class CombatUI : MonoBehaviour
     {        
         canvas = BaseGO.GetComponent<RectTransform>();
 
-        abilityButtons.AddRange(BaseGO.transform.GetChild(0).GetComponentsInChildren<CombatButton>());
-        itemButtons.AddRange(BaseGO.transform.GetChild(1).GetComponentsInChildren<CombatButton>());
-        moveButtons.AddRange(BaseGO.transform.GetChild(2).GetComponentsInChildren<CombatButton>());
-        choiceButtons.AddRange(BaseGO.transform.GetChild(3).GetComponentsInChildren<CombatButton>());
-
-        for (int i = 0; i < 5; i++)
-        {
-            abilityButtons[i].abilityButton = true;
-        }
+        abilityButtons = BaseGO.transform.GetChild(0).gameObject;
+        itemButtons = BaseGO.transform.GetChild(1).gameObject;
+        moveButtons = BaseGO.transform.GetChild(2).gameObject;
+        choiceButtons = BaseGO.transform.GetChild(3).gameObject;
     }
 
     private void Update()
@@ -47,72 +42,70 @@ public class CombatUI : MonoBehaviour
 
     public void deactivateChoiceButtons()
     {
-        for (int i = 0; i < 3; i++)
-        {
-            choiceButtons[i].deactivateButton();
-        }
-        //moveButtons[0].deactivateButton();
+         choiceButtons.SetActive(false);
     }
 
     public void deactivateMoveButtons()
     {
-        moveButtons[0].deactivateButton();
-        moveButtons[1].deactivateButton();
+        moveButtons.SetActive(false);
     }
 
     public void deactivateAbilityButtons()
     {
-        for (int j = 0; j < 5; j++)
-        {
-            abilityButtons[j].deactivateButton();
-        }
+        abilityButtons.SetActive(false);
     }
 
     public void deactivateItemButtons()
     {
-        for (int j = 0; j < 6; j++)
-        {
-            itemButtons[j].deactivateButton();
-        }
+        itemButtons.SetActive(false);
     }
 
     public void activateChoiceButtons()
     {
-        int offsetY = 50;
-        for (int i = 0; i < 3; i++)
-        {
-            choiceButtons[i].activateButton(new Vector3(110, offsetY, 0), combatantPos);
-            offsetY -= 30;
-        }
+        choiceButtons.SetActive(true);
     }
 
     public void activateChoiceButtons(Vector2 pos)
     {
+        choiceButtons.SetActive(true);
+
+        List<CombatButton> buttons = new List<CombatButton>();
+        buttons.AddRange(choiceButtons.GetComponentsInChildren<CombatButton>());
+        
+
         int offsetY = 50;
         for (int i = 0; i < 3; i++)
         {
-            choiceButtons[i].activateButton(new Vector3(110, offsetY, 0), pos);
+            buttons[i].activateButton(new Vector3(110, offsetY, 0), pos);
             offsetY -= 30;
         }
-        //moveButtons[0].activateButton(new Vector3(110, offsetY, 0), pos);
+
     }
 
     public void activateMoveButtons()
     {
-        moveButtons[0].activateButton(new Vector3(110, -10, 0), combatantPos);
-        moveButtons[1].activateButton(new Vector3(110, 20, 0), combatantPos);
     }
 
     public void activateMoveButtons(Vector2 pos)
     {
-        moveButtons[0].activateButton(new Vector3(110, -10, 0), pos);
-        moveButtons[1].activateButton(new Vector3(110, 20, 0), pos);
+        moveButtons.SetActive(true);
+
+        List<CombatButton> buttons = new List<CombatButton>();
+        buttons.AddRange(moveButtons.GetComponentsInChildren<CombatButton>());
+        
+        buttons[0].activateButton(new Vector3(110, -10, 0), pos);
+        buttons[1].activateButton(new Vector3(110, 20, 0), pos);
     }
 
     public void activateAbilityButtons()
     {
+        abilityButtons.SetActive(true);
+
+        List<CombatButton> buttons = new List<CombatButton>();
+        buttons.AddRange(abilityButtons.GetComponentsInChildren<CombatButton>());
+
         int count = 0;
-        foreach (CombatButton button in abilityButtons)
+        foreach (CombatButton button in buttons)
         {
             button.activateButton(button.transform.position, new Vector3());
             if (count < 4)
@@ -124,58 +117,45 @@ public class CombatUI : MonoBehaviour
     }
 
     public void activateItemButtons()
-    {
-        int offsetY = 110;
-
-        for (int i = 0; i < 6; i++)
-        {
-            itemButtons[i].activateButton(new Vector3(0, 0, 0), combatantPos);
-            offsetY -= 30;
-       }
+    {       
     }
 
     public void activateItemButtons(Vector2 pos)
     {
+        itemButtons.SetActive(true);
+
+        List<CombatButton> buttons = new List<CombatButton>();
+        buttons.AddRange(itemButtons.GetComponentsInChildren<CombatButton>());
+
         int offsetY = 50;
         for (int i = 0; i < 6; i++)
         {
-            itemButtons[i].activateButton(new Vector3(110, offsetY, 0), pos);
+            buttons[i].activateButton(new Vector3(110, offsetY, 0), pos);
             offsetY -= 30;
         }
     }
 
     public void useBackButton(Vector2 pos)
     {
-        for (int i = 0; i < 5; i++)
-        {
-            abilityButtons[i].deactivateButton();
-        }
 
-        for (int i = 0; i < 6; i++)
-        {
-            itemButtons[i].deactivateButton();
-        }
+        abilityButtons.SetActive(false);
+        itemButtons.SetActive(false);       
 
         activateChoiceButtons(pos);
     }
 
     public void useBackButton()
     {
-        for (int i = 0; i < 5; i++)
-        {
-            abilityButtons[i].deactivateButton();
-        }
 
-        for (int i = 0; i < 6; i++)
-        {
-            itemButtons[i].deactivateButton();
-        }
+        abilityButtons.SetActive(false);
+        itemButtons.SetActive(false);
+        
     }
 
     public void colorAbilityButton(int abilityButtonNum)
     {
-        var colors = abilityButtons[abilityButtonNum].GetComponent<Button>().colors;
-        colors.selectedColor = Color.grey;
-        abilityButtons[abilityButtonNum].GetComponent<Button>().colors = colors;
+        //var colors = abilityButtons[abilityButtonNum].GetComponent<Button>().colors;
+        //colors.selectedColor = Color.grey;
+        //abilityButtons[abilityButtonNum].GetComponent<Button>().colors = colors;
     }
 }

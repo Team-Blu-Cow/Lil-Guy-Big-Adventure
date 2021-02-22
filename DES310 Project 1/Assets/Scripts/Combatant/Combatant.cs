@@ -11,8 +11,6 @@ public enum Combatant_State
     Attacked,
 }
 
-
-
 public class Combatant : MonoBehaviour
 {
     public string combatantName;
@@ -102,12 +100,12 @@ public class Combatant : MonoBehaviour
     public void do_damage(int damage, Aspects.Aspect type)
     {
         // why cant i just get direct access to this? the switch case in these functions adds unnecessary overhead
-        GetComponent<Stats>().setStat(Combatant_Stats.HP, GetComponent<Stats>().getStat(Combatant_Stats.HP) - damage);
+        GetComponent<Stats>().SetModStat(Combatant_Stats.HP, GetComponent<Stats>().GetStat(Combatant_Stats.HP) - damage);
     }
 
     public void do_heal(int heal)
     {
-        GetComponent<Stats>().setStat(Combatant_Stats.HP, GetComponent<Stats>().getStat(Combatant_Stats.HP) + heal);
+        GetComponent<Stats>().SetModStat(Combatant_Stats.HP, GetComponent<Stats>().GetStat(Combatant_Stats.HP) + heal);
     }
 
     public void cancelMove()
@@ -124,19 +122,22 @@ public class Combatant : MonoBehaviour
         combatantState = Combatant_State.Attacking;
     }
 
-    public AbilityResult attackAbility(int abilityNum)
+    public AbilityResult UseAbility(int abilityNum)
     {
         combatantState = Combatant_State.Attacked;
-        return GetComponent<TestCombatSystem>().CastAbility(abilityNum);
-        
-        //initTracker.ChangeCurrentCombatant();       
+        return GetComponent<CombatSystem>().CastAbility(abilityNum);
     }
 
     public void UseItem(int itemNum)
     {
-        GetComponent<TestCombatSystem>().UseItem(itemNum);
-        combatantState = Combatant_State.Attacked;
-        //initTracker.ChangeCurrentCombatant();
+        if (combatantItems[itemNum])
+        {
+            GetComponent<CombatSystem>().UseItem(itemNum);
+            combatantState = Combatant_State.Attacked;
+
+            Destroy(combatantItems[itemNum].gameObject);
+            combatantItems[itemNum] = null;
+        }
     }
 }
 

@@ -7,19 +7,19 @@ public class HealthBar : MonoBehaviour
 {
     public void Update()
     {
-        if (GetComponent<Slider>().value != GetComponentInParent<PartyCombatant>().GetStats().getStat(Combatant_Stats.HP))
+        if (GetComponent<Slider>().value != GetComponentInParent<PartyCombatant>().GetStats().GetStat(Combatant_Stats.HP))
             SetHealth();
-        if (GetComponent<Slider>().maxValue != GetComponentInParent<PartyCombatant>().GetStats().getStat(Combatant_Stats.Constitution))
+        if (GetComponent<Slider>().maxValue != GetComponentInParent<PartyCombatant>().GetStats().GetStat(Combatant_Stats.Constitution))
             SetMaxHealth();        
     }
 
     public void SetHealth()
     {
-        GetComponent<Slider>().value = GetComponentInParent<PartyCombatant>().GetStats().getStat(Combatant_Stats.HP);
+        GetComponent<Slider>().value = GetComponentInParent<PartyCombatant>().GetStats().GetStat(Combatant_Stats.HP);
     }
     
     public void SetMaxHealth()
     {
-        GetComponent<Slider>().maxValue = GetComponentInParent<PartyCombatant>().GetStats().getStat(Combatant_Stats.Constitution);
+        GetComponent<Slider>().maxValue = GetComponentInParent<PartyCombatant>().GetStats().GetStat(Combatant_Stats.Constitution);
     }
 }
