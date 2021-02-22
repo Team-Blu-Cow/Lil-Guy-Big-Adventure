@@ -61,9 +61,9 @@ public struct AbilityResult
     }    
 }
 
-public class TestCombatSystem : MonoBehaviour
+public class CombatSystem : MonoBehaviour
 {
-    [HideInInspector] public GameObject enemy;
+    [HideInInspector] public GameObject target;
 
     private Combatant combatant;
     private Stats combatantStats;
@@ -91,7 +91,7 @@ public class TestCombatSystem : MonoBehaviour
     public AbilityResult CastAbility(int abilityNum)
     {
         Debug.Log("Casting Ability...");
-        if (enemy != null)
+        if (target != null)
         {           
             switch (abilitiesUsing[abilityNum].abilityType)
             {
@@ -104,22 +104,22 @@ public class TestCombatSystem : MonoBehaviour
                 default:
                     break;
             }
-            enemy = null;
+            target = null;
         }
         return new AbilityResult();
     }
 
     private AbilityResult DamageAbility(int abilityNum)
     {
-        Quirks[] enemyQuirks = enemy.GetComponent<Combatant>().combatantQuirks;
-        float[] enemyResistances = enemy.GetComponent<Combatant>().resistances;
+        Quirks[] enemyQuirks = target.GetComponent<Combatant>().combatantQuirks;
+        float[] enemyResistances = target.GetComponent<Combatant>().resistances;
         AbilityResult abilityResult = new AbilityResult();
         bool isCrit = false;
 
         int aspectType = (int)abilitiesUsing[abilityNum].abilityAspect;
 
         float damage = 0;
-        float defenceNegation = enemy.GetComponent<Stats>().GetStat(Combatant_Stats.Defence) / 2;
+        float defenceNegation = target.GetComponent<Stats>().GetStat(Combatant_Stats.Defence) / 2;
 
         switch (abilitiesUsing[abilityNum].statUsed)
         {
@@ -169,7 +169,7 @@ public class TestCombatSystem : MonoBehaviour
         damage -= defenceNegation;
 
         damage += poisonDamage;
-        enemy.GetComponent<Combatant>().do_damage((int)damage, abilitiesUsing[abilityNum].abilityAspect);
+        target.GetComponent<Combatant>().do_damage((int)damage, abilitiesUsing[abilityNum].abilityAspect);
         //Debug.Log("Enemy HP: " + enemy.GetComponent<Stats>().getStat(Combatant_Stats.HP));
         //Debug.Log("Dealt " + damage + " damage");
 
@@ -195,10 +195,10 @@ public class TestCombatSystem : MonoBehaviour
 
         if (abilitiesUsing[abilityNum].statUsed == stat_used.Magic)
         {
-            enemy.GetComponent<Stats>().SetModStat(Combatant_Stats.HP, enemy.GetComponent<Stats>().GetModStat(Combatant_Stats.HP) + heal);
-            if (enemy.GetComponent<Stats>().GetStat(Combatant_Stats.Constitution) < enemy.GetComponent<Stats>().GetModStat(Combatant_Stats.HP))
+            target.GetComponent<Stats>().SetModStat(Combatant_Stats.HP, target.GetComponent<Stats>().GetModStat(Combatant_Stats.HP) + heal);
+            if (target.GetComponent<Stats>().GetStat(Combatant_Stats.Constitution) < target.GetComponent<Stats>().GetModStat(Combatant_Stats.HP))
             {
-                enemy.GetComponent<Stats>().SetModStat(Combatant_Stats.HP, enemy.GetComponent<Stats>().GetFinalStat(Combatant_Stats.Constitution));
+                target.GetComponent<Stats>().SetModStat(Combatant_Stats.HP, target.GetComponent<Stats>().GetFinalStat(Combatant_Stats.Constitution));
             }
         }
 
@@ -225,28 +225,28 @@ public class TestCombatSystem : MonoBehaviour
         switch (abilitiesUsing[abilityNum].statUsed)
         {
             case stat_used.Strength:
-                enemy.GetComponent<Stats>().SetModStat(Combatant_Stats.Strength, buff);
+                target.GetComponent<Stats>().SetModStat(Combatant_Stats.Strength, buff);
                 break;
             case stat_used.Dexterity:
-                enemy.GetComponent<Stats>().SetModStat(Combatant_Stats.Dexterity, buff);
+                target.GetComponent<Stats>().SetModStat(Combatant_Stats.Dexterity, buff);
                 break;
             case stat_used.Magic:
-                enemy.GetComponent<Stats>().SetModStat(Combatant_Stats.Magic, buff);
+                target.GetComponent<Stats>().SetModStat(Combatant_Stats.Magic, buff);
                 break;
             case stat_used.Defence:
-                enemy.GetComponent<Stats>().SetModStat(Combatant_Stats.Defence, buff);
+                target.GetComponent<Stats>().SetModStat(Combatant_Stats.Defence, buff);
                 break;
             case stat_used.Constitution:
-                enemy.GetComponent<Stats>().SetModStat(Combatant_Stats.Constitution, buff);
+                target.GetComponent<Stats>().SetModStat(Combatant_Stats.Constitution, buff);
                 break;
             case stat_used.Luck:
-                enemy.GetComponent<Stats>().SetModStat(Combatant_Stats.Luck, buff);
+                target.GetComponent<Stats>().SetModStat(Combatant_Stats.Luck, buff);
                 break;
             case stat_used.Speed:
-                enemy.GetComponent<Stats>().SetModStat(Combatant_Stats.Speed, buff);
+                target.GetComponent<Stats>().SetModStat(Combatant_Stats.Speed, buff);
                 break;
             case stat_used.Initiative:
-                enemy.GetComponent<Stats>().SetModStat(Combatant_Stats.Initiative, buff);
+                target.GetComponent<Stats>().SetModStat(Combatant_Stats.Initiative, buff);
                 break;
         }
 

@@ -232,7 +232,7 @@ public class InitiativeTracker : MonoBehaviour
 
         if (selecting == true)
         {
-            if (getCurrentCombatant().GetComponent<TestCombatSystem>().enemy != null)
+            if (getCurrentCombatant().GetComponent<CombatSystem>().target != null)
             {
                 if (getCurrentCombatant().GetComponent<Combatant>().combatantState == Combatant_State.Attacking)
                 {

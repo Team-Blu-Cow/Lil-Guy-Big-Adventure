@@ -459,7 +459,7 @@ public class BattleManager : MonoBehaviour
 
     private void UseAbility(GameObject target, int abilityIndex)
     {
-        currentCombatant.GetComponent<TestCombatSystem>().enemy = target;
+        currentCombatant.GetComponent<CombatSystem>().target = target;
         AbilityResult result = currentCombatant.GetComponent<Combatant>().UseAbility(abilityIndex);
         abilityTargetPos = target.transform.position;
 

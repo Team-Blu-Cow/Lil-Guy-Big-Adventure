@@ -125,14 +125,14 @@ public class Combatant : MonoBehaviour
     public AbilityResult UseAbility(int abilityNum)
     {
         combatantState = Combatant_State.Attacked;
-        return GetComponent<TestCombatSystem>().CastAbility(abilityNum);
+        return GetComponent<CombatSystem>().CastAbility(abilityNum);
     }
 
     public void UseItem(int itemNum)
     {
         if (combatantItems[itemNum])
         {
-            GetComponent<TestCombatSystem>().UseItem(itemNum);
+            GetComponent<CombatSystem>().UseItem(itemNum);
             combatantState = Combatant_State.Attacked;
 
             Destroy(combatantItems[itemNum].gameObject);
