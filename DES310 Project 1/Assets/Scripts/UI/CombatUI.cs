@@ -45,6 +45,7 @@ public class CombatUI : MonoBehaviour
         {
             choiceButtons[i].deactivateButton();
         }
+        //moveButtons[0].deactivateButton();
     }
 
     public void deactivateMoveButtons()
@@ -89,6 +90,7 @@ public class CombatUI : MonoBehaviour
             choiceButtons[i].activateButton(new Vector3(110, offsetY, 0), pos);
             offsetY -= 30;
         }
+        //moveButtons[0].activateButton(new Vector3(110, offsetY, 0), pos);
     }
 
     public void activateMoveButtons()
