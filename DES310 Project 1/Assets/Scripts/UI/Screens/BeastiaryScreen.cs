@@ -147,7 +147,10 @@ public class BeastiaryScreen : MonoBehaviour
     
     public bool ToggleScreen()
     {
-        GetComponent<Canvas>().enabled = !GetComponent<Canvas>().enabled;
+        foreach (Canvas canvas in GetComponentsInChildren<Canvas>())
+        {
+            canvas.enabled = !canvas.enabled;
+        }
         UpdateSeen();
         return GetComponent<Canvas>().enabled;
     }
