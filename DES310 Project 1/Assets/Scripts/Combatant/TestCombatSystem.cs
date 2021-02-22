@@ -122,6 +122,7 @@ public class TestCombatSystem : MonoBehaviour
         int aspectType = (int)abilitiesUsing[abilityNum].abilityAspect;
 
         float damage = 0;
+        float defenceNegation = enemy.GetComponent<Stats>().getStat(Combatant_Stats.Defence) / 2;
 
         switch (abilitiesUsing[abilityNum].statUsed)
         {
@@ -168,6 +169,7 @@ public class TestCombatSystem : MonoBehaviour
             isCrit = true;
         }
 
+        damage -= defenceNegation;
 
         damage += poisonDamage;
         enemy.GetComponent<Combatant>().do_damage((int)damage, abilitiesUsing[abilityNum].abilityAspect);

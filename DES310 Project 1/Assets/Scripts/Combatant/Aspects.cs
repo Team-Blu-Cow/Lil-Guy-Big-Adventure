@@ -7,14 +7,14 @@ public class Aspects : MonoBehaviour
 
     public enum Aspect
     {
-        None = 0,
+        True = 0,
         Fire = 1,
-        Electric = 2,
+        Wind = 2,
         Physical = 3,
-        Nature = 4,
+        Earth = 4,
         Water = 5,
-        Holy = 6,
-        Cursed = 7,
+        Light = 6,
+        Dark = 7,
     }
 
 
