@@ -66,7 +66,7 @@ public struct AbilityResult
 
 public class TestCombatSystem : MonoBehaviour
 {
-    public GameObject enemy;
+    [HideInInspector] public GameObject enemy;
 
     private Combatant combatant;
     private Stats combatantStats;

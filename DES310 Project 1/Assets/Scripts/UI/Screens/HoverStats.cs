@@ -14,6 +14,11 @@ public class HoverStats : MonoBehaviour, IPointerEnterHandler, IPointerExitHandl
 
     private void Start()
     {
+        UpdateUI();
+    }
+
+    private void UpdateUI()
+    {
         for (int i = 0; i < party.party.Length; i++)
         {
             if (party.party[i])
@@ -24,7 +29,7 @@ public class HoverStats : MonoBehaviour, IPointerEnterHandler, IPointerExitHandl
                 tempMember.transform.GetChild(2).GetComponent<Image>().sprite = party.party[i].GetComponent<SpriteRenderer>().sprite;
                 tempMember.transform.GetChild(2).GetComponent<Image>().SetNativeSize();
             }
-        }  
+        }
     }
 
     // Update is called once per frame
