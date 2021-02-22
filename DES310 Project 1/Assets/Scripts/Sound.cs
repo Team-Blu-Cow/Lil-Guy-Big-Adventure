@@ -50,10 +50,11 @@ public class Music
 public class OneShot
 {
     public string name;
-
+    public bool loops;
     [Range(0, 1)] public float volume = 1;
     public AudioClip clip;
     [HideInInspector] public AudioSource source;
+    public AudioMixerGroup group;
 
     public void Play()
     {
@@ -63,5 +64,17 @@ public class OneShot
     public void Stop()
     {
         source.Stop();
+    }
+
+    public void initAudio()
+    {
+        if (group != null)
+        {
+            source.outputAudioMixerGroup = group;
+        }
+        else
+        {
+            Debug.Log("WARNING: " + name + "has not been assigned a mixer group!");
+        }
     }
 }
