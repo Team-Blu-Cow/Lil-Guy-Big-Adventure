@@ -22,9 +22,15 @@ public class Music
     {
         if (group != null)
         {
-            startSource.outputAudioMixerGroup = group;
+            if (start != null)
+            {
+                startSource.outputAudioMixerGroup = group;
+            }
             loopSource.outputAudioMixerGroup = group;
-            endSource.outputAudioMixerGroup = group;
+            if (end != null)
+            {
+                endSource.outputAudioMixerGroup = group;
+            }
         }
         else
         {
@@ -34,15 +40,26 @@ public class Music
 
     public IEnumerator Play()
     {
-        startSource.Play();
-        yield return new WaitForSeconds(start.length);
+        if (start != null)
+        {
+            startSource.Play();
+            yield return new WaitForSeconds(start.length);
+        }
+        else
+        {
+            yield return null;
+        }
+
         loopSource.Play();
     }
 
     public void Stop()
     {
         loopSource.Stop();
-        endSource.Play();
+        if (end != null)
+        {
+            endSource.Play();
+        }
     }
 
     public IEnumerator FadeOut()
@@ -54,15 +71,27 @@ public class Music
             while (currentTime < 1)
             {
                 currentTime += Time.deltaTime;
-                startSource.volume = Mathf.Lerp(start, 0f, currentTime / 1);
+                if (start != null)
+                {
+                    startSource.volume = Mathf.Lerp(start, 0f, currentTime / 1);
+                }
                 loopSource.volume = Mathf.Lerp(start, 0f, currentTime / 1);
-                endSource.volume = Mathf.Lerp(start, 0f, currentTime / 1);
+                if (end != null)
+                {
+                    endSource.volume = Mathf.Lerp(start, 0f, currentTime / 1);
+                }
                 yield return null;
             }
             Stop();
-            startSource.volume = 1f;
+            if (start != null)
+            {
+                startSource.volume = 1f;
+            }
             loopSource.volume = 1f;
-            endSource.volume = 1f;
+            if (end != null)
+            {
+                endSource.volume = 1f;
+            }
             yield break;
         }
     }
@@ -77,9 +106,15 @@ public class Music
             while (currentTime < 1)
             {
                 currentTime += Time.deltaTime;
-                startSource.volume = Mathf.Lerp(start, 1f, currentTime / 1);
+                if (start != null)
+                {
+                    startSource.volume = Mathf.Lerp(start, 1f, currentTime / 1);
+                }
                 loopSource.volume = Mathf.Lerp(start, 1f, currentTime / 1);
-                endSource.volume = Mathf.Lerp(start, 1f, currentTime / 1);
+                if (end != null)
+                {
+                    endSource.volume = Mathf.Lerp(start, 1f, currentTime / 1);
+                }
                 yield return null;
             }
             yield break;

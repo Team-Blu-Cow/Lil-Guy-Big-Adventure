@@ -605,12 +605,20 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 1652678421251567976, guid: c2aa42c7ebcfa8245af701e4c5e978dc, type: 3}
       propertyPath: oneShots.Array.size
-      value: 1
+      value: 3
       objectReference: {fileID: 0}
+    - target: {fileID: 1652678421251567976, guid: c2aa42c7ebcfa8245af701e4c5e978dc, type: 3}
+      propertyPath: music.Array.data[0].end
+      value: 
+      objectReference: {fileID: 8300000, guid: ef0fe9bd46266b446b449ec6d7d4b7a7, type: 3}
     - target: {fileID: 1652678421251567976, guid: c2aa42c7ebcfa8245af701e4c5e978dc, type: 3}
       propertyPath: music.Array.data[0].group
       value: 
       objectReference: {fileID: 2580403833928542978, guid: 9504455385ab4c345bd561d05428f082, type: 2}
+    - target: {fileID: 1652678421251567976, guid: c2aa42c7ebcfa8245af701e4c5e978dc, type: 3}
+      propertyPath: music.Array.data[0].start
+      value: 
+      objectReference: {fileID: 8300000, guid: 663abc62d3f9ac44a8eec5df53d1fede, type: 3}
     - target: {fileID: 1652678421251567976, guid: c2aa42c7ebcfa8245af701e4c5e978dc, type: 3}
       propertyPath: oneShots.Array.data[0].clip
       value: 
@@ -618,6 +626,22 @@ PrefabInstance:
     - target: {fileID: 1652678421251567976, guid: c2aa42c7ebcfa8245af701e4c5e978dc, type: 3}
       propertyPath: oneShots.Array.data[0].name
       value: Ambient Fire
+      objectReference: {fileID: 0}
+    - target: {fileID: 1652678421251567976, guid: c2aa42c7ebcfa8245af701e4c5e978dc, type: 3}
+      propertyPath: oneShots.Array.data[1].clip
+      value: 
+      objectReference: {fileID: 8300000, guid: 35181298918ed8f48bb53d21583bca7b, type: 3}
+    - target: {fileID: 1652678421251567976, guid: c2aa42c7ebcfa8245af701e4c5e978dc, type: 3}
+      propertyPath: oneShots.Array.data[1].name
+      value: Ambient Test
+      objectReference: {fileID: 0}
+    - target: {fileID: 1652678421251567976, guid: c2aa42c7ebcfa8245af701e4c5e978dc, type: 3}
+      propertyPath: oneShots.Array.data[2].clip
+      value: 
+      objectReference: {fileID: 8300000, guid: 9753be176ef15154e8ea5e08ae9024a0, type: 3}
+    - target: {fileID: 1652678421251567976, guid: c2aa42c7ebcfa8245af701e4c5e978dc, type: 3}
+      propertyPath: oneShots.Array.data[2].name
+      value: One Shot Test
       objectReference: {fileID: 0}
     - target: {fileID: 1652678421251567976, guid: c2aa42c7ebcfa8245af701e4c5e978dc, type: 3}
       propertyPath: oneShots.Array.data[0].group
@@ -628,7 +652,31 @@ PrefabInstance:
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 1652678421251567976, guid: c2aa42c7ebcfa8245af701e4c5e978dc, type: 3}
+      propertyPath: oneShots.Array.data[1].group
+      value: 
+      objectReference: {fileID: -9112270504475850036, guid: 9504455385ab4c345bd561d05428f082, type: 2}
+    - target: {fileID: 1652678421251567976, guid: c2aa42c7ebcfa8245af701e4c5e978dc, type: 3}
+      propertyPath: oneShots.Array.data[1].loops
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1652678421251567976, guid: c2aa42c7ebcfa8245af701e4c5e978dc, type: 3}
+      propertyPath: oneShots.Array.data[2].group
+      value: 
+      objectReference: {fileID: -4415839388557611050, guid: 9504455385ab4c345bd561d05428f082, type: 2}
+    - target: {fileID: 1652678421251567976, guid: c2aa42c7ebcfa8245af701e4c5e978dc, type: 3}
+      propertyPath: oneShots.Array.data[2].loops
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1652678421251567976, guid: c2aa42c7ebcfa8245af701e4c5e978dc, type: 3}
       propertyPath: oneShots.Array.data[0].volume
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1652678421251567976, guid: c2aa42c7ebcfa8245af701e4c5e978dc, type: 3}
+      propertyPath: oneShots.Array.data[1].volume
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1652678421251567976, guid: c2aa42c7ebcfa8245af701e4c5e978dc, type: 3}
+      propertyPath: oneShots.Array.data[2].volume
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 1652678421251567976, guid: c2aa42c7ebcfa8245af701e4c5e978dc, type: 3}
