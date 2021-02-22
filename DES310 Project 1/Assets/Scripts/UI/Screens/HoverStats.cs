@@ -8,21 +8,23 @@ public class HoverStats : MonoBehaviour, IPointerEnterHandler, IPointerExitHandl
 {
     GameObject hovered;
     [SerializeField] GameObject member;
-    public GameObject[] party;
+    [SerializeField] PlayerPartyManager party;
     float hoverTime;
     int count = 0;
 
     private void Start()
     {
-        for (int i = 0; i < party.Length; i++)
+        for (int i = 0; i < party.party.Length; i++)
         {
-            GameObject tempMember = Instantiate(member,transform.GetChild(0));
-            tempMember.GetComponent<PartyCombatant>().SetCombatantGO(party[i]);
-            tempMember.GetComponent<PartyCombatant>().named = "Name";
-            tempMember.transform.GetChild(2).GetComponent<Image>().sprite = party[i].GetComponent<SpriteRenderer>().sprite;
-            tempMember.transform.GetChild(2).GetComponent<Image>().SetNativeSize();
-        }
-  
+            if (party.party[i])
+            {
+                GameObject tempMember = Instantiate(member, transform.GetChild(0));
+                tempMember.GetComponent<PartyCombatant>().SetCombatantGO(party.party[i]);
+                tempMember.GetComponent<PartyCombatant>().named = "Name";
+                tempMember.transform.GetChild(2).GetComponent<Image>().sprite = party.party[i].GetComponent<SpriteRenderer>().sprite;
+                tempMember.transform.GetChild(2).GetComponent<Image>().SetNativeSize();
+            }
+        }  
     }
 
     // Update is called once per frame

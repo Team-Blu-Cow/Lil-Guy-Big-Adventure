@@ -1935,7 +1935,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   party:
   - {fileID: 522555646}
-  - {fileID: 0}
+  - {fileID: 877504212}
   - {fileID: 0}
   - {fileID: 0}
 --- !u!4 &299488562
@@ -5318,6 +5318,24 @@ GameObject:
   m_CorrespondingSourceObject: {fileID: 6773037149543772189, guid: 8cbe27ed55e90b847864376de199d9c1, type: 3}
   m_PrefabInstance: {fileID: 1525203104}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &877504218
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 877504212}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dc632899d89a2a046bf333e45c2c9b67, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  target: {fileID: 0}
+  speed: 0.5
+  path: []
+  currentlyPathFinding: 0
+  PathFinished: 0
+  gridHighLighter: {fileID: 1683309718}
 --- !u!1001 &891736435
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -16475,9 +16493,9 @@ RectTransform:
   m_Father: {fileID: 8183143970664515197}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 112.91, y: 0}
+  m_AnchorMin: {x: 0, y: 1}
+  m_AnchorMax: {x: 0, y: 1}
+  m_AnchoredPosition: {x: 112.91, y: -56.1379}
   m_SizeDelta: {x: 205.82, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1158668276547518294
@@ -16905,6 +16923,10 @@ PrefabInstance:
       propertyPath: grid
       value: 
       objectReference: {fileID: 1683309715}
+    - target: {fileID: 6115622612907476013, guid: 60a606ef734c0a347973a332ffe6ad23, type: 3}
+      propertyPath: party
+      value: 
+      objectReference: {fileID: 299488561}
     - target: {fileID: 6115622612907476013, guid: 60a606ef734c0a347973a332ffe6ad23, type: 3}
       propertyPath: Player
       value: 
@@ -20073,9 +20095,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   member: {fileID: 6057237310379914198, guid: 187919b75895fb746a0041226075cfd1, type: 3}
-  party:
-  - {fileID: 522555646}
-  - {fileID: 877504212}
+  party: {fileID: 299488561}
 --- !u!224 &8577228859271129333
 RectTransform:
   m_ObjectHideFlags: 0
@@ -23248,9 +23268,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   partyMember: {fileID: 2719420769501943195, guid: 362ab32793c8a924db51381359295326, type: 3}
-  party:
-  - {fileID: 522555646}
-  - {fileID: 877504212}
+  party: {fileID: 299488561}
 --- !u!222 &8577228859980851992
 CanvasRenderer:
   m_ObjectHideFlags: 0

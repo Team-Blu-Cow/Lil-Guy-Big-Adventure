@@ -7,7 +7,7 @@ using UnityEngine;
 public class SwapScreenParty : MonoBehaviour
 {
     [SerializeField] GameObject partyMember;
-    [SerializeField] GameObject[] party;
+    [SerializeField] PlayerPartyManager party;
     List<GameObject> members = new List<GameObject>();
 
     // Start is called before the first frame update
@@ -36,17 +36,19 @@ public class SwapScreenParty : MonoBehaviour
         LeanTween.value(back.gameObject, a => back.color = a, new Color(0, 0, 0, 0), new Color(0, 0, 0, 0.6f), 0.5f);
 
         // Set what party members appear
-        for(int i = 0; i <  party.Length; i++)
+        for(int i = 0; i <  party.party.Length; i++)
         {
-            GameObject tempPartyMember = Instantiate(partyMember, transform.GetChild(0));
-            members.Add(tempPartyMember);
-            tempPartyMember.GetComponentInChildren<PartyCombatant>().SetAll(party[i], party[i].GetComponent<Stats>(), party[i].GetComponent<Combatant>(), "Name");
-            tempPartyMember.GetComponentInChildren<TextMeshProUGUI>().text = transform.GetChild(0).GetComponentsInChildren<PartyCombatant>()[i].named;
-            tempPartyMember.GetComponentInChildren<Image>().sprite = transform.GetChild(0).GetComponentsInChildren<PartyCombatant>()[i].GetCombatantGO().GetComponent<SpriteRenderer>().sprite;
-            tempPartyMember.GetComponentInChildren<Image>().SetNativeSize();
-            tempPartyMember.GetComponent<Button>().onClick.AddListener(() => { ScreenManager.screenManager.OpenCombatantScreen(tempPartyMember.GetComponentInChildren<PartyCombatant>()); });
-            tempPartyMember.GetComponent<Button>().onClick.AddListener(CloseScreen);
-
+            if (party.party[i])
+            {
+                GameObject tempPartyMember = Instantiate(partyMember, transform.GetChild(0));
+                members.Add(tempPartyMember);
+                tempPartyMember.GetComponentInChildren<PartyCombatant>().SetAll(party.party[i], party.party[i].GetComponent<Stats>(), party.party[i].GetComponent<Combatant>(), "Name");
+                tempPartyMember.GetComponentInChildren<TextMeshProUGUI>().text = transform.GetChild(0).GetComponentsInChildren<PartyCombatant>()[i].named;
+                tempPartyMember.GetComponentInChildren<Image>().sprite = transform.GetChild(0).GetComponentsInChildren<PartyCombatant>()[i].GetCombatantGO().GetComponent<SpriteRenderer>().sprite;
+                tempPartyMember.GetComponentInChildren<Image>().SetNativeSize();
+                tempPartyMember.GetComponent<Button>().onClick.AddListener(() => { ScreenManager.screenManager.OpenCombatantScreen(tempPartyMember.GetComponentInChildren<PartyCombatant>()); });
+                tempPartyMember.GetComponent<Button>().onClick.AddListener(CloseScreen);
+            }
         }
     }
 

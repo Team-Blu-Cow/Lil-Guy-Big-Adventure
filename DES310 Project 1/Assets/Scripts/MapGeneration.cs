@@ -30,7 +30,7 @@ public class MapGeneration : MonoBehaviour
     [SerializeField] Item[] items;
     [SerializeField] GameObject[] enemies;
     [SerializeField] GameObject exit;
-    [SerializeField] Transform Player;
+    [SerializeField] PlayerPartyManager party;
 
     [Header("Generation variables")]
     [SerializeField] float lowerBound = 0.1f;
@@ -177,7 +177,7 @@ public class MapGeneration : MonoBehaviour
         avalibleExit = 0;
         foreach (GameObject exit in placedExits)
         {
-            PathRequestManager.RequestPath(Player.position, exit.transform.position, OnPathFound);
+            PathRequestManager.RequestPath(party.party[0].transform.position, exit.transform.position, OnPathFound);
         }
 
         LeanTween.delayedCall(0.3f, () =>
@@ -444,7 +444,30 @@ public class MapGeneration : MonoBehaviour
         // sets the player to the position where they entered and doesnt spawn an exit on them
         if ((int)enterDirection == tag[4]-48)
         {
-            Player.position = grid.NodeToWorld(position.x, position.y - 0.25f, 2);
+            foreach (GameObject combatant in party.party)
+            {
+                if (combatant)
+                {
+                    bool placed = false;
+                    int loops = 0;
+                    while (!placed)
+                    {
+                        for (int i = -loops; i < loops; i++)
+                        {
+                            for (int j = -loops; j < loops; j++)
+                            {
+                                if (grid.GetNode(new Vector3Int((int)position.x + i, (int)position.y + j, 0)).IsTraversable())
+                                {
+                                    combatant.transform.position = grid.NodeToWorld(position.x + i, position.y +j - 0.25f, 2);
+                                    combatant.GetComponent<PathFindingUnit>().OccupyTile(combatant);
+                                    placed = true;
+                                }
+                            }
+                        }
+                        loops++;                        
+                    }
+                }
+            }
             return;
         }
 
