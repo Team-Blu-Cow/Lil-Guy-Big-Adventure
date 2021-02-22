@@ -134,7 +134,10 @@ public class BattleManager : MonoBehaviour
                 if (combatant.tag == "Enemy")
                     enemyCombatants.Remove(combatant);
                 else
+                {
                     //TODO: remove combatant from player's party
+                    ai_core.party_list.Remove(combatant);
+                }
 
                 combatants.Remove(combatant);
                 combatant.GetComponent<PathFindingUnit>().OccupyTile(null);
