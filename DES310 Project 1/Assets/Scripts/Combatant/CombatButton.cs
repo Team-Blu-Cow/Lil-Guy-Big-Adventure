@@ -1,6 +1,9 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
+using TMPro;
+
 public class CombatButton : MonoBehaviour
 {
 
@@ -8,25 +11,28 @@ public class CombatButton : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        gameObject.SetActive(false);
+        GetComponent<Button>().interactable = false;
+        GetComponentInChildren<TextMeshProUGUI>().enabled = false;
     }
 
     public void activateButton(Vector3 offset, Vector3 combatantPosition)
     {
         if (abilityButton == false)
         {
-            gameObject.SetActive(true);
+            GetComponent<Button>().interactable = true;
+            GetComponentInChildren<TextMeshProUGUI>().enabled = true;
             GetComponent<RectTransform>().anchoredPosition = combatantPosition + offset;
         }
         else if (abilityButton == true)
         {
-            gameObject.SetActive(true);
-            GetComponent<RectTransform>().anchoredPosition = offset;
+            GetComponent<Button>().interactable = true;
+            GetComponentInChildren<TextMeshProUGUI>().enabled = true;
         }
     }
 
     public void deactivateButton()
     {
-        gameObject.SetActive(false);
+        GetComponent<Button>().interactable = false;
+        GetComponentInChildren<TextMeshProUGUI>().enabled = false;
     }
 }

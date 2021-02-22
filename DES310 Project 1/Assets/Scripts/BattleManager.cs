@@ -534,6 +534,11 @@ public class BattleManager : MonoBehaviour
         if (enemyCombatants.Count <= 0)
         {
             battleState = BattleState.FINISHED;
+            
+            foreach (GameObject exit in FindObjectOfType<MapGeneration>().placedExits)
+            {
+                exit.SetActive(true);
+            }
             Debug.Log("battle won");
         }
 

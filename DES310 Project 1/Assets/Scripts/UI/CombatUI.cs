@@ -2,34 +2,40 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using TMPro;
 
 public class CombatUI : MonoBehaviour
 {
-    public CombatButton[] moveButtons;
-    public CombatButton[] abilityButtons;
-    public CombatButton[] itemButtons;
-    public CombatButton[] choiceButtons;
-    public RectTransform canvas;
 
-    InitiativeTracker initTracker;
+    [SerializeField] GameObject BaseGO;
+
+    List<CombatButton> abilityButtons = new List<CombatButton>();
+    List<CombatButton> itemButtons = new List<CombatButton>();
+    List<CombatButton> moveButtons = new List<CombatButton>();
+    List<CombatButton> choiceButtons = new List<CombatButton>();
+
+    RectTransform canvas;
+
     Vector2 combatantPos;
-    Vector2 combatantScreenPos;
 
     private void Start()
-    {
-        //initTracker = gameObject.GetComponent<InitiativeTracker>();
-        for (int i = 0; i < 4; i++)
+    {        
+        canvas = BaseGO.GetComponent<RectTransform>();
+
+        abilityButtons.AddRange(BaseGO.transform.GetChild(0).GetComponentsInChildren<CombatButton>());
+        itemButtons.AddRange(BaseGO.transform.GetChild(1).GetComponentsInChildren<CombatButton>());
+        moveButtons.AddRange(BaseGO.transform.GetChild(2).GetComponentsInChildren<CombatButton>());
+        choiceButtons.AddRange(BaseGO.transform.GetChild(3).GetComponentsInChildren<CombatButton>());
+
+        for (int i = 0; i < 5; i++)
         {
             abilityButtons[i].abilityButton = true;
         }
-        choiceButtons[3].abilityButton = true;
     }
 
     private void Update()
     {
-        //combatantScreenPos = Camera.main.WorldToViewportPoint(initTracker.getCurrentCombatant().transform.position);
-        //combatantPos = new Vector2((combatantScreenPos.x * canvas.sizeDelta.x) - (canvas.sizeDelta.x * 0.5f), (combatantScreenPos.y * canvas.sizeDelta.y) - (canvas.sizeDelta.y * 0.5f));
-        // transform.GetChild(0);
+
     }
 
     public Vector2 WorldToCanvasSpace(Vector3 worldPos)
@@ -56,20 +62,18 @@ public class CombatUI : MonoBehaviour
 
     public void deactivateAbilityButtons()
     {
-        for (int j = 0; j < 4; j++)
+        for (int j = 0; j < 5; j++)
         {
             abilityButtons[j].deactivateButton();
         }
-        choiceButtons[3].deactivateButton();
     }
 
     public void deactivateItemButtons()
     {
-        for (int j = 0; j < 5; j++)
+        for (int j = 0; j < 6; j++)
         {
             itemButtons[j].deactivateButton();
         }
-        choiceButtons[4].deactivateButton();
     }
 
     public void activateChoiceButtons()
@@ -107,70 +111,65 @@ public class CombatUI : MonoBehaviour
 
     public void activateAbilityButtons()
     {
-        abilityButtons[0].activateButton(new Vector3(-165, 100, 0), new Vector3(0, 0, 0));
-        abilityButtons[1].activateButton(new Vector3(165, 100, 0), new Vector3(0, 0, 0));
-        abilityButtons[2].activateButton(new Vector3(-165, 35, 0), new Vector3(0, 0, 0));
-        abilityButtons[3].activateButton(new Vector3(165, 35, 0), new Vector3(0, 0, 0));
-        choiceButtons[3].activateButton(new Vector3(0, 155, 0), new Vector3(0, 0, 0));
+        int count = 0;
+        foreach (CombatButton button in abilityButtons)
+        {
+            button.activateButton(button.transform.position, new Vector3());
+            if (count < 4)
+            {
+                button.GetComponentInChildren<TextMeshProUGUI>().text = GetComponent<BattleManager>().currentCombatant.GetComponent<Combatant>().abilitiesUsing[count].abilityName;
+                count++;
+            }           
+        }
     }
 
     public void activateItemButtons()
     {
         int offsetY = 110;
 
-        for (int i = 0; i < 5; i++)
+        for (int i = 0; i < 6; i++)
         {
             itemButtons[i].activateButton(new Vector3(0, 0, 0), combatantPos);
             offsetY -= 30;
-        }
-
-        choiceButtons[4].activateButton(new Vector3(110, offsetY, 0), combatantPos);
+       }
     }
 
     public void activateItemButtons(Vector2 pos)
     {
         int offsetY = 50;
-        for (int i = 0; i < 5; i++)
+        for (int i = 0; i < 6; i++)
         {
             itemButtons[i].activateButton(new Vector3(110, offsetY, 0), pos);
             offsetY -= 30;
         }
-
-        choiceButtons[4].activateButton(new Vector3(110, offsetY, 0), pos);
     }
 
     public void useBackButton(Vector2 pos)
     {
-        for (int i = 0; i < 4; i++)
+        for (int i = 0; i < 5; i++)
         {
             abilityButtons[i].deactivateButton();
         }
 
-        for (int i = 0; i < 5; i++)
+        for (int i = 0; i < 6; i++)
         {
             itemButtons[i].deactivateButton();
         }
-
-        choiceButtons[3].deactivateButton();
-        choiceButtons[4].deactivateButton();
 
         activateChoiceButtons(pos);
     }
 
     public void useBackButton()
     {
-        for (int i = 0; i < 4; i++)
+        for (int i = 0; i < 5; i++)
         {
             abilityButtons[i].deactivateButton();
         }
 
-        for (int i = 0; i < 5; i++)
+        for (int i = 0; i < 6; i++)
         {
             itemButtons[i].deactivateButton();
         }
-
-        choiceButtons[3].deactivateButton();
-        choiceButtons[4].deactivateButton();
     }
 
     public void colorAbilityButton(int abilityButtonNum)
