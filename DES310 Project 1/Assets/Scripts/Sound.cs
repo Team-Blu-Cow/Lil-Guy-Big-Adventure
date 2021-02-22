@@ -44,6 +44,23 @@ public class Music
         loopSource.Stop();
         endSource.Play();
     }
+
+    public IEnumerator FadeOut()
+    {
+        //bool done = false;
+        //while (!done)
+        //{
+        //    volume -= Time.deltaTime;
+        //    if (volume <= 0f)
+        //    {
+        //        //Stop();
+        //        //volume = 1f;
+        //        done = true;
+        //    }
+        //}
+        Debug.LogWarning("Deprecated lmao");
+        yield return null;
+    }
 }
 
 [System.Serializable]
@@ -76,5 +93,23 @@ public class OneShot
         {
             Debug.Log("WARNING: " + name + "has not been assigned a mixer group!");
         }
+    }
+
+    public IEnumerator FadeOut()
+    {
+        //bool done = false;
+        //while (!done)
+        //{
+        //    volume -= Time.deltaTime * 0.1f;
+        //    if (volume <= 0f)
+        //    {
+        //        Stop();
+        //        volume = 1f;
+        //        done = true;
+        //    }
+        //}
+        //
+        Debug.LogWarning("Deprecated lmao");
+        yield return null;
     }
 }

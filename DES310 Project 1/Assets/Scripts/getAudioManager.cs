@@ -17,6 +17,12 @@ public class getAudioManager : MonoBehaviour
         instance.Stop(in_string);
     }
 
+    public void FadeOut(string in_string)
+    {
+        instance = GameObject.Find("AudioManager").GetComponent<AudioManager>();
+        instance.FadeOut(in_string);
+    }
+
     public void setMusicVolume(float in_vol)
     {
         instance = GameObject.Find("AudioManager").GetComponent<AudioManager>();
