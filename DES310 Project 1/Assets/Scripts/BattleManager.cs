@@ -86,6 +86,10 @@ public class BattleManager : MonoBehaviour
     void CycleQueue()
     {
         currentCombatant = battleQueue.Dequeue();
+        while (currentCombatant.activeSelf == false)
+        {
+            currentCombatant = battleQueue.Dequeue();
+        }
         battleQueue.Enqueue(currentCombatant);
     }
 
@@ -113,6 +117,33 @@ public class BattleManager : MonoBehaviour
         T tmp = list[indexA];
         list[indexA] = list[indexB];
         list[indexB] = tmp;
+    }
+
+    public void CheckIfCombatantDead(GameObject combatant)
+    {
+        if(combatant != null && combatants.Contains(combatant)&& combatant.GetComponent<Combatant>().GetComponent<Stats>().getStat(Combatant_Stats.HP) <= 0)
+        {
+            
+            if(combatant.GetComponent<Combatant>().GetComponent<Stats>().combatant_type == Combatant_Type.Human)
+            {
+                // KILL MAIN CHARACTER
+                Debug.Log("Player died, you suck!");
+            }
+            else
+            {
+                if (combatant.tag == "Enemy")
+                    enemyCombatants.Remove(combatant);
+                else
+                {
+                    //TODO: remove combatant from player's party
+                    ai_core.party_list.Remove(combatant);
+                }
+
+                combatants.Remove(combatant);
+                combatant.GetComponent<PathFindingUnit>().OccupyTile(null);
+                combatant.SetActive(false);
+            }
+        }
     }
 
     //--------------------------------------------------------------------------------------------------------------------------------------------//
@@ -145,6 +176,8 @@ public class BattleManager : MonoBehaviour
     {
         combatants = new List<GameObject>();
 
+        ai_core.party_list = new List<GameObject>();
+
         if (enemyCombatants != null)
         {
             combatants.AddRange(enemyCombatants);
@@ -152,7 +185,11 @@ public class BattleManager : MonoBehaviour
         foreach (var member in playerParty.party)
         {
             if (member != null)
+            {
                 combatants.Add(member);
+                ai_core.party_list.Add(member);
+            }
+                
         }
 
         SortBattleInitiative();
@@ -224,6 +261,8 @@ public class BattleManager : MonoBehaviour
     // Start Turn Phase ****************************************************************************************************************************
     void StartTurn()
     {
+        receivedActionCommand = false;
+
         CycleQueue();
 
         currentCombatant.GetComponent<PathFindingUnit>().SetSelectableTiles(currentCombatant.GetComponent<Stats>().getStat(Combatant_Stats.Speed));
@@ -327,7 +366,7 @@ public class BattleManager : MonoBehaviour
             //if (actionState == ActionState.ABILITY)
              //   DamagePopup.Create(abilityTargetPos, 300);
 
-            StartCoroutine(Wait(1));
+            StartCoroutine(WaitThenFinish(1));
         }
             
 
@@ -335,7 +374,7 @@ public class BattleManager : MonoBehaviour
             SetCombatantState(CombatantState.END);
     }
 
-    IEnumerator Wait(float seconds)
+    IEnumerator WaitThenFinish(float seconds)
     {
         yield return new WaitForSeconds(seconds);
         actionState = ActionState.FINISHED;
@@ -350,7 +389,11 @@ public class BattleManager : MonoBehaviour
             AbilityResult result = behaviour.Attack(ai_core);
             if(result.target != null)
             {
-	            AnimateAbility(result.target.transform.position, result.abilityIndex);
+                abilityTargetPos = result.target.transform.position;
+
+                CheckIfCombatantDead(result.target);
+
+                AnimateAbility(abilityTargetPos, result.abilityIndex);
 	            StartCoroutine(ShowDamagePopup(0.2f, (int)result.oDamage, result.crit));
             }
             else
@@ -370,15 +413,20 @@ public class BattleManager : MonoBehaviour
         {
             case ActionState.ABILITY:
             {
-                IsoNode node = gridHighLighter.grid.WorldToNode(mousePos);
-                if (gridHighLighter.IsTileOccupied(node))
-                {
-                    // TODO edit this to allow for healing to target allies ect.
-                    if (node.occupier.tag == "Enemy")
+                
+	            IsoNode node = gridHighLighter.grid.WorldToNode(mousePos);
+	            if (gridHighLighter.IsTileOccupied(node))
+	            {
+                    if (receivedActionCommand == false)
                     {
-                        UseAbility(node.occupier, selectedAbility);
-                        break;
-                    }
+                        receivedActionCommand = true;
+                        // TODO edit this to allow for healing to target allies ect.
+                        if (node.occupier.tag == "Enemy")
+	                    {
+	                        UseAbility(node.occupier, selectedAbility);
+	                        break;
+	                    }
+	                }
                 }
                 break;
             }
@@ -400,6 +448,8 @@ public class BattleManager : MonoBehaviour
 
         abilityTargetPos = target.transform.position;
 
+        CheckIfCombatantDead(target);
+
         AnimateAbility(target.transform.position,abilityIndex);
         StartCoroutine(ShowDamagePopup(0.2f, (int)result.oDamage, result.crit));
     }
@@ -412,11 +462,24 @@ public class BattleManager : MonoBehaviour
     public void AnimateAbility(Vector3 animPos, int abilityIndex)
     {
         // draw animation effect 
-        GameObject ability = Instantiate(currentCombatant.GetComponent<Combatant>().abilitiesUsing[abilityIndex].gameObject, animPos, Quaternion.identity);
+        /*GameObject ability = Instantiate(currentCombatant.GetComponent<Combatant>().abilitiesUsing[abilityIndex].gameObject, animPos, Quaternion.identity);
         ability.GetComponent<Ability>().bManager = this;
         ability.transform.localScale = new Vector3(2f, 2f, 2f);
         ability.GetComponent<SpriteRenderer>().sortingOrder = 1;
-        ability.GetComponent<Ability>().PlayAnim();
+        ability.GetComponent<Ability>().PlayAnim();*/
+        if (currentCombatant.GetComponent<Combatant>().abilitiesUsing[abilityIndex].Anim != null)
+        {
+            animPos = new Vector3(animPos.x, animPos.y-0.125f, 3);
+            GameObject ability = Instantiate(currentCombatant.GetComponent<Combatant>().abilitiesUsing[abilityIndex].Anim, animPos, Quaternion.identity);
+            ability.transform.localScale = Vector3.one * currentCombatant.GetComponent<Combatant>().abilitiesUsing[abilityIndex].scale;
+            StartCoroutine(WaitForAnim(currentCombatant.GetComponent<Combatant>().abilitiesUsing[abilityIndex].time));
+        }
+    }
+
+    IEnumerator WaitForAnim(float seconds)
+    {
+        yield return new WaitForSeconds(seconds);
+        animEffectComplete = true;
     }
 
     public void OnChooseAbility()
@@ -431,6 +494,7 @@ public class BattleManager : MonoBehaviour
     public void OnSelectAbility(int abilityIndex)
     {
         selectedAbility = abilityIndex;
+        combatUI.colorAbilityButton(abilityIndex);
         if (currentCombatant.GetComponent<Combatant>().abilitiesLearnt[selectedAbility] != null)
             currentCombatant.GetComponent<PathFindingUnit>().SetSelectableTiles(currentCombatant.GetComponent<Combatant>().abilitiesLearnt[selectedAbility].abilityRange, true);
     }

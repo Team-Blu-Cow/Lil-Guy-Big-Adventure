@@ -56,6 +56,18 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7558335817995306079, guid: 9285a0b73e54ff44aa137bb4373dd6c7, type: 3}
+      propertyPath: Anim
+      value: 
+      objectReference: {fileID: 4021103657954561961, guid: 5c755f9bc5253ea418e919994537dcc7, type: 3}
+    - target: {fileID: 7558335817995306079, guid: 9285a0b73e54ff44aa137bb4373dd6c7, type: 3}
+      propertyPath: time
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7558335817995306079, guid: 9285a0b73e54ff44aa137bb4373dd6c7, type: 3}
+      propertyPath: scale
+      value: 0.45
+      objectReference: {fileID: 0}
+    - target: {fileID: 7558335817995306079, guid: 9285a0b73e54ff44aa137bb4373dd6c7, type: 3}
       propertyPath: animDelay
       value: 0.1
       objectReference: {fileID: 0}
@@ -66,6 +78,10 @@ PrefabInstance:
     - target: {fileID: 7558335817995306079, guid: 9285a0b73e54ff44aa137bb4373dd6c7, type: 3}
       propertyPath: abilityName
       value: Bonk
+      objectReference: {fileID: 0}
+    - target: {fileID: 7558335817995306079, guid: 9285a0b73e54ff44aa137bb4373dd6c7, type: 3}
+      propertyPath: abilityAspect
+      value: 3
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 9285a0b73e54ff44aa137bb4373dd6c7, type: 3}

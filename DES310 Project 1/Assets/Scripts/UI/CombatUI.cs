@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class CombatUI : MonoBehaviour
 {
@@ -9,7 +10,7 @@ public class CombatUI : MonoBehaviour
     public CombatButton[] itemButtons;
     public CombatButton[] choiceButtons;
     public RectTransform canvas;
-    
+
     InitiativeTracker initTracker;
     Vector2 combatantPos;
     Vector2 combatantScreenPos;
@@ -17,7 +18,7 @@ public class CombatUI : MonoBehaviour
     private void Start()
     {
         //initTracker = gameObject.GetComponent<InitiativeTracker>();
-        for(int i = 0; i < 4; i++)
+        for (int i = 0; i < 4; i++)
         {
             abilityButtons[i].abilityButton = true;
         }
@@ -104,15 +105,11 @@ public class CombatUI : MonoBehaviour
 
     public void activateAbilityButtons()
     {
-        int offsetY = -30;
-
-        for (int i = 0; i < 4; i++)
-        {
-            abilityButtons[i].activateButton(new Vector3(-110, offsetY, 0), combatantPos);
-            offsetY -= 30;
-        }
-
-        choiceButtons[3].activateButton(new Vector3(-110, offsetY, 0), combatantPos);
+        abilityButtons[0].activateButton(new Vector3(-165, 100, 0), new Vector3(0, 0, 0));
+        abilityButtons[1].activateButton(new Vector3(165, 100, 0), new Vector3(0, 0, 0));
+        abilityButtons[2].activateButton(new Vector3(-165, 35, 0), new Vector3(0, 0, 0));
+        abilityButtons[3].activateButton(new Vector3(165, 35, 0), new Vector3(0, 0, 0));
+        choiceButtons[3].activateButton(new Vector3(0, 155, 0), new Vector3(0, 0, 0));
     }
 
     public void activateItemButtons()
@@ -155,7 +152,7 @@ public class CombatUI : MonoBehaviour
         choiceButtons[3].deactivateButton();
         choiceButtons[4].deactivateButton();
 
-        activateChoiceButtons(pos);      
+        activateChoiceButtons(pos);
     }
 
     public void useBackButton()
@@ -172,5 +169,12 @@ public class CombatUI : MonoBehaviour
 
         choiceButtons[3].deactivateButton();
         choiceButtons[4].deactivateButton();
+    }
+
+    public void colorAbilityButton(int abilityButtonNum)
+    {
+        var colors = abilityButtons[abilityButtonNum].GetComponent<Button>().colors;
+        colors.selectedColor = Color.grey;
+        abilityButtons[abilityButtonNum].GetComponent<Button>().colors = colors;
     }
 }

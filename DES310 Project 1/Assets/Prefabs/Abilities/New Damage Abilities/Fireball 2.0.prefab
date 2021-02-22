@@ -56,6 +56,18 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7558335817995306079, guid: 9285a0b73e54ff44aa137bb4373dd6c7, type: 3}
+      propertyPath: Anim
+      value: 
+      objectReference: {fileID: 2421574060677634809, guid: c60357c46a159754eba03905357f7e16, type: 3}
+    - target: {fileID: 7558335817995306079, guid: 9285a0b73e54ff44aa137bb4373dd6c7, type: 3}
+      propertyPath: time
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7558335817995306079, guid: 9285a0b73e54ff44aa137bb4373dd6c7, type: 3}
+      propertyPath: scale
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 7558335817995306079, guid: 9285a0b73e54ff44aa137bb4373dd6c7, type: 3}
       propertyPath: statUsed
       value: 1
       objectReference: {fileID: 0}

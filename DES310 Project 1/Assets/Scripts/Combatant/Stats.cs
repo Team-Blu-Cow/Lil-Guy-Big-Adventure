@@ -49,7 +49,7 @@ public class Stats : MonoBehaviour
     private int base_luck = 5; // regular 1 in 20 e.g. d20 roll
     private int base_speed = 5;
     private int base_init = 5;
-    private int current_hp;
+    [SerializeField] private int current_hp;
 
     private void Start()
     {        
@@ -62,7 +62,7 @@ public class Stats : MonoBehaviour
                 base_dex += 3;
                 base_mag += 3;
                 base_def += 3;
-                base_con += 3;
+                base_con += 7;
                 base_luck += 3;
                 base_speed += 3;
                 base_init += 3;               

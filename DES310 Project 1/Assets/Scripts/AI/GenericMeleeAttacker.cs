@@ -43,10 +43,11 @@ namespace AI
                         IsoNode node = aiCore.pathfinder.GetGrid().WorldToNode(targetLoc);
 
                         if(node != null && node.occupier != null)
-                        {                            
-                            GetComponent<TestCombatSystem>().enemy = node.occupier;
+                        {
+                            GameObject target = node.occupier;
+                            GetComponent<TestCombatSystem>().enemy = target;
                             result = GetComponent<Combatant>().attackAbility(0);
-                            result.target = node.occupier;
+                            result.target = target;
                             result.abilityIndex = 0;
                         }
                     }

@@ -2,12 +2,30 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine.EventSystems;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class HoverStats : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, IPointerClickHandler
 {
     GameObject hovered;
+    [SerializeField] GameObject member;
+    [SerializeField] PlayerPartyManager party;
     float hoverTime;
     int count = 0;
+
+    private void Start()
+    {
+        for (int i = 0; i < party.party.Length; i++)
+        {
+            if (party.party[i])
+            {
+                GameObject tempMember = Instantiate(member, transform.GetChild(0));
+                tempMember.GetComponent<PartyCombatant>().SetCombatantGO(party.party[i]);
+                tempMember.GetComponent<PartyCombatant>().named = "Name";
+                tempMember.transform.GetChild(2).GetComponent<Image>().sprite = party.party[i].GetComponent<SpriteRenderer>().sprite;
+                tempMember.transform.GetChild(2).GetComponent<Image>().SetNativeSize();
+            }
+        }  
+    }
 
     // Update is called once per frame
     void Update()
@@ -47,7 +65,7 @@ public class HoverStats : MonoBehaviour, IPointerEnterHandler, IPointerExitHandl
     {
         if (eventData.pointerCurrentRaycast.gameObject != null && eventData.pointerCurrentRaycast.gameObject.CompareTag("UIPartyMember"))
         {
-            hovered = eventData.pointerCurrentRaycast.gameObject.transform.GetChild(0).gameObject;
+            hovered = eventData.pointerCurrentRaycast.gameObject.transform.parent.GetChild(0).gameObject;
             if (LeanTween.isTweening(hovered))
                 ShowStats();
         }
@@ -89,7 +107,7 @@ public class HoverStats : MonoBehaviour, IPointerEnterHandler, IPointerExitHandl
     void OpenCombatant(object combatant)
     {
         GameObject goCombatant = combatant as GameObject;
-        ScreenManager.screenManager.OpenCombatantScreen(goCombatant.GetComponent<PartyCombatant>());
+        ScreenManager.screenManager.OpenCombatantScreen(goCombatant.GetComponentInParent<PartyCombatant>());
         count = 0;
     }
 
