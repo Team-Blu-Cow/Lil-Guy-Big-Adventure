@@ -185,7 +185,7 @@ public class TestCombatSystem : MonoBehaviour
     {
         bool isCrit = false;
         AbilityResult abilityResult = new AbilityResult();
-        int heal = (int)abilitiesUsing[abilityNum].abilityPower * combatantStats.GetFinalStat(Combatant_Stats.Magic);
+        int heal = (int)abilitiesUsing[abilityNum].abilityPower + combatantStats.GetFinalStat(Combatant_Stats.Magic);
 
         if (Random.Range(1, 100) < combatantStats.GetStat(Combatant_Stats.Luck))
         {
@@ -195,10 +195,10 @@ public class TestCombatSystem : MonoBehaviour
 
         if (abilitiesUsing[abilityNum].statUsed == stat_used.Magic)
         {
-            enemy.GetComponent<Stats>().SetModStat(Combatant_Stats.HP, combatantStats.GetFinalStat(Combatant_Stats.HP) + heal);
-            if (enemy.GetComponent<Stats>().GetStat(Combatant_Stats.Constitution) < combatantStats.GetFinalStat(Combatant_Stats.HP))
+            enemy.GetComponent<Stats>().SetModStat(Combatant_Stats.HP, enemy.GetComponent<Stats>().GetModStat(Combatant_Stats.HP) + heal);
+            if (enemy.GetComponent<Stats>().GetStat(Combatant_Stats.Constitution) < enemy.GetComponent<Stats>().GetModStat(Combatant_Stats.HP))
             {
-                enemy.GetComponent<Stats>().SetModStat(Combatant_Stats.HP, combatantStats.GetFinalStat(Combatant_Stats.Constitution));
+                enemy.GetComponent<Stats>().SetModStat(Combatant_Stats.HP, enemy.GetComponent<Stats>().GetFinalStat(Combatant_Stats.Constitution));
             }
         }
 
@@ -225,28 +225,28 @@ public class TestCombatSystem : MonoBehaviour
         switch (abilitiesUsing[abilityNum].statUsed)
         {
             case stat_used.Strength:
-                enemy.GetComponent<Stats>().SetModStat(Combatant_Stats.Strength, combatantStats.GetStat(Combatant_Stats.Strength) + buff);
+                enemy.GetComponent<Stats>().SetModStat(Combatant_Stats.Strength, buff);
                 break;
             case stat_used.Dexterity:
-                enemy.GetComponent<Stats>().SetModStat(Combatant_Stats.Dexterity, combatantStats.GetStat(Combatant_Stats.Dexterity) + buff);
+                enemy.GetComponent<Stats>().SetModStat(Combatant_Stats.Dexterity, buff);
                 break;
             case stat_used.Magic:
-                enemy.GetComponent<Stats>().SetModStat(Combatant_Stats.Magic, combatantStats.GetStat(Combatant_Stats.Magic) + buff);
+                enemy.GetComponent<Stats>().SetModStat(Combatant_Stats.Magic, buff);
                 break;
             case stat_used.Defence:
-                enemy.GetComponent<Stats>().SetModStat(Combatant_Stats.Defence, combatantStats.GetStat(Combatant_Stats.Defence) + buff);
+                enemy.GetComponent<Stats>().SetModStat(Combatant_Stats.Defence, buff);
                 break;
             case stat_used.Constitution:
-                enemy.GetComponent<Stats>().SetModStat(Combatant_Stats.Constitution, combatantStats.GetStat(Combatant_Stats.Constitution) + buff);
+                enemy.GetComponent<Stats>().SetModStat(Combatant_Stats.Constitution, buff);
                 break;
             case stat_used.Luck:
-                enemy.GetComponent<Stats>().SetModStat(Combatant_Stats.Luck, combatantStats.GetStat(Combatant_Stats.Luck) + buff);
+                enemy.GetComponent<Stats>().SetModStat(Combatant_Stats.Luck, buff);
                 break;
             case stat_used.Speed:
-                enemy.GetComponent<Stats>().SetModStat(Combatant_Stats.Speed, combatantStats.GetStat(Combatant_Stats.Speed) + buff);
+                enemy.GetComponent<Stats>().SetModStat(Combatant_Stats.Speed, buff);
                 break;
             case stat_used.Initiative:
-                enemy.GetComponent<Stats>().SetModStat(Combatant_Stats.Initiative, combatantStats.GetStat(Combatant_Stats.Initiative) + buff);
+                enemy.GetComponent<Stats>().SetModStat(Combatant_Stats.Initiative, buff);
                 break;
         }
 
