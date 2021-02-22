@@ -54,6 +54,7 @@ public class ScreenManager : MonoBehaviour
         pause.TogglePauseGame(true);
         partyScreen.CloseScreen();
         combatantScreen.CloseScreen();
+        beastiaryScreen.CloseScreen();
     }
     
     public void OpenCombatantScreen(PartyCombatant combatant)
