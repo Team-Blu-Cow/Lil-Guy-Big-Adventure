@@ -15,6 +15,7 @@ public enum Combatant_State
 
 public class Combatant : MonoBehaviour
 {
+    public string combatantName;
     public int combatantNum;
     public bool fighting;
 
@@ -28,6 +29,7 @@ public class Combatant : MonoBehaviour
     public Quirks[] combatantQuirks;
 
     public InitiativeTracker initTracker;
+
 
     public Vector3 oldPosition;
     public Combatant_State combatantState = Combatant_State.Idle;

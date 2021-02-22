@@ -108,6 +108,7 @@ MonoBehaviour:
   mod_luck: 0
   mod_speed: 0
   mod_init: 0
+  current_hp: 0
 --- !u!114 &6127942090193602137
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -133,6 +134,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cf65118ca2564484991111fe932c906f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  combatantName: Mushroom
   combatantNum: 0
   fighting: 0
   abilitiesLearnt:
