@@ -16079,7 +16079,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6773037149543772178, guid: 8cbe27ed55e90b847864376de199d9c1, type: 3}
       propertyPath: mod_con
-      value: -4
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6773037149543772189, guid: 8cbe27ed55e90b847864376de199d9c1, type: 3}
       propertyPath: m_Name
