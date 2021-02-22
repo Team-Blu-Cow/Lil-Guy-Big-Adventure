@@ -5,7 +5,7 @@ using TMPro;
 
 public class ScreenManager : MonoBehaviour
 {
-    public static ScreenManager screenManager;
+    public static ScreenManager instance;
 
     public InputManager controls;
 
@@ -20,12 +20,12 @@ public class ScreenManager : MonoBehaviour
 
     private void Awake()
     {
-        if (screenManager != null)
+        if (instance != null)
         {
             Debug.LogWarning("Screen Manager instances");
             return;
         }
-        screenManager = this;
+        instance = this;
         
         controls = new InputManager();
         controls.Keyboard.Pause.performed += ctx => TogglePause();

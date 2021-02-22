@@ -7,7 +7,6 @@ using UnityEngine;
 public class SwapScreenCombatant : MonoBehaviour
 {
     public GameObject swapAbility;
-
     private void Start()
     {
         LeanTween.scale(gameObject, new Vector3(0, 0, 0), 0.0f);
@@ -34,30 +33,31 @@ public class SwapScreenCombatant : MonoBehaviour
     {
         // Enable canvas
         transform.GetComponentInParent<Canvas>().enabled = true;
-        GetComponent<PartyCombatant>().SetCombatant(combatant.GetCombatant());
-        GetComponent<PartyCombatant>().SetCombatantGO(combatant.combatantGO);
+        GetComponent<PartyCombatant>().Combatant = combatant.Combatant;
+        GetComponent<PartyCombatant>().CombatantGO = combatant.CombatantGO;
 
         // Fade in background
         LeanTween.scale(gameObject, new Vector3(1, 1, 1), 0.5f);
 
         // Set the resistances on ui
-        GetComponentInChildren<ShowResistanceUI>().SetRes(combatant.GetCombatant());
+        GetComponentInChildren<ShowResistanceUI>().SetRes(combatant.Combatant);
 
         // Set the name and health on the ui
-        GameObject.Find("CombatantName").GetComponent<TextMeshProUGUI>().text = combatant.named + "(" + combatant.GetStats().GetStat(Combatant_Stats.HP) + "/" + combatant.GetStats().GetStat(Combatant_Stats.Constitution) + ")";
+
+        transform.GetChild(0).GetComponent<TextMeshProUGUI>().text = combatant.Combatant.combatantName + " (" + combatant.CombatantStats.GetStat(Combatant_Stats.HP) + "/" + combatant.CombatantStats.GetStat(Combatant_Stats.Constitution) + ")";
 
         // Fade in background
         Image back = transform.parent.GetComponentInChildren<Image>();
         LeanTween.value(back.gameObject, a => back.color = a, new Color(0, 0, 0, 0), new Color(0, 0, 0, 0.6f), 0.5f);
 
         // Set stats on text
-        SetStats(combatant.GetStats());
-        SetStatsModified(combatant.GetStats());
-        SetAblities(combatant.GetCombatant());
+        SetStats(combatant.CombatantStats);
+        SetStatsModified(combatant.CombatantStats);
+        SetAblities(combatant.Combatant);
         int count = 0;
         foreach (LearnedAbility ability in swapAbility.GetComponentsInChildren<LearnedAbility>())
         {
-            ability.SetAbility(combatant.GetCombatant(),count);
+            ability.SetAbility(combatant.Combatant,count);
             count++;
         }
 
@@ -119,7 +119,7 @@ public class SwapScreenCombatant : MonoBehaviour
         GameObject.Find("Stats/BaseStats").transform.GetChild(0).GetComponentInChildren<TextMeshProUGUI>().text =
             "Strength: " + (combatantStats.GetStat(Combatant_Stats.Strength) ) + "\n" +
             "Dexterity: " + (combatantStats.GetStat(Combatant_Stats.Dexterity) ) + "\n" +
-            "Magic: " + (combatantStats.GetStat(Combatant_Stats.Magic)) + "\n" +
+            "Magic: " + (combatantStats.GetStat(Combatant_Stats.Magic) ) + "\n" +
             "Defence: " + (combatantStats.GetStat(Combatant_Stats.Defence) ) + "\n" +
             "Constitution: " + (combatantStats.GetStat(Combatant_Stats.Constitution) ) + "\n" +
             "Luck: " + (combatantStats.GetStat(Combatant_Stats.Luck) ) + "\n" +
