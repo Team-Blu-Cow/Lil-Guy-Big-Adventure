@@ -93,6 +93,12 @@ public class Stats : MonoBehaviour
                 break;
         };
 
+        mod_str += Random.Range(1, 5);
+        mod_dex += Random.Range(1, 5);
+        mod_mag += Random.Range(1, 5);
+        mod_def += Random.Range(1, 5);
+        mod_luck += Random.Range(1, 5);
+        mod_init += Random.Range(1, 5);
      
         base_str += mod_str;
         base_dex += mod_dex;
