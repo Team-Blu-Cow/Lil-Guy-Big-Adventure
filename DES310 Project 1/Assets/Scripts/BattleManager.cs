@@ -132,7 +132,9 @@ public class BattleManager : MonoBehaviour
             else
             {
                 if (combatant.tag == "Enemy")
+                {
                     enemyCombatants.Remove(combatant);
+                }
                 else
                 {
                     //TODO: remove combatant from player's party
@@ -539,6 +541,11 @@ public class BattleManager : MonoBehaviour
     void EndTurn()
     {
         // check if player has won or lost
+        if(enemyCombatants.Count >= 0)
+        {
+            battleState = BattleState.FINISHED;
+            Debug.Log("battle won");
+        }
 
         currentCombatant.GetComponent<PathFindingUnit>().OccupyTile(currentCombatant);
 
