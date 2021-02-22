@@ -96,14 +96,14 @@ public class BeastiaryScreen : MonoBehaviour
             if (text.name == "StatText")
             {
                 text.text =
-                "Strength: " + (combatantStats.getStat(Combatant_Stats.Strength) - combatantStats.mod_str) + "\n" +
-                "Dexterity: " + (combatantStats.getStat(Combatant_Stats.Dexterity) - combatantStats.mod_dex) + "\n" +
-                "Magic: " + (combatantStats.getStat(Combatant_Stats.Magic) - combatantStats.mod_mag) + "\n" +
-                "Defence: " + (combatantStats.getStat(Combatant_Stats.Defence) - combatantStats.mod_def) + "\n" +
-                "Constitution: " + (combatantStats.getStat(Combatant_Stats.Constitution) - combatantStats.mod_con) + "\n" +
-                "Luck: " + (combatantStats.getStat(Combatant_Stats.Luck) - combatantStats.mod_luck) + "\n" +
-                "Speed: " + (combatantStats.getStat(Combatant_Stats.Speed) - combatantStats.mod_speed) + "\n" +
-                "Init: " + (combatantStats.getStat(Combatant_Stats.Initiative) - combatantStats.mod_init) + "\n";
+                "Strength: " + (combatantStats.GetStat(Combatant_Stats.Strength)) + "\n" +
+                "Dexterity: " + (combatantStats.GetStat(Combatant_Stats.Dexterity) ) + "\n" +
+                "Magic: " + (combatantStats.GetStat(Combatant_Stats.Magic) ) + "\n" +
+                "Defence: " + (combatantStats.GetStat(Combatant_Stats.Defence) ) + "\n" +
+                "Constitution: " + (combatantStats.GetStat(Combatant_Stats.Constitution)) + "\n" +
+                "Luck: " + (combatantStats.GetStat(Combatant_Stats.Luck) ) + "\n" +
+                "Speed: " + (combatantStats.GetStat(Combatant_Stats.Speed) ) + "\n" +
+                "Init: " + (combatantStats.GetStat(Combatant_Stats.Initiative) ) + "\n";
             }
             else if (text.name == ("CreatureName"))
             {

@@ -46,7 +46,7 @@ namespace AI
                         {
                             GameObject target = node.occupier;
                             GetComponent<TestCombatSystem>().enemy = target;
-                            result = GetComponent<Combatant>().attackAbility(0);
+                            result = GetComponent<Combatant>().UseAbility(0);
                             result.target = target;
                             result.abilityIndex = 0;
                         }

@@ -125,13 +125,16 @@ public class CombatUI : MonoBehaviour
 
     public void activateItemButtons()
     {
-        int offsetY = 110;
-
-        for (int i = 0; i < 6; i++)
+        int count = 0;
+        foreach (CombatButton button in itemButtons)
         {
-            itemButtons[i].activateButton(new Vector3(0, 0, 0), combatantPos);
-            offsetY -= 30;
-       }
+            button.activateButton(new Vector3(0, 0, 0), combatantPos);
+            if (count < GetComponent<BattleManager>().currentCombatant.GetComponent<Combatant>().combatantItems.Length)
+            {
+                button.GetComponentInChildren<TextMeshProUGUI>().text = GetComponent<BattleManager>().currentCombatant.GetComponent<Combatant>().combatantItems[count].itemName;
+                count++;
+            }
+        }
     }
 
     public void activateItemButtons(Vector2 pos)

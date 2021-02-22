@@ -105,7 +105,7 @@ public class BattleManager : MonoBehaviour
 
             for (int j = 1; j < combatants.Count; j++)
             {
-                if (combatants[j - 1].GetComponent<Stats>().getStat(Combatant_Stats.Initiative) < combatants[j].GetComponent<Stats>().getStat(Combatant_Stats.Initiative))
+                if (combatants[j - 1].GetComponent<Stats>().GetStat(Combatant_Stats.Initiative) < combatants[j].GetComponent<Stats>().GetStat(Combatant_Stats.Initiative))
                 {
                     Swap(combatants, j - 1, j);
                     swapped = true;
@@ -123,7 +123,7 @@ public class BattleManager : MonoBehaviour
 
     public void CheckIfCombatantDead(GameObject combatant)
     {
-        if (combatant != null && combatants.Contains(combatant) && combatant.GetComponent<Combatant>().GetComponent<Stats>().getStat(Combatant_Stats.HP) <= 0)
+        if (combatant != null && combatants.Contains(combatant) && combatant.GetComponent<Combatant>().GetComponent<Stats>().GetStat(Combatant_Stats.HP) <= 0)
         {
             if (combatant.GetComponent<Combatant>().GetComponent<Stats>().combatant_type == Combatant_Type.Human)
             {
@@ -165,7 +165,10 @@ public class BattleManager : MonoBehaviour
                         break;
 
                     case CombatantState.ACTION:
-                        RecieveAction(mousePos);
+                        if (actionState != ActionState.ITEM)
+                        {
+                            RecieveAction(mousePos);
+                        }
                         break;
                 }
                 break;
@@ -263,7 +266,7 @@ public class BattleManager : MonoBehaviour
 
         CycleQueue();
 
-        currentCombatant.GetComponent<PathFindingUnit>().SetSelectableTiles(currentCombatant.GetComponent<Stats>().getStat(Combatant_Stats.Speed));
+        currentCombatant.GetComponent<PathFindingUnit>().SetSelectableTiles(currentCombatant.GetComponent<Stats>().GetStat(Combatant_Stats.Speed));
 
         SetCombatantState(CombatantState.MOVE);
 
@@ -312,7 +315,7 @@ public class BattleManager : MonoBehaviour
         AI.AIBaseBehavior behaviour = currentCombatant.GetComponent<AI.AIBaseBehavior>();
         if (behaviour)
         {
-            int speed = currentCombatant.GetComponent<Stats>().getStat(Combatant_Stats.Speed);
+            int speed = currentCombatant.GetComponent<Stats>().GetStat(Combatant_Stats.Speed);
 
             behaviour.Move(ai_core, speed);
         }
@@ -414,31 +417,50 @@ public class BattleManager : MonoBehaviour
                     {
                         if (receivedActionCommand == false)
                         {
-                            receivedActionCommand = true;
-                            // TODO edit this to allow for healing to target allies ect.
-                            if (node.occupier.tag == "Enemy")
+                            //Check ability type                 
+                            switch (currentCombatant.GetComponent<Combatant>().abilitiesUsing[selectedAbility].abilityType)
                             {
-                                UseAbility(node.occupier, selectedAbility);
-                                break;
-                            }
+                                case ability_type.Damage:
+                                    if (node.occupier.tag == ("Enemy"))
+                                    {
+                                        UseAbility(node.occupier, selectedAbility);
+                                        receivedActionCommand = true;
+                                    }
+                                    break;
+
+                                case ability_type.Heal:
+                                    if (node.occupier.tag == ("Ally"))
+                                    {
+                                        UseAbility(node.occupier, selectedAbility);
+                                        receivedActionCommand = true;
+                                    }
+                                    break;
+
+                                case ability_type.Buff:
+                                    if (node.occupier.tag == ("Ally"))
+                                    {
+                                        UseAbility(node.occupier, selectedAbility);
+                                        receivedActionCommand = true;
+                                    }
+                                    break;
+                            }                                                
                         }
                     }
                     break;
                 }
 
-                /*case ActionState.ITEM:
+                case ActionState.ITEM:
                 {
-                    currentCombatant.GetComponent<Combatant>().UseItem()
+                    currentCombatant.GetComponent<Combatant>().UseItem(selectedItem);
                     break;
-                }//*/
+                }
         }
     }
 
     private void UseAbility(GameObject target, int abilityIndex)
     {
         currentCombatant.GetComponent<TestCombatSystem>().enemy = target;
-        AbilityResult result = currentCombatant.GetComponent<Combatant>().attackAbility(abilityIndex);
-
+        AbilityResult result = currentCombatant.GetComponent<Combatant>().UseAbility(abilityIndex);
         abilityTargetPos = target.transform.position;
 
         CheckIfCombatantDead(target);
@@ -505,11 +527,10 @@ public class BattleManager : MonoBehaviour
         selectedItem = itemIndex;
         if (currentCombatant.GetComponent<Combatant>().combatantItems[itemIndex] != null)
         {
-            currentCombatant.GetComponent<Combatant>().UseItem(itemIndex);
-
             // TODO: play animation or whatever
 
-            //SetCombatantState(CombatantState.END);
+            RecieveAction(new Vector3());
+
             actionState = ActionState.FINISHED;
         }
     }
@@ -533,19 +554,34 @@ public class BattleManager : MonoBehaviour
         // check if player has won or lost
         if (enemyCombatants.Count <= 0)
         {
-            battleState = BattleState.FINISHED;
-            
-            foreach (GameObject exit in FindObjectOfType<MapGeneration>().placedExits)
-            {
-                exit.SetActive(true);
-            }
-            Debug.Log("battle won");
+            EndBattle();
         }
 
         currentCombatant.GetComponent<PathFindingUnit>().OccupyTile(currentCombatant);
 
         SetCombatantState(CombatantState.START);
+
+        
         //Debug.Log("End Turn");
+    }
+    void EndBattle()
+    {
+        battleState = BattleState.FINISHED;
+
+        foreach (GameObject exit in FindObjectOfType<MapGeneration>().placedExits)
+        {
+            exit.SetActive(true);
+        }
+
+        foreach (GameObject combatant in playerParty.party)
+        {
+            if (combatant)
+            {
+                combatant.GetComponent<Stats>().ResetStats();
+            }
+        }
+
+        Debug.Log("battle won");
     }
 
     public Queue<GameObject> getBattleQueue()
