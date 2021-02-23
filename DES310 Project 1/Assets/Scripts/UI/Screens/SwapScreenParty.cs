@@ -44,9 +44,16 @@ public class SwapScreenParty : MonoBehaviour
                 GameObject tempPartyMember = Instantiate(partyMember, transform.GetChild(0));
                 members.Add(tempPartyMember);
                 tempPartyMember.GetComponentInChildren<PartyCombatant>().SetAll(party.party[i]);
+
+                // Setup Text
                 tempPartyMember.GetComponentInChildren<TextMeshProUGUI>().text = party.party[i].GetComponent<Combatant>().combatantName;
+                tempPartyMember.GetComponentInChildren<TextMeshProUGUI>().font = ScreenManager.instance.activeFont;
+
+                // Setup Image
                 tempPartyMember.GetComponentInChildren<Image>().sprite = party.party[i].GetComponent<SpriteRenderer>().sprite;
                 tempPartyMember.GetComponentInChildren<Image>().SetNativeSize();
+
+                // Setup button
                 tempPartyMember.GetComponent<Button>().onClick.AddListener(() => { ScreenManager.instance.OpenCombatantScreen(tempPartyMember.GetComponentInChildren<PartyCombatant>()); });
                 tempPartyMember.GetComponent<Button>().onClick.AddListener(CloseScreen);
             }
