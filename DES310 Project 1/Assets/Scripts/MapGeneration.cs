@@ -41,7 +41,7 @@ public class MapGeneration : MonoBehaviour
     [SerializeField] Image transition;
 
     [Header ("InGame Objects")]
-    List<GameObject> placedItems = new List<GameObject>();
+    public List<GameObject> placedItems = new List<GameObject>();
     public List<GameObject> placedExits = new List<GameObject>();
     List<GameObject> placedEnemies = new List<GameObject>();
 
@@ -164,10 +164,11 @@ public class MapGeneration : MonoBehaviour
         grid.CreateGrid();
 
         PlaceExits();
-        PlaceItems(size);
-        PlaceEnemies(size);
 
         grid.CreateGrid();
+
+        PlaceItems(size);
+        PlaceEnemies(size);
 
         avalibleExit = 0;
         foreach (GameObject exit in placedExits)
@@ -223,10 +224,12 @@ public class MapGeneration : MonoBehaviour
             int n = 0;
             while (n < attempts)
             {
-                Vector2 itemPos = new Vector2(Random.Range(0, size.x), Random.Range(0, size.y));
-                if (grid.GetNode(new Vector3Int((int)itemPos.x, (int)itemPos.y, 2)).IsTraversable())
+                Vector2Int itemPos = new Vector2Int((int)Random.Range(0, size.x), (int)Random.Range(0, size.y));
+                if (grid.GetNode(new Vector3Int(itemPos.x, itemPos.y, 2)).IsTraversable())
                 {
-                    placedItems.Add(Instantiate(items[Random.Range(0, items.Length)], grid.NodeToWorld(itemPos.x, itemPos.y, 2), new Quaternion(0, 0, 0, 0), transform.GetChild(1)).gameObject);
+                    GameObject item = Instantiate(items[Random.Range(0, items.Length)], grid.NodeToWorld(itemPos.x, itemPos.y, 2) + new Vector3(0,0.1f,0), new Quaternion(0, 0, 0, 0), transform.GetChild(1)).gameObject;
+                    placedItems.Add(item);
+                    grid.GetNode(new Vector3Int(itemPos.x, itemPos.y, 2)).SetOccupied(item);
                     break;
                 }
                 n++;

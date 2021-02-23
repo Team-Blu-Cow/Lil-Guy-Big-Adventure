@@ -197,6 +197,11 @@ public class BattleManager : MonoBehaviour
             }
         }
 
+        if (playerParty.party[0].TryGetComponent<Movement>(out Movement move))
+        {
+            move.enabled = false;
+        }
+
         SortBattleInitiative();
         SetBattleQueue();
 
@@ -579,6 +584,11 @@ public class BattleManager : MonoBehaviour
             {
                 combatant.GetComponent<Stats>().ResetStats();
             }
+        }
+
+        if (playerParty.party[0].TryGetComponent<Movement>(out Movement move))
+        {
+            move.enabled = true;
         }
 
         gridHighLighter.ClearSelectableTiles();
