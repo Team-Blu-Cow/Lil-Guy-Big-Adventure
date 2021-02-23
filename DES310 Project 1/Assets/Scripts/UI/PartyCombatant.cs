@@ -4,59 +4,29 @@ using UnityEngine;
 
 public class PartyCombatant : MonoBehaviour
 {
-    public GameObject combatantGO;
-    Stats combatantStats;
-    Combatant combatant;
-    public string named;
+    public GameObject CombatantGO { get; set; }
+    public Stats CombatantStats { get; set; }
+    public Combatant Combatant { get; set; }
 
     private void Awake()
     {
-        if (combatantGO == null)
-            combatantGO = transform.gameObject;  
+        if (CombatantGO == null)
+            CombatantGO = transform.gameObject;  
     }
 
     private void Start()
     {
-        if (combatantGO.TryGetComponent<Stats>(out Stats stat))
-            SetStats(stat);
+        if (CombatantGO.TryGetComponent<Stats>(out Stats stat))
+            CombatantStats = stat;
         
-        if (combatantGO.TryGetComponent<Combatant>(out Combatant combatant))
-            SetCombatant(combatant);
+        if (CombatantGO.TryGetComponent<Combatant>(out Combatant combatantScript))
+            Combatant = combatantScript;
     }
 
-    public void SetAll(GameObject combatantGO, Stats stats, Combatant combtantScript, string names)
+    public void SetAll(GameObject combatantGO)
     {
-        SetCombatantGO(combatantGO);
-        SetStats(stats);
-        SetCombatant(combtantScript);
-        named = names;
-    }
-
-    public Stats GetStats()
-    {
-        return combatantStats;
-    }
-   public void SetStats(Stats stats)
-    {
-        combatantStats = stats;
-    }
-    
-    public Combatant GetCombatant()
-    {
-        return combatant;
-    }
-   public void SetCombatant(Combatant combatantScrpit)
-    {
-        combatant = combatantScrpit;
-    }
-    
-    public GameObject GetCombatantGO()
-    {
-        return combatantGO;
-    }
-
-    public void SetCombatantGO(GameObject combatantIn)
-    {
-        combatantGO = combatantIn;
+        CombatantGO = combatantGO;
+        CombatantStats = combatantGO.GetComponent<Stats>();
+        Combatant  = combatantGO.GetComponent<Combatant>();
     }
 }

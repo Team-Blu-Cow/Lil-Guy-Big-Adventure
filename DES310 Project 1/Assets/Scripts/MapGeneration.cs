@@ -24,13 +24,15 @@ public class MapGeneration : MonoBehaviour
     [SerializeField] TileData rockTiles;
     [SerializeField] TileData bridgeTiles;
 
+    [Header("Grid")]
     [SerializeField] IsoGrid grid;
+    [SerializeField] PathFinder pathfinder;
 
     [Header("Objects")]
     [SerializeField] Item[] items;
     [SerializeField] GameObject[] enemies;
     [SerializeField] GameObject exit;
-    [SerializeField] PlayerPartyManager party;
+    PlayerPartyManager party;
 
     [Header("Generation variables")]
     [SerializeField] float lowerBound = 0.1f;
@@ -41,7 +43,7 @@ public class MapGeneration : MonoBehaviour
     [SerializeField] Image transition;
 
     [Header ("InGame Objects")]
-    List<GameObject> placedItems = new List<GameObject>();
+    public List<GameObject> placedItems = new List<GameObject>();
     public List<GameObject> placedExits = new List<GameObject>();
     List<GameObject> placedEnemies = new List<GameObject>();
 
@@ -54,6 +56,11 @@ public class MapGeneration : MonoBehaviour
     private int avalibleExit;
     private int travelledRegions;
     Direction enterDirection = 0;
+
+    private void Start()
+    {
+        party = ScreenManager.instance.partyManager;
+    }
 
     public void StartSwap(int dir)
     {
@@ -164,15 +171,19 @@ public class MapGeneration : MonoBehaviour
         grid.CreateGrid();
 
         PlaceExits();
-        PlaceItems(size);
-        PlaceEnemies(size);
 
         grid.CreateGrid();
+
+        PlaceItems(size);
+        PlaceEnemies(size);
 
         avalibleExit = 0;
         foreach (GameObject exit in placedExits)
         {
-            PathRequestManager.RequestPath(party.party[0].transform.position, exit.transform.position, OnPathFound);
+            if (pathfinder.FindPath(party.party[0].transform.position, exit.transform.position) !=null)
+            {
+                avalibleExit++;
+            }
         }
 
         LeanTween.delayedCall(0.3f, () =>
@@ -192,13 +203,6 @@ public class MapGeneration : MonoBehaviour
         });
     }
 
-    void OnPathFound(Vector3[] newPath, bool pathSuccess)
-    {
-        if (pathSuccess)
-        {
-            avalibleExit++;
-        }
-    }
     void PlaceItems(Vector2 size)
     {
         int[] chances = { 20, 30, 25, 15 };
@@ -223,10 +227,12 @@ public class MapGeneration : MonoBehaviour
             int n = 0;
             while (n < attempts)
             {
-                Vector2 itemPos = new Vector2(Random.Range(0, size.x), Random.Range(0, size.y));
-                if (grid.GetNode(new Vector3Int((int)itemPos.x, (int)itemPos.y, 2)).IsTraversable())
+                Vector2Int itemPos = new Vector2Int((int)Random.Range(0, size.x), (int)Random.Range(0, size.y));
+                if (grid.GetNode(new Vector3Int(itemPos.x, itemPos.y, 2)).IsTraversable() && pathfinder.FindPath(party.party[0].transform.position, new Vector3(itemPos.x, itemPos.y, 2)) != null)
                 {
-                    placedItems.Add(Instantiate(items[Random.Range(0, items.Length)], grid.NodeToWorld(itemPos.x, itemPos.y, 2), new Quaternion(0, 0, 0, 0), transform.GetChild(1)).gameObject);
+                    GameObject item = Instantiate(items[Random.Range(0, items.Length)], grid.NodeToWorld(itemPos.x, itemPos.y, 2) + new Vector3(0,0.1f,0), new Quaternion(0, 0, 0, 0), transform.GetChild(1)).gameObject;
+                    placedItems.Add(item);
+                    grid.GetNode(new Vector3Int(itemPos.x, itemPos.y, 2)).SetOccupied(item);
                     break;
                 }
                 n++;
@@ -259,7 +265,7 @@ public class MapGeneration : MonoBehaviour
             while (n < attempts)
             {
                 Vector2 enemyPos = new Vector2(Random.Range(0, size.x), Random.Range(0, size.y));
-                if (grid.GetNode(new Vector3Int((int)enemyPos.x, (int)enemyPos.y, 2)).IsTraversable())
+                if (grid.GetNode(new Vector3Int((int)enemyPos.x, (int)enemyPos.y, 2)).IsTraversable() )
                 {
                     GameObject enemy = Instantiate(enemies[Random.Range(0, enemies.Length)], grid.NodeToWorld((int)enemyPos.x, (int)enemyPos.y, 2), new Quaternion(0, 0, 0, 0), transform.GetChild(2)).gameObject;
                     battleManager.enemyCombatants.Add(enemy);

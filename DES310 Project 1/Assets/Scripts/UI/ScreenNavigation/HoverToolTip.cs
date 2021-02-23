@@ -22,12 +22,12 @@ public class HoverToolTip : MonoBehaviour
 
     public void SetHeader()
     {
-        GetComponentsInChildren<TextMeshProUGUI>()[0].text = transform.parent.GetComponentInParent<PartyCombatant>().named;
+        GetComponentsInChildren<TextMeshProUGUI>()[0].text = transform.parent.GetComponentInParent<PartyCombatant>().Combatant.combatantName;
     }
 
     public void SetText()
     {
-        Stats stats = transform.parent.GetComponentInParent<PartyCombatant>().GetStats();
+        Stats stats = transform.parent.GetComponentInParent<PartyCombatant>().CombatantStats;
 
         foreach (TextMeshProUGUI TMP in GetComponentsInChildren<TextMeshProUGUI>())
         {
@@ -44,6 +44,6 @@ public class HoverToolTip : MonoBehaviour
 
     public void SetResistance()
     {
-        GetComponentInChildren<ShowResistanceUI>().SetRes(transform.parent.GetComponentInParent<PartyCombatant>().GetCombatant());
+        GetComponentInChildren<ShowResistanceUI>().SetRes(transform.parent.GetComponentInParent<PartyCombatant>().Combatant);
     }
 }

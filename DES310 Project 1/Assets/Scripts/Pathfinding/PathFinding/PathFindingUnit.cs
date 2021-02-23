@@ -17,6 +17,10 @@ public class PathFindingUnit : MonoBehaviour
     {
         //IsoNode node = gridHighLighter.grid.WorldToNode(transform.position);
         OccupyTile(gameObject);
+        if (target == null)
+        {
+            target = FindObjectOfType<CursorController>().transform;
+        }
     }
 
     public void OccupyTile(GameObject me)
@@ -74,8 +78,8 @@ public class PathFindingUnit : MonoBehaviour
 
     public void StartPath()
     {
-        StopPath();
-        RequestPath();
+        StopPath();        
+        PathRequestManager.RequestPath(transform.position, target.position, OnPathFound);
     }
 
     public void StopPath()

@@ -46,7 +46,7 @@ public class LearnedAbility : MonoBehaviour, IPointerDownHandler,IPointerUpHandl
         {
             if (eventGO.CompareTag("UsingAbility") && gameObject.activeSelf)
             {
-                Combatant combatant = eventGO.transform.parent.GetComponentInParent<PartyCombatant>().GetCombatant();
+                Combatant combatant = eventGO.transform.parent.GetComponentInParent<PartyCombatant>().Combatant;
 
                 for (int i = 0; i < 10; i++)
                 {
@@ -55,7 +55,7 @@ public class LearnedAbility : MonoBehaviour, IPointerDownHandler,IPointerUpHandl
                         combatant.abilitiesUsing[i] = combatant.abilitiesLearnt[abilitySelect];
                     }
                 }
-                ScreenManager.screenManager.GetCombatantScreen().SetAblities(combatant);
+                ScreenManager.instance.GetCombatantScreen().SetAblities(combatant);
             }
         }
 

@@ -8,13 +8,14 @@ public class HoverStats : MonoBehaviour, IPointerEnterHandler, IPointerExitHandl
 {
     GameObject hovered;
     [SerializeField] GameObject member;
-    [SerializeField] PlayerPartyManager party;
+    PlayerPartyManager party;
     float hoverTime;
     int count = 0;
 
     private void Start()
     {
-        UpdateUI();
+        party = ScreenManager.instance.partyManager;
+        UpdateUI();        
     }
 
     private void UpdateUI()
@@ -24,8 +25,7 @@ public class HoverStats : MonoBehaviour, IPointerEnterHandler, IPointerExitHandl
             if (party.party[i])
             {
                 GameObject tempMember = Instantiate(member, transform.GetChild(0));
-                tempMember.GetComponent<PartyCombatant>().SetCombatantGO(party.party[i]);
-                tempMember.GetComponent<PartyCombatant>().named = "Name";
+                tempMember.GetComponent<PartyCombatant>().SetAll(party.party[i]);
                 tempMember.transform.GetChild(2).GetComponent<Image>().sprite = party.party[i].GetComponent<SpriteRenderer>().sprite;
                 tempMember.transform.GetChild(2).GetComponent<Image>().SetNativeSize();
             }
@@ -112,13 +112,13 @@ public class HoverStats : MonoBehaviour, IPointerEnterHandler, IPointerExitHandl
     void OpenCombatant(object combatant)
     {
         GameObject goCombatant = combatant as GameObject;
-        ScreenManager.screenManager.OpenCombatantScreen(goCombatant.GetComponentInParent<PartyCombatant>());
+        ScreenManager.instance.OpenCombatantScreen(goCombatant.GetComponentInParent<PartyCombatant>());
         count = 0;
     }
 
     void OpenParty()
     {
-        ScreenManager.screenManager.OpenPartyScreen();
+        ScreenManager.instance.OpenPartyScreen();
     }
 
 }

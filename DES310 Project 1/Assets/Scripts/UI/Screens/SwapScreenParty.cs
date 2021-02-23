@@ -7,13 +7,14 @@ using UnityEngine;
 public class SwapScreenParty : MonoBehaviour
 {
     [SerializeField] GameObject partyMember;
-    [SerializeField] PlayerPartyManager party;
+    PlayerPartyManager party;
     List<GameObject> members = new List<GameObject>();
 
     // Start is called before the first frame update
     void Start()
     {
         // Set starting to closed position
+        party = ScreenManager.instance.partyManager;
         LeanTween.scale(gameObject, new Vector3(0, 0, 0), 0.0f);
         GetComponentInParent<Canvas>().enabled = false;
     }
@@ -42,11 +43,11 @@ public class SwapScreenParty : MonoBehaviour
             {
                 GameObject tempPartyMember = Instantiate(partyMember, transform.GetChild(0));
                 members.Add(tempPartyMember);
-                tempPartyMember.GetComponentInChildren<PartyCombatant>().SetAll(party.party[i], party.party[i].GetComponent<Stats>(), party.party[i].GetComponent<Combatant>(), "Name");
-                tempPartyMember.GetComponentInChildren<TextMeshProUGUI>().text = transform.GetChild(0).GetComponentsInChildren<PartyCombatant>()[i].named;
-                tempPartyMember.GetComponentInChildren<Image>().sprite = transform.GetChild(0).GetComponentsInChildren<PartyCombatant>()[i].GetCombatantGO().GetComponent<SpriteRenderer>().sprite;
+                tempPartyMember.GetComponentInChildren<PartyCombatant>().SetAll(party.party[i]);
+                tempPartyMember.GetComponentInChildren<TextMeshProUGUI>().text = party.party[i].GetComponent<Combatant>().combatantName;
+                tempPartyMember.GetComponentInChildren<Image>().sprite = party.party[i].GetComponent<SpriteRenderer>().sprite;
                 tempPartyMember.GetComponentInChildren<Image>().SetNativeSize();
-                tempPartyMember.GetComponent<Button>().onClick.AddListener(() => { ScreenManager.screenManager.OpenCombatantScreen(tempPartyMember.GetComponentInChildren<PartyCombatant>()); });
+                tempPartyMember.GetComponent<Button>().onClick.AddListener(() => { ScreenManager.instance.OpenCombatantScreen(tempPartyMember.GetComponentInChildren<PartyCombatant>()); });
                 tempPartyMember.GetComponent<Button>().onClick.AddListener(CloseScreen);
             }
         }

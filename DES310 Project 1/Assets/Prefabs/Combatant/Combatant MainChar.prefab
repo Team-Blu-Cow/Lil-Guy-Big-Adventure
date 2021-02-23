@@ -15,9 +15,13 @@ GameObject:
   - component: {fileID: 3634225340204788173}
   - component: {fileID: 6142369988557824416}
   - component: {fileID: 9062793450821158146}
+  - component: {fileID: 522555656}
+  - component: {fileID: 522555655}
+  - component: {fileID: 522555652}
+  - component: {fileID: 522555653}
   m_Layer: 0
   m_Name: Combatant MainChar
-  m_TagString: Untagged
+  m_TagString: Ally
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -30,7 +34,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3634225340204788172}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 1.05, y: -2.9, z: 0}
+  m_LocalPosition: {x: -4, y: -5.5, z: 2}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -100,14 +104,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   combatant_type: 0
-  mod_str: 0
-  mod_dex: 0
-  mod_mag: 0
-  mod_def: 0
-  mod_con: 0
-  mod_luck: 0
-  mod_speed: 0
-  mod_init: 0
   current_hp: 0
 --- !u!114 &3634225340204788174
 MonoBehaviour:
@@ -121,7 +117,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d04cc3d93a06d0f49bbec40568383715, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  enemy: {fileID: 0}
+  target: {fileID: 0}
 --- !u!114 &3634225340204788173
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -138,7 +134,7 @@ MonoBehaviour:
   combatantNum: 0
   fighting: 0
   abilitiesLearnt:
-  - {fileID: 7330357067154717427, guid: 73221df6f1556724c90a36110123d2e1, type: 3}
+  - {fileID: 3421883576234602752, guid: 3ca27b04a6592eb4987690aca76d52b1, type: 3}
   - {fileID: 5173025126576702271, guid: e19b5518816ddef49a18ebb68d8780ba, type: 3}
   - {fileID: 4907401747735708768, guid: f8c0eb4770f9fc4429c2aedfa4d18834, type: 3}
   - {fileID: 2936241848379702815, guid: 6af5812377a1c1440b85024975dda723, type: 3}
@@ -207,3 +203,81 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2b62abc45b6a7944997f3bf1a57ef3b5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!50 &522555656
+Rigidbody2D:
+  serializedVersion: 4
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3634225340204788172}
+  m_BodyType: 1
+  m_Simulated: 1
+  m_UseFullKinematicContacts: 0
+  m_UseAutoMass: 0
+  m_Mass: 1
+  m_LinearDrag: 0
+  m_AngularDrag: 0.05
+  m_GravityScale: 0
+  m_Material: {fileID: 0}
+  m_Interpolate: 0
+  m_SleepingMode: 1
+  m_CollisionDetection: 0
+  m_Constraints: 0
+--- !u!61 &522555655
+BoxCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3634225340204788172}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: 0.39999998}
+  m_SpriteTilingProperty:
+    border: {x: 0, y: 0, z: 0, w: 0}
+    pivot: {x: 0.5, y: 0.1}
+    oldSize: {x: 0.65625, y: 1}
+    newSize: {x: 1, y: 1}
+    adaptiveTilingThreshold: 0.5
+    drawMode: 0
+    adaptiveTiling: 0
+  m_AutoTiling: 0
+  serializedVersion: 2
+  m_Size: {x: 0.75, y: 1}
+  m_EdgeRadius: 0
+--- !u!114 &522555652
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3634225340204788172}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dc632899d89a2a046bf333e45c2c9b67, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  target: {fileID: 0}
+  speed: 5
+  path: []
+  currentlyPathFinding: 0
+  PathFinished: 0
+  gridHighLighter: {fileID: 0}
+--- !u!114 &522555653
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3634225340204788172}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0dba0e160da75914fa7dc230bbd7606b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  grid: {fileID: 0}
