@@ -14,4 +14,7 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/Final Base.unity
     guid: 47e776f9ec2f3ee43bede93847330876
+  - enabled: 1
+    path: Assets/Scenes/CampFire.unity
+    guid: 7c7e2c7dfce8a894997753d826c4a693
   m_configObjects: {}

@@ -55,12 +55,17 @@ public class BattleManager : MonoBehaviour
     // Start is called before the first frame update
     private void Start()
     {
+        playerParty = FindObjectOfType<PlayerPartyManager>();
         if (playerParty == null)
         {
             playerParty = Instantiate(playerPartyGO).gameObject.GetComponent<PlayerPartyManager>();
-            playerParty.transform.GetChild(0).GetComponent<PathFindingUnit>().GridHighLighter = gridHighLighter;
-            ScreenManager.instance.partyManager = playerParty;
+          
         }
+        playerParty.GetComponentsInChildren<PathFindingUnit>()[0].GridHighLighter = gridHighLighter;
+        playerParty.GetComponentsInChildren<Movement>()[0].grid = gridHighLighter.grid;
+        ScreenManager.instance.partyManager = playerParty;
+        playerParty.GetComponentsInChildren<PathFindingUnit>()[0].target = FindObjectOfType<CursorController>().transform;
+
 
         battleState = BattleState.SLEEPING;
         combatantState = CombatantState.START;

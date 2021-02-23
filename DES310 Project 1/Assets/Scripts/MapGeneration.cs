@@ -57,6 +57,8 @@ public class MapGeneration : MonoBehaviour
     private int travelledRegions;
     Direction enterDirection = 0;
 
+    [SerializeField] LevelLoader levelLoader;
+
     private void Start()
     {
         party = ScreenManager.instance.partyManager;
@@ -98,6 +100,7 @@ public class MapGeneration : MonoBehaviour
         if (travelledRegions >= 3 && Random.Range(0, 100 * (1 / (float)travelledRegions)) < 10)
         {
             //Swap to campfire scene?
+            levelLoader.SwitchScene("CampFire");
             travelledRegions = 0;
             LeanTween.value(transition.gameObject, a => transition.color = a, new Color(0, 0, 0, 1), new Color(0, 0, 0, 0f), 0.2f);
             return;
