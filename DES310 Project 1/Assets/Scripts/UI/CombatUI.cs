@@ -126,13 +126,19 @@ public class CombatUI : MonoBehaviour
 
         List<CombatButton> buttons = new List<CombatButton>();
         buttons.AddRange(itemButtons.GetComponentsInChildren<CombatButton>());
-
+        Item[] items = GetComponent<BattleManager>().currentCombatant.GetComponent<Combatant>().combatantItems;
         int offsetY = 50;
-        for (int i = 0; i < 6; i++)
+        for (int i = 0; i < items.Length; i++)
         {
-            buttons[i].activateButton(new Vector3(110, offsetY, 0), pos);
-            offsetY -= 30;
+            if (items[i])
+            {
+                buttons[i].GetComponentInChildren<TextMeshProUGUI>().text = items[i].itemName;
+                buttons[i].activateButton(new Vector3(110, offsetY, 0), pos);
+                offsetY -= 35;
+            }
         }
+
+        buttons[5].activateButton(new Vector3(110, offsetY, 0), pos);
     }
 
     public void useBackButton(Vector2 pos)
