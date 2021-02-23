@@ -61263,6 +61263,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1264645303}
   - component: {fileID: 1264645304}
+  - component: {fileID: 1264645305}
   m_Layer: 0
   m_Name: 'Portal(Clone) '
   m_TagString: Exit1
@@ -61316,6 +61317,18 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 1, y: 1}
   m_EdgeRadius: 0
+--- !u!114 &1264645305
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1264645302}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9cbd42cbbd40d3141af3a8de70058642, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1267905111
 GameObject:
   m_ObjectHideFlags: 0
@@ -92605,6 +92618,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1999422540}
   - component: {fileID: 1999422541}
+  - component: {fileID: 1999422542}
   m_Layer: 0
   m_Name: Portal(Clone)
   m_TagString: Exit1
@@ -92658,6 +92672,18 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 1, y: 1}
   m_EdgeRadius: 0
+--- !u!114 &1999422542
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1999422539}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9cbd42cbbd40d3141af3a8de70058642, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &2002915301
 GameObject:
   m_ObjectHideFlags: 0
