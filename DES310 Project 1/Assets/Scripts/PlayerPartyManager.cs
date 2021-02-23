@@ -9,6 +9,14 @@ public class PlayerPartyManager : MonoBehaviour
 
     void Start()
     {
-        
+        DontDestroyOnLoad(gameObject);
+    }
+
+    public void Remove()
+    {
+        foreach (GameObject item in GetComponentsInChildren<GameObject>())
+        {
+            Destroy(item);
+        }
     }
 }

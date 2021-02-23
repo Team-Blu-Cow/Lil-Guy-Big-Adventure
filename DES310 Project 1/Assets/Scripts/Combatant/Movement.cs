@@ -18,6 +18,7 @@ public class Movement : MonoBehaviour
         controls.Keyboard.RClick.started += ctx => { RMouseDown = true; };
         controls.Keyboard.RClick.canceled += ctx => { RMouseDown = false; };
         controls.Keyboard.LClick.performed += ctx => LeftDown();
+        grid = FindObjectOfType<IsoGrid>();
     }
 
     private void OnEnable()

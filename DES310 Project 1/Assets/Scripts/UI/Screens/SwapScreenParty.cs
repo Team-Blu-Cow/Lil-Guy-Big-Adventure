@@ -7,13 +7,14 @@ using UnityEngine;
 public class SwapScreenParty : MonoBehaviour
 {
     [SerializeField] GameObject partyMember;
-    [SerializeField] PlayerPartyManager party;
+    PlayerPartyManager party;
     List<GameObject> members = new List<GameObject>();
 
     // Start is called before the first frame update
     void Start()
     {
         // Set starting to closed position
+        party = ScreenManager.instance.partyManager;
         LeanTween.scale(gameObject, new Vector3(0, 0, 0), 0.0f);
         GetComponentInParent<Canvas>().enabled = false;
     }

@@ -8,13 +8,14 @@ public class HoverStats : MonoBehaviour, IPointerEnterHandler, IPointerExitHandl
 {
     GameObject hovered;
     [SerializeField] GameObject member;
-    [SerializeField] PlayerPartyManager party;
+    PlayerPartyManager party;
     float hoverTime;
     int count = 0;
 
     private void Start()
     {
-        UpdateUI();
+        party = ScreenManager.instance.partyManager;
+        UpdateUI();        
     }
 
     private void UpdateUI()

@@ -13,6 +13,7 @@ public class BattleManager : MonoBehaviour
 {
     public List<GameObject> enemyCombatants;
     [SerializeField] private PlayerPartyManager playerParty;
+    [SerializeField] private GameObject playerPartyGO;
 
     [SerializeField] private List<GameObject> combatants;
     [SerializeField] private Queue<GameObject> battleQueue;
@@ -46,12 +47,24 @@ public class BattleManager : MonoBehaviour
 
     [SerializeField] private AI.AICore ai_core;
 
+    private void Awake()
+    {        
+        
+    }
+
     // Start is called before the first frame update
     private void Start()
     {
+        if (playerParty == null)
+        {
+            playerParty = Instantiate(playerPartyGO).gameObject.GetComponent<PlayerPartyManager>();
+            playerParty.transform.GetChild(0).GetComponent<PathFindingUnit>().GridHighLighter = gridHighLighter;
+            ScreenManager.instance.partyManager = playerParty;
+        }
+
         battleState = BattleState.SLEEPING;
         combatantState = CombatantState.START;
-        actionState = ActionState.NOT_SELECTED;
+        actionState = ActionState.NOT_SELECTED;        
     }
 
     private void Update()

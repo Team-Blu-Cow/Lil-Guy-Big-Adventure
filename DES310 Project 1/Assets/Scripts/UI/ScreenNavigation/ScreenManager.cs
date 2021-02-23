@@ -17,6 +17,7 @@ public class ScreenManager : MonoBehaviour
     BeastiaryScreen beastiaryScreen;
     LevelLoader levelSwitch;
     public List<TMP_FontAsset> fonts;
+    public PlayerPartyManager partyManager;
 
     private void Awake()
     {
