@@ -282,6 +282,11 @@ public class BattleManager : MonoBehaviour
         }
     }
 
+    public void AddParty(GameObject combatant)
+    {
+        playerParty.AddCombatant(combatant);
+    }
+
     // Start Turn Phase ****************************************************************************************************************************
     private void StartTurn()
     {
