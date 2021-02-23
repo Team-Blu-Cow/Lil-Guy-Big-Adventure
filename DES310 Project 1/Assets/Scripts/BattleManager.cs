@@ -49,12 +49,6 @@ public class BattleManager : MonoBehaviour
 
     private void Awake()
     {        
-        
-    }
-
-    // Start is called before the first frame update
-    private void Start()
-    {
         playerParty = FindObjectOfType<PlayerPartyManager>();
         if (playerParty == null)
         {
@@ -63,9 +57,13 @@ public class BattleManager : MonoBehaviour
         }
         playerParty.GetComponentsInChildren<PathFindingUnit>()[0].GridHighLighter = gridHighLighter;
         playerParty.GetComponentsInChildren<Movement>()[0].grid = gridHighLighter.grid;
-        ScreenManager.instance.partyManager = playerParty;
         playerParty.GetComponentsInChildren<PathFindingUnit>()[0].target = FindObjectOfType<CursorController>().transform;
+    }
 
+    // Start is called before the first frame update
+    private void Start()
+    {
+        ScreenManager.instance.partyManager = playerParty;
 
         battleState = BattleState.SLEEPING;
         combatantState = CombatantState.START;
@@ -591,9 +589,12 @@ public class BattleManager : MonoBehaviour
     {
         battleState = BattleState.FINISHED;
 
-        foreach (GameObject exit in FindObjectOfType<MapGeneration>().placedExits)
+        if (FindObjectOfType<MapGeneration>() != null)
         {
-            exit.SetActive(true);
+            foreach (GameObject exit in FindObjectOfType<MapGeneration>().placedExits)
+            {
+                exit.SetActive(true);
+            }
         }
 
         foreach (GameObject combatant in playerParty.party)
