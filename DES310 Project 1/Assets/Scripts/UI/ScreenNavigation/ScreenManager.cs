@@ -16,6 +16,7 @@ public class ScreenManager : MonoBehaviour
     InventoryUI inventory;
     HoverStats inGameParty;
     BeastiaryScreen beastiaryScreen;
+    InitiativeUI initiativeUI;
 
     LevelLoader levelSwitch;
 
@@ -41,6 +42,7 @@ public class ScreenManager : MonoBehaviour
         partyScreen = GetComponentInChildren<SwapScreenParty>();
         inventory = GetComponentInChildren<InventoryUI>();
         inGameParty = GetComponentInChildren<HoverStats>();
+        initiativeUI = GetComponentInChildren<InitiativeUI>();
         levelSwitch = GetComponentInChildren<LevelLoader>();
 
         activeFont = fonts[0];
@@ -137,5 +139,15 @@ public class ScreenManager : MonoBehaviour
     public SwapScreenCombatant GetCombatantScreen()
     {
         return combatantScreen;
+    }
+
+    public void CloseInititive()
+    {
+        initiativeUI.GetComponentInParent<Canvas>().enabled = false;
+    }
+    
+    public void OpenInititive()
+    {
+        initiativeUI.GetComponentInParent<Canvas>().enabled = true;
     }
 }
