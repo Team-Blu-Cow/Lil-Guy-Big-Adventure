@@ -80,9 +80,17 @@ PrefabInstance:
       value: 0.5
       objectReference: {fileID: 0}
     - target: {fileID: 6773037149543772188, guid: 8cbe27ed55e90b847864376de199d9c1, type: 3}
+      propertyPath: resistances.Array.data[6]
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6773037149543772188, guid: 8cbe27ed55e90b847864376de199d9c1, type: 3}
+      propertyPath: resistances.Array.data[7]
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 6773037149543772188, guid: 8cbe27ed55e90b847864376de199d9c1, type: 3}
       propertyPath: abilitiesLearnt.Array.data[0]
       value: 
-      objectReference: {fileID: 8470993346599219810, guid: 2b64caf0437a65d46b58169fa52bf05c, type: 3}
+      objectReference: {fileID: 7907028290374525569, guid: 8f4fe241390a34b4b93cd49652214aba, type: 3}
     - target: {fileID: 6773037149543772188, guid: 8cbe27ed55e90b847864376de199d9c1, type: 3}
       propertyPath: abilitiesLearnt.Array.data[1]
       value: 
@@ -91,6 +99,10 @@ PrefabInstance:
       propertyPath: abilitiesLearnt.Array.data[2]
       value: 
       objectReference: {fileID: 4308851610775836936, guid: f665f000f80ac5e4b8ccaa79f1de13f4, type: 3}
+    - target: {fileID: 6773037149543772188, guid: 8cbe27ed55e90b847864376de199d9c1, type: 3}
+      propertyPath: abilitiesLearnt.Array.data[4]
+      value: 
+      objectReference: {fileID: 8470993346599219810, guid: 2b64caf0437a65d46b58169fa52bf05c, type: 3}
     - target: {fileID: 6773037149543772188, guid: 8cbe27ed55e90b847864376de199d9c1, type: 3}
       propertyPath: abilitiesLearnt.Array.data[5]
       value: 
