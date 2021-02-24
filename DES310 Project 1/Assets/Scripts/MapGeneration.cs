@@ -64,9 +64,12 @@ public class MapGeneration : MonoBehaviour
         party = ScreenManager.instance.partyManager;
     }
 
-    public void StartSwap(int dir)
+    public void StartSwap(int dir, bool initialSwap = false)
     {
-        LeanTween.value(transition.gameObject, a => transition.color = a, new Color(0, 0, 0, 0), new Color(0, 0, 0, 1f), 0.3f).setOnComplete(RenderMap);
+        if (initialSwap == false)
+            LeanTween.value(transition.gameObject, a => transition.color = a, new Color(0, 0, 0, 0), new Color(0, 0, 0, 1f), 0.3f).setOnComplete(RenderMap);
+        else
+            LeanTween.delayedCall(0.5f, RenderMap);
         enterDirection = (Direction)dir;
     }
 

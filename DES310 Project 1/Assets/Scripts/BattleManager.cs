@@ -39,7 +39,6 @@ public class BattleManager : MonoBehaviour
     public CombatantState CombatantState { get { return combatantState; } set { combatantState = value; } }
     [SerializeField] private ActionState actionState;
 
-    //public InitiativeTracker initTracker;
     [SerializeField] private GridHighLighter gridHighLighter;
 
     [SerializeField] private CombatUI combatUI;
@@ -67,7 +66,8 @@ public class BattleManager : MonoBehaviour
 
         battleState = BattleState.SLEEPING;
         combatantState = CombatantState.START;
-        actionState = ActionState.NOT_SELECTED;        
+        actionState = ActionState.NOT_SELECTED;
+        FindObjectOfType<MapGeneration>().StartSwap(0, true);
     }
 
     private void Update()
