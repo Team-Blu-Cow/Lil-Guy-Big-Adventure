@@ -1,10 +1,10 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.SceneManagement;
 
 public class Movement : MonoBehaviour
 {
+    public IsoGrid grid;
     InputManager controls;
 
     bool RMouseDown = false;
@@ -18,6 +18,11 @@ public class Movement : MonoBehaviour
         controls.Keyboard.RClick.started += ctx => { RMouseDown = true; };
         controls.Keyboard.RClick.canceled += ctx => { RMouseDown = false; };
         controls.Keyboard.LClick.performed += ctx => LeftDown();        
+    }
+
+    private void Start()
+    {
+        grid = PathRequestManager.GetGrid();//FindObjectOfType<IsoGrid>();
     }
 
     private void OnEnable()
@@ -42,14 +47,14 @@ public class Movement : MonoBehaviour
     }
 
     void Move()
-    {        
+    {
         Vector2 mousePos = Camera.main.ScreenToWorldPoint(controls.Keyboard.MousePos.ReadValue<Vector2>());
-        Vector3 nodePos = PathRequestManager.GetGrid().WorldToNode(mousePos).worldPosition;
+        Vector3 nodePos = grid.WorldToNode(mousePos).worldPosition;
         Vector3 oldPos = Camera.main.ScreenToWorldPoint(controls.Keyboard.MousePos.ReadValue<Vector2>());
 
         if (oldPos != new Vector3 (nodePos.x,nodePos.y,1) || LClick)
         {
-            PathRequestManager.GetGrid().WorldToNode(transform.position).SetOccupied(null);
+            grid.WorldToNode(transform.position).SetOccupied(null);
             GetComponent<PathFindingUnit>().StartPath();
             LClick = false;
         }
@@ -70,33 +75,35 @@ public class Movement : MonoBehaviour
                 if (hit.collider.TryGetComponent<Item>(out item))
                 {
                     item.PickUp(transform.position);
-                }           
+                }
+                else if (hit.collider.gameObject.transform.tag.Contains("Exit"))
+                {                                      
+                    IsoNode node = grid.WorldToNode(hit.collider.gameObject.transform.position);
+
+                    int i = hit.collider.gameObject.transform.tag.ToString()[4] - 48;
+
+                    foreach (IsoNode neighbor in grid.GetNeighbors(node))
+                    {
+                        if (neighbor != null)
+                        {
+                            if (neighbor.gridPosition == grid.WorldToNode(transform.position).gridPosition) //if it is a treasure
+                            {
+                                FindObjectOfType<MapGeneration>().StartSwap(i);
+                                grid.CreateGrid();
+                            }
+                        }
+                    }
+
+                    if (node.gridPosition == grid.WorldToNode(transform.position).gridPosition)
+                    {
+                        FindObjectOfType<MapGeneration>().StartSwap(i);
+                        grid.CreateGrid();
+                    }                   
+                }
             }
             else
             {
                 GetComponent<PathFindingUnit>().StopPath();
-            }
-        }
-    }
-    private void OnTriggerEnter2D(Collider2D collision)
-    {
-        if (collision.tag.Contains("Exit"))
-        {
-            if (SceneManager.GetActiveScene().name == "CampFire")
-            {
-                if (AudioManager.instance)
-                {
-                    AudioManager.instance.FadeOut("Campfire Theme");
-                    AudioManager.instance.FadeIn("Overworld Theme");
-                }
-
-                ScreenManager.instance.SwitchLevel("Final Base");
-            }
-            else if (SceneManager.GetActiveScene().name == "Final Base")
-            {
-                int direction = collision.transform.tag.ToString()[4] - 48;
-
-                FindObjectOfType<MapGeneration>().StartSwap(direction);                
             }
         }
     }

@@ -57,16 +57,22 @@ public class MapGeneration : MonoBehaviour
     private int travelledRegions;
     Direction enterDirection = 0;
 
-    [SerializeField] LevelLoader levelLoader;
+    [SerializeField] private int SpawnBase = 10;
+
+    private LevelLoader levelLoader;
 
     private void Start()
     {
         party = ScreenManager.instance.partyManager;
+        levelLoader = FindObjectOfType<LevelLoader>();
     }
 
-    public void StartSwap(int dir)
+    public void StartSwap(int dir, bool initialSwap = false)
     {
-        LeanTween.value(transition.gameObject, a => transition.color = a, new Color(0, 0, 0, 0), new Color(0, 0, 0, 1f), 0.3f).setOnComplete(RenderMap);
+        if (initialSwap == false)
+            LeanTween.value(transition.gameObject, a => transition.color = a, new Color(0, 0, 0, 0), new Color(0, 0, 0, 1f), 0.3f).setOnComplete(RenderMap);
+        else
+            LeanTween.delayedCall(0.5f, RenderMap);
         enterDirection = (Direction)dir;
     }
 
@@ -100,13 +106,8 @@ public class MapGeneration : MonoBehaviour
         if (travelledRegions >= 3 && Random.Range(0, 100 * (1 / (float)travelledRegions)) < 10)
         {
             //Swap to campfire scene?
-            AudioManager audioManager = FindObjectOfType<AudioManager>();
-            if (audioManager)
-            {
-                audioManager.FadeOut("Overworld Theme");
-                audioManager.FadeIn("Campfire Theme");
-            }
-            
+            FindObjectOfType<AudioManager>().FadeOut("Overworld Theme");
+            FindObjectOfType<AudioManager>().FadeIn("Campfire Theme");
             levelLoader.SwitchScene("CampFire");
             travelledRegions = 0;
             LeanTween.value(transition.gameObject, a => transition.color = a, new Color(0, 0, 0, 1), new Color(0, 0, 0, 0f), 0.2f);
@@ -206,6 +207,7 @@ public class MapGeneration : MonoBehaviour
             {
                 LeanTween.value(transition.gameObject, a => transition.color = a, new Color(0, 0, 0, 1), new Color(0, 0, 0, 0f), 0.3f);
                 travelledRegions++;
+                party.totalAreasVisited++;
                 battleManager.BattleState = BattleState.START;
                 battleManager.CombatantState = CombatantState.START;
                 battleManager.CombatUI.deactivateChoiceButtons();
@@ -252,13 +254,16 @@ public class MapGeneration : MonoBehaviour
     
     void PlaceEnemies(Vector2 size)
     {
-        int[] chances = { 10, 40, 30, 20 };
+        int[] chances = { 10, 20, 30, 20 };
         int totalRatio = 0;
 
         foreach (int c in chances)
             totalRatio += c;
 
-        int r = Random.Range(0, totalRatio);
+        int r = Random.Range(0, SpawnBase);
+
+        SpawnBase = party.totalAreasVisited*10;
+        SpawnBase = Mathf.Clamp(SpawnBase, 0, totalRatio);
 
         int iteration = 0; // so you know what to do next
         foreach (int c in chances)

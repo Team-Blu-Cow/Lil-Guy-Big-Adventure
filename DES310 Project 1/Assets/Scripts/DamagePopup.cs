@@ -5,13 +5,13 @@ using TMPro;
 
 public class DamagePopup : MonoBehaviour
 {
-    public static DamagePopup Create(Vector3 pos, int dmg, bool isCrit = false)
+    public static DamagePopup Create(Vector3 pos, int dmg, bool isCrit = false, bool isHeal = false)
     {
         Transform pfDamagePopupObj = Instantiate(Resources.Load<Transform>("Prefabs/pfDamagePopup"), pos, Quaternion.identity);
         pfDamagePopupObj.GetComponent<TMPro.TextMeshPro>().sortingOrder = 1;
 
         DamagePopup dmgPopup = pfDamagePopupObj.GetComponent<DamagePopup>();
-        dmgPopup.Setup(dmg, isCrit);
+        dmgPopup.Setup(dmg, isCrit, isHeal);
 
         return dmgPopup;
     }
@@ -25,24 +25,33 @@ public class DamagePopup : MonoBehaviour
 
     [SerializeField] private Color normalColor;
     [SerializeField] private Color criticalColor;
+    [SerializeField] private Color healColor;
+    [SerializeField] private Color criticalHealColor;
 
     private void Awake()
     {
         textMesh = transform.GetComponent<TextMeshPro>();
     }
 
-    public void Setup(int damageNum, bool isCrit = false)
+    public void Setup(int damageNum, bool isCrit = false, bool isHeal = false)
     {
         textMesh.SetText(damageNum.ToString());
         if (!isCrit)
         {
             textMesh.fontSize = 4;
-            textColor = normalColor;
+            if(isHeal)
+                textColor = healColor;
+            else
+                textColor = normalColor;
         }
         else
         {
             textMesh.fontSize = 5;
-            textColor = criticalColor;
+            if (isHeal)
+                textColor = criticalHealColor;
+            else
+                textColor = criticalColor;
+
         }
         textMesh.color = textColor;
         disappearTimer = disappearTimerMax;

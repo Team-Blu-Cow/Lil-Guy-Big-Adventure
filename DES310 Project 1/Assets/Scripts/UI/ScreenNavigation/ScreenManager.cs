@@ -9,7 +9,7 @@ public class ScreenManager : MonoBehaviour
 
     public InputManager controls;
 
-    [Header ("Screens")]
+    [Header("Screens")]
     PauseScreen pause;
     SwapScreenCombatant combatantScreen;
     SwapScreenParty partyScreen;
@@ -23,6 +23,15 @@ public class ScreenManager : MonoBehaviour
     [SerializeField] List<TMP_FontAsset> fonts;
     [HideInInspector] public TMP_FontAsset activeFont;
     public PlayerPartyManager partyManager;
+    bool inGame = true;
+
+    public HoverStats hoverStats
+    {
+        get
+        {
+            return instance.inGameParty;
+        }
+    }
 
     private void Awake()
     {
@@ -61,18 +70,27 @@ public class ScreenManager : MonoBehaviour
 
     public void TogglePause()
     {
-        if (Time.timeScale == 0f)
+        if (inGame)
         {
-            pause.TogglePauseGame(false);
+            if (Time.timeScale == 0f)
+            {
+                pause.TogglePauseGame(false);
+            }
+            else
+            {
+                pause.TogglePauseGame(true);
+            }
         }
         else
         {
-            pause.TogglePauseGame(true);
+            OpenInGameUI();
         }
+        
     }
     
     public void OpenCombatantScreen(PartyCombatant combatant)
     {
+        inGame = false;
         inGameParty.ToggleCanvas(false);
         partyScreen.CloseScreen();
         combatantScreen.OpenScreen(combatant);
@@ -81,6 +99,7 @@ public class ScreenManager : MonoBehaviour
     
     public void OpenPartyScreen()
     {
+        inGame = false;
         inGameParty.ToggleCanvas(false);
         partyScreen.OpenScreen();
         combatantScreen.CloseScreen();
@@ -89,9 +108,11 @@ public class ScreenManager : MonoBehaviour
         pause.TogglePauseGame(false);
     }
 
-    public void ToggleBeastiaryScreen()
+    public void OpenBeastiaryScreen()
     {
-        inGameParty.ToggleCanvas(!beastiaryScreen.ToggleScreen());
+        inGame = false;
+        beastiaryScreen.OpenScreen();
+        inGameParty.ToggleCanvas(false);
         partyScreen.CloseScreen();
         combatantScreen.CloseScreen();
         combatantScreen.ToggleLearned(false);
@@ -113,10 +134,12 @@ public class ScreenManager : MonoBehaviour
     
     public void OpenInGameUI()
     {
+        inGame = true;
         inGameParty.ToggleCanvas(true);
         partyScreen.CloseScreen();
         combatantScreen.CloseScreen();
         combatantScreen.ToggleLearned(false);
+        beastiaryScreen.CloseScreen();
     }
 
     public void SwitchLevel(string scene)

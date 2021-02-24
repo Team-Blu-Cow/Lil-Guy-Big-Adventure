@@ -137,6 +137,7 @@ public class BeastiaryScreen : MonoBehaviour
     
     public void OpenScreen()
     {
+        UpdateSeen();
         GetComponent<Canvas>().enabled = true;
     }
 

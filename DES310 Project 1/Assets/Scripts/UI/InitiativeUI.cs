@@ -34,9 +34,12 @@ public class InitiativeUI : MonoBehaviour
 	                {
 	                    Image initImage = transform.GetChild(count).GetChild(0).GetComponent<Image>();
 	                    GameObject combatant = battleQueue.Dequeue();
-	                    initImage.sprite = combatant.GetComponent<SpriteRenderer>().sprite;
-	                    initImage.SetNativeSize();
-	                    count++;
+                        if (combatant != null)
+                        {
+                            initImage.sprite = combatant.GetComponent<SpriteRenderer>().sprite;
+                            initImage.SetNativeSize();
+                            count++;
+                        }
 	                }
 	
 	            }

@@ -49,6 +49,7 @@ MonoBehaviour:
   - {fileID: 0}
   - {fileID: 0}
   - {fileID: 0}
+  totalAreasVisited: 1
 --- !u!1001 &316281308701856163
 PrefabInstance:
   m_ObjectHideFlags: 0

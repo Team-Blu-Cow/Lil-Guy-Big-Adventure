@@ -182,5 +182,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c89851c44040cab4e8791e973f76a544, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  normalColor: {r: 1, g: 1, b: 1, a: 1}
+  normalColor: {r: 1, g: 0.6462264, b: 0.6462264, a: 1}
   criticalColor: {r: 1, g: 0, b: 0, a: 1}
+  healColor: {r: 0.7216981, g: 1, b: 0.807332, a: 1}
+  criticalHealColor: {r: 0, g: 0.8584906, b: 0.037618566, a: 1}

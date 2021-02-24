@@ -12,6 +12,7 @@ public enum ActionState { NOT_SELECTED, WAIT, ABILITY, ITEM, FINISHED }
 public class BattleManager : MonoBehaviour
 {
     public List<GameObject> enemyCombatants;
+    [HideInInspector] public List<GameObject> deadCombatants;
     [SerializeField] private PlayerPartyManager playerParty;
     [SerializeField] private GameObject playerPartyGO;
 
@@ -39,7 +40,6 @@ public class BattleManager : MonoBehaviour
     public CombatantState CombatantState { get { return combatantState; } set { combatantState = value; } }
     [SerializeField] private ActionState actionState;
 
-    //public InitiativeTracker initTracker;
     [SerializeField] private GridHighLighter gridHighLighter;
 
     [SerializeField] private CombatUI combatUI;
@@ -49,12 +49,6 @@ public class BattleManager : MonoBehaviour
 
     private void Awake()
     {        
-        
-    }
-
-    // Start is called before the first frame update
-    private void Start()
-    {
         playerParty = FindObjectOfType<PlayerPartyManager>();
         if (playerParty == null)
         {
@@ -62,19 +56,19 @@ public class BattleManager : MonoBehaviour
           
         }
         playerParty.GetComponentsInChildren<PathFindingUnit>()[0].GridHighLighter = gridHighLighter;
-
+        playerParty.GetComponentsInChildren<Movement>()[0].grid = gridHighLighter.grid;
         playerParty.GetComponentsInChildren<PathFindingUnit>()[0].target = FindObjectOfType<CursorController>().transform;
+    }
 
+    // Start is called before the first frame update
+    private void Start()
+    {
+        ScreenManager.instance.partyManager = playerParty;
 
+        battleState = BattleState.SLEEPING;
         combatantState = CombatantState.START;
-
         actionState = ActionState.NOT_SELECTED;
-        MapGeneration mapGeneration = FindObjectOfType<MapGeneration>();
-
-        if (mapGeneration)
-            mapGeneration.StartSwap(0, true);
-        else
-            EndBattle();        
+        FindObjectOfType<MapGeneration>().StartSwap(0, true);
     }
 
     private void Update()
@@ -144,6 +138,13 @@ public class BattleManager : MonoBehaviour
         list[indexB] = tmp;
     }
 
+    IEnumerator RemoveCombatant(GameObject combatant, float delay)
+    {
+        yield return new WaitForSeconds(delay);
+        combatant.SetActive(false);
+        // yield return null;
+    }
+
     public void CheckIfCombatantDead(GameObject combatant)
     {
         if (combatant != null && combatants.Contains(combatant) && combatant.GetComponent<Combatant>().GetComponent<Stats>().GetStat(Combatant_Stats.HP) <= 0)
@@ -155,9 +156,18 @@ public class BattleManager : MonoBehaviour
             }
             else
             {
+
+                // play combatants death animation
+                Animator animator = combatant.GetComponent<Animator>();
+                if(animator != null)
+                {
+                    animator.SetTrigger("Death");
+                }
+
                 if (combatant.tag == "Enemy")
                 {
                     enemyCombatants.Remove(combatant);
+                    deadCombatants.Add(combatant);
                 }
                 else
                 {
@@ -167,7 +177,8 @@ public class BattleManager : MonoBehaviour
 
                 combatants.Remove(combatant);
                 combatant.GetComponent<PathFindingUnit>().OccupyTile(null);
-                combatant.SetActive(false);
+                // combatant.SetActive(false);
+                StartCoroutine(RemoveCombatant(combatant, 1f));
             }
         }
     }
@@ -219,6 +230,7 @@ public class BattleManager : MonoBehaviour
             {
                 combatants.Add(member);
                 ai_core.party_list.Add(member);
+                member.GetComponent<PathFindingUnit>().OccupyTile(member);
             }
         }
 
@@ -226,6 +238,8 @@ public class BattleManager : MonoBehaviour
         {
             move.enabled = false;
         }
+
+        deadCombatants = new List<GameObject>();
 
         SortBattleInitiative();
         SetBattleQueue();
@@ -291,7 +305,9 @@ public class BattleManager : MonoBehaviour
 
     public void AddParty(GameObject combatant)
     {
+        combatant.tag = "Ally";
         playerParty.AddCombatant(combatant);
+        ScreenManager.instance.hoverStats.UpdateUI();
     }
 
     // Start Turn Phase ****************************************************************************************************************************
@@ -466,7 +482,7 @@ public class BattleManager : MonoBehaviour
                                 case ability_type.Heal:
                                     if (node.occupier.tag == ("Ally"))
                                     {
-                                        UseAbility(node.occupier, selectedAbility);
+                                        UseAbility(node.occupier, selectedAbility, true);
                                         receivedActionCommand = true;
                                     }
                                     break;
@@ -474,7 +490,7 @@ public class BattleManager : MonoBehaviour
                                 case ability_type.Buff:
                                     if (node.occupier.tag == ("Ally"))
                                     {
-                                        UseAbility(node.occupier, selectedAbility);
+                                        UseAbility(node.occupier, selectedAbility, true);
                                         receivedActionCommand = true;
                                     }
                                     break;
@@ -492,7 +508,7 @@ public class BattleManager : MonoBehaviour
         }
     }
 
-    private void UseAbility(GameObject target, int abilityIndex)
+    private void UseAbility(GameObject target, int abilityIndex, bool isHeal = false)
     {
         currentCombatant.GetComponent<CombatSystem>().target = target;
         AbilityResult result = currentCombatant.GetComponent<Combatant>().UseAbility(abilityIndex);
@@ -501,13 +517,13 @@ public class BattleManager : MonoBehaviour
         CheckIfCombatantDead(target);
 
         AnimateAbility(target.transform.position, abilityIndex);
-        StartCoroutine(ShowDamagePopup(0.2f, (int)result.oDamage, result.crit));
+        StartCoroutine(ShowDamagePopup(0.2f, (int)result.oDamage, result.crit, isHeal));
     }
 
-    private IEnumerator ShowDamagePopup(float seconds, int dmgNum, bool crit)
+    private IEnumerator ShowDamagePopup(float seconds, int dmgNum, bool crit, bool isHeal = false)
     {
         yield return new WaitForSeconds(seconds);
-        DamagePopup.Create(abilityTargetPos, dmgNum, crit);
+        DamagePopup.Create(abilityTargetPos, dmgNum, crit, isHeal);
     }
 
     public void AnimateAbility(Vector3 animPos, int abilityIndex)
@@ -604,9 +620,12 @@ public class BattleManager : MonoBehaviour
         battleState = BattleState.FINISHED;
         ScreenManager.instance.CloseInititive();
 
-        foreach (GameObject exit in FindObjectOfType<MapGeneration>().placedExits)
+        if (FindObjectOfType<MapGeneration>() != null)
         {
-            exit.SetActive(true);
+            foreach (GameObject exit in FindObjectOfType<MapGeneration>().placedExits)
+            {
+                exit.SetActive(true);
+            }
         }
 
         foreach (GameObject combatant in playerParty.party)
