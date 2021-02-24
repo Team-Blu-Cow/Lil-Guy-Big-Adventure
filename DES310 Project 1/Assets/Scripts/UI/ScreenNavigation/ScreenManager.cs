@@ -9,7 +9,7 @@ public class ScreenManager : MonoBehaviour
 
     public InputManager controls;
 
-    [Header ("Screens")]
+    [Header("Screens")]
     PauseScreen pause;
     SwapScreenCombatant combatantScreen;
     SwapScreenParty partyScreen;
@@ -24,6 +24,14 @@ public class ScreenManager : MonoBehaviour
     [HideInInspector] public TMP_FontAsset activeFont;
     public PlayerPartyManager partyManager;
     bool inGame = true;
+
+    public HoverStats hoverStats
+    {
+        get
+        {
+            return instance.inGameParty;
+        }
+    }
 
     private void Awake()
     {
