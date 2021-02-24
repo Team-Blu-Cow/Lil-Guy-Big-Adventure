@@ -244,8 +244,11 @@ public class ScreenManager : MonoBehaviour
     // Recruit /////////////////
     public void ShowRecruit()
     {
-        recruitEnemy.GetComponent<Canvas>().enabled = true;
-        recruitEnemy.Recruit();
+        if(recruitEnemy.TryGetComponent<Canvas>(out Canvas canvas))
+        {
+            canvas.enabled = true;
+            recruitEnemy.Recruit();
+        }
     }
     
     public void HideRecruit()

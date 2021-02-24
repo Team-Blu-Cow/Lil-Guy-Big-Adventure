@@ -19,7 +19,7 @@ GameObject:
   - component: {fileID: 5042615767834717089}
   m_Layer: 0
   m_Name: Combatant Lizard
-  m_TagString: Untagged
+  m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -129,15 +129,43 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cf65118ca2564484991111fe932c906f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  combatantName: 
+  combatantName: Lizard
   combatantNum: 0
   fighting: 0
-  abilitiesLearnt: []
-  abilitiesUsing: []
+  abilitiesLearnt:
+  - {fileID: 5173025126576702271, guid: e19b5518816ddef49a18ebb68d8780ba, type: 3}
+  - {fileID: 245600760294883261, guid: 76831f9f65498dd4c8fd649e81ca829c, type: 3}
+  - {fileID: 3421883576234602752, guid: 3ca27b04a6592eb4987690aca76d52b1, type: 3}
+  - {fileID: 8458301428264756310, guid: 0fad40dff84cff145a9de3540c00e247, type: 3}
+  - {fileID: 5967139999300929174, guid: d25bd0189fcba11499e5b391bca3ce70, type: 3}
+  - {fileID: 7436532388492697849, guid: f7aebba6fd04a3d4fb458eca03fb3ae6, type: 3}
+  - {fileID: 876702254931070579, guid: 6506a54066584794f8766f4a6838dd4c, type: 3}
+  - {fileID: 5869609677974200889, guid: 01758146b0d1a984a83d39c1f65fa4bc, type: 3}
+  abilitiesUsing:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
   abilitySelect: 0
-  combatantItems: []
-  resistances: []
-  combatantQuirks: []
+  combatantItems:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  resistances:
+  - 1
+  - 0.25
+  - 1.5
+  - 1
+  - 1.5
+  - 2
+  - 0.5
+  - 0.75
+  combatantQuirks:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
   initTracker: {fileID: 0}
   oldPosition: {x: 0, y: 0, z: 0}
   combatantState: 0
@@ -185,7 +213,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   target: {fileID: 0}
-  speed: 0.5
+  speed: 3
   path: []
   currentlyPathFinding: 0
   PathFinished: 0
@@ -203,7 +231,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   turn_completed: 1
-  speed: 1
+  speed: 3
 --- !u!1 &5529163054273402004
 GameObject:
   m_ObjectHideFlags: 0

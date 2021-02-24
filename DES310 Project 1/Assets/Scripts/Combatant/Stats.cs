@@ -98,7 +98,7 @@ public class Stats : MonoBehaviour
             case Combatant_Type.Hedgehonch:
                 base_def += 6;
                 base_con += 2;
-                base_mag -= -6;
+                base_mag -= 6;
                 base_init -= 4;
                 base_speed -= 2;
                 break;
@@ -108,6 +108,15 @@ public class Stats : MonoBehaviour
                 base_con -= 1;
                 base_def -= 3;
                 base_str -= 4;
+                break;
+            case Combatant_Type.Lizard:
+                base_mag += 6;
+                base_init -= 1;
+                base_con -= 1;
+                base_def -= 3;
+                base_str -= 2;
+                base_luck += 5;
+                base_speed += 2;
                 break;
         };
 
