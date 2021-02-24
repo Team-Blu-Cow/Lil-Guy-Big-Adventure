@@ -8,6 +8,8 @@ public class CombatUI : MonoBehaviour
 {
 
     [SerializeField] GameObject BaseGO;
+    [SerializeField] private Sprite[] aspectIcons;
+    [SerializeField] private Color[] aspectColours;
 
     GameObject abilityButtons;
     GameObject itemButtons;
@@ -26,6 +28,8 @@ public class CombatUI : MonoBehaviour
         itemButtons = BaseGO.transform.GetChild(1).gameObject;
         moveButtons = BaseGO.transform.GetChild(2).gameObject;
         choiceButtons = BaseGO.transform.GetChild(3).gameObject;
+
+        aspectIcons = Resources.LoadAll<Sprite>("Sprites/Elements");
     }
 
     private void Update()
@@ -111,9 +115,17 @@ public class CombatUI : MonoBehaviour
             if (count < 4)
             {
                 button.GetComponentInChildren<TextMeshProUGUI>().text = GetComponent<BattleManager>().currentCombatant.GetComponent<Combatant>().abilitiesUsing[count].abilityName;
+                Aspects.Aspect iconIndex = GetComponent<BattleManager>().currentCombatant.GetComponent<Combatant>().abilitiesUsing[count].abilityAspect;
+                button.gameObject.GetComponent<Image>().color = aspectColours[(int)iconIndex];
+                button.transform.GetChild(0).GetComponent<Image>().sprite = aspectIcons[GetAbilityIcon(iconIndex)];
                 count++;
             }           
         }
+    }
+
+    private int GetAbilityIcon(Aspects.Aspect aspect)
+    {
+        return (int)aspect;
     }
 
     public void activateItemButtons()

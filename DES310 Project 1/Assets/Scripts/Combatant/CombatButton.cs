@@ -13,6 +13,8 @@ public class CombatButton : MonoBehaviour
     {
         GetComponent<Button>().interactable = false;
         GetComponentInChildren<TextMeshProUGUI>().enabled = false;
+        if (abilityButton)
+            transform.GetChild(0).gameObject.SetActive(false);
     }
 
     public void activateButton(Vector3 offset, Vector3 combatantPosition)
@@ -27,6 +29,7 @@ public class CombatButton : MonoBehaviour
         {
             GetComponent<Button>().interactable = true;
             GetComponentInChildren<TextMeshProUGUI>().enabled = true;
+            transform.GetChild(0).gameObject.SetActive(true);
         }
     }
 
@@ -34,5 +37,7 @@ public class CombatButton : MonoBehaviour
     {
         GetComponent<Button>().interactable = false;
         GetComponentInChildren<TextMeshProUGUI>().enabled = false;
+        if (abilityButton)
+            transform.GetChild(0).gameObject.SetActive(false);
     }
 }
