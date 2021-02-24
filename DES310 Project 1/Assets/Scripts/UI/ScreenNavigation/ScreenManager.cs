@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 using TMPro;
 using UnityEditor;
 
@@ -19,6 +20,8 @@ public class ScreenManager : MonoBehaviour
     BeastiaryScreen beastiaryScreen;
     InitiativeUI initiativeUI;
     RecruitEnemy recruitEnemy;
+    RemoveParty removeParty;
+    options option;
 
     LevelLoader levelSwitch;
 
@@ -55,6 +58,8 @@ public class ScreenManager : MonoBehaviour
         inGameParty = GetComponentInChildren<HoverStats>();
         initiativeUI = GetComponentInChildren<InitiativeUI>();
         recruitEnemy = GetComponentInChildren<RecruitEnemy>();
+        removeParty = GetComponentInChildren<RemoveParty>();
+        option = GetComponentInChildren<options>();
         levelSwitch = GetComponentInChildren<LevelLoader>();
 
         activeFont = fonts[0];
@@ -97,27 +102,37 @@ public class ScreenManager : MonoBehaviour
             return null;
     }
 
-    //UI
+    //-------------------------------------  UI -------------------------------------\\
+
+    // Pause //////
     public void TogglePause()
     {
         if (inGame)
         {
-            if (Time.timeScale == 0f)
-            {
-                pause.TogglePauseGame(false);
-            }
-            else
-            {
-                pause.TogglePauseGame(true);
-            }
+            pause.TogglePauseGame(true);
         }
         else
         {
-            OpenInGameUI();
+            if (option.GetComponent<Canvas>().enabled)
+            {
+                option.GetComponent<Canvas>().enabled = false;
+                if (AudioManager.instance)
+                {
+                    AudioManager.instance.FadeOut("One Shot Test");
+                    AudioManager.instance.FadeOut("Ambient Test");
+                }
+                pause.TogglePauseGame(true);
+            }
+            else
+            {
+                pause.TogglePauseGame(false);
+                OpenInGameUI();
+            }
         }
         
     }
     
+    // Combatant ///////
     public void OpenCombatantScreen(PartyCombatant combatant)
     {
         inGame = false;
@@ -127,6 +142,7 @@ public class ScreenManager : MonoBehaviour
         combatantScreen.ToggleLearned(false);
     }
     
+    // Party ////////
     public void OpenPartyScreen()
     {
         inGame = false;
@@ -138,6 +154,7 @@ public class ScreenManager : MonoBehaviour
         pause.TogglePauseGame(false);
     }
 
+    // Beastiary screen //////////////
     public void OpenBeastiaryScreen()
     {
         inGame = false;
@@ -148,6 +165,21 @@ public class ScreenManager : MonoBehaviour
         combatantScreen.ToggleLearned(false);
     }
     
+    public void ToggleBeastiaryScreen()
+    {
+        if (beastiaryScreen.GetComponent<Canvas>().enabled)
+        {
+            inGame = true;
+            beastiaryScreen.CloseScreen();
+        }
+        else
+        {
+            inGame = false;
+            beastiaryScreen.OpenScreen();
+        }
+    }
+    
+    // Inventory /////////////
     public void OpenInventory()
     {
         inventory.ToggleInventory(true);
@@ -162,6 +194,7 @@ public class ScreenManager : MonoBehaviour
         inventory.FlipInventory();
     }
     
+    // In Game Ui //////////////////// 
     public void OpenInGameUI()
     {
         inGame = true;
@@ -172,6 +205,7 @@ public class ScreenManager : MonoBehaviour
         beastiaryScreen.CloseScreen();
     }
 
+    // Helper Functions /////////////////
     public void SwitchLevel(string scene)
     {
         if (pause)
@@ -194,6 +228,7 @@ public class ScreenManager : MonoBehaviour
         return combatantScreen;
     }
 
+    // Initiative ///////////
     public void CloseInititive()
     {
         initiativeUI.GetComponentInParent<Canvas>().enabled = false;
@@ -204,6 +239,7 @@ public class ScreenManager : MonoBehaviour
         initiativeUI.GetComponentInParent<Canvas>().enabled = true;
     }
 
+    // Recruit /////////////////
     public void ShowRecruit()
     {
         recruitEnemy.GetComponent<Canvas>().enabled = true;
@@ -213,5 +249,25 @@ public class ScreenManager : MonoBehaviour
     public void HideRecruit()
     {
         recruitEnemy.GetComponent<Canvas>().enabled = false;
+    }
+    
+    public void ShowRemove()
+    {
+        removeParty.GetComponent<Canvas>().enabled = true;
+        removeParty.Remove();
+    }
+    
+    public void HideRemove()
+    {
+        removeParty.GetComponent<Canvas>().enabled = false;
+    }
+
+    // Options //////////////
+    public void ShowOptions()
+    {
+        inGame = false;
+        pause.GetComponent<Canvas>().enabled = false;
+        option.GetComponent<Canvas>().enabled = true;
+        option.GetComponent<GraphicRaycaster>().enabled = true;
     }
 }

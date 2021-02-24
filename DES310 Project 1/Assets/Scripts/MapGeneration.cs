@@ -52,7 +52,7 @@ public class MapGeneration : MonoBehaviour
     [SerializeField] float radius = 5f;
 
     [SerializeField] BattleManager battleManager;
-
+  
     private int avalibleExit;
     private int travelledRegions;
     Direction enterDirection = 0;
@@ -65,6 +65,16 @@ public class MapGeneration : MonoBehaviour
     {
         party = ScreenManager.instance.partyManager;
         levelLoader = FindObjectOfType<LevelLoader>();
+    }
+
+    private void Update()
+    {
+        foreach (GameObject exit in placedExits)
+        {
+            Vector3 pos = exit.transform.position;
+
+            exit.transform.position = new Vector3(pos.x, pos.y - (Mathf.Sin(Time.time)*0.001f), pos.z);
+        }
     }
 
     public void StartSwap(int dir, bool initialSwap = false)
@@ -196,7 +206,7 @@ public class MapGeneration : MonoBehaviour
         avalibleExit = 0;
         foreach (GameObject exit in placedExits)
         {
-            if (pathfinder.FindPath(party.party[0].transform.position, exit.transform.position) !=null)
+            if (pathfinder.FindPath(party.party[0].transform.position, exit.transform.position - new Vector3(0, 1, 0)) !=null)
             {
                 avalibleExit++;
             }
@@ -411,7 +421,7 @@ public class MapGeneration : MonoBehaviour
                         tileMapFloor.SetTile(new Vector3Int(-i, -startPos.x-1, 0), bridgeTiles.tiles[0]);
                     }
                 }
-                tempExit = Instantiate(exit, grid.NodeToWorld(startPos.x, 0, 2) , Quaternion.Euler(0f, 0f, 0f), transform.GetChild(0)).gameObject;
+                tempExit = Instantiate(exit, grid.NodeToWorld(startPos.x, 0, 2) + new Vector3(0, 1, 0), Quaternion.Euler(0f, 0f, 0f), transform.GetChild(0)).gameObject;
 
                 break;
             case Direction.BottomLeft:// place bridge going +y  
@@ -424,7 +434,7 @@ public class MapGeneration : MonoBehaviour
                         tileMapFloor.SetTransformMatrix(new Vector3Int(-startPos.y-1, -i, 0), matrix); 
                     }
                 }
-                tempExit = Instantiate(exit, grid.NodeToWorld(grid.gridSize.y-1, startPos.y, 2), Quaternion.Euler(0f, 180f, 0f), transform.GetChild(0)).gameObject;
+                tempExit = Instantiate(exit, grid.NodeToWorld(grid.gridSize.y-1, startPos.y, 2) + new Vector3(0, 1, 0), Quaternion.Euler(0f, 180f, 0f), transform.GetChild(0)).gameObject;
 
                 break;
             case Direction.TopRight:// place bridge going -y
@@ -437,7 +447,7 @@ public class MapGeneration : MonoBehaviour
                         tileMapFloor.SetTransformMatrix(new Vector3Int(-startPos.y-1, -i, 0), matrix);
                     }
                 }
-                tempExit = Instantiate(exit, grid.NodeToWorld(0, startPos.y, 2), Quaternion.Euler(0f, 0f, 0f), transform.GetChild(0)).gameObject;
+                tempExit = Instantiate(exit, grid.NodeToWorld(0, startPos.y, 2) + new Vector3(0, 1, 0), Quaternion.Euler(0f, 0f, 0f), transform.GetChild(0)).gameObject;
 
                 break;
             case Direction.BottomRight:// place bridge going +x
@@ -448,7 +458,7 @@ public class MapGeneration : MonoBehaviour
                         tileMapFloor.SetTile(new Vector3Int(-i, -startPos.x-1, 0), bridgeTiles.tiles[0]);
                     }
                 }
-                tempExit = Instantiate(exit, grid.NodeToWorld(startPos.x, grid.gridSize.x-1, 2), Quaternion.Euler(0f, 180f, 0f), transform.GetChild(0)).gameObject;
+                tempExit = Instantiate(exit, grid.NodeToWorld(startPos.x, grid.gridSize.x-1, 2) + new Vector3(0,1,0), Quaternion.Euler(0f, 180f, 0f), transform.GetChild(0)).gameObject;
 
                 break;
             default:

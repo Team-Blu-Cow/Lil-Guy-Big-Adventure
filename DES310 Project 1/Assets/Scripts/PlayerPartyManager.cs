@@ -21,39 +21,43 @@ public class PlayerPartyManager : MonoBehaviour
         }
     }
 
-    public void AddCombatant(GameObject combatant)
+    public bool AddCombatant(GameObject combatant)
     {
-        bool added = false;
+        bool partyFull = true;
 
         for (int i = 0; i < party.Length; i++)
         {
             if (party[i] == combatant)
             {
-                Debug.Log("Combatant in party");
+                partyFull = false;
                 break;
             }
 
             if (party[i] == null)
             {
+                partyFull = false;
                 party[i] = combatant;
                 combatant.tag = "Ally";
                 combatant.gameObject.SetActive(true);                
                 combatant.transform.parent = transform;
                 combatant.GetComponent<Stats>().SetModStat(Combatant_Stats.HP, combatant.GetComponent<Stats>().GetFinalStat(Combatant_Stats.Constitution));
                 FindObjectOfType<MapGeneration>().placedEnemies.Remove(combatant);
-                added = true;
                 break;
             }
         }
 
-        if (added)
+        return partyFull;
+    }
+    public void RemoveCombatant(GameObject combatant)
+    {
+        for (int i = 0; i < party.Length; i++)
         {
-            Debug.Log("Added combatant to party");
-        }
-        else
-        {
-            Debug.Log("Combatant not added to party");
-
+            if (party[i] == combatant)
+            {
+                party[i] = null;
+                Destroy(combatant);
+                break;
+            }
         }
     }
 }
