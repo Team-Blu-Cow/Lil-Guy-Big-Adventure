@@ -1,0 +1,123 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1001 &6976532419451418415
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 6773037149543772176, guid: 8cbe27ed55e90b847864376de199d9c1, type: 3}
+      propertyPath: m_RootOrder
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6773037149543772176, guid: 8cbe27ed55e90b847864376de199d9c1, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6773037149543772176, guid: 8cbe27ed55e90b847864376de199d9c1, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6773037149543772176, guid: 8cbe27ed55e90b847864376de199d9c1, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6773037149543772176, guid: 8cbe27ed55e90b847864376de199d9c1, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6773037149543772176, guid: 8cbe27ed55e90b847864376de199d9c1, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6773037149543772176, guid: 8cbe27ed55e90b847864376de199d9c1, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6773037149543772176, guid: 8cbe27ed55e90b847864376de199d9c1, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6773037149543772176, guid: 8cbe27ed55e90b847864376de199d9c1, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6773037149543772176, guid: 8cbe27ed55e90b847864376de199d9c1, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6773037149543772176, guid: 8cbe27ed55e90b847864376de199d9c1, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6773037149543772177, guid: 8cbe27ed55e90b847864376de199d9c1, type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 4855066853780554660, guid: 0ffac5d96a153a74ea2577a392092a3f, type: 3}
+    - target: {fileID: 6773037149543772178, guid: 8cbe27ed55e90b847864376de199d9c1, type: 3}
+      propertyPath: combatant_type
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 6773037149543772188, guid: 8cbe27ed55e90b847864376de199d9c1, type: 3}
+      propertyPath: combatantName
+      value: Big Hedgehog
+      objectReference: {fileID: 0}
+    - target: {fileID: 6773037149543772188, guid: 8cbe27ed55e90b847864376de199d9c1, type: 3}
+      propertyPath: resistances.Array.data[1]
+      value: 2.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 6773037149543772188, guid: 8cbe27ed55e90b847864376de199d9c1, type: 3}
+      propertyPath: resistances.Array.data[3]
+      value: 0.25
+      objectReference: {fileID: 0}
+    - target: {fileID: 6773037149543772188, guid: 8cbe27ed55e90b847864376de199d9c1, type: 3}
+      propertyPath: resistances.Array.data[4]
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6773037149543772188, guid: 8cbe27ed55e90b847864376de199d9c1, type: 3}
+      propertyPath: resistances.Array.data[5]
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 6773037149543772188, guid: 8cbe27ed55e90b847864376de199d9c1, type: 3}
+      propertyPath: resistances.Array.data[6]
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6773037149543772188, guid: 8cbe27ed55e90b847864376de199d9c1, type: 3}
+      propertyPath: resistances.Array.data[7]
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 6773037149543772188, guid: 8cbe27ed55e90b847864376de199d9c1, type: 3}
+      propertyPath: abilitiesLearnt.Array.data[0]
+      value: 
+      objectReference: {fileID: 7907028290374525569, guid: 8f4fe241390a34b4b93cd49652214aba, type: 3}
+    - target: {fileID: 6773037149543772188, guid: 8cbe27ed55e90b847864376de199d9c1, type: 3}
+      propertyPath: abilitiesLearnt.Array.data[1]
+      value: 
+      objectReference: {fileID: 162200607106058233, guid: dfed7f97b5e92cd40b9b681b70ebd551, type: 3}
+    - target: {fileID: 6773037149543772188, guid: 8cbe27ed55e90b847864376de199d9c1, type: 3}
+      propertyPath: abilitiesLearnt.Array.data[2]
+      value: 
+      objectReference: {fileID: 4308851610775836936, guid: f665f000f80ac5e4b8ccaa79f1de13f4, type: 3}
+    - target: {fileID: 6773037149543772188, guid: 8cbe27ed55e90b847864376de199d9c1, type: 3}
+      propertyPath: abilitiesLearnt.Array.data[4]
+      value: 
+      objectReference: {fileID: 8470993346599219810, guid: 2b64caf0437a65d46b58169fa52bf05c, type: 3}
+    - target: {fileID: 6773037149543772188, guid: 8cbe27ed55e90b847864376de199d9c1, type: 3}
+      propertyPath: abilitiesLearnt.Array.data[5]
+      value: 
+      objectReference: {fileID: 3421883576234602752, guid: 3ca27b04a6592eb4987690aca76d52b1, type: 3}
+    - target: {fileID: 6773037149543772188, guid: 8cbe27ed55e90b847864376de199d9c1, type: 3}
+      propertyPath: abilitiesLearnt.Array.data[7]
+      value: 
+      objectReference: {fileID: 4907401747735708768, guid: f8c0eb4770f9fc4429c2aedfa4d18834, type: 3}
+    - target: {fileID: 6773037149543772188, guid: 8cbe27ed55e90b847864376de199d9c1, type: 3}
+      propertyPath: abilitiesLearnt.Array.data[9]
+      value: 
+      objectReference: {fileID: 5733333759112573666, guid: be78b21b92db7c640b6fa01c53782832, type: 3}
+    - target: {fileID: 6773037149543772189, guid: 8cbe27ed55e90b847864376de199d9c1, type: 3}
+      propertyPath: m_Name
+      value: Combatant Big Hedgehog
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 8cbe27ed55e90b847864376de199d9c1, type: 3}

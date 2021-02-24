@@ -61,7 +61,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7558335817995306079, guid: 9285a0b73e54ff44aa137bb4373dd6c7, type: 3}
       propertyPath: abilityPower
-      value: 1.5
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 7558335817995306079, guid: 9285a0b73e54ff44aa137bb4373dd6c7, type: 3}
       propertyPath: abilityAspect

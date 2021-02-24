@@ -119,7 +119,7 @@ public class CombatSystem : MonoBehaviour
         int aspectType = (int)abilitiesUsing[abilityNum].abilityAspect;
 
         float damage = 0;
-        float defenceNegation = target.GetComponent<Stats>().GetStat(Combatant_Stats.Defence) / 2;
+        float defenceNegation = target.GetComponent<Stats>().GetStat(Combatant_Stats.Defence) / 2.0f;
 
         switch (abilitiesUsing[abilityNum].statUsed)
         {
@@ -169,6 +169,12 @@ public class CombatSystem : MonoBehaviour
         damage -= defenceNegation;
 
         damage += poisonDamage;
+
+        if(damage < 1)
+        {
+            damage = 1;
+        }
+
         target.GetComponent<Combatant>().do_damage((int)damage, abilitiesUsing[abilityNum].abilityAspect);
         //Debug.Log("Enemy HP: " + enemy.GetComponent<Stats>().getStat(Combatant_Stats.HP));
         //Debug.Log("Dealt " + damage + " damage");

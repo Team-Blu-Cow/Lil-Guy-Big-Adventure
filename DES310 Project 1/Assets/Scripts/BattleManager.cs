@@ -56,7 +56,6 @@ public class BattleManager : MonoBehaviour
           
         }
         playerParty.GetComponentsInChildren<PathFindingUnit>()[0].GridHighLighter = gridHighLighter;
-        playerParty.GetComponentsInChildren<Movement>()[0].grid = gridHighLighter.grid;
         playerParty.GetComponentsInChildren<PathFindingUnit>()[0].target = FindObjectOfType<CursorController>().transform;
     }
 
@@ -68,7 +67,12 @@ public class BattleManager : MonoBehaviour
         battleState = BattleState.SLEEPING;
         combatantState = CombatantState.START;
         actionState = ActionState.NOT_SELECTED;
-        FindObjectOfType<MapGeneration>().StartSwap(0, true);
+        MapGeneration mapGeneration = FindObjectOfType<MapGeneration>();
+
+        if (mapGeneration)
+            mapGeneration.StartSwap(0, true);
+        else
+            EndBattle();
     }
 
     private void Update()
@@ -305,9 +309,10 @@ public class BattleManager : MonoBehaviour
 
     public void AddParty(GameObject combatant)
     {
-        combatant.tag = "Ally";
         playerParty.AddCombatant(combatant);
         ScreenManager.instance.hoverStats.UpdateUI();
+        ScreenManager.instance.HideRecruit();
+        
     }
 
     // Start Turn Phase ****************************************************************************************************************************
@@ -619,6 +624,7 @@ public class BattleManager : MonoBehaviour
     {
         battleState = BattleState.FINISHED;
         ScreenManager.instance.CloseInititive();
+        ScreenManager.instance.ShowRecruit();
 
         if (FindObjectOfType<MapGeneration>() != null)
         {
