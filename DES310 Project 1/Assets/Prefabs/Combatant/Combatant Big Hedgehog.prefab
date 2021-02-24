@@ -61,7 +61,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6773037149543772188, guid: 8cbe27ed55e90b847864376de199d9c1, type: 3}
       propertyPath: combatantName
-      value: Big Hedgehog
+      value: Hedge Honch
       objectReference: {fileID: 0}
     - target: {fileID: 6773037149543772188, guid: 8cbe27ed55e90b847864376de199d9c1, type: 3}
       propertyPath: resistances.Array.data[1]

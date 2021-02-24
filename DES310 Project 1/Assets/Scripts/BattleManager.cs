@@ -235,6 +235,7 @@ public class BattleManager : MonoBehaviour
             {
                 combatants.Add(member);
                 ai_core.party_list.Add(member);
+                member.GetComponent<PathFindingUnit>().GridHighLighter = gridHighLighter;
                 member.GetComponent<PathFindingUnit>().OccupyTile(member);
             }
         }
@@ -312,9 +313,10 @@ public class BattleManager : MonoBehaviour
     {        
         if (playerParty.AddCombatant(combatant))
         {
-            ScreenManager.instance.ShowRemove();
+            ScreenManager.instance.ShowRemove(combatant);
         }
 
+        deadCombatants = new List<GameObject>();
         ScreenManager.instance.hoverStats.UpdateUI();
         ScreenManager.instance.HideRecruit();      
     }

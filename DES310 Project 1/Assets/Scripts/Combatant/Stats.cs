@@ -9,8 +9,8 @@ public enum Combatant_Type
     StoneBug = 2, // Str: Str, Def Weak: Mag, Init
     Phoenix = 3, // Str: Mag, Init Weak: Luck, Str
     Hedgehog = 4, // Str: Dex Weak: Str, Init
-    Big_Hedgehog = 5,
-    Tall_Mushroom = 6
+    Hedgehonch = 5,
+    Magishroom = 6
 }
 
 public enum Combatant_Stats
@@ -94,14 +94,14 @@ public class Stats : MonoBehaviour
                 base_str -= 3;
                 base_init -= 3;
                 break;
-            case Combatant_Type.Big_Hedgehog:
+            case Combatant_Type.Hedgehonch:
                 base_def += 6;
                 base_con += 2;
                 base_mag -= -6;
                 base_init -= 4;
                 base_speed -= 2;
                 break;
-            case Combatant_Type.Tall_Mushroom:
+            case Combatant_Type.Magishroom:
                 base_mag += 9;
                 base_init += 3;
                 base_con -= 1;

@@ -19,6 +19,9 @@ public class BeastiaryScreen : MonoBehaviour
     public GameObject newLeftPage;
     public GameObject newRightPage;
 
+    [Header("Canvases")]
+    public Canvas[] canvases;
+
     int currentCombatant = 0;
 
     enum PageOrder
@@ -96,14 +99,14 @@ public class BeastiaryScreen : MonoBehaviour
             if (text.name == "StatText")
             {
                 text.text =
-                "Strength: " + (combatantStats.GetStat(Combatant_Stats.Strength)) + "\n" +
-                "Dexterity: " + (combatantStats.GetStat(Combatant_Stats.Dexterity) ) + "\n" +
-                "Magic: " + (combatantStats.GetStat(Combatant_Stats.Magic) ) + "\n" +
-                "Defence: " + (combatantStats.GetStat(Combatant_Stats.Defence) ) + "\n" +
-                "Constitution: " + (combatantStats.GetStat(Combatant_Stats.Constitution)) + "\n" +
-                "Luck: " + (combatantStats.GetStat(Combatant_Stats.Luck) ) + "\n" +
-                "Speed: " + (combatantStats.GetStat(Combatant_Stats.Speed) ) + "\n" +
-                "Init: " + (combatantStats.GetStat(Combatant_Stats.Initiative) ) + "\n";
+                "Strength: " + (combatantStats.GetFinalStat(Combatant_Stats.Strength)) + "\n" +
+                "Dexterity: " + (combatantStats.GetFinalStat(Combatant_Stats.Dexterity) ) + "\n" +
+                "Magic: " + (combatantStats.GetFinalStat(Combatant_Stats.Magic) ) + "\n" +
+                "Defence: " + (combatantStats.GetFinalStat(Combatant_Stats.Defence) ) + "\n" +
+                "Constitution: " + (combatantStats.GetFinalStat(Combatant_Stats.Constitution)) + "\n" +
+                "Luck: " + (combatantStats.GetFinalStat(Combatant_Stats.Luck) ) + "\n" +
+                "Speed: " + (combatantStats.GetFinalStat(Combatant_Stats.Speed) ) + "\n" +
+                "Init: " + (combatantStats.GetFinalStat(Combatant_Stats.Initiative) ) + "\n";
             }
             else if (text.name == ("CreatureName"))
             {
@@ -139,11 +142,16 @@ public class BeastiaryScreen : MonoBehaviour
     {
         UpdateSeen();
         GetComponent<Canvas>().enabled = true;
+        canvases[1].enabled = true;
     }
 
     public void CloseScreen()
     {
         GetComponent<Canvas>().enabled = false;
+        foreach(Canvas canvas in canvases)
+        {
+            canvas.enabled = false;
+        }
     }
     
     public bool ToggleScreen()

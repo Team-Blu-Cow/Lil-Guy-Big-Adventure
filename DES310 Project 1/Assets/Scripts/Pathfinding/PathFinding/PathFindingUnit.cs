@@ -21,8 +21,11 @@ public class PathFindingUnit : MonoBehaviour
 
     public void OccupyTile(GameObject me)
     {
-        IsoNode node = gridHighLighter.grid.WorldToNode(transform.position);
-        node.SetOccupied(me);
+        if(gridHighLighter != null && gridHighLighter.grid != null)
+        {
+            IsoNode node = gridHighLighter.grid.WorldToNode(transform.position);
+            node.SetOccupied(me);
+        }
     }
 
     public void SetSelectableTiles(int range, bool includeOccupied = false)

@@ -191,7 +191,7 @@ public class CombatSystem : MonoBehaviour
     {
         bool isCrit = false;
         AbilityResult abilityResult = new AbilityResult();
-        int heal = (int)abilitiesUsing[abilityNum].abilityPower + combatantStats.GetFinalStat(Combatant_Stats.Magic);
+        int heal = (int)abilitiesUsing[abilityNum].abilityPower;
 
         if (Random.Range(1, 100) < combatantStats.GetStat(Combatant_Stats.Luck))
         {

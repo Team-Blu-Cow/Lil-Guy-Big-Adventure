@@ -60,4 +60,15 @@ public class PlayerPartyManager : MonoBehaviour
             }
         }
     }
+
+    public void RemoveCombatant(int memberIndex, GameObject newPartyMember)
+    {
+        if(party[memberIndex] != null)
+        {
+            Destroy(party[memberIndex]);
+            party[memberIndex] = null;
+            AddCombatant(newPartyMember);
+            ScreenManager.instance.HideRemove();
+        }
+    }
 }

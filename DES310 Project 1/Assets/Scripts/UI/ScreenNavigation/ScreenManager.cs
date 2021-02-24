@@ -98,6 +98,8 @@ public class ScreenManager : MonoBehaviour
     {
         if (animGO.TryGetComponent<Animator>(out Animator anim))
             return GetSpritesFromClip(anim.runtimeAnimatorController.animationClips[0])[0];
+        else if (animGO.TryGetComponent<SpriteRenderer>(out SpriteRenderer sr))
+            return sr.sprite;
         else
             return null;
     }
@@ -251,10 +253,10 @@ public class ScreenManager : MonoBehaviour
         recruitEnemy.GetComponent<Canvas>().enabled = false;
     }
     
-    public void ShowRemove()
+    public void ShowRemove(GameObject newPartyMember)
     {
         removeParty.GetComponent<Canvas>().enabled = true;
-        removeParty.Remove();
+        removeParty.Remove(newPartyMember);
     }
     
     public void HideRemove()
