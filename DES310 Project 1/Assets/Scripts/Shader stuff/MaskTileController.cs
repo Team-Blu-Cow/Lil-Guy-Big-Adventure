@@ -32,12 +32,10 @@ public class MaskTileController : MonoBehaviour
         if(testTile1 != null)
         {
             tilemap = tilemap1;
-            Debug.Log("tilemap1");
         }
         else
         {
             tilemap = tilemap2;
-            Debug.Log("tilemap2");
         }
     }
 
@@ -79,7 +77,6 @@ public class MaskTileController : MonoBehaviour
         if(collision.CompareTag("Cursor"))
         {
             mouseOver = true;
-            Debug.Log("trigger entered");
         }
     }
 
@@ -88,7 +85,6 @@ public class MaskTileController : MonoBehaviour
         if (collision.CompareTag("Cursor"))
         {
             mouseOver = false;
-            Debug.Log("trigger exited");
         }
     }
 }
