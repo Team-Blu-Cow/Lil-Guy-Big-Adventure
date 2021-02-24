@@ -269,13 +269,13 @@ MonoBehaviour:
   - {fileID: 0}
   resistances:
   - 1
-  - 2
-  - 0.5
+  - 1
+  - 1.5
   - 2
   - 0.5
   - 1
   - 2
-  - 1
+  - 0.5
   combatantQuirks:
   - {fileID: 0}
   - {fileID: 0}

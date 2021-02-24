@@ -66,7 +66,6 @@ public class Stats : MonoBehaviour
                 base_def += 3;
                 base_con += 7;
                 base_luck += 3;
-                base_speed += 3;
                 base_init += 3;               
                 break;
             case Combatant_Type.Mushroom:
@@ -96,8 +95,7 @@ public class Stats : MonoBehaviour
                 base_init -= 3;
                 break;
             case Combatant_Type.Big_Hedgehog:
-                base_str += 6;
-                base_def += 9;
+                base_def += 6;
                 base_con += 2;
                 base_mag -= -6;
                 base_init -= 4;
