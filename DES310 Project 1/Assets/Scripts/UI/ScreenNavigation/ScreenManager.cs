@@ -77,7 +77,7 @@ public class ScreenManager : MonoBehaviour
     }
 
     //Helper
-    public static List<Sprite> GetSpritesFromClip(AnimationClip clip)
+    /*public static List<Sprite> GetSpritesFromClip(AnimationClip clip)
     {
         var _sprites = new List<Sprite>();
         if (clip != null)
@@ -92,13 +92,13 @@ public class ScreenManager : MonoBehaviour
             }
         }
         return _sprites;
-    }
+    }*/
 
     public static Sprite GetFirstSprite(GameObject animGO)
     {
-        if (animGO.TryGetComponent<Animator>(out Animator anim))
-            return GetSpritesFromClip(anim.runtimeAnimatorController.animationClips[0])[0];
-        else if (animGO.TryGetComponent<SpriteRenderer>(out SpriteRenderer sr))
+        /*if (animGO.TryGetComponent<Animator>(out Animator anim))
+            return GetSpritesFromClip(anim.runtimeAnimatorController.animationClips[0])[0];*/
+        if (animGO.TryGetComponent<SpriteRenderer>(out SpriteRenderer sr))
             return sr.sprite;
         else
             return null;
