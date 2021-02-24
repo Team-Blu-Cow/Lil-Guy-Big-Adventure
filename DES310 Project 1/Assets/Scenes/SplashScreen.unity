@@ -604,6 +604,10 @@ PrefabInstance:
     m_TransformParent: {fileID: 0}
     m_Modifications:
     - target: {fileID: 1652678421251567976, guid: c2aa42c7ebcfa8245af701e4c5e978dc, type: 3}
+      propertyPath: music.Array.size
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 1652678421251567976, guid: c2aa42c7ebcfa8245af701e4c5e978dc, type: 3}
       propertyPath: oneShots.Array.size
       value: 3
       objectReference: {fileID: 0}
@@ -612,6 +616,14 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 8300000, guid: ef0fe9bd46266b446b449ec6d7d4b7a7, type: 3}
     - target: {fileID: 1652678421251567976, guid: c2aa42c7ebcfa8245af701e4c5e978dc, type: 3}
+      propertyPath: music.Array.data[1].end
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 1652678421251567976, guid: c2aa42c7ebcfa8245af701e4c5e978dc, type: 3}
+      propertyPath: music.Array.data[1].name
+      value: Overworld Theme
+      objectReference: {fileID: 0}
+    - target: {fileID: 1652678421251567976, guid: c2aa42c7ebcfa8245af701e4c5e978dc, type: 3}
       propertyPath: music.Array.data[0].group
       value: 
       objectReference: {fileID: 2580403833928542978, guid: 9504455385ab4c345bd561d05428f082, type: 2}
@@ -619,6 +631,18 @@ PrefabInstance:
       propertyPath: music.Array.data[0].start
       value: 
       objectReference: {fileID: 8300000, guid: 663abc62d3f9ac44a8eec5df53d1fede, type: 3}
+    - target: {fileID: 1652678421251567976, guid: c2aa42c7ebcfa8245af701e4c5e978dc, type: 3}
+      propertyPath: music.Array.data[1].group
+      value: 
+      objectReference: {fileID: 2580403833928542978, guid: 9504455385ab4c345bd561d05428f082, type: 2}
+    - target: {fileID: 1652678421251567976, guid: c2aa42c7ebcfa8245af701e4c5e978dc, type: 3}
+      propertyPath: music.Array.data[1].start
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 1652678421251567976, guid: c2aa42c7ebcfa8245af701e4c5e978dc, type: 3}
+      propertyPath: music.Array.data[1].volume
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 1652678421251567976, guid: c2aa42c7ebcfa8245af701e4c5e978dc, type: 3}
       propertyPath: oneShots.Array.data[0].clip
       value: 
@@ -668,6 +692,10 @@ PrefabInstance:
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 1652678421251567976, guid: c2aa42c7ebcfa8245af701e4c5e978dc, type: 3}
+      propertyPath: music.Array.data[1].musicLoop
+      value: 
+      objectReference: {fileID: 8300000, guid: 1f580f6cfc9086c47ae23b5a08b3132e, type: 3}
+    - target: {fileID: 1652678421251567976, guid: c2aa42c7ebcfa8245af701e4c5e978dc, type: 3}
       propertyPath: oneShots.Array.data[0].volume
       value: 1
       objectReference: {fileID: 0}
@@ -680,9 +708,17 @@ PrefabInstance:
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 1652678421251567976, guid: c2aa42c7ebcfa8245af701e4c5e978dc, type: 3}
+      propertyPath: music.Array.data[0].leadInTime
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1652678421251567976, guid: c2aa42c7ebcfa8245af701e4c5e978dc, type: 3}
       propertyPath: music.Array.data[0].musicMixer
       value: 
       objectReference: {fileID: 24100000, guid: 9504455385ab4c345bd561d05428f082, type: 2}
+    - target: {fileID: 1652678421251567976, guid: c2aa42c7ebcfa8245af701e4c5e978dc, type: 3}
+      propertyPath: music.Array.data[1].leadInTime
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 1652678421251567982, guid: c2aa42c7ebcfa8245af701e4c5e978dc, type: 3}
       propertyPath: m_Name
       value: AudioManager

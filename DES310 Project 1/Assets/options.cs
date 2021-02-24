@@ -22,7 +22,7 @@ public class options : MonoBehaviour
 
         for (int i = 0; i < array.Length; i++)
         {
-            string option = array[i].width + " x " + array[i].height;
+            string option = array[i].width + " x " + array[i].height + ", " + array[i].refreshRate + "hz";
 
             if (Mathf.Approximately((float)array[i].width / (float)array[i].height, 16f / 9f))
             {
@@ -42,7 +42,7 @@ public class options : MonoBehaviour
     public void setResolution(int resolution)
     {
         Resolution res = resolutions[resolution];
-        Screen.SetResolution(res.width, res.height, Screen.fullScreen);
+        Screen.SetResolution(res.width, res.height, Screen.fullScreen, res.refreshRate);
     }
 
     public void setFullscreen(bool fullscreen)

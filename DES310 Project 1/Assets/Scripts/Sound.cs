@@ -9,6 +9,7 @@ public class Music
     public string name;
 
     [Range(0, 1)] public float volume = 1;
+    [Range(0, 20)] public float leadInTime = 1;
     [SerializeField] public AudioClip start;
     [SerializeField] public AudioClip musicLoop;
     [SerializeField] public AudioClip end;
@@ -42,12 +43,14 @@ public class Music
     {
         if (start != null)
         {
+            Debug.Log("hit");
             startSource.Play();
             yield return new WaitForSeconds(start.length);
         }
         else
         {
-            yield return null;
+            Debug.Log("leadin");
+            yield return new WaitForSeconds(leadInTime);
         }
 
         loopSource.Play();
@@ -102,6 +105,9 @@ public class Music
             GameObject.Find("AudioManager").GetComponent<AudioManager>().Play(name);
             float currentTime = 0;
             float start = 0f;
+
+            loopSource.volume = start;
+            yield return new WaitForSeconds(leadInTime);
 
             while (currentTime < 1)
             {

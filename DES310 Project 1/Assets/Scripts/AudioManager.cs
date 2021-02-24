@@ -8,6 +8,7 @@ public class AudioManager : MonoBehaviour
 {
     public Music[] music;
     public OneShot[] oneShots;
+    private List<string> currentlyPlaying;
 
     public static AudioManager instance;
     public AudioMixer mixer;
@@ -15,6 +16,8 @@ public class AudioManager : MonoBehaviour
     // Start is called before the first frame update
     private void Awake()
     {
+        currentlyPlaying = new List<string>();
+
         if (instance == null)
         {
             instance = this;
@@ -66,12 +69,15 @@ public class AudioManager : MonoBehaviour
         if (m != null)
         {
             StartChildCoroutine(m.Play());
+            currentlyPlaying.Add(in_name);
             return;
         }
         OneShot o = Array.Find(oneShots, sounds => sounds.name == in_name);
         if (o != null)
         {
             o.Play();
+
+            currentlyPlaying.Add(in_name);
             return;
         }
         Debug.LogWarning("No valid Audio matches name: " + in_name);
@@ -84,14 +90,40 @@ public class AudioManager : MonoBehaviour
         if (m != null)
         {
             m.Stop();
+
+            currentlyPlaying.Remove(in_name);
             return;
         }
         OneShot o = Array.Find(oneShots, sounds => sounds.name == in_name);
         if (o != null)
         {
             o.Stop();
+
+            currentlyPlaying.Remove(in_name);
             return;
         }
+    }
+
+    public void StopAll()
+    {
+        foreach (string s in currentlyPlaying)
+        {
+            Music m = Array.Find(music, sounds => sounds.name == s);
+            if (m != null)
+            {
+                m.Stop();
+                return;
+            }
+            OneShot o = Array.Find(oneShots, sounds => sounds.name == s);
+            if (o != null)
+            {
+                o.Stop();
+
+                return;
+            }
+        }
+
+        currentlyPlaying.Clear();
     }
 
     public void FadeOut(string in_name)
@@ -100,12 +132,16 @@ public class AudioManager : MonoBehaviour
         if (m != null)
         {
             StartChildCoroutine(m.FadeOut());
+
+            currentlyPlaying.Remove(in_name);
             return;
         }
         OneShot o = Array.Find(oneShots, sounds => sounds.name == in_name);
         if (o != null)
         {
             StartChildCoroutine(o.FadeOut());
+
+            currentlyPlaying.Remove(in_name);
             return;
         }
     }
@@ -116,12 +152,16 @@ public class AudioManager : MonoBehaviour
         if (m != null)
         {
             StartChildCoroutine(m.FadeIn());
+
+            currentlyPlaying.Add(in_name);
             return;
         }
         OneShot o = Array.Find(oneShots, sounds => sounds.name == in_name);
         if (o != null)
         {
             StartChildCoroutine(o.FadeIn());
+
+            currentlyPlaying.Add(in_name);
             return;
         }
     }

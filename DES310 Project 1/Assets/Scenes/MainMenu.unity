@@ -1295,10 +1295,10 @@ RectTransform:
   m_Father: {fileID: 1494061887}
   m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.5, y: 0.5}
-  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 1, y: 1}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 100, y: 100}
+  m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &339761900
 GameObject:
@@ -1504,16 +1504,15 @@ RectTransform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
-  - {fileID: 1677289112}
   - {fileID: 1300557436}
   - {fileID: 1106420615}
   m_Father: {fileID: 1494061887}
   m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.5, y: 0.5}
-  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 1, y: 1}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 100, y: 100}
+  m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &422399464
 GameObject:
@@ -3382,7 +3381,7 @@ RectTransform:
   m_Children:
   - {fileID: 50045133}
   m_Father: {fileID: 1106420615}
-  m_RootOrder: 0
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
@@ -3906,9 +3905,10 @@ RectTransform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
+  - {fileID: 1677289112}
   - {fileID: 771317998}
   m_Father: {fileID: 395825502}
-  m_RootOrder: 2
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -4562,14 +4562,26 @@ MonoBehaviour:
         m_CallState: 2
       - m_Target: {fileID: 183746078}
         m_TargetAssemblyTypeName: getAudioManager, Assembly-CSharp
-        m_MethodName: Stop
-        m_Mode: 5
+        m_MethodName: StopAll
+        m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
           m_IntArgument: 0
           m_FloatArgument: 0
           m_StringArgument: Main Theme
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 183746078}
+        m_TargetAssemblyTypeName: getAudioManager, Assembly-CSharp
+        m_MethodName: Play
+        m_Mode: 5
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: Overworld Theme
           m_BoolArgument: 0
         m_CallState: 2
 --- !u!114 &1265151962
@@ -4781,12 +4793,12 @@ RectTransform:
   - {fileID: 644447330}
   - {fileID: 524626764}
   m_Father: {fileID: 395825502}
-  m_RootOrder: 1
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 80, y: 60.9}
-  m_SizeDelta: {x: 160, y: 30}
+  m_AnchoredPosition: {x: 97.12, y: 59.6}
+  m_SizeDelta: {x: 194.24, y: 30}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1300557437
 MonoBehaviour:
@@ -6125,7 +6137,7 @@ GameObject:
   - component: {fileID: 1677289114}
   - component: {fileID: 1677289113}
   m_Layer: 0
-  m_Name: Resolution Text (1)
+  m_Name: Fullscreen Text
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -6140,14 +6152,14 @@ RectTransform:
   m_GameObject: {fileID: 1677289111}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0.00012207031}
-  m_LocalScale: {x: 0.6774999, y: 0.6774999, z: 0.6774999}
+  m_LocalScale: {x: 0.67749983, y: 0.67749983, z: 0.67749983}
   m_Children: []
-  m_Father: {fileID: 395825502}
+  m_Father: {fileID: 1106420615}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0.5}
   m_AnchorMax: {x: 0, y: 0.5}
-  m_AnchoredPosition: {x: -39.63002, y: 18.992989}
+  m_AnchoredPosition: {x: -89.63002, y: 0}
   m_SizeDelta: {x: 226.8441, y: 41.9067}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1677289113
@@ -6352,6 +6364,30 @@ MonoBehaviour:
           m_IntArgument: 0
           m_FloatArgument: 0
           m_StringArgument: 
+          m_BoolArgument: 1
+        m_CallState: 2
+      - m_Target: {fileID: 183746078}
+        m_TargetAssemblyTypeName: getAudioManager, Assembly-CSharp
+        m_MethodName: FadeOut
+        m_Mode: 5
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: Ambient Test
+          m_BoolArgument: 1
+        m_CallState: 2
+      - m_Target: {fileID: 183746078}
+        m_TargetAssemblyTypeName: getAudioManager, Assembly-CSharp
+        m_MethodName: FadeOut
+        m_Mode: 5
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: One Shot Test
           m_BoolArgument: 1
         m_CallState: 2
 --- !u!114 &1685806187
@@ -6594,7 +6630,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: e79103cd51f80bc4ba1ee8cb9f1b61d7, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 4122d752aa416c64cab8203069a172a8, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -6696,8 +6732,8 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 17.92
-  m_fontSizeBase: 17.92
+  m_fontSize: 14.46
+  m_fontSizeBase: 14.46
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
