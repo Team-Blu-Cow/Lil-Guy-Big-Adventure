@@ -10,7 +10,8 @@ public enum Combatant_Type
     Phoenix = 3, // Str: Mag, Init Weak: Luck, Str
     Hedgehog = 4, // Str: Dex Weak: Str, Init
     Hedgehonch = 5,
-    Magishroom = 6
+    Magishroom = 6,
+    Lizard = 7
 }
 
 public enum Combatant_Stats
