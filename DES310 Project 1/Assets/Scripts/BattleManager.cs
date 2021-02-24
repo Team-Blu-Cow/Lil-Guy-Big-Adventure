@@ -228,6 +228,7 @@ public class BattleManager : MonoBehaviour
             {
                 combatants.Add(member);
                 ai_core.party_list.Add(member);
+                member.GetComponent<PathFindingUnit>().OccupyTile(member);
             }
         }
 
@@ -300,7 +301,9 @@ public class BattleManager : MonoBehaviour
 
     public void AddParty(GameObject combatant)
     {
+        combatant.tag = "Ally";
         playerParty.AddCombatant(combatant);
+        ScreenManager.instance.hoverStats.UpdateUI();
     }
 
     // Start Turn Phase ****************************************************************************************************************************
@@ -475,7 +478,7 @@ public class BattleManager : MonoBehaviour
                                 case ability_type.Heal:
                                     if (node.occupier.tag == ("Ally"))
                                     {
-                                        UseAbility(node.occupier, selectedAbility);
+                                        UseAbility(node.occupier, selectedAbility, true);
                                         receivedActionCommand = true;
                                     }
                                     break;
@@ -483,7 +486,7 @@ public class BattleManager : MonoBehaviour
                                 case ability_type.Buff:
                                     if (node.occupier.tag == ("Ally"))
                                     {
-                                        UseAbility(node.occupier, selectedAbility);
+                                        UseAbility(node.occupier, selectedAbility, true);
                                         receivedActionCommand = true;
                                     }
                                     break;
@@ -501,7 +504,7 @@ public class BattleManager : MonoBehaviour
         }
     }
 
-    private void UseAbility(GameObject target, int abilityIndex)
+    private void UseAbility(GameObject target, int abilityIndex, bool isHeal = false)
     {
         currentCombatant.GetComponent<CombatSystem>().target = target;
         AbilityResult result = currentCombatant.GetComponent<Combatant>().UseAbility(abilityIndex);
@@ -510,13 +513,13 @@ public class BattleManager : MonoBehaviour
         CheckIfCombatantDead(target);
 
         AnimateAbility(target.transform.position, abilityIndex);
-        StartCoroutine(ShowDamagePopup(0.2f, (int)result.oDamage, result.crit));
+        StartCoroutine(ShowDamagePopup(0.2f, (int)result.oDamage, result.crit, isHeal));
     }
 
-    private IEnumerator ShowDamagePopup(float seconds, int dmgNum, bool crit)
+    private IEnumerator ShowDamagePopup(float seconds, int dmgNum, bool crit, bool isHeal = false)
     {
         yield return new WaitForSeconds(seconds);
-        DamagePopup.Create(abilityTargetPos, dmgNum, crit);
+        DamagePopup.Create(abilityTargetPos, dmgNum, crit, isHeal);
     }
 
     public void AnimateAbility(Vector3 animPos, int abilityIndex)

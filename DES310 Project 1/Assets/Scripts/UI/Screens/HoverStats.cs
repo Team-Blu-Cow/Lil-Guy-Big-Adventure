@@ -18,8 +18,13 @@ public class HoverStats : MonoBehaviour, IPointerEnterHandler, IPointerExitHandl
         UpdateUI();        
     }
 
-    private void UpdateUI()
+    public void UpdateUI()
     {
+        foreach (Transform child in transform.GetChild(0))
+        {
+            Destroy(child.gameObject);
+        }
+
         for (int i = 0; i < party.party.Length; i++)
         {
             if (party.party[i])
