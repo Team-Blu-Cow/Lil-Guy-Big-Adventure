@@ -19,6 +19,11 @@ public class PathRequestManager : MonoBehaviour
         pathFinder = GetComponent<PathFinder>();
     }
 
+    public static IsoGrid GetGrid()
+    {
+        return instance.pathFinder.GetGrid();
+    }
+
     public static void RequestPath(Vector3 pathStart, Vector3 pathEnd, Action<Vector3[], bool> callback)
     {
         PathRequest newRequest = new PathRequest(pathStart,pathEnd,callback);

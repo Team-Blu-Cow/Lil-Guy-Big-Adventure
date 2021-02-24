@@ -38,6 +38,22 @@ public class IsoGrid : MonoBehaviour
         }
     }
 
+    public Tilemap TileMap
+    {
+        get
+        {
+            return tileMap;
+        }
+    }
+
+    public Tilemap DetailTileMap
+    {
+        get
+        {
+            return detailTileMap;
+        }
+    }
+
 
     // Awake Method *******************************************************************************
     void Awake()

@@ -39,7 +39,6 @@ public class BattleManager : MonoBehaviour
     public CombatantState CombatantState { get { return combatantState; } set { combatantState = value; } }
     [SerializeField] private ActionState actionState;
 
-    //public InitiativeTracker initTracker;
     [SerializeField] private GridHighLighter gridHighLighter;
 
     [SerializeField] private CombatUI combatUI;
@@ -49,12 +48,6 @@ public class BattleManager : MonoBehaviour
 
     private void Awake()
     {        
-        
-    }
-
-    // Start is called before the first frame update
-    private void Start()
-    {
         playerParty = FindObjectOfType<PlayerPartyManager>();
         if (playerParty == null)
         {
@@ -63,13 +56,18 @@ public class BattleManager : MonoBehaviour
         }
         playerParty.GetComponentsInChildren<PathFindingUnit>()[0].GridHighLighter = gridHighLighter;
         playerParty.GetComponentsInChildren<Movement>()[0].grid = gridHighLighter.grid;
-        ScreenManager.instance.partyManager = playerParty;
         playerParty.GetComponentsInChildren<PathFindingUnit>()[0].target = FindObjectOfType<CursorController>().transform;
+    }
 
+    // Start is called before the first frame update
+    private void Start()
+    {
+        ScreenManager.instance.partyManager = playerParty;
 
         battleState = BattleState.SLEEPING;
         combatantState = CombatantState.START;
-        actionState = ActionState.NOT_SELECTED;        
+        actionState = ActionState.NOT_SELECTED;
+        FindObjectOfType<MapGeneration>().StartSwap(0, true);
     }
 
     private void Update()
@@ -214,6 +212,8 @@ public class BattleManager : MonoBehaviour
     //--------------------------------------------------------------------------------------------------------------------------------------------//
     private void StartBattle()
     {
+        ScreenManager.instance.OpenInititive();
+
         combatants = new List<GameObject>();
 
         ai_core.party_list = new List<GameObject>();
@@ -611,10 +611,14 @@ public class BattleManager : MonoBehaviour
     void EndBattle()
     {
         battleState = BattleState.FINISHED;
+        ScreenManager.instance.CloseInititive();
 
-        foreach (GameObject exit in FindObjectOfType<MapGeneration>().placedExits)
+        if (FindObjectOfType<MapGeneration>() != null)
         {
-            exit.SetActive(true);
+            foreach (GameObject exit in FindObjectOfType<MapGeneration>().placedExits)
+            {
+                exit.SetActive(true);
+            }
         }
 
         foreach (GameObject combatant in playerParty.party)

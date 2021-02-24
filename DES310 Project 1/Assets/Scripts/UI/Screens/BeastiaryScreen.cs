@@ -186,6 +186,7 @@ public class BeastiaryScreen : MonoBehaviour
             newCombatant.GetComponent<Button>().onClick.AddListener(() => { OpenCombatant(x); });
 
             newCombatant.GetComponentInChildren<TextMeshProUGUI>().text = EnemiesMet[x].GetComponent<Stats>().combatant_type.ToString();
+            newCombatant.GetComponentInChildren<TextMeshProUGUI>().font = ScreenManager.instance.activeFont;
             newCombatant.GetComponentInChildren<Image>().sprite = EnemiesMet[x].GetComponent<SpriteRenderer>().sprite;
             newCombatant.GetComponentInChildren<Image>().SetNativeSize();
         }        

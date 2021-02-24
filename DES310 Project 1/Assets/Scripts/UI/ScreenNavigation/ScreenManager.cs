@@ -9,14 +9,19 @@ public class ScreenManager : MonoBehaviour
 
     public InputManager controls;
 
+    [Header ("Screens")]
     PauseScreen pause;
     SwapScreenCombatant combatantScreen;
     SwapScreenParty partyScreen;
     InventoryUI inventory;
     HoverStats inGameParty;
     BeastiaryScreen beastiaryScreen;
+    InitiativeUI initiativeUI;
+
     LevelLoader levelSwitch;
-    public List<TMP_FontAsset> fonts;
+
+    [SerializeField] List<TMP_FontAsset> fonts;
+    [HideInInspector] public TMP_FontAsset activeFont;
     public PlayerPartyManager partyManager;
 
     private void Awake()
@@ -37,7 +42,11 @@ public class ScreenManager : MonoBehaviour
         partyScreen = GetComponentInChildren<SwapScreenParty>();
         inventory = GetComponentInChildren<InventoryUI>();
         inGameParty = GetComponentInChildren<HoverStats>();
+        initiativeUI = GetComponentInChildren<InitiativeUI>();
         levelSwitch = GetComponentInChildren<LevelLoader>();
+
+        activeFont = fonts[0];
+        SwapFont(0);
     }
 
     private void OnEnable()
@@ -52,10 +61,14 @@ public class ScreenManager : MonoBehaviour
 
     public void TogglePause()
     {
-        pause.TogglePauseGame(true);
-        partyScreen.CloseScreen();
-        combatantScreen.CloseScreen();
-        beastiaryScreen.CloseScreen();
+        if (Time.timeScale == 0f)
+        {
+            pause.TogglePauseGame(false);
+        }
+        else
+        {
+            pause.TogglePauseGame(true);
+        }
     }
     
     public void OpenCombatantScreen(PartyCombatant combatant)
@@ -64,7 +77,6 @@ public class ScreenManager : MonoBehaviour
         partyScreen.CloseScreen();
         combatantScreen.OpenScreen(combatant);
         combatantScreen.ToggleLearned(false);
-        pause.TogglePauseGame(false);
     }
     
     public void OpenPartyScreen()
@@ -73,16 +85,16 @@ public class ScreenManager : MonoBehaviour
         partyScreen.OpenScreen();
         combatantScreen.CloseScreen();
         combatantScreen.ToggleLearned(false);
+        beastiaryScreen.CloseScreen();
         pause.TogglePauseGame(false);
     }
-    
+
     public void ToggleBeastiaryScreen()
     {
         inGameParty.ToggleCanvas(!beastiaryScreen.ToggleScreen());
         partyScreen.CloseScreen();
         combatantScreen.CloseScreen();
         combatantScreen.ToggleLearned(false);
-        pause.TogglePauseGame(false);
     }
     
     public void OpenInventory()
@@ -104,7 +116,6 @@ public class ScreenManager : MonoBehaviour
         inGameParty.ToggleCanvas(true);
         partyScreen.CloseScreen();
         combatantScreen.CloseScreen();
-        pause.TogglePauseGame(false);
         combatantScreen.ToggleLearned(false);
     }
 
@@ -117,6 +128,7 @@ public class ScreenManager : MonoBehaviour
 
     public void SwapFont(int i)
     {
+        activeFont = fonts[i];
         foreach (TextMeshProUGUI text in GetComponentsInChildren<TextMeshProUGUI>())
         {
             if (fonts.Count > i)
@@ -127,5 +139,15 @@ public class ScreenManager : MonoBehaviour
     public SwapScreenCombatant GetCombatantScreen()
     {
         return combatantScreen;
+    }
+
+    public void CloseInititive()
+    {
+        initiativeUI.GetComponentInParent<Canvas>().enabled = false;
+    }
+    
+    public void OpenInititive()
+    {
+        initiativeUI.GetComponentInParent<Canvas>().enabled = true;
     }
 }

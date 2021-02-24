@@ -22,7 +22,7 @@ public class Movement : MonoBehaviour
 
     private void Start()
     {
-        grid = FindObjectOfType<IsoGrid>();
+        grid = PathRequestManager.GetGrid();//FindObjectOfType<IsoGrid>();
     }
 
     private void OnEnable()
@@ -77,7 +77,7 @@ public class Movement : MonoBehaviour
                     item.PickUp(transform.position);
                 }
                 else if (hit.collider.gameObject.transform.tag.Contains("Exit"))
-                {
+                {                                      
                     IsoNode node = grid.WorldToNode(hit.collider.gameObject.transform.position);
 
                     int i = hit.collider.gameObject.transform.tag.ToString()[4] - 48;
@@ -98,7 +98,7 @@ public class Movement : MonoBehaviour
                     {
                         FindObjectOfType<MapGeneration>().StartSwap(i);
                         grid.CreateGrid();
-                    }
+                    }                   
                 }
             }
             else
