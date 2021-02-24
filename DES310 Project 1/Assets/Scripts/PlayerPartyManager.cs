@@ -6,6 +6,7 @@ using UnityEngine;
 public class PlayerPartyManager : MonoBehaviour
 {
     public GameObject[] party = new GameObject[4];
+    public int totalAreasVisited = 1;
 
     void Start()
     {
