@@ -687,16 +687,15 @@ GameObject:
   - component: {fileID: 33325177}
   - component: {fileID: 33325176}
   - component: {fileID: 33325175}
-  - component: {fileID: 33325178}
   m_Layer: 0
   m_Name: Cursor
-  m_TagString: Untagged
+  m_TagString: Cursor
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!61 &33325175
-BoxCollider2D:
+--- !u!58 &33325175
+CircleCollider2D:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -709,18 +708,8 @@ BoxCollider2D:
   m_UsedByEffector: 0
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: 0}
-  m_SpriteTilingProperty:
-    border: {x: 0, y: 0, z: 0, w: 0}
-    pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 1, y: 1}
-    newSize: {x: 1, y: 1}
-    adaptiveTilingThreshold: 0.5
-    drawMode: 0
-    adaptiveTiling: 0
-  m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 1, y: 1}
-  m_EdgeRadius: 0
+  m_Radius: 8
 --- !u!50 &33325176
 Rigidbody2D:
   serializedVersion: 4
@@ -758,18 +747,6 @@ MonoBehaviour:
   thisTransform: {fileID: 0}
   initTracker: {fileID: 0}
   battleManager: {fileID: 143049153}
---- !u!114 &33325178
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 33325174}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3949a361dcce25f49821c8f882609e8d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!212 &33325179
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -17532,7 +17509,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 112.91, y: 0}
+  m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 205.82, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1158668276547518294
