@@ -45,7 +45,7 @@ public class MapGeneration : MonoBehaviour
     [Header ("InGame Objects")]
     public List<GameObject> placedItems = new List<GameObject>();
     public List<GameObject> placedExits = new List<GameObject>();
-    List<GameObject> placedEnemies = new List<GameObject>();
+    public List<GameObject> placedEnemies = new List<GameObject>();
 
     [Header ("Perlin noise")]
     List<Vector2> treeGrid = new List<Vector2>();
@@ -105,12 +105,17 @@ public class MapGeneration : MonoBehaviour
         // Check if it should be a campfire
         if (travelledRegions >= 3 && Random.Range(0, 100 * (1 / (float)travelledRegions)) < 10)
         {
-            //Swap to campfire scene?
-            FindObjectOfType<AudioManager>().FadeOut("Overworld Theme");
-            FindObjectOfType<AudioManager>().FadeIn("Campfire Theme");
-            levelLoader.SwitchScene("CampFire");
+            //Swap to campfire scene
+            if (AudioManager.instance)
+            {
+                AudioManager.instance.FadeOut("Overworld Theme");
+                AudioManager.instance.FadeIn("Campfire Theme");
+            }
+            
             travelledRegions = 0;
-            LeanTween.value(transition.gameObject, a => transition.color = a, new Color(0, 0, 0, 1), new Color(0, 0, 0, 0f), 0.2f);
+            LeanTween.value(transition.gameObject, a => transition.color = a, new Color(0, 0, 0, 0), new Color(0, 0, 0, 1f), 0.2f);
+            levelLoader.SwitchScene("CampFire");
+            
             return;
         }
 

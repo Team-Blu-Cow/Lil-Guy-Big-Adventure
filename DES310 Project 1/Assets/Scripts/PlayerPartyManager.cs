@@ -29,14 +29,18 @@ public class PlayerPartyManager : MonoBehaviour
         {
             if (party[i] == combatant)
             {
-                Debug.Log("combatant in party");
+                Debug.Log("Combatant in party");
                 break;
             }
 
             if (party[i] == null)
             {
                 party[i] = combatant;
+                combatant.tag = "Ally";
+                combatant.gameObject.SetActive(true);                
                 combatant.transform.parent = transform;
+                combatant.GetComponent<Stats>().SetModStat(Combatant_Stats.HP, combatant.GetComponent<Stats>().GetFinalStat(Combatant_Stats.Constitution));
+                FindObjectOfType<MapGeneration>().placedEnemies.Remove(combatant);
                 added = true;
                 break;
             }

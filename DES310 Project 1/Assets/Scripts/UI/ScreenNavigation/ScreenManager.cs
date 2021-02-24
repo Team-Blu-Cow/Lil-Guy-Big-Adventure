@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
+using UnityEditor;
 
 public class ScreenManager : MonoBehaviour
 {
@@ -17,6 +18,7 @@ public class ScreenManager : MonoBehaviour
     HoverStats inGameParty;
     BeastiaryScreen beastiaryScreen;
     InitiativeUI initiativeUI;
+    RecruitEnemy recruitEnemy;
 
     LevelLoader levelSwitch;
 
@@ -52,6 +54,7 @@ public class ScreenManager : MonoBehaviour
         inventory = GetComponentInChildren<InventoryUI>();
         inGameParty = GetComponentInChildren<HoverStats>();
         initiativeUI = GetComponentInChildren<InitiativeUI>();
+        recruitEnemy = GetComponentInChildren<RecruitEnemy>();
         levelSwitch = GetComponentInChildren<LevelLoader>();
 
         activeFont = fonts[0];
@@ -68,6 +71,33 @@ public class ScreenManager : MonoBehaviour
         controls.Disable();
     }
 
+    //Helper
+    public static List<Sprite> GetSpritesFromClip(AnimationClip clip)
+    {
+        var _sprites = new List<Sprite>();
+        if (clip != null)
+        {
+            foreach (var binding in AnimationUtility.GetObjectReferenceCurveBindings(clip))
+            {
+                ObjectReferenceKeyframe[] keyframes = AnimationUtility.GetObjectReferenceCurve(clip, binding);
+                foreach (var frame in keyframes)
+                {
+                    _sprites.Add((Sprite)frame.value);
+                }
+            }
+        }
+        return _sprites;
+    }
+
+    public static Sprite GetFirstSprite(GameObject animGO)
+    {
+        if (animGO.TryGetComponent<Animator>(out Animator anim))
+            return GetSpritesFromClip(anim.runtimeAnimatorController.animationClips[0])[0];
+        else
+            return null;
+    }
+
+    //UI
     public void TogglePause()
     {
         if (inGame)
@@ -172,5 +202,16 @@ public class ScreenManager : MonoBehaviour
     public void OpenInititive()
     {
         initiativeUI.GetComponentInParent<Canvas>().enabled = true;
+    }
+
+    public void ShowRecruit()
+    {
+        recruitEnemy.GetComponent<Canvas>().enabled = true;
+        recruitEnemy.Recruit();
+    }
+    
+    public void HideRecruit()
+    {
+        recruitEnemy.GetComponent<Canvas>().enabled = false;
     }
 }
