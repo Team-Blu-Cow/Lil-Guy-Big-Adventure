@@ -28,9 +28,6 @@ namespace AI
         {
             turn_completed = false;
             AbilityResult result = new AbilityResult();
-            // TODO @matthew
-            // check target is in range
-            // deal damage
 
             Vector3[] path = FindShortestPathToEnemy(aiCore);
             if(path != null)
