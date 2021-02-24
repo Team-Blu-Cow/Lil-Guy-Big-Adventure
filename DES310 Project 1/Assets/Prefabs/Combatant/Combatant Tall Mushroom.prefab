@@ -11,6 +11,10 @@ PrefabInstance:
       propertyPath: m_Controller
       value: 
       objectReference: {fileID: 9100000, guid: 8694d0fb77dc56c4ebc98242db649e42, type: 2}
+    - target: {fileID: 6127942090193602136, guid: dddb1748b38a99b4888117d6eccbe498, type: 3}
+      propertyPath: combatant_type
+      value: 6
+      objectReference: {fileID: 0}
     - target: {fileID: 6127942090193602138, guid: dddb1748b38a99b4888117d6eccbe498, type: 3}
       propertyPath: m_RootOrder
       value: 0
@@ -55,6 +59,30 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 6127942090193602139, guid: dddb1748b38a99b4888117d6eccbe498, type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: -853318129285537788, guid: 0ffac5d96a153a74ea2577a392092a3f, type: 3}
+    - target: {fileID: 6127942090193602142, guid: dddb1748b38a99b4888117d6eccbe498, type: 3}
+      propertyPath: combatantName
+      value: Tall Mushroom
+      objectReference: {fileID: 0}
+    - target: {fileID: 6127942090193602142, guid: dddb1748b38a99b4888117d6eccbe498, type: 3}
+      propertyPath: abilitiesLearnt.Array.data[0]
+      value: 
+      objectReference: {fileID: 5733333759112573666, guid: be78b21b92db7c640b6fa01c53782832, type: 3}
+    - target: {fileID: 6127942090193602142, guid: dddb1748b38a99b4888117d6eccbe498, type: 3}
+      propertyPath: abilitiesLearnt.Array.data[5]
+      value: 
+      objectReference: {fileID: 5173025126576702271, guid: e19b5518816ddef49a18ebb68d8780ba, type: 3}
+    - target: {fileID: 6127942090193602142, guid: dddb1748b38a99b4888117d6eccbe498, type: 3}
+      propertyPath: abilitiesLearnt.Array.data[6]
+      value: 
+      objectReference: {fileID: 7330357067154717427, guid: 73221df6f1556724c90a36110123d2e1, type: 3}
+    - target: {fileID: 6127942090193602142, guid: dddb1748b38a99b4888117d6eccbe498, type: 3}
+      propertyPath: abilitiesLearnt.Array.data[8]
+      value: 
+      objectReference: {fileID: 5869609677974200889, guid: 01758146b0d1a984a83d39c1f65fa4bc, type: 3}
     - target: {fileID: 6127942090193602143, guid: dddb1748b38a99b4888117d6eccbe498, type: 3}
       propertyPath: m_Name
       value: Combatant Tall Mushroom
