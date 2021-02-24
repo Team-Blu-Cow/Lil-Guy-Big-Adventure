@@ -176,6 +176,7 @@ public class BattleManager : MonoBehaviour
                 else
                 {
                     //TODO: remove combatant from player's party
+                    playerParty.RemoveCombatant(combatant);
                     ai_core.party_list.Remove(combatant);
                 }
 
@@ -308,11 +309,14 @@ public class BattleManager : MonoBehaviour
     }
 
     public void AddParty(GameObject combatant)
-    {
-        playerParty.AddCombatant(combatant);
+    {        
+        if (playerParty.AddCombatant(combatant))
+        {
+            ScreenManager.instance.ShowRemove();
+        }
+
         ScreenManager.instance.hoverStats.UpdateUI();
-        ScreenManager.instance.HideRecruit();
-        
+        ScreenManager.instance.HideRecruit();      
     }
 
     // Start Turn Phase ****************************************************************************************************************************

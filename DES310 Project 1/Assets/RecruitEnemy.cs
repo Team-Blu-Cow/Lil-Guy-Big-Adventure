@@ -6,15 +6,16 @@ using UnityEngine.UI;
 public class RecruitEnemy : MonoBehaviour
 {
     [SerializeField] GameObject buttonBase;
-    [SerializeField] BattleManager BattleManager;
+    [SerializeField] BattleManager battleManager;
 
     public void Recruit()
     {
-        foreach (GameObject dead in BattleManager.deadCombatants)
+        foreach (GameObject dead in battleManager.deadCombatants)
         {
             GameObject enemyButton = Instantiate(buttonBase, transform.GetChild(0)).gameObject;
-            enemyButton.GetComponent<Button>().onClick.AddListener(() => { BattleManager.AddParty(dead); });
-            enemyButton.GetComponentsInChildren<Image>()[1].sprite = ScreenManager.GetFirstSprite(dead);
+            enemyButton.GetComponent<Button>().onClick.AddListener(() => { battleManager.AddParty(dead); });
+            enemyButton.GetComponentsInChildren<Image>()[1].sprite = ScreenManager.GetFirstSprite(dead); 
+            enemyButton.GetComponentsInChildren<Image>()[1].SetNativeSize();
         }
     }    
 }
