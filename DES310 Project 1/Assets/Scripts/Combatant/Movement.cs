@@ -22,7 +22,7 @@ public class Movement : MonoBehaviour
 
     private void Start()
     {
-        grid = FindObjectOfType<IsoGrid>();
+        grid = PathRequestManager.GetGrid();//FindObjectOfType<IsoGrid>();
     }
 
     private void OnEnable()
