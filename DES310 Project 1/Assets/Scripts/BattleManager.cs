@@ -12,6 +12,7 @@ public enum ActionState { NOT_SELECTED, WAIT, ABILITY, ITEM, FINISHED }
 public class BattleManager : MonoBehaviour
 {
     public List<GameObject> enemyCombatants;
+    [HideInInspector] public List<GameObject> deadCombatants;
     [SerializeField] private PlayerPartyManager playerParty;
     [SerializeField] private GameObject playerPartyGO;
 
@@ -166,6 +167,7 @@ public class BattleManager : MonoBehaviour
                 if (combatant.tag == "Enemy")
                 {
                     enemyCombatants.Remove(combatant);
+                    deadCombatants.Add(combatant);
                 }
                 else
                 {
@@ -236,6 +238,8 @@ public class BattleManager : MonoBehaviour
         {
             move.enabled = false;
         }
+
+        deadCombatants = new List<GameObject>();
 
         SortBattleInitiative();
         SetBattleQueue();
