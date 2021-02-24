@@ -62,14 +62,19 @@ public class BattleManager : MonoBehaviour
           
         }
         playerParty.GetComponentsInChildren<PathFindingUnit>()[0].GridHighLighter = gridHighLighter;
-        playerParty.GetComponentsInChildren<Movement>()[0].grid = gridHighLighter.grid;
-        ScreenManager.instance.partyManager = playerParty;
+
         playerParty.GetComponentsInChildren<PathFindingUnit>()[0].target = FindObjectOfType<CursorController>().transform;
 
 
-        battleState = BattleState.SLEEPING;
         combatantState = CombatantState.START;
-        actionState = ActionState.NOT_SELECTED;        
+
+        actionState = ActionState.NOT_SELECTED;
+        MapGeneration mapGeneration = FindObjectOfType<MapGeneration>();
+
+        if (mapGeneration)
+            mapGeneration.StartSwap(0, true);
+        else
+            EndBattle();        
     }
 
     private void Update()

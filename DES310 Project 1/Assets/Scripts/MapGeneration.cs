@@ -100,6 +100,13 @@ public class MapGeneration : MonoBehaviour
         if (travelledRegions >= 3 && Random.Range(0, 100 * (1 / (float)travelledRegions)) < 10)
         {
             //Swap to campfire scene?
+            AudioManager audioManager = FindObjectOfType<AudioManager>();
+            if (audioManager)
+            {
+                audioManager.FadeOut("Overworld Theme");
+                audioManager.FadeIn("Campfire Theme");
+            }
+            
             levelLoader.SwitchScene("CampFire");
             travelledRegions = 0;
             LeanTween.value(transition.gameObject, a => transition.color = a, new Color(0, 0, 0, 1), new Color(0, 0, 0, 0f), 0.2f);
