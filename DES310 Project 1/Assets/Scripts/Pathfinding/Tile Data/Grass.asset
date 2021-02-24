@@ -20,9 +20,9 @@ MonoBehaviour:
   - {fileID: 11400000, guid: cf9d12a88eb43164a9fdda338dc2d4a6, type: 2}
   - {fileID: 11400000, guid: be6947c2b8de1074d94c859aa78494f6, type: 2}
   - {fileID: 11400000, guid: ec652b277ac366643b50b8f878e5464e, type: 2}
-  - {fileID: 11400000, guid: bc253797e2eef1945a0943bf8d8d9eb1, type: 2}
-  - {fileID: 11400000, guid: 3bf24260f8a2b7c459548db9775c4b9d, type: 2}
-  - {fileID: 11400000, guid: 32cdba87f84b91348ac4f4cfec949916, type: 2}
-  - {fileID: 11400000, guid: a3b4e66acbaeb664f87f5379898fc013, type: 2}
+  - {fileID: 11400000, guid: 741a02def958da4409450eb8ff8c28c1, type: 2}
+  - {fileID: 11400000, guid: 2929c0a5a432fd0459fa6afbdabc2e17, type: 2}
+  - {fileID: 11400000, guid: 2715fd7c0ecf93a478ec8c6b2dbd5ddf, type: 2}
+  - {fileID: 11400000, guid: 1c0929ac7d3e996429bbdaa2f4335555, type: 2}
   walkable: 1
   OmniDirectional: 1
