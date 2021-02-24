@@ -125,6 +125,13 @@ public class Combatant : MonoBehaviour
     public AbilityResult UseAbility(int abilityNum)
     {
         combatantState = Combatant_State.Attacked;
+
+        Animator animator = GetComponent<Animator>();
+        if(animator != null)
+        {
+            animator.SetTrigger("Attack");
+        }
+
         return GetComponent<CombatSystem>().CastAbility(abilityNum);
     }
 

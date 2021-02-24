@@ -139,6 +139,13 @@ public class BattleManager : MonoBehaviour
         list[indexB] = tmp;
     }
 
+    IEnumerator RemoveCombatant(GameObject combatant, float delay)
+    {
+        yield return new WaitForSeconds(delay);
+        combatant.SetActive(false);
+        // yield return null;
+    }
+
     public void CheckIfCombatantDead(GameObject combatant)
     {
         if (combatant != null && combatants.Contains(combatant) && combatant.GetComponent<Combatant>().GetComponent<Stats>().GetStat(Combatant_Stats.HP) <= 0)
@@ -150,6 +157,14 @@ public class BattleManager : MonoBehaviour
             }
             else
             {
+
+                // play combatants death animation
+                Animator animator = combatant.GetComponent<Animator>();
+                if(animator != null)
+                {
+                    animator.SetTrigger("Death");
+                }
+
                 if (combatant.tag == "Enemy")
                 {
                     enemyCombatants.Remove(combatant);
@@ -162,7 +177,8 @@ public class BattleManager : MonoBehaviour
 
                 combatants.Remove(combatant);
                 combatant.GetComponent<PathFindingUnit>().OccupyTile(null);
-                combatant.SetActive(false);
+                // combatant.SetActive(false);
+                StartCoroutine(RemoveCombatant(combatant, 1f));
             }
         }
     }

@@ -224,7 +224,7 @@ public class IsoGrid : MonoBehaviour
 
                 foreach (IsoNode neighbor in GetNeighbors(node))
                 {
-                    if (!marked.Contains(neighbor))
+                    if (neighbor != null && !marked.Contains(neighbor))
                     {
                         neighbor.distance = 1 + node.distance;
                         processing.Enqueue(neighbor);
