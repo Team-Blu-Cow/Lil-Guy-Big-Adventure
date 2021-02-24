@@ -127,9 +127,12 @@ public class Combatant : MonoBehaviour
         combatantState = Combatant_State.Attacked;
 
         Animator animator = GetComponent<Animator>();
-        if(animator != null)
+        CombatantAnimations combatant_animations = GetComponent<CombatantAnimations>();
+
+        if(animator != null && combatant_animations != null)
         {
             animator.SetTrigger("Attack");
+            StartCoroutine(combatant_animations.LockRotationForAttack(GetComponent<CombatSystem>().target));
         }
 
         return GetComponent<CombatSystem>().CastAbility(abilityNum);
