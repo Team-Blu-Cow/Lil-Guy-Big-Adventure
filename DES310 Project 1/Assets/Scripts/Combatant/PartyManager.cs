@@ -60,7 +60,7 @@ public class PartyManager : MonoBehaviour
 
     public void combatantFight(int abilityNum)
     {
-        combatants[currentCombatantNum - 1].GetComponent<TestCombatSystem>().CastAbility(abilityNum);
+        combatants[currentCombatantNum - 1].GetComponent<CombatSystem>().CastAbility(abilityNum);
         Debug.Log("Combatant " + currentCombatantNum + " attacked with an ability");
     }
 

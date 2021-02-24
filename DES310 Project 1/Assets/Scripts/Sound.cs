@@ -44,6 +44,47 @@ public class Music
         loopSource.Stop();
         endSource.Play();
     }
+
+    public IEnumerator FadeOut()
+    {
+        {
+            float currentTime = 0;
+            float start = loopSource.volume;
+
+            while (currentTime < 1)
+            {
+                currentTime += Time.deltaTime;
+                startSource.volume = Mathf.Lerp(start, 0f, currentTime / 1);
+                loopSource.volume = Mathf.Lerp(start, 0f, currentTime / 1);
+                endSource.volume = Mathf.Lerp(start, 0f, currentTime / 1);
+                yield return null;
+            }
+            Stop();
+            startSource.volume = 1f;
+            loopSource.volume = 1f;
+            endSource.volume = 1f;
+            yield break;
+        }
+    }
+
+    public IEnumerator FadeIn()
+    {
+        {
+            GameObject.Find("AudioManager").GetComponent<AudioManager>().Play(name);
+            float currentTime = 0;
+            float start = 0f;
+
+            while (currentTime < 1)
+            {
+                currentTime += Time.deltaTime;
+                startSource.volume = Mathf.Lerp(start, 1f, currentTime / 1);
+                loopSource.volume = Mathf.Lerp(start, 1f, currentTime / 1);
+                endSource.volume = Mathf.Lerp(start, 1f, currentTime / 1);
+                yield return null;
+            }
+            yield break;
+        }
+    }
 }
 
 [System.Serializable]
@@ -75,6 +116,41 @@ public class OneShot
         else
         {
             Debug.Log("WARNING: " + name + "has not been assigned a mixer group!");
+        }
+    }
+
+    public IEnumerator FadeOut()
+    {
+        {
+            float currentTime = 0;
+            float start = source.volume;
+
+            while (currentTime < 1)
+            {
+                currentTime += Time.deltaTime;
+                source.volume = Mathf.Lerp(start, 0f, currentTime / 1);
+                yield return null;
+            }
+            Stop();
+            source.volume = 1f;
+            yield break;
+        }
+    }
+
+    public IEnumerator FadeIn()
+    {
+        {
+            Play();
+            float currentTime = 0;
+            float start = 0f;
+
+            while (currentTime < 1)
+            {
+                currentTime += Time.deltaTime;
+                source.volume = Mathf.Lerp(start, 1f, currentTime / 1);
+                yield return null;
+            }
+            yield break;
         }
     }
 }

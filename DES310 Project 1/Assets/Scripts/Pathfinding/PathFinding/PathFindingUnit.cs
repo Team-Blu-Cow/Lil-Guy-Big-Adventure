@@ -74,8 +74,8 @@ public class PathFindingUnit : MonoBehaviour
 
     public void StartPath()
     {
-        StopPath();
-        RequestPath();
+        StopPath();        
+        PathRequestManager.RequestPath(transform.position, target.position, OnPathFound);
     }
 
     public void StopPath()

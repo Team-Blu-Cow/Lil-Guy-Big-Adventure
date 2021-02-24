@@ -31,14 +31,14 @@ public class Stats : MonoBehaviour
     public Combatant_Type combatant_type;
     Combatant combatant;
 
-    public int mod_str;
-    public int mod_dex;
-    public int mod_mag;
-    public int mod_def;
-    public int mod_con;
-    public int mod_luck;
-    public int mod_speed;
-    public int mod_init;
+    int mod_str;
+    int mod_dex;
+    int mod_mag;
+    int mod_def;
+    int mod_con;
+    int mod_luck;
+    int mod_speed;
+    int mod_init;
 
     // base stats
     private int base_str = 5;
@@ -93,36 +93,38 @@ public class Stats : MonoBehaviour
                 break;
         };
 
+        base_str += Random.Range(1, 5);
+        base_dex += Random.Range(1, 5);
+        base_mag += Random.Range(1, 5);
+        base_def += Random.Range(1, 5);
+        base_luck += Random.Range(1, 5);
+        base_init += Random.Range(1, 5);
      
-        base_str += mod_str;
-        base_dex += mod_dex;
-        base_mag += mod_mag;
-        base_def += mod_def;
-        base_con += mod_con;
-        base_luck += mod_luck;
-        base_speed += mod_speed;
-        base_init += mod_init;
-
         base_con *= 10;
         current_hp = base_con;
 
+        QuirkStats();
 
-        quirkStats();
 
-        // pls dont, thanks, you can see this shit in the editor
-
-        //Debug.Log("Str: " + base_str);
-        //Debug.Log("dex: " + base_dex);
-        //Debug.Log("mag: " + base_mag);
-        //Debug.Log("def: " + base_def);
-        //Debug.Log("con: " + base_con);
-        //Debug.Log("luck: " + base_luck);
-        //Debug.Log("speed: " + base_speed);
-        //Debug.Log("init: " + base_init);
-        //Debug.Log("HP: " + current_hp);
+    }
+    public int GetFinalStat(Combatant_Stats stat)
+    {
+        return (GetModStat(stat) + GetStat(stat));
     }
 
-    public int getStat(Combatant_Stats stat)
+    public void ResetStats()
+    {
+         mod_str = 0;
+         mod_dex = 0;
+         mod_mag = 0;
+         mod_def = 0;
+         mod_con = 0;
+         mod_luck = 0;
+         mod_speed = 0;
+         mod_init = 0;
+    }
+
+    public int GetStat(Combatant_Stats stat)
     {
         switch (stat)
         {
@@ -150,33 +152,61 @@ public class Stats : MonoBehaviour
         }
     }
 
-    public void setStat(Combatant_Stats stat, int setStat)
+    public int GetModStat(Combatant_Stats stat)
     {
         switch (stat)
         {
             case Combatant_Stats.Strength:
-                base_str = setStat;
+                return mod_str;
+            case Combatant_Stats.Dexterity:
+                return mod_dex;
+            case Combatant_Stats.Magic:
+                return mod_mag;
+            case Combatant_Stats.Defence:
+                return mod_def;
+            case Combatant_Stats.Constitution:
+                return mod_con;
+            case Combatant_Stats.Luck:
+                return mod_luck;
+            case Combatant_Stats.Speed:
+                return mod_speed;
+            case Combatant_Stats.Initiative:
+                return mod_init;
+            case Combatant_Stats.HP:
+                return current_hp;
+            default:
+                Debug.Log("ERROR: Invalid Stat Name");
+                return 0;
+        }
+    }
+
+    public void SetModStat(Combatant_Stats stat, int setStat)
+    {
+        switch (stat)
+        {
+            case Combatant_Stats.Strength:
+                mod_str = setStat;
                 break;
             case Combatant_Stats.Dexterity:
-                base_dex = setStat;
+                mod_dex = setStat;
                 break;
             case Combatant_Stats.Magic:
-                base_mag = setStat;
+                mod_mag = setStat;
                 break;
             case Combatant_Stats.Defence:
-                base_def = setStat;
+                mod_def = setStat;
                 break;
             case Combatant_Stats.Constitution:
-                base_con = setStat;
+                mod_con = setStat;
                 break;
             case Combatant_Stats.Luck:
-                base_luck = setStat;
+                mod_luck = setStat;
                 break;
             case Combatant_Stats.Speed:
-                base_speed = setStat;
+                mod_speed = setStat;
                 break;
             case Combatant_Stats.Initiative:
-                base_init = setStat;
+                mod_init = setStat;
                 break;
             case Combatant_Stats.HP:
                 current_hp = setStat;
@@ -184,7 +214,7 @@ public class Stats : MonoBehaviour
         }
     }
 
-    private void quirkStats()
+    private void QuirkStats()
     {
         Quirks[] quirks = combatant.combatantQuirks;
 

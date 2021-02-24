@@ -94,6 +94,38 @@ public class AudioManager : MonoBehaviour
         }
     }
 
+    public void FadeOut(string in_name)
+    {
+        Music m = Array.Find(music, sounds => sounds.name == in_name);
+        if (m != null)
+        {
+            StartChildCoroutine(m.FadeOut());
+            return;
+        }
+        OneShot o = Array.Find(oneShots, sounds => sounds.name == in_name);
+        if (o != null)
+        {
+            StartChildCoroutine(o.FadeOut());
+            return;
+        }
+    }
+
+    public void FadeIn(string in_name)
+    {
+        Music m = Array.Find(music, sounds => sounds.name == in_name);
+        if (m != null)
+        {
+            StartChildCoroutine(m.FadeIn());
+            return;
+        }
+        OneShot o = Array.Find(oneShots, sounds => sounds.name == in_name);
+        if (o != null)
+        {
+            StartChildCoroutine(o.FadeIn());
+            return;
+        }
+    }
+
     public void StartChildCoroutine(IEnumerator coroutineMethod)
     {
         StartCoroutine(coroutineMethod);

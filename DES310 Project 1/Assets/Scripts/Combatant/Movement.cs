@@ -5,8 +5,7 @@ using UnityEngine;
 public class Movement : MonoBehaviour
 {
     public IsoGrid grid;
-    InputManager controls; 
-    Transform target;
+    InputManager controls;
 
     bool RMouseDown = false;
     bool LClick = false;
@@ -14,12 +13,16 @@ public class Movement : MonoBehaviour
 
     private void Awake()
     {
-        //target = GetComponent<PathFindingUnit>().target;
         controls = new InputManager();
 
-        //controls.Keyboard.RClick.started += ctx => { RMouseDown = true; };
-        //controls.Keyboard.RClick.canceled += ctx => { RMouseDown = false; };
-        controls.Keyboard.LClick.performed += ctx => LeftDown();
+        controls.Keyboard.RClick.started += ctx => { RMouseDown = true; };
+        controls.Keyboard.RClick.canceled += ctx => { RMouseDown = false; };
+        controls.Keyboard.LClick.performed += ctx => LeftDown();        
+    }
+
+    private void Start()
+    {
+        grid = FindObjectOfType<IsoGrid>();
     }
 
     private void OnEnable()
@@ -45,16 +48,16 @@ public class Movement : MonoBehaviour
 
     void Move()
     {
-        /*Vector2 mousePos = Camera.main.ScreenToWorldPoint(controls.Keyboard.MousePos.ReadValue<Vector2>());
+        Vector2 mousePos = Camera.main.ScreenToWorldPoint(controls.Keyboard.MousePos.ReadValue<Vector2>());
         Vector3 nodePos = grid.WorldToNode(mousePos).worldPosition;
-        Vector3 oldPos = target.position;
-        target.position = new Vector3(nodePos.x, nodePos.y, 1);
+        Vector3 oldPos = Camera.main.ScreenToWorldPoint(controls.Keyboard.MousePos.ReadValue<Vector2>());
 
         if (oldPos != new Vector3 (nodePos.x,nodePos.y,1) || LClick)
         {
+            grid.WorldToNode(transform.position).SetOccupied(null);
             GetComponent<PathFindingUnit>().StartPath();
             LClick = false;
-        }*/
+        }
     }
 
     private void LeftDown()
@@ -100,7 +103,7 @@ public class Movement : MonoBehaviour
             }
             else
             {
-                //GetComponent<PathFindingUnit>().StopPath();
+                GetComponent<PathFindingUnit>().StopPath();
             }
         }
     }

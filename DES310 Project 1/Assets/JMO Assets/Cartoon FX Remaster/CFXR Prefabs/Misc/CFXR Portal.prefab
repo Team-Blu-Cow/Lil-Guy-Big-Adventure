@@ -9660,7 +9660,7 @@ Transform:
   m_GameObject: {fileID: 4903989986093316332}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 0.5, y: 1, z: 1}
+  m_LocalScale: {x: 0.2, y: 0.3, z: 0.3}
   m_Children:
   - {fileID: 766592810832810626}
   - {fileID: 8614197214832540360}
@@ -9679,7 +9679,7 @@ ParticleSystem:
   m_GameObject: {fileID: 4903989986093316332}
   serializedVersion: 7
   lengthInSec: 1
-  simulationSpeed: 1
+  simulationSpeed: 0.5
   stopAction: 0
   cullingMode: 0
   ringBufferMode: 0
@@ -19439,7 +19439,7 @@ Light:
   m_Type: 2
   m_Shape: 0
   m_Color: {r: 0.7541256, g: 0.5235849, b: 1, a: 1}
-  m_Intensity: 3.6831484
+  m_Intensity: 0
   m_Range: 10
   m_SpotAngle: 30
   m_InnerSpotAngle: 21.80208

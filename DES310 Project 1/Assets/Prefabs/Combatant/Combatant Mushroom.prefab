@@ -136,6 +136,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cf65118ca2564484991111fe932c906f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  combatantName: Mushroom
   combatantNum: 0
   fighting: 0
   abilitiesLearnt:

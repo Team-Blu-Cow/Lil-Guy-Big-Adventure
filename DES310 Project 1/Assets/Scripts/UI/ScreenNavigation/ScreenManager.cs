@@ -5,7 +5,7 @@ using TMPro;
 
 public class ScreenManager : MonoBehaviour
 {
-    public static ScreenManager screenManager;
+    public static ScreenManager instance;
 
     public InputManager controls;
 
@@ -17,15 +17,16 @@ public class ScreenManager : MonoBehaviour
     BeastiaryScreen beastiaryScreen;
     LevelLoader levelSwitch;
     public List<TMP_FontAsset> fonts;
+    public PlayerPartyManager partyManager;
 
     private void Awake()
     {
-        if (screenManager != null)
+        if (instance != null)
         {
             Debug.LogWarning("Screen Manager instances");
             return;
         }
-        screenManager = this;
+        instance = this;
         
         controls = new InputManager();
         controls.Keyboard.Pause.performed += ctx => TogglePause();
@@ -54,6 +55,7 @@ public class ScreenManager : MonoBehaviour
         pause.TogglePauseGame(true);
         partyScreen.CloseScreen();
         combatantScreen.CloseScreen();
+        beastiaryScreen.CloseScreen();
     }
     
     public void OpenCombatantScreen(PartyCombatant combatant)

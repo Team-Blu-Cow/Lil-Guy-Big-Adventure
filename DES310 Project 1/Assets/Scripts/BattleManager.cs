@@ -4,15 +4,19 @@ using UnityEngine;
 using System;
 
 public enum BattleState { SLEEPING, START, IN_BATTLE, FINISHED }
+
 public enum CombatantState { START, MOVE, ACTION, END }
+
 public enum ActionState { NOT_SELECTED, WAIT, ABILITY, ITEM, FINISHED }
+
 public class BattleManager : MonoBehaviour
 {
     public List<GameObject> enemyCombatants;
     [SerializeField] private PlayerPartyManager playerParty;
+    [SerializeField] private GameObject playerPartyGO;
 
-    [SerializeField] List<GameObject> combatants;
-    [SerializeField] Queue<GameObject> battleQueue;
+    [SerializeField] private List<GameObject> combatants;
+    [SerializeField] private Queue<GameObject> battleQueue;
     public GameObject currentCombatant = null;
     public GameObject selectedCombatant = null;
 
@@ -24,31 +28,48 @@ public class BattleManager : MonoBehaviour
 
     private Vector3 abilityTargetPos;
     [HideInInspector] public bool animEffectComplete = false;
-	
+
     public Vector3 targetPos;
     public Vector3 cursorPos;
     public Vector2 uiPos;
 
     [SerializeField] private BattleState battleState;
     public BattleState BattleState { get { return battleState; } set { battleState = value; } }
-    [SerializeField] private CombatantState combatantState; 
+    [SerializeField] private CombatantState combatantState;
     public CombatantState CombatantState { get { return combatantState; } set { combatantState = value; } }
     [SerializeField] private ActionState actionState;
 
     //public InitiativeTracker initTracker;
     [SerializeField] private GridHighLighter gridHighLighter;
+
     [SerializeField] private CombatUI combatUI;
     public CombatUI CombatUI { get { return combatUI; } }
 
     [SerializeField] private AI.AICore ai_core;
 
+    private void Awake()
+    {        
+        
+    }
 
     // Start is called before the first frame update
-    void Start()
+    private void Start()
     {
+        playerParty = FindObjectOfType<PlayerPartyManager>();
+        if (playerParty == null)
+        {
+            playerParty = Instantiate(playerPartyGO).gameObject.GetComponent<PlayerPartyManager>();
+          
+        }
+        playerParty.GetComponentsInChildren<PathFindingUnit>()[0].GridHighLighter = gridHighLighter;
+        playerParty.GetComponentsInChildren<Movement>()[0].grid = gridHighLighter.grid;
+        ScreenManager.instance.partyManager = playerParty;
+        playerParty.GetComponentsInChildren<PathFindingUnit>()[0].target = FindObjectOfType<CursorController>().transform;
+
+
         battleState = BattleState.SLEEPING;
         combatantState = CombatantState.START;
-        actionState = ActionState.NOT_SELECTED;
+        actionState = ActionState.NOT_SELECTED;        
     }
 
     private void Update()
@@ -67,12 +88,12 @@ public class BattleManager : MonoBehaviour
                 InBattle();
                 break;
         }
-
     }
+
     //--------------------------------------------------------------------------------------------------------------------------------------------//
     // DATA STRUCTURING METHODS                                                                                                                   //
     //--------------------------------------------------------------------------------------------------------------------------------------------//
-    void SetBattleQueue()
+    private void SetBattleQueue()
     {
         battleQueue = new Queue<GameObject>();
 
@@ -80,10 +101,9 @@ public class BattleManager : MonoBehaviour
         {
             battleQueue.Enqueue(combatant);
         }
-
     }
 
-    void CycleQueue()
+    private void CycleQueue()
     {
         currentCombatant = battleQueue.Dequeue();
         while (currentCombatant.activeSelf == false)
@@ -103,7 +123,7 @@ public class BattleManager : MonoBehaviour
 
             for (int j = 1; j < combatants.Count; j++)
             {
-                if (combatants[j - 1].GetComponent<Stats>().getStat(Combatant_Stats.Initiative) < combatants[j].GetComponent<Stats>().getStat(Combatant_Stats.Initiative))
+                if (combatants[j - 1].GetComponent<Stats>().GetStat(Combatant_Stats.Initiative) < combatants[j].GetComponent<Stats>().GetStat(Combatant_Stats.Initiative))
                 {
                     Swap(combatants, j - 1, j);
                     swapped = true;
@@ -128,10 +148,9 @@ public class BattleManager : MonoBehaviour
 
     public void CheckIfCombatantDead(GameObject combatant)
     {
-        if(combatant != null && combatants.Contains(combatant)&& combatant.GetComponent<Combatant>().GetComponent<Stats>().getStat(Combatant_Stats.HP) <= 0)
+        if (combatant != null && combatants.Contains(combatant) && combatant.GetComponent<Combatant>().GetComponent<Stats>().GetStat(Combatant_Stats.HP) <= 0)
         {
-            
-            if(combatant.GetComponent<Combatant>().GetComponent<Stats>().combatant_type == Combatant_Type.Human)
+            if (combatant.GetComponent<Combatant>().GetComponent<Stats>().combatant_type == Combatant_Type.Human)
             {
                 // KILL MAIN CHARACTER
                 Debug.Log("Player died, you suck!");
@@ -147,7 +166,9 @@ public class BattleManager : MonoBehaviour
                 }
 
                 if (combatant.tag == "Enemy")
+                {
                     enemyCombatants.Remove(combatant);
+                }
                 else
                 {
                     //TODO: remove combatant from player's party
@@ -178,7 +199,10 @@ public class BattleManager : MonoBehaviour
                         break;
 
                     case CombatantState.ACTION:
-                        RecieveAction(mousePos);
+                        if (actionState != ActionState.ITEM)
+                        {
+                            RecieveAction(mousePos);
+                        }
                         break;
                 }
                 break;
@@ -188,7 +212,7 @@ public class BattleManager : MonoBehaviour
     //--------------------------------------------------------------------------------------------------------------------------------------------//
     // BATTLE STATE METHODS                                                                                                                       //
     //--------------------------------------------------------------------------------------------------------------------------------------------//
-    void StartBattle()
+    private void StartBattle()
     {
         combatants = new List<GameObject>();
 
@@ -205,7 +229,11 @@ public class BattleManager : MonoBehaviour
                 combatants.Add(member);
                 ai_core.party_list.Add(member);
             }
-                
+        }
+
+        if (playerParty.party[0].TryGetComponent<Movement>(out Movement move))
+        {
+            move.enabled = false;
         }
 
         SortBattleInitiative();
@@ -216,10 +244,8 @@ public class BattleManager : MonoBehaviour
         battleState = BattleState.IN_BATTLE;
     }
 
-    void InBattle()
+    private void InBattle()
     {
-        
-
         switch (combatantState)
         {
             case CombatantState.START:
@@ -238,7 +264,6 @@ public class BattleManager : MonoBehaviour
                 EndTurn();
                 break;
         }
-
     }
 
     //--------------------------------------------------------------------------------------------------------------------------------------------//
@@ -246,10 +271,10 @@ public class BattleManager : MonoBehaviour
     //--------------------------------------------------------------------------------------------------------------------------------------------//
 
     // Utility Functions ***************************************************************************************************************************
-    
+
     // use this function instead of manually altering the variable
     // so that other system variables can be edited along side state changes
-    void SetCombatantState(CombatantState state)
+    private void SetCombatantState(CombatantState state)
     {
         combatantState = state;
 
@@ -271,17 +296,21 @@ public class BattleManager : MonoBehaviour
                 combatUI.deactivateChoiceButtons();
                 break;
         }
+    }
 
+    public void AddParty(GameObject combatant)
+    {
+        playerParty.AddCombatant(combatant);
     }
 
     // Start Turn Phase ****************************************************************************************************************************
-    void StartTurn()
+    private void StartTurn()
     {
         receivedActionCommand = false;
 
         CycleQueue();
 
-        currentCombatant.GetComponent<PathFindingUnit>().SetSelectableTiles(currentCombatant.GetComponent<Stats>().getStat(Combatant_Stats.Speed));
+        currentCombatant.GetComponent<PathFindingUnit>().SetSelectableTiles(currentCombatant.GetComponent<Stats>().GetStat(Combatant_Stats.Speed));
 
         SetCombatantState(CombatantState.MOVE);
 
@@ -299,7 +328,7 @@ public class BattleManager : MonoBehaviour
     }
 
     // Move Phase **********************************************************************************************************************************
-    void TurnMovePhase()
+    private void TurnMovePhase()
     {
         if (currentCombatant.gameObject.tag == "Enemy")
         {
@@ -314,24 +343,23 @@ public class BattleManager : MonoBehaviour
         }
         else
         {
-            if(currentCombatant.GetComponent<PathFindingUnit>().PathFinished == true && currentlyMoving == true)
+            if (currentCombatant.GetComponent<PathFindingUnit>().PathFinished == true && currentlyMoving == true)
             {
                 currentlyMoving = false;
                 currentCombatant.GetComponent<PathFindingUnit>().PathFinished = false;
                 SetCombatantState(CombatantState.ACTION);
                 combatUI.activateChoiceButtons(uiPos);
             }
-
         }
     }
 
-    void AIMove()
+    private void AIMove()
     {
         //SetCombatantState(CombatantState.ACTION);
         AI.AIBaseBehavior behaviour = currentCombatant.GetComponent<AI.AIBaseBehavior>();
         if (behaviour)
         {
-            int speed = currentCombatant.GetComponent<Stats>().getStat(Combatant_Stats.Speed);
+            int speed = currentCombatant.GetComponent<Stats>().GetStat(Combatant_Stats.Speed);
 
             behaviour.Move(ai_core, speed);
         }
@@ -368,10 +396,10 @@ public class BattleManager : MonoBehaviour
     }
 
     // Action Phase ********************************************************************************************************************************
-    void TurnActionPhase()
+    private void TurnActionPhase()
     {
         // same as move phase function, unsure if this is needed
-        
+
         if (currentCombatant.tag == "Enemy" && actionState == ActionState.NOT_SELECTED)
             AIAction();
 
@@ -380,37 +408,36 @@ public class BattleManager : MonoBehaviour
             animEffectComplete = false;
             //TODO: animate target, show health bar, show damage numbers, screen shake ect.
             //if (actionState == ActionState.ABILITY)
-             //   DamagePopup.Create(abilityTargetPos, 300);
+            //   DamagePopup.Create(abilityTargetPos, 300);
 
             StartCoroutine(WaitThenFinish(1));
         }
-            
 
         if (actionState == ActionState.FINISHED)
             SetCombatantState(CombatantState.END);
     }
 
-    IEnumerator WaitThenFinish(float seconds)
+    private IEnumerator WaitThenFinish(float seconds)
     {
         yield return new WaitForSeconds(seconds);
         actionState = ActionState.FINISHED;
     }
 
-    void AIAction()
+    private void AIAction()
     {
         AI.AIBaseBehavior behaviour = currentCombatant.GetComponent<AI.AIBaseBehavior>();
         if (behaviour)
         {
             actionState = ActionState.ABILITY;
             AbilityResult result = behaviour.Attack(ai_core);
-            if(result.target != null)
+            if (result.target != null)
             {
                 abilityTargetPos = result.target.transform.position;
 
                 CheckIfCombatantDead(result.target);
 
                 AnimateAbility(abilityTargetPos, result.abilityIndex);
-	            StartCoroutine(ShowDamagePopup(0.2f, (int)result.oDamage, result.crit));
+                StartCoroutine(ShowDamagePopup(0.2f, (int)result.oDamage, result.crit));
             }
             else
             {
@@ -428,48 +455,65 @@ public class BattleManager : MonoBehaviour
         switch (actionState)
         {
             case ActionState.ABILITY:
-            {
-                
-	            IsoNode node = gridHighLighter.grid.WorldToNode(mousePos);
-	            if (gridHighLighter.IsTileOccupied(node))
-	            {
-                    if (receivedActionCommand == false)
+                {
+                    IsoNode node = gridHighLighter.grid.WorldToNode(mousePos);
+                    if (gridHighLighter.IsTileOccupied(node))
                     {
-                        receivedActionCommand = true;
-                        // TODO edit this to allow for healing to target allies ect.
-                        if (node.occupier.tag == "Enemy")
-	                    {
-	                        UseAbility(node.occupier, selectedAbility);
-	                        break;
-	                    }
-	                }
+                        if (receivedActionCommand == false)
+                        {
+                            //Check ability type                 
+                            switch (currentCombatant.GetComponent<Combatant>().abilitiesUsing[selectedAbility].abilityType)
+                            {
+                                case ability_type.Damage:
+                                    if (node.occupier.tag == ("Enemy"))
+                                    {
+                                        UseAbility(node.occupier, selectedAbility);
+                                        receivedActionCommand = true;
+                                    }
+                                    break;
+
+                                case ability_type.Heal:
+                                    if (node.occupier.tag == ("Ally"))
+                                    {
+                                        UseAbility(node.occupier, selectedAbility);
+                                        receivedActionCommand = true;
+                                    }
+                                    break;
+
+                                case ability_type.Buff:
+                                    if (node.occupier.tag == ("Ally"))
+                                    {
+                                        UseAbility(node.occupier, selectedAbility);
+                                        receivedActionCommand = true;
+                                    }
+                                    break;
+                            }                                                
+                        }
+                    }
+                    break;
                 }
-                break;
-            }
 
-            /*case ActionState.ITEM:
-            {
-                currentCombatant.GetComponent<Combatant>().UseItem()
-                break;
-            }//*/
-
+                case ActionState.ITEM:
+                {
+                    currentCombatant.GetComponent<Combatant>().UseItem(selectedItem);
+                    break;
+                }
         }
-
     }
 
-    void UseAbility(GameObject target, int abilityIndex)
+    private void UseAbility(GameObject target, int abilityIndex)
     {
-        currentCombatant.GetComponent<TestCombatSystem>().enemy = target;
-        AbilityResult result = currentCombatant.GetComponent<Combatant>().attackAbility(abilityIndex);
-
+        currentCombatant.GetComponent<CombatSystem>().target = target;
+        AbilityResult result = currentCombatant.GetComponent<Combatant>().UseAbility(abilityIndex);
         abilityTargetPos = target.transform.position;
 
         CheckIfCombatantDead(target);
 
-        AnimateAbility(target.transform.position,abilityIndex);
+        AnimateAbility(target.transform.position, abilityIndex);
         StartCoroutine(ShowDamagePopup(0.2f, (int)result.oDamage, result.crit));
     }
-    IEnumerator ShowDamagePopup(float seconds, int dmgNum, bool crit)
+
+    private IEnumerator ShowDamagePopup(float seconds, int dmgNum, bool crit)
     {
         yield return new WaitForSeconds(seconds);
         DamagePopup.Create(abilityTargetPos, dmgNum, crit);
@@ -477,7 +521,7 @@ public class BattleManager : MonoBehaviour
 
     public void AnimateAbility(Vector3 animPos, int abilityIndex)
     {
-        // draw animation effect 
+        // draw animation effect
         /*GameObject ability = Instantiate(currentCombatant.GetComponent<Combatant>().abilitiesUsing[abilityIndex].gameObject, animPos, Quaternion.identity);
         ability.GetComponent<Ability>().bManager = this;
         ability.transform.localScale = new Vector3(2f, 2f, 2f);
@@ -485,14 +529,14 @@ public class BattleManager : MonoBehaviour
         ability.GetComponent<Ability>().PlayAnim();*/
         if (currentCombatant.GetComponent<Combatant>().abilitiesUsing[abilityIndex].Anim != null)
         {
-            animPos = new Vector3(animPos.x, animPos.y-0.125f, 3);
+            animPos = new Vector3(animPos.x, animPos.y - 0.125f, 3);
             GameObject ability = Instantiate(currentCombatant.GetComponent<Combatant>().abilitiesUsing[abilityIndex].Anim, animPos, Quaternion.identity);
             ability.transform.localScale = Vector3.one * currentCombatant.GetComponent<Combatant>().abilitiesUsing[abilityIndex].scale;
             StartCoroutine(WaitForAnim(currentCombatant.GetComponent<Combatant>().abilitiesUsing[abilityIndex].time));
         }
     }
 
-    IEnumerator WaitForAnim(float seconds)
+    private IEnumerator WaitForAnim(float seconds)
     {
         yield return new WaitForSeconds(seconds);
         animEffectComplete = true;
@@ -525,16 +569,14 @@ public class BattleManager : MonoBehaviour
     public void OnSelectItem(int itemIndex)
     {
         selectedItem = itemIndex;
-        if(currentCombatant.GetComponent<Combatant>().combatantItems[itemIndex] != null)
+        if (currentCombatant.GetComponent<Combatant>().combatantItems[itemIndex] != null)
         {
-            currentCombatant.GetComponent<Combatant>().UseItem(itemIndex);
-
             // TODO: play animation or whatever
 
-            //SetCombatantState(CombatantState.END);
+            RecieveAction(new Vector3());
+
             actionState = ActionState.FINISHED;
         }
-            
     }
 
     public void OnBackButton()
@@ -550,16 +592,46 @@ public class BattleManager : MonoBehaviour
         //SetCombatantState(CombatantState.END);
     }
 
-
     // End Phase  **********************************************************************************************************************************
-    void EndTurn()
+    private void EndTurn()
     {
         // check if player has won or lost
+        if (enemyCombatants.Count <= 0)
+        {
+            EndBattle();
+        }
 
         currentCombatant.GetComponent<PathFindingUnit>().OccupyTile(currentCombatant);
 
         SetCombatantState(CombatantState.START);
+
+        
         //Debug.Log("End Turn");
+    }
+    void EndBattle()
+    {
+        battleState = BattleState.FINISHED;
+
+        foreach (GameObject exit in FindObjectOfType<MapGeneration>().placedExits)
+        {
+            exit.SetActive(true);
+        }
+
+        foreach (GameObject combatant in playerParty.party)
+        {
+            if (combatant)
+            {
+                combatant.GetComponent<Stats>().ResetStats();
+            }
+        }
+
+        if (playerParty.party[0].TryGetComponent<Movement>(out Movement move))
+        {
+            move.enabled = true;
+        }
+
+        gridHighLighter.ClearSelectableTiles();
+        Debug.Log("battle won");
     }
 
     public Queue<GameObject> getBattleQueue()
@@ -571,5 +643,4 @@ public class BattleManager : MonoBehaviour
     {
         return combatantState;
     }
-
 }
