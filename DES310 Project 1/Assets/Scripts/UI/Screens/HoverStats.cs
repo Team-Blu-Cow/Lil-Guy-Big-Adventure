@@ -31,7 +31,7 @@ public class HoverStats : MonoBehaviour, IPointerEnterHandler, IPointerExitHandl
             {
                 GameObject tempMember = Instantiate(member, transform.GetChild(0));
                 tempMember.GetComponent<PartyCombatant>().SetAll(party.party[i]);
-                tempMember.transform.GetChild(2).GetComponent<Image>().sprite = party.party[i].GetComponent<SpriteRenderer>().sprite;
+                tempMember.transform.GetChild(2).GetComponent<Image>().sprite = ScreenManager.GetFirstSprite(party.party[i]);
                 tempMember.transform.GetChild(2).GetComponent<Image>().SetNativeSize();
             }
         }

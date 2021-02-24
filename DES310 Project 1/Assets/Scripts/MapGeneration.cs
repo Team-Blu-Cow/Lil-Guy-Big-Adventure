@@ -45,7 +45,7 @@ public class MapGeneration : MonoBehaviour
     [Header ("InGame Objects")]
     public List<GameObject> placedItems = new List<GameObject>();
     public List<GameObject> placedExits = new List<GameObject>();
-    List<GameObject> placedEnemies = new List<GameObject>();
+    public List<GameObject> placedEnemies = new List<GameObject>();
 
     [Header ("Perlin noise")]
     List<Vector2> treeGrid = new List<Vector2>();

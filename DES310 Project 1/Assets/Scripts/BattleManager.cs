@@ -309,9 +309,10 @@ public class BattleManager : MonoBehaviour
 
     public void AddParty(GameObject combatant)
     {
-        combatant.tag = "Ally";
         playerParty.AddCombatant(combatant);
         ScreenManager.instance.hoverStats.UpdateUI();
+        ScreenManager.instance.HideRecruit();
+        
     }
 
     // Start Turn Phase ****************************************************************************************************************************
@@ -623,6 +624,7 @@ public class BattleManager : MonoBehaviour
     {
         battleState = BattleState.FINISHED;
         ScreenManager.instance.CloseInititive();
+        ScreenManager.instance.ShowRecruit();
 
         if (FindObjectOfType<MapGeneration>() != null)
         {

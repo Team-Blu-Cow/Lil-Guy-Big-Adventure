@@ -97,6 +97,7 @@ public class Movement : MonoBehaviour
                 int direction = collision.transform.tag.ToString()[4] - 48;
 
                 FindObjectOfType<MapGeneration>().StartSwap(direction);
+                ScreenManager.instance.HideRecruit();
 
             }
         }

@@ -50,7 +50,7 @@ public class SwapScreenParty : MonoBehaviour
                 tempPartyMember.GetComponentInChildren<TextMeshProUGUI>().font = ScreenManager.instance.activeFont;
 
                 // Setup Image
-                tempPartyMember.GetComponentInChildren<Image>().sprite = party.party[i].GetComponent<SpriteRenderer>().sprite;
+                tempPartyMember.GetComponentInChildren<Image>().sprite = ScreenManager.GetFirstSprite(party.party[i]);
                 tempPartyMember.GetComponentInChildren<Image>().SetNativeSize();
 
                 // Setup button
