@@ -214,6 +214,8 @@ public class BattleManager : MonoBehaviour
     //--------------------------------------------------------------------------------------------------------------------------------------------//
     private void StartBattle()
     {
+        ScreenManager.instance.OpenInititive();
+
         combatants = new List<GameObject>();
 
         ai_core.party_list = new List<GameObject>();
@@ -611,6 +613,7 @@ public class BattleManager : MonoBehaviour
     void EndBattle()
     {
         battleState = BattleState.FINISHED;
+        ScreenManager.instance.CloseInititive();
 
         foreach (GameObject exit in FindObjectOfType<MapGeneration>().placedExits)
         {
