@@ -13,9 +13,9 @@ MonoBehaviour:
   m_Name: Tree
   m_EditorClassIdentifier: 
   tiles:
-  - {fileID: 11400000, guid: 692b8cd666d51994697ef7acf9c9723b, type: 2}
-  - {fileID: 11400000, guid: e253ab8025807e24b983d1bfcffbdc9e, type: 2}
-  - {fileID: 11400000, guid: 58943e9f1a85995449cb2915a5793409, type: 2}
-  - {fileID: 11400000, guid: 5bc3a1605584ebb47928561c19fcee5a, type: 2}
+  - {fileID: 11400000, guid: 09f0aeb27a63912469742f3c53cd5265, type: 2}
+  - {fileID: 11400000, guid: ce7c44bc61a1f0848a803c8ba82608ac, type: 2}
+  - {fileID: 11400000, guid: ad735a71f54484c4e9843c413363c52a, type: 2}
+  - {fileID: 11400000, guid: 9d8e8bd5cfcd716428e11f5b40465444, type: 2}
   walkable: 0
   OmniDirectional: 1

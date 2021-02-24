@@ -81,4 +81,9 @@ public class CursorController : MonoBehaviour
             hoverObject = null;           
         }*/
     }
+
+    private void OnDrawGizmos()
+    {
+        Gizmos.DrawWireSphere(transform.position, gameObject.GetComponent<CircleCollider2D>().radius/10);
+    }
 }
