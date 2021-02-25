@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 using System;
 
 public enum BattleState { SLEEPING, START, IN_BATTLE, FINISHED }
@@ -579,8 +580,8 @@ public class BattleManager : MonoBehaviour
 
     public void OnChooseItem()
     {
-        combatUI.activateItemButtons(uiPos);
         combatUI.deactivateChoiceButtons();
+        combatUI.activateItemButtons(uiPos);
         actionState = ActionState.ITEM;
     }
 
@@ -594,6 +595,7 @@ public class BattleManager : MonoBehaviour
             RecieveAction(new Vector3());
 
             actionState = ActionState.FINISHED;
+
         }
     }
 

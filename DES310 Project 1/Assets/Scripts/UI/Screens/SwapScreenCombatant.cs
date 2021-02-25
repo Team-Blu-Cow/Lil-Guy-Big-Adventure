@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using TMPro;
 using UnityEngine.UI;
 using UnityEngine;
@@ -59,6 +57,20 @@ public class SwapScreenCombatant : MonoBehaviour
         {
             ability.SetAbility(combatant.Combatant,count);
             count++;
+        }
+
+        // Set items
+        for (int i = 0; i < combatant.Combatant.combatantItems.Length; i++)
+        {
+            if (combatant.Combatant.combatantItems[i] != null)
+            {
+                transform.GetChild(2).GetChild(i).GetComponentsInChildren<Image>()[1].enabled = true;
+                transform.GetChild(2).GetChild(i).GetComponentsInChildren<Image>()[1].sprite = combatant.Combatant.combatantItems[i].itemImage;
+            }
+            else
+            {
+                transform.GetChild(2).GetChild(i).GetComponentsInChildren<Image>()[1].enabled = false;
+            }
         }
 
         // Swap to main screen

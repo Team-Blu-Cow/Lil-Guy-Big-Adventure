@@ -14,6 +14,7 @@ public class ScreenManager : MonoBehaviour
     [Header("Screens")]
     PauseScreen pause;
     SwapScreenCombatant combatantScreen;
+    public SwapScreenCombatant CombatantScreen { get { return combatantScreen; } set { } }
     SwapScreenParty partyScreen;
     InventoryUI inventory;
     HoverStats inGameParty;
