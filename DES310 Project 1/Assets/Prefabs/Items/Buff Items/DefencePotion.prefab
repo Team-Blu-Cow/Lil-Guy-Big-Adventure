@@ -15,6 +15,10 @@ PrefabInstance:
       propertyPath: itemName
       value: Defence Potion
       objectReference: {fileID: 0}
+    - target: {fileID: 6213852727469305250, guid: eae60b014ca9dbc47bc3b7a2af6c98db, type: 3}
+      propertyPath: itemImage
+      value: 
+      objectReference: {fileID: 21300000, guid: 5469aeab7c913bf489463fcfb31ae87d, type: 3}
     - target: {fileID: 8032059200680620698, guid: eae60b014ca9dbc47bc3b7a2af6c98db, type: 3}
       propertyPath: m_RootOrder
       value: 0

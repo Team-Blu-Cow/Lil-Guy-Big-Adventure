@@ -48,7 +48,8 @@ public class InventorySlot : MonoBehaviour, IPointerDownHandler, IPointerUpHandl
             else if (eventGO.CompareTag("InventoryEquipt"))
             {
                 // Equipt item
-                eventGO.transform.parent.parent.GetComponentInParent<PartyCombatant>().Combatant.combatantItems[0] = item;
+                eventGO.transform.parent.parent.GetComponentInParent<Combatant>().combatantItems[0] = item;
+                item.transform.parent = eventGO.transform.parent.parent;
 
                 // Removes from inventory
                 Inventory.instance.items.Remove(item);
@@ -61,7 +62,7 @@ public class InventorySlot : MonoBehaviour, IPointerDownHandler, IPointerUpHandl
     {
         item = newItem;
 
-        icon.sprite = null;
+        icon.sprite = item.itemImage;
         icon.enabled = true;
         removeBtn.interactable = true;
     }

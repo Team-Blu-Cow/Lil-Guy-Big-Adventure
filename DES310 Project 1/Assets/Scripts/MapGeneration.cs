@@ -98,8 +98,14 @@ public class MapGeneration : MonoBehaviour
         // Clear items
         for (int i = 0; i < placedItems.Count; i++)
         {
-            if (placedItems[i].activeSelf)
+            if (placedItems[i].GetComponent<Item>().pickedUp)
+            {
+                placedItems[i].SetActive(false);
+            }
+            else
+            {
                 Destroy(placedItems[i]);
+            }
         }
         placedItems.Clear();
 
@@ -255,7 +261,7 @@ public class MapGeneration : MonoBehaviour
             while (n < attempts)
             {
                 Vector2Int itemPos = new Vector2Int((int)Random.Range(0, size.x), (int)Random.Range(0, size.y));
-                if (grid.GetNode(new Vector3Int(itemPos.x, itemPos.y, 2)).IsTraversable() && pathfinder.FindPath(party.party[0].transform.position, new Vector3(itemPos.x, itemPos.y, 2)) != null)
+                if (grid.GetNode(new Vector3Int(itemPos.x, itemPos.y, 2)).IsTraversable() && pathfinder.FindPath(party.party[0].transform.position, grid.NodeToWorld(itemPos.x, itemPos.y, 2)) != null)
                 {
                     GameObject item = Instantiate(items[Random.Range(0, items.Length)], grid.NodeToWorld(itemPos.x, itemPos.y, 2) + new Vector3(0,0.1f,0), new Quaternion(0, 0, 0, 0), transform.GetChild(1)).gameObject;
                     placedItems.Add(item);

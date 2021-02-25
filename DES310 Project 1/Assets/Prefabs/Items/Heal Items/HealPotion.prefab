@@ -20,6 +20,10 @@ PrefabInstance:
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 6213852727469305250, guid: eae60b014ca9dbc47bc3b7a2af6c98db, type: 3}
+      propertyPath: itemImage
+      value: 
+      objectReference: {fileID: 21300000, guid: e57d5d5c742e10e41b6440fead8627bb, type: 3}
+    - target: {fileID: 6213852727469305250, guid: eae60b014ca9dbc47bc3b7a2af6c98db, type: 3}
       propertyPath: itemPower
       value: 10
       objectReference: {fileID: 0}
