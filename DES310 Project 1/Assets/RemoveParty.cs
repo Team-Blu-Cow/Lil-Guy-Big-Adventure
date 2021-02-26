@@ -10,15 +10,17 @@ public class RemoveParty : MonoBehaviour
     
     public void Remove(GameObject newPartyMember)
     {
+        int i = 0;
+        foreach (GameObject button in buttons)
+        {
+            button.transform.GetChild(0).GetComponent<Image>().sprite = ScreenManager.GetFirstSprite(ScreenManager.instance.partyManager.party[i]);
+            button.transform.GetChild(0).GetComponent<Image>().SetNativeSize();
+            i++;
+        }
+
         buttons[0].GetComponent<Button>().onClick.AddListener(() => { ScreenManager.instance.partyManager.RemoveCombatant(1, newPartyMember); });
-        buttons[0].transform.GetChild(0).GetComponent<Image>().sprite = ScreenManager.GetFirstSprite(ScreenManager.instance.partyManager.party[1]);
-        buttons[0].transform.GetChild(0).GetComponent<Image>().SetNativeSize();
         buttons[1].GetComponent<Button>().onClick.AddListener(() => { ScreenManager.instance.partyManager.RemoveCombatant(2, newPartyMember); });
-        buttons[1].transform.GetChild(0).GetComponent<Image>().sprite = ScreenManager.GetFirstSprite(ScreenManager.instance.partyManager.party[2]);
-        buttons[1].transform.GetChild(0).GetComponent<Image>().SetNativeSize();
         buttons[2].GetComponent<Button>().onClick.AddListener(() => { ScreenManager.instance.partyManager.RemoveCombatant(3, newPartyMember); });
-        buttons[2].transform.GetChild(0).GetComponent<Image>().sprite = ScreenManager.GetFirstSprite(ScreenManager.instance.partyManager.party[3]);
-        buttons[2].transform.GetChild(0).GetComponent<Image>().SetNativeSize();
 
         /*GameObject[] partyList = ScreenManager.instance.partyManager.party;
         for (int i = 1; i < partyList.Length; i++)

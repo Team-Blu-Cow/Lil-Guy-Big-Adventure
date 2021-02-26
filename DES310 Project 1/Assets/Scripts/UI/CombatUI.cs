@@ -71,8 +71,6 @@ public class CombatUI : MonoBehaviour
 
     public void activateChoiceButtons(Vector2 pos)
     {
-        choiceButtons.SetActive(true);
-
         List<CombatButton> buttons = new List<CombatButton>();
         buttons.AddRange(choiceButtons.GetComponentsInChildren<CombatButton>());
         
@@ -84,6 +82,7 @@ public class CombatUI : MonoBehaviour
             offsetY -= 30;
         }
 
+        choiceButtons.SetActive(true);
     }
 
     public void activateMoveButtons()
@@ -92,19 +91,17 @@ public class CombatUI : MonoBehaviour
 
     public void activateMoveButtons(Vector2 pos)
     {
-        moveButtons.SetActive(true);
-
         List<CombatButton> buttons = new List<CombatButton>();
         buttons.AddRange(moveButtons.GetComponentsInChildren<CombatButton>());
         
         buttons[0].activateButton(new Vector3(110, -10, 0), pos);
         buttons[1].activateButton(new Vector3(110, 20, 0), pos);
+        
+        moveButtons.SetActive(true);
     }
 
     public void activateAbilityButtons()
-    {
-        abilityButtons.SetActive(true);
-
+    {  
         List<CombatButton> buttons = new List<CombatButton>();
         buttons.AddRange(abilityButtons.GetComponentsInChildren<CombatButton>());
 
@@ -121,6 +118,8 @@ public class CombatUI : MonoBehaviour
                 count++;
             }           
         }
+        
+        abilityButtons.SetActive(true);
     }
 
     private int GetAbilityIcon(Aspects.Aspect aspect)
@@ -133,15 +132,16 @@ public class CombatUI : MonoBehaviour
     }
 
     public void activateItemButtons(Vector2 pos)
-    {
-        itemButtons.SetActive(true);
-
+    { 
         List<CombatButton> buttons = new List<CombatButton>();
         buttons.AddRange(itemButtons.GetComponentsInChildren<CombatButton>());
         Item[] items = GetComponent<BattleManager>().currentCombatant.GetComponent<Combatant>().combatantItems;
+
         int offsetY = 50;
         for (int i = 0; i < items.Length; i++)
         {
+            buttons[i].deactivateButton();
+
             if (items[i])
             {
                 buttons[i].GetComponentInChildren<TextMeshProUGUI>().text = items[i].itemName;
@@ -151,6 +151,8 @@ public class CombatUI : MonoBehaviour
         }
 
         buttons[5].activateButton(new Vector3(110, offsetY, 0), pos);
+        
+        itemButtons.SetActive(true);
     }
 
     public void useBackButton(Vector2 pos)

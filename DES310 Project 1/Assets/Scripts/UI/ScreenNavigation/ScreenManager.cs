@@ -14,6 +14,7 @@ public class ScreenManager : MonoBehaviour
     [Header("Screens")]
     PauseScreen pause;
     SwapScreenCombatant combatantScreen;
+    public SwapScreenCombatant CombatantScreen { get { return combatantScreen; } set { } }
     SwapScreenParty partyScreen;
     InventoryUI inventory;
     HoverStats inGameParty;
@@ -212,7 +213,7 @@ public class ScreenManager : MonoBehaviour
     {
         if (pause)
             pause.TogglePauseGame(false);
-        levelSwitch.SwitchScene(scene);        
+        levelSwitch.SwitchScene(scene);
     }
 
     public void SwapFont(int i)
@@ -244,7 +245,7 @@ public class ScreenManager : MonoBehaviour
     // Recruit /////////////////
     public void ShowRecruit()
     {
-        if(recruitEnemy.TryGetComponent<Canvas>(out Canvas canvas))
+        if(recruitEnemy != null && recruitEnemy.TryGetComponent<Canvas>(out Canvas canvas))
         {
             canvas.enabled = true;
             recruitEnemy.Recruit();

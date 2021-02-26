@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 using System;
 
 public enum BattleState { SLEEPING, START, IN_BATTLE, FINISHED }
@@ -109,11 +110,14 @@ public class BattleManager : MonoBehaviour
     private void CycleQueue()
     {
         currentCombatant = battleQueue.Dequeue();
-        while (currentCombatant.activeSelf == false)
+        if (currentCombatant)
         {
-            currentCombatant = battleQueue.Dequeue();
+            while (currentCombatant.activeSelf == false)
+            {
+                currentCombatant = battleQueue.Dequeue();
+            }
+            battleQueue.Enqueue(currentCombatant);
         }
-        battleQueue.Enqueue(currentCombatant);
     }
 
     public void SortBattleInitiative()
@@ -157,6 +161,7 @@ public class BattleManager : MonoBehaviour
             {
                 // KILL MAIN CHARACTER
                 Debug.Log("Player died, you suck!");
+                ScreenManager.instance.SwitchLevel("DeathScreen");
             }
             else
             {
@@ -175,14 +180,13 @@ public class BattleManager : MonoBehaviour
                 }
                 else
                 {
-                    //TODO: remove combatant from player's party
                     playerParty.RemoveCombatant(combatant);
                     ai_core.party_list.Remove(combatant);
+                    ScreenManager.instance.hoverStats.UpdateUI();
                 }
 
                 combatants.Remove(combatant);
                 combatant.GetComponent<PathFindingUnit>().OccupyTile(null);
-                // combatant.SetActive(false);
                 StartCoroutine(RemoveCombatant(combatant, 1f));
             }
         }
@@ -579,8 +583,8 @@ public class BattleManager : MonoBehaviour
 
     public void OnChooseItem()
     {
-        combatUI.activateItemButtons(uiPos);
         combatUI.deactivateChoiceButtons();
+        combatUI.activateItemButtons(uiPos);
         actionState = ActionState.ITEM;
     }
 
@@ -594,6 +598,7 @@ public class BattleManager : MonoBehaviour
             RecieveAction(new Vector3());
 
             actionState = ActionState.FINISHED;
+
         }
     }
 

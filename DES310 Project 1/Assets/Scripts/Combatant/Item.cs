@@ -36,29 +36,24 @@ public class Item : MonoBehaviour
     public item_duration itemDuration;
     public stat_boost statBoost;
     public int itemPower;
+    public Sprite itemImage;
+    public bool pickedUp;
 
     public void PickUp(Vector3 playerPos)
     {
-        bool pickedUp = false;
         IsoGrid grid = GameObject.FindObjectOfType<IsoGrid>();
         IsoNode node = grid.WorldToNode(transform.position);
 
         foreach (IsoNode neighbor in grid.GetNeighbors(node))
         {
-            if (neighbor.gridPosition == grid.WorldToNode(playerPos).gridPosition) //if it is a treasure
+            if (neighbor.gridPosition == grid.WorldToNode(playerPos).gridPosition && !pickedUp) //if it is a treasure
             {
                 //Collect
-                pickedUp = true;
                 Inventory.instance.Add(this);
-                gameObject.SetActive(false);
+                GetComponent<SpriteRenderer>().sprite = Resources.Load<Sprite>("Sprites/Items/open_chest");
+                pickedUp = true;
                 Debug.Log("Picked Up");
             }
-        }
-
-        if (!pickedUp)
-        {
-            //Show cant pickup
-            Debug.Log("Cant pickup");
         }
     }
 }
