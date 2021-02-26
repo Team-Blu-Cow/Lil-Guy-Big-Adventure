@@ -213,7 +213,7 @@ public class ScreenManager : MonoBehaviour
     {
         if (pause)
             pause.TogglePauseGame(false);
-        levelSwitch.SwitchScene(scene);        
+        levelSwitch.SwitchScene(scene);
     }
 
     public void SwapFont(int i)
