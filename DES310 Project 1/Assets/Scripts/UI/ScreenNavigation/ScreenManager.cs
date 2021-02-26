@@ -113,6 +113,7 @@ public class ScreenManager : MonoBehaviour
         if (inGame)
         {
             pause.TogglePauseGame(true);
+            inGame = false;
         }
         else
         {
