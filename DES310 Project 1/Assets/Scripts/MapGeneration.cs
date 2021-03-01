@@ -59,12 +59,9 @@ public class MapGeneration : MonoBehaviour
 
     [SerializeField] private int SpawnBase = 10;
 
-    private LevelLoader levelLoader;
-
     private void Start()
     {
         party = ScreenManager.instance.partyManager;
-        levelLoader = FindObjectOfType<LevelLoader>();
     }
 
     private void Update()
@@ -130,7 +127,7 @@ public class MapGeneration : MonoBehaviour
             
             travelledRegions = 0;
             LeanTween.value(transition.gameObject, a => transition.color = a, new Color(0, 0, 0, 0), new Color(0, 0, 0, 1f), 0.2f);
-            levelLoader.SwitchScene("CampFire");
+            ScreenManager.instance.SwitchLevel("CampFire");
             
             return;
         }
