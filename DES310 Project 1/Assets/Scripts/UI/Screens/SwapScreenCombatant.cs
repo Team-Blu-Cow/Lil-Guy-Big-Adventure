@@ -160,7 +160,7 @@ public class SwapScreenCombatant : MonoBehaviour
                 "Type: " + ab.abilityType.ToString() + "\n" +
                 "Main Stat: " + ab.statUsed.ToString() + "\n" +
                 "Power: " + ab.abilityPower + "\n" +
-                "Area: " + ab.abilityArea + "\n" +
+                "Range: " + ab.abilityRange + "\n" +
                 "Aspect: " + ab.abilityAspect;
                 count++;
             }

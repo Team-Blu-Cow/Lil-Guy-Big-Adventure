@@ -52,6 +52,7 @@ public class Item : MonoBehaviour
                 Inventory.instance.Add(this);
                 GetComponent<SpriteRenderer>().sprite = Resources.Load<Sprite>("Sprites/Items/open_chest");
                 pickedUp = true;
+                DamagePopup.Create("Found a "+itemName, transform.position);
                 // Debug.Log("Picked Up");
             }
         }

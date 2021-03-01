@@ -51,4 +51,5 @@ MonoBehaviour:
   abilityArea: 1
   abilityAspect: 0
   scale: 0.25
+  time: 1
   Anim: {fileID: 8163684771574148739, guid: 6dc4191059d6c3a4a820270672bbf567, type: 3}

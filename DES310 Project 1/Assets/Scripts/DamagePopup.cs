@@ -16,6 +16,17 @@ public class DamagePopup : MonoBehaviour
         return dmgPopup;
     }
 
+    public static DamagePopup Create(string text, Vector3 pos)
+    {
+        Transform pfDamagePopupObj = Instantiate(Resources.Load<Transform>("Prefabs/pfDamagePopup"), pos, Quaternion.identity);
+        pfDamagePopupObj.GetComponent<TMPro.TextMeshPro>().sortingOrder = 1;
+
+        DamagePopup dmgPopup = pfDamagePopupObj.GetComponent<DamagePopup>();
+        dmgPopup.Setup(text);
+
+        return dmgPopup;
+    }
+
     [SerializeField] private const float disappearTimerMax = 1f;
 
     private TextMeshPro textMesh;
@@ -54,6 +65,15 @@ public class DamagePopup : MonoBehaviour
 
         }
         textMesh.color = textColor;
+        disappearTimer = disappearTimerMax;
+        moveVector = new Vector3(0, 1) * 4f;
+    }
+
+    public void Setup(string text)
+    {
+        textMesh.SetText(text);
+        textMesh.fontSize = 4;
+        textMesh.color = Color.white;
         disappearTimer = disappearTimerMax;
         moveVector = new Vector3(0, 1) * 4f;
     }
