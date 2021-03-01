@@ -64,13 +64,16 @@ public class MapGeneration : MonoBehaviour
         party = ScreenManager.instance.partyManager;
     }
 
-    private void Update()
+    float portalTime = 0f;
+
+    private void FixedUpdate()
     {
+        portalTime += Time.fixedDeltaTime;
+
         foreach (GameObject exit in placedExits)
         {
             Vector3 pos = exit.transform.position;
-
-            exit.transform.position = new Vector3(pos.x, pos.y - (Mathf.Sin(Time.time)*0.001f), pos.z);
+            exit.transform.position = new Vector3(pos.x, pos.y - (Mathf.Sin(portalTime)*0.001f), pos.z);
         }
     }
 
@@ -85,6 +88,8 @@ public class MapGeneration : MonoBehaviour
 
     public void RenderMap()
     {
+        portalTime = 0;
+
         Vector2 size = new Vector2(grid.gridSize.x, grid.gridSize.y);
         // PoissonDisc(grid.gridSize.x, grid.gridSize.y); // Doesnt work really just did some boofed stuff wiht the perlin noise map to place trees instead
 
