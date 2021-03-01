@@ -90,7 +90,7 @@ public class CombatSystem : MonoBehaviour
 
     public AbilityResult CastAbility(int abilityNum)
     {
-        Debug.Log("Casting Ability...");
+        // Debug.Log("Casting Ability...");
         if (target != null)
         {           
             switch (abilitiesUsing[abilityNum].abilityType)
@@ -264,7 +264,7 @@ public class CombatSystem : MonoBehaviour
 
     public void UseItem(int currentItem)
     {
-        Debug.Log("Using Item...");        
+        // Debug.Log("Using Item...");        
         switch (items[currentItem].itemType)
         {
             case item_type.Poison:
@@ -296,7 +296,7 @@ public class CombatSystem : MonoBehaviour
             combatantStats.SetModStat(Combatant_Stats.HP, combatantStats.GetFinalStat(Combatant_Stats.Constitution));
         }
 
-        Debug.Log("Healed " + items[currentItem].itemPower + " points of damage");
+        // Debug.Log("Healed " + items[currentItem].itemPower + " points of damage");
         
     }
 

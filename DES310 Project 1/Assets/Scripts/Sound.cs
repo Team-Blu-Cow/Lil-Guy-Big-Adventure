@@ -43,13 +43,13 @@ public class Music
     {
         if (start != null)
         {
-            Debug.Log("hit");
+            // Debug.Log("hit");
             startSource.Play();
             yield return new WaitForSeconds(start.length);
         }
         else
         {
-            Debug.Log("leadin");
+            // Debug.Log("leadin");
             yield return new WaitForSeconds(leadInTime);
         }
 

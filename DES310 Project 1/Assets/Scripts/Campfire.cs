@@ -43,7 +43,7 @@ public class Campfire : MonoBehaviour
     
     private void MouseLeftClick()
     {
-        Debug.Log(":]");
+        // Debug.Log(":]");
         if(cursorPos.x > -1.0f && cursorPos.x < 0.0f && cursorPos.y < -4.25 && cursorPos.y > -4.75)
         {
             for(int i = 0; i < playerParty.party.Length; i++)
@@ -53,7 +53,7 @@ public class Campfire : MonoBehaviour
                     playerParty.party[i].GetComponent<Stats>().SetModStat(Combatant_Stats.HP, playerParty.party[i].GetComponent<Stats>().GetStat(Combatant_Stats.Constitution));
                 }
             }
-            Debug.Log("Hi");
+            // Debug.Log("Hi");
         }
     }
 

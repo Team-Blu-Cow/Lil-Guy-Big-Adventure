@@ -160,7 +160,7 @@ public class BattleManager : MonoBehaviour
             if (combatant.GetComponent<Combatant>().GetComponent<Stats>().combatant_type == Combatant_Type.Human)
             {
                 // KILL MAIN CHARACTER
-                Debug.Log("Player died, you suck!");
+                // Debug.Log("Player died, you suck!");
                 ScreenManager.instance.SwitchLevel("DeathScreen");
             }
             else
@@ -659,7 +659,7 @@ public class BattleManager : MonoBehaviour
         }
 
         gridHighLighter.ClearSelectableTiles();
-        Debug.Log("battle won");
+        // Debug.Log("battle won");
     }
 
     public Queue<GameObject> getBattleQueue()
