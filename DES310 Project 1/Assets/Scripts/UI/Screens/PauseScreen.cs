@@ -23,7 +23,7 @@ public class PauseScreen : MonoBehaviour
     {
         if (toggle)
         {
-            Time.timeScale = 0f;
+            //Time.timeScale = 0f;
             pauseMenu.enabled = true;
             foreach (GraphicRaycaster caster in rayCasters)
             {
@@ -33,7 +33,7 @@ public class PauseScreen : MonoBehaviour
         }
         else
         {
-            Time.timeScale = 1f;
+            //Time.timeScale = 1f;
             pauseMenu.enabled = false;
             foreach (GraphicRaycaster caster in rayCasters)
             {

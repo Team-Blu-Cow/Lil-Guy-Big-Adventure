@@ -9,10 +9,14 @@ public class Campfire : MonoBehaviour
     private Transform cursor;
     public Vector3 cursorPos;
 
+    private GameObject textInstructionObject;
+
     void Awake()
     {
         input = new InputManager();
 
+        textInstructionObject = gameObject.GetComponentInChildren<TMPro.TextMeshPro>().gameObject;
+        textInstructionObject.SetActive(true);
         input.Keyboard.LClick.performed += ctx => MouseLeftClick();
     }
     void OnEnable()
@@ -53,7 +57,7 @@ public class Campfire : MonoBehaviour
                     playerParty.party[i].GetComponent<Stats>().SetModStat(Combatant_Stats.HP, playerParty.party[i].GetComponent<Stats>().GetStat(Combatant_Stats.Constitution));
                 }
             }
-            // Debug.Log("Hi");
+            textInstructionObject.SetActive(false);
         }
     }
 

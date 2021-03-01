@@ -1375,7 +1375,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &125221565
 RectTransform:
   m_ObjectHideFlags: 0
@@ -1793,6 +1793,10 @@ MonoBehaviour:
   targetPos: {x: 0, y: 0, z: 0}
   cursorPos: {x: 0, y: 0, z: 0}
   uiPos: {x: 0, y: 0}
+  allyColour: {fileID: 2100000, guid: 37d7d77be7411ab469f4dc375c4d78a7, type: 2}
+  allyColourOverlay: {fileID: 2100000, guid: 6d8b6b06c66b6594882e8d0ac0e03414, type: 2}
+  enemyColour: {fileID: 2100000, guid: 50d33794cbd166d4db94f0a2a54f6ab2, type: 2}
+  enemyColourOverlay: {fileID: 2100000, guid: f95459abbf0830a4bb0c5a37dd9fa125, type: 2}
   battleState: 0
   combatantState: 0
   actionState: 0
@@ -15508,7 +15512,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Add Party
+  m_text: destroy party
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -24345,11 +24349,11 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 143049153}
         m_TargetAssemblyTypeName: BattleManager, Assembly-CSharp
-        m_MethodName: AddParty
-        m_Mode: 2
+        m_MethodName: ResetParty
+        m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.GameObject, UnityEngine
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
           m_IntArgument: 4
           m_FloatArgument: 0
           m_StringArgument: 
@@ -31952,6 +31956,18 @@ MonoBehaviour:
           m_IntArgument: 0
           m_FloatArgument: 0
           m_StringArgument: Main Theme
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 143049153}
+        m_TargetAssemblyTypeName: BattleManager, Assembly-CSharp
+        m_MethodName: ResetParty
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
 --- !u!222 &8577228859804336369

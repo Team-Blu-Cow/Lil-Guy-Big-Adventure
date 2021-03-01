@@ -35,6 +35,11 @@ public class BattleManager : MonoBehaviour
     public Vector3 cursorPos;
     public Vector2 uiPos;
 
+    [SerializeField] private Material allyColour;
+    [SerializeField] private Material allyColourOverlay;
+    [SerializeField] private Material enemyColour;
+    [SerializeField] private Material enemyColourOverlay;
+
     [SerializeField] private BattleState battleState;
     public BattleState BattleState { get { return battleState; } set { battleState = value; } }
     [SerializeField] private CombatantState combatantState;
@@ -232,6 +237,11 @@ public class BattleManager : MonoBehaviour
         if (enemyCombatants != null)
         {
             combatants.AddRange(enemyCombatants);
+            foreach(GameObject combatant in enemyCombatants)
+            {
+                combatant.GetComponent<Renderer>().material = enemyColour;
+                combatant.transform.GetChild(0).GetComponent<Renderer>().material = enemyColourOverlay;
+            }
         }
         foreach (var member in playerParty.party)
         {
@@ -241,6 +251,8 @@ public class BattleManager : MonoBehaviour
                 ai_core.party_list.Add(member);
                 member.GetComponent<PathFindingUnit>().GridHighLighter = gridHighLighter;
                 member.GetComponent<PathFindingUnit>().OccupyTile(member);
+                member.GetComponent<Renderer>().material = allyColour;
+                member.transform.GetChild(0).GetComponent<Renderer>().material = allyColourOverlay;
             }
         }
 
@@ -325,9 +337,20 @@ public class BattleManager : MonoBehaviour
         ScreenManager.instance.HideRecruit();      
     }
 
+    public void ResetParty()
+    {
+        //playerParty.Remove();
+        Destroy(playerParty.gameObject);
+        //Destroy(GameObject.Find("PlayerParty(Clone)"));
+        //battleState = BattleState.FINISHED;
+    }
+
     // Start Turn Phase ****************************************************************************************************************************
     private void StartTurn()
     {
+        if (playerParty == null)
+            return;
+
         receivedActionCommand = false;
 
         CycleQueue();
@@ -352,6 +375,9 @@ public class BattleManager : MonoBehaviour
     // Move Phase **********************************************************************************************************************************
     private void TurnMovePhase()
     {
+        if (playerParty == null)
+            return;
+
         if (currentCombatant.gameObject.tag == "Enemy")
         {
             AI.AIBaseBehavior behaviour = currentCombatant.GetComponent<AI.AIBaseBehavior>();
@@ -420,6 +446,9 @@ public class BattleManager : MonoBehaviour
     // Action Phase ********************************************************************************************************************************
     private void TurnActionPhase()
     {
+        if (playerParty == null)
+            return;
+
         // same as move phase function, unsure if this is needed
 
         if (currentCombatant.tag == "Enemy" && actionState == ActionState.NOT_SELECTED)
@@ -618,6 +647,9 @@ public class BattleManager : MonoBehaviour
     // End Phase  **********************************************************************************************************************************
     private void EndTurn()
     {
+        if (playerParty == null)
+            return;
+
         // check if player has won or lost
         if (enemyCombatants.Count <= 0)
         {
