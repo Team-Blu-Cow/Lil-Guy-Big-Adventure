@@ -167,6 +167,7 @@ public class BattleManager : MonoBehaviour
                 // KILL MAIN CHARACTER
                 // Debug.Log("Player died, you suck!");
                 ScreenManager.instance.SwitchLevel("DeathScreen");
+                ResetParty();
             }
             else
             {
