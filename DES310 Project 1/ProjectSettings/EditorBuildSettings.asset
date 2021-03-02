@@ -13,8 +13,11 @@ EditorBuildSettings:
     guid: 1eed9786fb1c9b048bdafa219df709af
   - enabled: 1
     path: Assets/Scenes/Final Base.unity
-    guid: 3023ff4d99a492a44ba0c93f70fcbce9
+    guid: 90dd52c093aa0da47a2418cf700608ec
   - enabled: 1
     path: Assets/Scenes/CampFire.unity
     guid: 7c7e2c7dfce8a894997753d826c4a693
+  - enabled: 1
+    path: Assets/Scenes/DeathScreen.unity
+    guid: c00d67bdf35755e40869afffe6ecb33f
   m_configObjects: {}
